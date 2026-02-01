@@ -335,17 +335,17 @@
 
         .ratio-control {
             background: var(--bg-card);
-            padding: 18px;
+            padding: 16px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             height: auto !important;
             overflow: visible !important;
         }
 
         .ratio-control h4 {
             color: var(--text-primary);
-            margin-bottom: 14px;
-            font-size: 0.85rem;
+            margin-bottom: 12px;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 600;
@@ -353,110 +353,127 @@
 
         .ratio-slider {
             display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .slider-track {
+            display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 8px 0;
+            gap: 10px;
+        }
+
+        .slider-track span {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            min-width: 30px;
         }
 
         .ratio-slider input[type="range"] {
             flex: 1;
-            height: 8px;
-            border-radius: 4px;
+            height: 6px;
+            border-radius: 3px;
             background: var(--border);
             outline: none;
             -webkit-appearance: none;
-            min-height: 44px;
         }
 
         .ratio-slider input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
             background: white;
             cursor: pointer;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .ratio-slider input[type="range"]::-moz-range-thumb {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
             background: white;
             cursor: pointer;
             border: none;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .ratio-value-display {
+            text-align: center;
+            padding: 8px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-top: 4px;
         }
 
         .ratio-value {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-primary);
-            min-width: 50px;
-            text-align: center;
+            color: var(--accent);
         }
 
         .param-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
         .param-box {
             background: var(--bg-card);
-            padding: 20px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 10px;
             text-align: center;
         }
 
         .param-label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .param-value {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--accent);
         }
 
         .brew-steps {
             background: var(--bg-card);
-            padding: 20px;
+            padding: 16px;
             border-radius: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             height: auto !important;
             overflow: visible !important;
         }
 
         .brew-steps h4 {
-            margin-bottom: 20px;
+            margin-bottom: 14px;
             color: var(--text-primary);
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .step {
-            margin-bottom: 16px;
-            padding-left: 16px;
-            border-left: 3px solid var(--accent);
+            margin-bottom: 12px;
+            padding-left: 12px;
+            border-left: 2px solid var(--accent);
         }
 
         .step-time {
             font-weight: 700;
             color: var(--accent);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .step-action {
             color: var(--text-secondary);
-            margin-top: 4px;
-            line-height: 1.5;
+            margin-top: 3px;
+            line-height: 1.4;
+            font-size: 0.85rem;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -464,35 +481,35 @@
         /* BREW TIMER */
         .brew-timer-section {
             background: var(--bg-card);
-            padding: 24px;
+            padding: 20px;
             border-radius: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             height: auto !important;
             overflow: visible !important;
         }
 
         .timer-display {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 300;
             text-align: center;
             color: var(--accent);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             font-variant-numeric: tabular-nums;
         }
 
         .timer-controls {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
         }
 
         .timer-btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             background: var(--bg-secondary);
             color: var(--text-primary);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.95rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
@@ -513,47 +530,47 @@
         /* FEEDBACK SYSTEM */
         .feedback-section {
             background: var(--bg-card);
-            padding: 24px;
+            padding: 20px;
             border-radius: 12px;
-            margin-top: 24px;
+            margin-top: 16px;
             height: auto !important;
             max-height: none !important;
             overflow: visible !important;
         }
 
         .feedback-section h4 {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .feedback-group {
-            margin-bottom: 24px;
+            margin-bottom: 18px;
         }
 
         .feedback-label {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
         }
 
         .feedback-scale {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .scale-option {
             flex: 1;
-            padding: 12px 8px;
+            padding: 10px 6px;
             background: var(--bg-secondary);
             border: 2px solid var(--border);
             border-radius: 8px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.2s;
             color: var(--text-secondary);
@@ -762,33 +779,45 @@
 
             .param-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 10px;
             }
 
             .timer-display {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .coffee-card {
-                padding: 20px;
+                padding: 18px;
             }
 
             .ratio-control {
-                padding: 16px;
-                margin-bottom: 16px;
+                padding: 14px;
+                margin-bottom: 14px;
             }
 
             .brew-steps {
-                padding: 16px;
-                margin-bottom: 16px;
+                padding: 14px;
+                margin-bottom: 14px;
             }
 
             .feedback-section {
-                padding: 20px;
+                padding: 18px;
             }
 
             .scale-option {
-                padding: 10px 6px;
+                padding: 9px 5px;
+                font-size: 0.7rem;
+            }
+
+            .param-box {
+                padding: 12px;
+            }
+
+            .param-value {
+                font-size: 1.1rem;
+            }
+
+            .step-action {
                 font-size: 0.8rem;
             }
         }
@@ -1265,14 +1294,18 @@
                         <div class="ratio-control">
                             <h4>Coffee Amount</h4>
                             <div class="ratio-slider">
-                                <span style="color: var(--text-secondary);">10g</span>
-                                <input type="range" min="10" max="30" value="${amount}" 
-                                       oninput="updateCoffeeAmountLive(this.value, ${index}); event.stopPropagation();" 
-                                       onmousedown="event.stopPropagation();"
-                                       ontouchstart="event.stopPropagation();"
-                                       onclick="event.stopPropagation();">
-                                <span style="color: var(--text-secondary);">30g</span>
-                                <span class="ratio-value" id="ratioValue-${index}">${amount}g</span>
+                                <div class="slider-track">
+                                    <span>10g</span>
+                                    <input type="range" min="10" max="30" value="${amount}" 
+                                           oninput="updateCoffeeAmountLive(this.value, ${index}); event.stopPropagation();" 
+                                           onmousedown="event.stopPropagation();"
+                                           ontouchstart="event.stopPropagation();"
+                                           onclick="event.stopPropagation();">
+                                    <span>30g</span>
+                                </div>
+                                <div class="ratio-value-display">
+                                    <span class="ratio-value" id="ratioValue-${index}">${amount}g</span>
+                                </div>
                             </div>
                         </div>
                         
