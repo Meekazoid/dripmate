@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BrewBuddy - Your personal specialty coffee brewing assistant">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.webp">
+    <title>BrewBuddy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #d4a574;
+            --accent-hover: #c09563;
+            --border: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        body.light-mode {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --bg-card: #ffffff;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --accent: #8b6f47;
+            --accent-hover: #7a5f3d;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 40px 20px 100px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 6px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .add-section {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .camera-button {
+            width: auto;
+            max-width: 280px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+        }
+
+        .camera-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .camera-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+        }
+
+        .camera-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .camera-button .emoji {
+            font-size: 1.4rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 14px 24px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+        }
+
+        .coffee-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .coffee-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: auto;
+            height: auto;
+        }
+
+        .coffee-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .coffee-card.expanded {
+            box-shadow: 0 12px 32px var(--shadow);
+            height: auto;
+            min-height: auto;
+        }
+
+        .coffee-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .coffee-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .coffee-origin {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .delete-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            opacity: 0.4;
+        }
+
+        .delete-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        body.light-mode .delete-btn {
+            color: #666666;
+            border-color: #e0e0e0;
+        }
+
+        .coffee-process {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .brew-params {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            display: none;
+            height: auto;
+            overflow: visible;
+        }
+
+        .coffee-card.expanded .brew-params {
+            display: block;
+        }
+
+        .ratio-control {
+            background: var(--bg-card);
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .ratio-control h4 {
+            color: var(--text-primary);
+            margin-bottom: 14px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .ratio-slider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+        }
+
+        .ratio-slider input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border);
+            outline: none;
+            -webkit-appearance: none;
+            min-height: 44px;
+        }
+
+        .ratio-slider input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+
+        .ratio-slider input[type="range"]::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+
+        .ratio-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .param-box {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .param-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .param-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .brew-steps {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .brew-steps h4 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step {
+            margin-bottom: 16px;
+            padding-left: 16px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .step-time {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        .step-action {
+            color: var(--text-secondary);
+            margin-top: 4px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* BREW TIMER */
+        .brew-timer-section {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 300;
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .timer-btn {
+            padding: 12px 24px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .timer-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .timer-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* FEEDBACK SYSTEM */
+        .feedback-section {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 24px;
+        }
+
+        .feedback-section h4 {
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feedback-group {
+            margin-bottom: 24px;
+        }
+
+        .feedback-label {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .feedback-scale {
+            display: flex;
+            gap: 8px;
+        }
+
+        .scale-option {
+            flex: 1;
+            padding: 12px 8px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+        }
+
+        .scale-option:hover {
+            border-color: var(--accent);
+        }
+
+        .scale-option.selected {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+
+        .feedback-suggestion {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 24px;
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .suggestion-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .suggestion-values {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-value {
+            background: var(--bg-card);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .suggestion-value strong {
+            color: var(--accent);
+        }
+
+        .apply-suggestion-btn {
+            margin-top: 16px;
+            background: var(--accent);
+            color: white;
+        }
+
+        /* FIXED CONTROLS */
+        .fixed-controls {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            width: 56px;
+            height: 56px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 16px var(--shadow);
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0;
+            width: auto;
+            line-height: 1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading, .error-message, .success-message {
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .error-message {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #ff6b7a;
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            color: #5fda7d;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 16px 100px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .logo {
+                width: 56px;
+                height: 56px;
+            }
+
+            .param-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .timer-display {
+                font-size: 2.5rem;
+            }
+
+            .coffee-card {
+                padding: 20px;
+            }
+
+            .ratio-control {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .brew-steps {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .feedback-section {
+                padding: 20px;
+            }
+
+            .scale-option {
+                padding: 10px 6px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .logo {
+                width: 52px;
+                height: 52px;
+            }
+
+            .coffee-name {
+                font-size: 1.3rem;
+            }
+
+            .param-box {
+                padding: 16px;
+            }
+
+            .param-value {
+                font-size: 1.2rem;
+            }
+
+            .camera-button {
+                padding: 18px 32px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo.webp" alt="BrewBuddy" class="logo">
+            <h1>BrewBuddy</h1>
+        </header>
+        
+        <div class="mode-toggle">
+            <button class="mode-btn active" onclick="switchMode('camera')">📷 Photo</button>
+            <button class="mode-btn" onclick="switchMode('manual')">✍️ Manual</button>
+        </div>
+
+        <div class="add-section">
+            <div class="camera-section active">
+                <input type="file" id="imageInput" accept="image/*" capture="environment" style="display: none;">
+                <button class="camera-button" id="cameraBtn">
+                    <span class="emoji">📷</span>
+                    <span>Coffee Shot</span>
+                </button>
+                <img id="imagePreview" alt="Preview" style="display: none; margin-top: 16px; width: 100%; border-radius: 12px;">
+                <div id="loadingMessage" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 12px;">Analyzing coffee...</p>
+                </div>
+                <div id="errorMessage" class="error-message hidden"></div>
+                <div id="successMessage" class="success-message hidden"></div>
+            </div>
+
+            <div class="manual-section hidden">
+                <div class="form-group">
+                    <label>Name / Farm</label>
+                    <input type="text" id="name" placeholder="e.g. Finca Milán">
+                </div>
+                
+                <div class="form-group">
+                    <label>Origin</label>
+                    <input type="text" id="origin" placeholder="e.g. Colombia, Calarcá">
+                </div>
+                
+                <div class="form-group">
+                    <label>Processing Method</label>
+                    <select id="process">
+                        <option value="">-- Select --</option>
+                        <option value="washed">Washed</option>
+                        <option value="natural">Natural</option>
+                        <option value="honey">Honey</option>
+                        <option value="anaerobic natural">Anaerobic Natural</option>
+                        <option value="anaerobic washed">Anaerobic Washed</option>
+                        <option value="carbonic maceration">Carbonic Maceration</option>
+                        <option value="yeast inoculated natural">Yeast Inoculated Natural</option>
+                        <option value="nitro washed">Nitro Washed</option>
+                        <option value="extended fermentation">Extended Fermentation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Variety</label>
+                    <input type="text" id="cultivar" placeholder="e.g. Caturra">
+                </div>
+                
+                <div class="form-group">
+                    <label>Altitude (masl)</label>
+                    <input type="text" id="altitude" placeholder="e.g. 1650">
+                </div>
+                
+                <div class="form-group">
+                    <label>Roaster</label>
+                    <input type="text" id="roaster" placeholder="Optional">
+                </div>
+                
+                <div class="form-group">
+                    <label>Tasting Notes</label>
+                    <textarea id="tastingNotes" placeholder="e.g. Watermelon, Lemonade"></textarea>
+                </div>
+                
+                <button onclick="saveCoffeeManual()">✓ Save</button>
+            </div>
+        </div>
+
+        <div id="coffeeList" class="coffee-list"></div>
+        
+        <div id="emptyState" class="empty-state">
+            <div class="empty-state-icon">☕</div>
+            <h2>No coffees yet</h2>
+            <p style="margin-top: 12px;">Add your first coffee to get started</p>
+        </div>
+    </div>
+
+    <div class="fixed-controls">
+        <div class="control-btn" onclick="toggleTheme()">🌓</div>
+        <div class="control-btn" onclick="openSettings()">⚙️</div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-btn" onclick="closeSettings()">✕</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Backend URL</label>
+                <input type="text" id="backendUrl" placeholder="https://your-backend.railway.app">
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                    Enter your deployed backend URL here.
+                </p>
+            </div>
+            
+            <button onclick="saveSettings()">Save Settings</button>
+        </div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            backendUrl: localStorage.getItem('backendUrl') || ''
+        };
+
+        let coffees = JSON.parse(localStorage.getItem('coffees') || '[]');
+        let currentMode = 'camera';
+        let coffeeAmount = parseInt(localStorage.getItem('coffeeAmount')) || 15;
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let isTimerRunning = false;
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (mode === 'camera') {
+                document.querySelector('.camera-section').classList.remove('hidden');
+                document.querySelector('.manual-section').classList.add('hidden');
+            } else {
+                document.querySelector('.camera-section').classList.add('hidden');
+                document.querySelector('.manual-section').classList.remove('hidden');
+            }
+        }
+
+        function getBrewRecommendations(coffee) {
+            const processLower = coffee.process.toLowerCase();
+            const amount = coffee.customAmount || coffeeAmount;
+            
+            // Use custom values if available from feedback
+            const grindSetting = coffee.customGrind || getDefaultGrind(processLower);
+            const temperature = coffee.customTemp || getDefaultTemp(processLower);
+            
+            const waterAmount = Math.round(amount * 16);
+            const bloom = Math.round(amount * 3);
+            const secondPour = Math.round(waterAmount * 0.5);
+            const thirdPour = Math.round(waterAmount * 0.83);
+            const finalPour = waterAmount;
+            
+            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
+                processLower.includes('carbonic') || processLower.includes('extended')) {
+                return {
+                    grindSetting,
+                    temperature,
+                    ratio: `1:16 (${amount}g)`,
+                    steps: [
+                        { time: '0:00', action: `Bloom: ${bloom}g water, wait 30-45 sec` },
+                        { time: '0:45', action: `To ${secondPour}g: Pour slowly in circles` },
+                        { time: '1:15', action: `To ${thirdPour}g: Concentric circles` },
+                        { time: '1:45', action: `To ${finalPour}g: Final pour` }
+                    ],
+                    targetTime: '2:30-3:00',
+                    notes: 'Experimental process - cooler temp for volatile aromas'
+                };
+            } else if (processLower.includes('natural') || processLower.includes('honey') || 
+                       processLower.includes('yeast')) {
+                const waterAmountNatural = Math.round(amount * 16.7);
+                const bloomNatural = Math.round(amount * 3.3);
+                const secondPourNatural = Math.round(waterAmountNatural * 0.52);
+                const thirdPourNatural = Math.round(waterAmountNatural * 0.84);
+                return {
+                    grindSetting,
+                    temperature,
+                    ratio: `1:16.7 (${amount}g)`,
+                    steps: [
+                        { time: '0:00', action: `Bloom: ${bloomNatural}g water, make crater, 45 sec` },
+                        { time: '0:45', action: `To ${secondPourNatural}g: Pour slowly` },
+                        { time: '1:20', action: `To ${thirdPourNatural}g: Concentric circles` },
+                        { time: '1:50', action: `To ${waterAmountNatural}g: Final pour` }
+                    ],
+                    targetTime: '2:45-3:15',
+                    notes: 'Natural process - coarser grind, higher temp'
+                };
+            } else {
+                return {
+                    grindSetting,
+                    temperature,
+                    ratio: `1:16 (${amount}g)`,
+                    steps: [
+                        { time: '0:00', action: `Bloom: ${bloom}g water, 30-40 sec` },
+                        { time: '0:40', action: `To ${secondPour}g: Pour evenly` },
+                        { time: '1:15', action: `To ${thirdPour}g: Concentric circles` },
+                        { time: '1:45', action: `To ${finalPour}g: Final pour` }
+                    ],
+                    targetTime: '2:30-3:00',
+                    notes: 'Standard washed - balanced profile'
+                };
+            }
+        }
+
+        function getDefaultGrind(processLower) {
+            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
+                processLower.includes('carbonic') || processLower.includes('extended')) {
+                return '3-3.5';
+            } else if (processLower.includes('natural') || processLower.includes('honey') || 
+                       processLower.includes('yeast')) {
+                return '4-4.5';
+            } else {
+                return '3.5-4';
+            }
+        }
+
+        function getDefaultTemp(processLower) {
+            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
+                processLower.includes('carbonic') || processLower.includes('extended')) {
+                return '91-92°C';
+            } else if (processLower.includes('natural') || processLower.includes('honey') || 
+                       processLower.includes('yeast')) {
+                return '93-94°C';
+            } else {
+                return '92-93°C';
+            }
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer(index) {
+            if (isTimerRunning) return;
+            isTimerRunning = true;
+            
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                const display = document.getElementById(`timer-display-${index}`);
+                if (display) {
+                    display.textContent = formatTime(timerSeconds);
+                }
+            }, 1000);
+            
+            const startBtn = document.getElementById(`timer-start-${index}`);
+            const stopBtn = document.getElementById(`timer-stop-${index}`);
+            if (startBtn) startBtn.classList.add('active');
+            if (stopBtn) stopBtn.classList.remove('active');
+        }
+
+        function stopTimer(index) {
+            if (!isTimerRunning) return;
+            isTimerRunning = false;
+            clearInterval(timerInterval);
+            
+            const startBtn = document.getElementById(`timer-start-${index}`);
+            const stopBtn = document.getElementById(`timer-stop-${index}`);
+            if (startBtn) startBtn.classList.remove('active');
+            if (stopBtn) stopBtn.classList.add('active');
+        }
+
+        function resetTimer(index) {
+            stopTimer(index);
+            timerSeconds = 0;
+            const display = document.getElementById(`timer-display-${index}`);
+            if (display) {
+                display.textContent = '00:00';
+            }
+        }
+
+        function selectFeedback(index, category, value) {
+            const coffee = coffees[index];
+            if (!coffee.feedback) {
+                coffee.feedback = {};
+            }
+            coffee.feedback[category] = value;
+            
+            // Update UI
+            const options = document.querySelectorAll(`[data-feedback="${index}-${category}"]`);
+            options.forEach(opt => {
+                if (opt.dataset.value === value) {
+                    opt.classList.add('selected');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+            
+            // Generate suggestion
+            generateSuggestion(index);
+            
+            // Save
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+        }
+
+        function generateSuggestion(index) {
+            const coffee = coffees[index];
+            const feedback = coffee.feedback || {};
+            
+            const suggestionDiv = document.getElementById(`suggestion-${index}`);
+            if (!suggestionDiv) return;
+            
+            let suggestions = [];
+            let newGrind = null;
+            let newTemp = null;
+            
+            // Extraction feedback
+            if (feedback.extraction === 'under') {
+                suggestions.push('Coffee is underextracted - tastes sour/weak');
+                suggestions.push('→ Grind finer (0.5 steps down)');
+                suggestions.push('→ Or increase temperature by 2°C');
+                newGrind = adjustGrind(coffee.customGrind || getDefaultGrind(coffee.process.toLowerCase()), -0.5);
+                newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), +2);
+            } else if (feedback.extraction === 'over') {
+                suggestions.push('Coffee is overextracted - tastes bitter/harsh');
+                suggestions.push('→ Grind coarser (0.5 steps up)');
+                suggestions.push('→ Or decrease temperature by 2°C');
+                newGrind = adjustGrind(coffee.customGrind || getDefaultGrind(coffee.process.toLowerCase()), +0.5);
+                newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), -2);
+            }
+            
+            // Taste feedback
+            if (feedback.taste === 'flat') {
+                suggestions.push('Flavors not coming through clearly');
+                suggestions.push('→ Increase temperature by 2°C');
+                newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), +2);
+            } else if (feedback.taste === 'harsh') {
+                suggestions.push('Taste is too harsh/aggressive');
+                suggestions.push('→ Lower temperature by 2°C');
+                newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), -2);
+            }
+            
+            // Body feedback
+            if (feedback.body === 'thin') {
+                suggestions.push('Body too thin/watery');
+                suggestions.push('→ Grind slightly finer');
+                newGrind = adjustGrind(coffee.customGrind || getDefaultGrind(coffee.process.toLowerCase()), -0.3);
+            } else if (feedback.body === 'heavy') {
+                suggestions.push('Body too heavy/muddy');
+                suggestions.push('→ Grind slightly coarser');
+                newGrind = adjustGrind(coffee.customGrind || getDefaultGrind(coffee.process.toLowerCase()), +0.3);
+            }
+            
+            if (suggestions.length === 0 || feedback.extraction === 'perfect') {
+                suggestionDiv.innerHTML = `
+                    <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                        ✓ Perfect! No adjustments needed.
+                    </div>
+                `;
+                suggestionDiv.classList.remove('hidden');
+                return;
+            }
+            
+            suggestionDiv.innerHTML = `
+                <div class="suggestion-title">💡 Suggested Adjustments</div>
+                <div class="suggestion-text">${suggestions.join('<br>')}</div>
+                <div class="suggestion-values">
+                    ${newGrind ? `<div class="suggestion-value"><strong>New Grind:</strong> ${newGrind}</div>` : ''}
+                    ${newTemp ? `<div class="suggestion-value"><strong>New Temp:</strong> ${newTemp}</div>` : ''}
+                </div>
+                <button class="apply-suggestion-btn" onclick="applySuggestion(${index}, '${newGrind}', '${newTemp}')">
+                    Apply These Settings
+                </button>
+            `;
+            suggestionDiv.classList.remove('hidden');
+        }
+
+        function adjustGrind(current, change) {
+            const match = current.match(/([\d.]+)(?:-([\d.]+))?/);
+            if (!match) return current;
+            
+            const low = parseFloat(match[1]) + change;
+            const high = match[2] ? parseFloat(match[2]) + change : null;
+            
+            if (high) {
+                return `${low.toFixed(1)}-${high.toFixed(1)}`;
+            }
+            return low.toFixed(1);
+        }
+
+        function adjustTemp(current, change) {
+            const match = current.match(/(\d+)(?:-(\d+))?/);
+            if (!match) return current;
+            
+            const low = parseInt(match[1]) + change;
+            const high = match[2] ? parseInt(match[2]) + change : null;
+            
+            if (high) {
+                return `${low}-${high}°C`;
+            }
+            return `${low}°C`;
+        }
+
+        function applySuggestion(index, newGrind, newTemp) {
+            const coffee = coffees[index];
+            if (newGrind && newGrind !== 'null') coffee.customGrind = newGrind;
+            if (newTemp && newTemp !== 'null') coffee.customTemp = newTemp;
+            
+            // Reset feedback after applying
+            coffee.feedback = {};
+            
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+            renderCoffees();
+            
+            // Show success message
+            alert('Settings applied! The brew parameters have been updated.');
+        }
+
+        function renderCoffeeCard(coffee, index) {
+            const brewParams = getBrewRecommendations(coffee);
+            const amount = coffee.customAmount || coffeeAmount;
+            
+            return `
+                <div class="coffee-card" data-index="${index}">
+                    <div class="coffee-header">
+                        <div>
+                            <div class="coffee-name">${coffee.name}</div>
+                            <div class="coffee-origin">${coffee.origin}</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteCoffee(${index}); event.stopPropagation();">🗑️</button>
+                    </div>
+                    
+                    <div class="coffee-process">${coffee.process}</div>
+                    
+                    <div class="brew-params">
+                        <div class="ratio-control">
+                            <h4>Coffee Amount</h4>
+                            <div class="ratio-slider">
+                                <span style="color: var(--text-secondary);">10g</span>
+                                <input type="range" min="10" max="30" value="${amount}" 
+                                       oninput="updateCoffeeAmountLive(this.value, ${index}); event.stopPropagation();" 
+                                       onmousedown="event.stopPropagation();"
+                                       ontouchstart="event.stopPropagation();"
+                                       onclick="event.stopPropagation();">
+                                <span style="color: var(--text-secondary);">30g</span>
+                                <span class="ratio-value" id="ratioValue-${index}">${amount}g</span>
+                            </div>
+                        </div>
+                        
+                        <div class="param-grid">
+                            <div class="param-box">
+                                <div class="param-label">Fellow Ode Gen2</div>
+                                <div class="param-value">${brewParams.grindSetting}</div>
+                            </div>
+                            <div class="param-box">
+                                <div class="param-label">Temperature</div>
+                                <div class="param-value">${brewParams.temperature}</div>
+                            </div>
+                            <div class="param-box">
+                                <div class="param-label">Ratio</div>
+                                <div class="param-value">${brewParams.ratio}</div>
+                            </div>
+                            <div class="param-box">
+                                <div class="param-label">Target Time</div>
+                                <div class="param-value">${brewParams.targetTime}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="brew-timer-section">
+                            <div class="timer-display" id="timer-display-${index}">00:00</div>
+                            <div class="timer-controls">
+                                <button class="timer-btn" id="timer-start-${index}" onclick="startTimer(${index}); event.stopPropagation();">Start</button>
+                                <button class="timer-btn" id="timer-stop-${index}" onclick="stopTimer(${index}); event.stopPropagation();">Stop</button>
+                                <button class="timer-btn" onclick="resetTimer(${index}); event.stopPropagation();">Reset</button>
+                            </div>
+                        </div>
+                        
+                        <div class="brew-steps">
+                            <h4>V60 Pour-Over Steps</h4>
+                            ${brewParams.steps.map(step => `
+                                <div class="step">
+                                    <div class="step-time">${step.time}</div>
+                                    <div class="step-action">${step.action}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <h4>Brew Feedback</h4>
+                            
+                            <div class="feedback-group">
+                                <div class="feedback-label">Extraction</div>
+                                <div class="feedback-scale">
+                                    <div class="scale-option ${coffee.feedback?.extraction === 'under' ? 'selected' : ''}" 
+                                         data-feedback="${index}-extraction" data-value="under"
+                                         onclick="selectFeedback(${index}, 'extraction', 'under'); event.stopPropagation();">
+                                        Under
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.extraction === 'perfect' ? 'selected' : ''}" 
+                                         data-feedback="${index}-extraction" data-value="perfect"
+                                         onclick="selectFeedback(${index}, 'extraction', 'perfect'); event.stopPropagation();">
+                                        Perfect
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.extraction === 'over' ? 'selected' : ''}" 
+                                         data-feedback="${index}-extraction" data-value="over"
+                                         onclick="selectFeedback(${index}, 'extraction', 'over'); event.stopPropagation();">
+                                        Over
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feedback-group">
+                                <div class="feedback-label">Taste Clarity</div>
+                                <div class="feedback-scale">
+                                    <div class="scale-option ${coffee.feedback?.taste === 'flat' ? 'selected' : ''}" 
+                                         data-feedback="${index}-taste" data-value="flat"
+                                         onclick="selectFeedback(${index}, 'taste', 'flat'); event.stopPropagation();">
+                                        Flat
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.taste === 'good' ? 'selected' : ''}" 
+                                         data-feedback="${index}-taste" data-value="good"
+                                         onclick="selectFeedback(${index}, 'taste', 'good'); event.stopPropagation();">
+                                        Good
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.taste === 'perfect' ? 'selected' : ''}" 
+                                         data-feedback="${index}-taste" data-value="perfect"
+                                         onclick="selectFeedback(${index}, 'taste', 'perfect'); event.stopPropagation();">
+                                        Perfect
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.taste === 'harsh' ? 'selected' : ''}" 
+                                         data-feedback="${index}-taste" data-value="harsh"
+                                         onclick="selectFeedback(${index}, 'taste', 'harsh'); event.stopPropagation();">
+                                        Harsh
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feedback-group">
+                                <div class="feedback-label">Body</div>
+                                <div class="feedback-scale">
+                                    <div class="scale-option ${coffee.feedback?.body === 'thin' ? 'selected' : ''}" 
+                                         data-feedback="${index}-body" data-value="thin"
+                                         onclick="selectFeedback(${index}, 'body', 'thin'); event.stopPropagation();">
+                                        Thin
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.body === 'balanced' ? 'selected' : ''}" 
+                                         data-feedback="${index}-body" data-value="balanced"
+                                         onclick="selectFeedback(${index}, 'body', 'balanced'); event.stopPropagation();">
+                                        Balanced
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.body === 'heavy' ? 'selected' : ''}" 
+                                         data-feedback="${index}-body" data-value="heavy"
+                                         onclick="selectFeedback(${index}, 'body', 'heavy'); event.stopPropagation();">
+                                        Heavy
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feedback-suggestion hidden" id="suggestion-${index}"></div>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 16px; background: var(--bg-secondary); border-radius: 8px; font-size: 0.9rem;">
+                            <strong style="color: var(--accent);">💡 Tip:</strong>
+                            <span style="color: var(--text-secondary);"> ${brewParams.notes}</span>
+                        </div>
+                        
+                        ${coffee.cultivar && coffee.cultivar !== 'Unknown' ? `
+                        <div style="margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem;">
+                            <strong>Variety:</strong> ${coffee.cultivar} | <strong>Altitude:</strong> ${coffee.altitude} masl
+                        </div>
+                        ` : ''}
+                        
+                        <div style="margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem;">
+                            <strong>Tasting Notes:</strong> ${coffee.tastingNotes}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCoffees() {
+            const listEl = document.getElementById('coffeeList');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (coffees.length === 0) {
+                listEl.innerHTML = '';
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+                listEl.innerHTML = coffees.map((coffee, index) => renderCoffeeCard(coffee, index)).join('');
+                
+                document.querySelectorAll('.coffee-card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        if (e.target.closest('.delete-btn') || 
+                            e.target.closest('.timer-btn') || 
+                            e.target.closest('.scale-option') ||
+                            e.target.closest('.apply-suggestion-btn') ||
+                            e.target.closest('input[type="range"]')) {
+                            return;
+                        }
+                        
+                        document.querySelectorAll('.coffee-card').forEach(c => {
+                            if (c !== this) c.classList.remove('expanded');
+                        });
+                        this.classList.toggle('expanded');
+                    });
+                });
+            }
+        }
+
+        function deleteCoffee(index) {
+            if (confirm('Really delete this coffee?')) {
+                coffees.splice(index, 1);
+                localStorage.setItem('coffees', JSON.stringify(coffees));
+                renderCoffees();
+            }
+        }
+
+        function updateCoffeeAmountLive(value, cardIndex) {
+            const amount = parseInt(value);
+            coffees[cardIndex].customAmount = amount;
+            
+            const valueDisplay = document.getElementById(`ratioValue-${cardIndex}`);
+            if (valueDisplay) {
+                valueDisplay.textContent = amount + 'g';
+            }
+            
+            const expandedCard = document.querySelector(`.coffee-card[data-index="${cardIndex}"]`);
+            if (expandedCard && expandedCard.classList.contains('expanded')) {
+                const coffee = coffees[cardIndex];
+                const brewParams = getBrewRecommendations(coffee);
+                
+                const paramBoxes = expandedCard.querySelectorAll('.param-box .param-value');
+                if (paramBoxes.length >= 3) {
+                    paramBoxes[2].textContent = brewParams.ratio;
+                }
+                
+                const steps = expandedCard.querySelectorAll('.step');
+                brewParams.steps.forEach((step, i) => {
+                    if (steps[i]) {
+                        steps[i].querySelector('.step-action').textContent = step.action;
+                    }
+                });
+            }
+            
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+        }
+
+        function showMessage(type, message) {
+            const errorEl = document.getElementById('errorMessage');
+            const successEl = document.getElementById('successMessage');
+            
+            if (type === 'error') {
+                errorEl.textContent = message;
+                errorEl.classList.remove('hidden');
+                successEl.classList.add('hidden');
+            } else {
+                successEl.textContent = message;
+                successEl.classList.remove('hidden');
+                errorEl.classList.add('hidden');
+            }
+            
+            setTimeout(() => {
+                errorEl.classList.add('hidden');
+                successEl.classList.add('hidden');
+            }, 5000);
+        }
+
+        async function analyzeCoffeeImage(imageData, mediaType) {
+            if (!CONFIG.backendUrl) {
+                throw new Error('Backend URL not configured. Please enter it in settings.');
+            }
+
+            const response = await fetch(`${CONFIG.backendUrl}/api/analyze-coffee`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    imageData,
+                    mediaType
+                }),
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error || 'Analysis error');
+            }
+
+            const result = await response.json();
+            if (!result.success) {
+                throw new Error(result.error || 'Analysis failed');
+            }
+
+            return result.data;
+        }
+
+        document.getElementById('cameraBtn').addEventListener('click', () => {
+            document.getElementById('imageInput').click();
+        });
+
+        document.getElementById('imageInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const preview = document.getElementById('imagePreview');
+            const loadingEl = document.getElementById('loadingMessage');
+            const cameraBtn = document.getElementById('cameraBtn');
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                preview.src = event.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+            
+            loadingEl.classList.remove('hidden');
+            cameraBtn.disabled = true;
+            
+            try {
+                const base64Data = await new Promise((resolve, reject) => {
+                    const r = new FileReader();
+                    r.onload = () => resolve(r.result.split(',')[1]);
+                    r.onerror = reject;
+                    r.readAsDataURL(file);
+                });
+                
+                const coffeeInfo = await analyzeCoffeeImage(base64Data, file.type);
+                
+                coffees.unshift(coffeeInfo);
+                localStorage.setItem('coffees', JSON.stringify(coffees));
+                renderCoffees();
+                
+                showMessage('success', '✓ Coffee added successfully!');
+                
+                preview.style.display = 'none';
+                e.target.value = '';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('error', error.message);
+            } finally {
+                loadingEl.classList.add('hidden');
+                cameraBtn.disabled = false;
+            }
+        });
+
+        function saveCoffeeManual() {
+            const name = document.getElementById('name').value.trim();
+            const origin = document.getElementById('origin').value.trim();
+            const process = document.getElementById('process').value;
+            const cultivar = document.getElementById('cultivar').value.trim();
+            const altitude = document.getElementById('altitude').value.trim();
+            const roaster = document.getElementById('roaster').value.trim();
+            const tastingNotes = document.getElementById('tastingNotes').value.trim();
+            
+            if (!name || !origin || !process) {
+                alert('Please fill in at least Name, Origin and Processing Method.');
+                return;
+            }
+            
+            const coffee = {
+                name,
+                origin,
+                process,
+                cultivar: cultivar || 'Unknown',
+                altitude: altitude || '1500',
+                roaster: roaster || 'Unknown',
+                tastingNotes: tastingNotes || 'No notes',
+                addedDate: new Date().toISOString()
+            };
+            
+            coffees.unshift(coffee);
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+            
+            document.getElementById('name').value = '';
+            document.getElementById('origin').value = '';
+            document.getElementById('process').value = '';
+            document.getElementById('cultivar').value = '';
+            document.getElementById('altitude').value = '';
+            document.getElementById('roaster').value = '';
+            document.getElementById('tastingNotes').value = '';
+            
+            renderCoffees();
+            showMessage('success', '✓ Coffee added successfully!');
+        }
+
+        function openSettings() {
+            document.getElementById('settingsModal').classList.add('active');
+            document.getElementById('backendUrl').value = CONFIG.backendUrl;
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function saveSettings() {
+            const backendUrl = document.getElementById('backendUrl').value.trim();
+            CONFIG.backendUrl = backendUrl;
+            localStorage.setItem('backendUrl', backendUrl);
+            closeSettings();
+            alert('Settings saved!');
+        }
+
+        renderCoffees();
+
+        if (!CONFIG.backendUrl) {
+            setTimeout(() => {
+                alert('Welcome to BrewBuddy! Please configure your Backend URL in settings (⚙️) first.');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
