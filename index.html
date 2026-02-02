@@ -1733,16 +1733,24 @@
                 errorEl.textContent = message;
                 errorEl.classList.remove('hidden');
                 successEl.classList.add('hidden');
+            } else if (type === 'info') {
+                // Show info as success with different icon
+                successEl.textContent = '⏳ ' + message;
+                successEl.classList.remove('hidden');
+                errorEl.classList.add('hidden');
             } else {
                 successEl.textContent = message;
                 successEl.classList.remove('hidden');
                 errorEl.classList.add('hidden');
             }
             
-            setTimeout(() => {
-                errorEl.classList.add('hidden');
-                successEl.classList.add('hidden');
-            }, 5000);
+            // Don't auto-hide info messages (manual hide only)
+            if (type !== 'info') {
+                setTimeout(() => {
+                    errorEl.classList.add('hidden');
+                    successEl.classList.add('hidden');
+                }, 5000);
+            }
         }
 
         async function analyzeCoffeeImage(imageData, mediaType) {
@@ -1778,6 +1786,62 @@
             document.getElementById('imageInput').click();
         });
 
+        // Image compression function
+        async function compressImage(file, maxSizeMB = 4.5) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        // Calculate new dimensions (max 2048px)
+                        let width = img.width;
+                        let height = img.height;
+                        const maxDim = 2048;
+                        
+                        if (width > maxDim || height > maxDim) {
+                            if (width > height) {
+                                height = (height / width) * maxDim;
+                                width = maxDim;
+                            } else {
+                                width = (width / height) * maxDim;
+                                height = maxDim;
+                            }
+                        }
+                        
+                        // Create canvas
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Try different quality levels
+                        let quality = 0.9;
+                        let dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        
+                        // Reduce quality if still too large
+                        while (dataUrl.length > maxSizeMB * 1024 * 1024 * 1.37 && quality > 0.1) {
+                            quality -= 0.1;
+                            dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        }
+                        
+                        resolve({
+                            dataUrl: dataUrl,
+                            base64: dataUrl.split(',')[1],
+                            type: 'image/jpeg',
+                            originalSize: file.size,
+                            compressedSize: Math.round(dataUrl.length * 0.75)
+                        });
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
         document.getElementById('imageInput').addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -1786,25 +1850,45 @@
             const loadingEl = document.getElementById('loadingMessage');
             const cameraBtn = document.getElementById('cameraBtn');
             
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                preview.src = event.target.result;
-                preview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-            
             loadingEl.classList.remove('hidden');
             cameraBtn.disabled = true;
             
             try {
-                const base64Data = await new Promise((resolve, reject) => {
-                    const r = new FileReader();
-                    r.onload = () => resolve(r.result.split(',')[1]);
-                    r.onerror = reject;
-                    r.readAsDataURL(file);
-                });
+                // Show original in preview
+                const previewReader = new FileReader();
+                previewReader.onload = (event) => {
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                previewReader.readAsDataURL(file);
                 
-                const coffeeInfo = await analyzeCoffeeImage(base64Data, file.type);
+                // Compress image if needed
+                const fileSizeMB = file.size / (1024 * 1024);
+                let imageData;
+                let mediaType;
+                
+                if (fileSizeMB > 4.5) {
+                    // Show compression message
+                    showMessage('info', `Compressing image (${fileSizeMB.toFixed(1)}MB → smaller)...`);
+                    
+                    const compressed = await compressImage(file);
+                    imageData = compressed.base64;
+                    mediaType = compressed.type;
+                    
+                    console.log(`Compressed: ${(compressed.originalSize / 1024 / 1024).toFixed(1)}MB → ${(compressed.compressedSize / 1024 / 1024).toFixed(1)}MB`);
+                } else {
+                    // Use original
+                    imageData = await new Promise((resolve, reject) => {
+                        const r = new FileReader();
+                        r.onload = () => resolve(r.result.split(',')[1]);
+                        r.onerror = reject;
+                        r.readAsDataURL(file);
+                    });
+                    mediaType = file.type;
+                }
+                
+                // Analyze
+                const coffeeInfo = await analyzeCoffeeImage(imageData, mediaType);
                 
                 coffees.unshift(coffeeInfo);
                 localStorage.setItem('coffees', JSON.stringify(coffees));
@@ -1817,7 +1901,7 @@
                 
             } catch (error) {
                 console.error('Error:', error);
-                showMessage('error', error.message);
+                showMessage('error', error.message || 'Failed to process image');
             } finally {
                 loadingEl.classList.add('hidden');
                 cameraBtn.disabled = false;
