@@ -1061,8 +1061,10 @@
     </div>
 
     <script>
+        // BrewBuddy Configuration
         const CONFIG = {
-            backendUrl: localStorage.getItem('backendUrl') || ''
+            // Backend URL
+            backendUrl: 'https://brew-buddy-backend-production.up.railway.app',
         };
 
         let coffees = JSON.parse(localStorage.getItem('coffees') || '[]');
