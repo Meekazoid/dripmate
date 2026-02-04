@@ -1,0 +1,2766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BrewBuddy - Your personal specialty coffee brewing assistant">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>BrewBuddy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        body {
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #d4a574;
+            --accent-hover: #c09563;
+            --border: #2a2a2a;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        body.light-mode {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --bg-card: #ffffff;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --accent: #8b6f47;
+            --accent-hover: #7a5f3d;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 40px 20px 100px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 50px;
+        }
+
+        .logo-title-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+        }
+
+        .header-subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: 8px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .add-section {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .camera-button {
+            width: auto;
+            max-width: 280px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+        }
+
+        .camera-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .camera-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+        }
+
+        .camera-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .camera-button .emoji {
+            font-size: 1.4rem;
+        }
+
+        .upload-button {
+            width: 150px;
+            padding: 9px 22px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.765rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .upload-button:hover {
+            background: var(--bg-card);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .upload-button:active {
+            transform: translateY(0);
+        }
+
+        .upload-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .manual-button {
+            width: 150px;
+            padding: 9px 22px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.765rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .manual-button:hover {
+            background: var(--bg-card);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .manual-button:active {
+            transform: translateY(0);
+        }
+
+        .button-icon {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .manual-section {
+            margin-top: 30px;
+        }
+
+        .camera-icon {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 14px 24px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+        }
+
+        .coffee-list {
+            display: grid;
+            gap: 20px;
+            overflow: visible;
+        }
+
+        .coffee-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: visible !important;
+            height: auto !important;
+            max-height: none !important;
+            min-height: 0 !important;
+        }
+
+        .coffee-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .coffee-card.expanded {
+            box-shadow: 0 12px 32px var(--shadow);
+            overflow: visible !important;
+            height: auto !important;
+            max-height: none !important;
+        }
+
+        .coffee-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .coffee-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .coffee-origin {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 0;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            opacity: 0.6;
+        }
+
+        .delete-icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .delete-btn:hover {
+            opacity: 1;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        body.light-mode .delete-btn {
+            color: #aaaaaa;
+        }
+
+        .coffee-process {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Process + Freshness in einer Zeile (15% kleiner) */
+        .process-freshness-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .coffee-process-small {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .freshness-badge-inline .freshness-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .freshness-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .freshness-badge.resting {
+            background: rgba(33, 150, 243, 0.15);
+            color: #2196F3;
+        }
+
+        .freshness-badge.sweet {
+            background: rgba(255, 152, 0, 0.15);
+            color: #FF9800;
+        }
+
+        .freshness-badge.fading {
+            background: rgba(158, 158, 158, 0.15);
+            color: #9E9E9E;
+        }
+
+        body.light-mode .freshness-badge.resting {
+            background: rgba(25, 118, 210, 0.2);
+            color: #1976D2;
+        }
+
+        body.light-mode .freshness-badge.sweet {
+            background: rgba(245, 124, 0, 0.2);
+            color: #F57C00;
+        }
+
+        body.light-mode .freshness-badge.fading {
+            background: rgba(97, 97, 97, 0.2);
+            color: #616161;
+        }
+
+        .freshness-icon {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        /* Roast Date Section */
+        .roast-date-section {
+            background: var(--bg-card);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .roast-date-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .roast-icon {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .roast-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .roast-date-input {
+            width: fit-content;
+            min-width: 140px;
+            max-width: 140px;
+            padding: 10px 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .roast-date-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .roast-date-input::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            filter: invert(0.5);
+        }
+
+        body.light-mode .roast-date-input::-webkit-calendar-picker-indicator {
+            filter: invert(0.2);
+        }
+
+        .water-hardness-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 4px 10px;
+            background: rgba(66, 165, 245, 0.2);
+            border: 1px solid rgba(66, 165, 245, 0.4);
+            color: #42a5f5;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        body.light-mode .water-hardness-badge {
+            background: rgba(66, 165, 245, 0.15);
+            border-color: rgba(66, 165, 245, 0.3);
+        }
+
+        .brew-params {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            display: none;
+            height: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
+        }
+
+        .coffee-card.expanded .brew-params {
+            display: block;
+        }
+
+        /* Grinder Selection */
+        .grinder-selector {
+            background: var(--bg-card);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .grinder-btn {
+            flex: 1;
+            padding: 10px 12px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .grinder-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .grinder-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .ratio-control {
+            background: var(--bg-card);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        .ratio-control h4 {
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .ratio-slider {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* IMPROVED: Gramm value above slider */
+        .ratio-value-display {
+            text-align: center;
+            padding: 8px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .ratio-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .slider-track {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-track span {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            min-width: 30px;
+        }
+
+        .ratio-slider input[type="range"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            flex: 1;
+            background: transparent;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Track - thin horizontal line */
+        .ratio-slider input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .ratio-slider input[type="range"]::-moz-range-track {
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            border: none;
+        }
+
+        /* Thumb - sits centered ON the track */
+        .ratio-slider input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: white;
+            border: 2px solid var(--text-secondary);
+            cursor: grab;
+            margin-top: -7.5px; /* Centers 18px thumb on 3px track: (18-3)/2 = 7.5 */
+        }
+
+        .ratio-slider input[type="range"]::-webkit-slider-thumb:active {
+            cursor: grabbing;
+        }
+
+        .ratio-slider input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: white;
+            border: 2px solid var(--text-secondary);
+            cursor: grab;
+            border: 2px solid var(--text-secondary);
+        }
+
+        .ratio-slider input[type="range"]::-moz-range-thumb:active {
+            cursor: grabbing;
+        }
+
+        /* Light mode adjustments */
+        body.light-mode .ratio-slider input[type="range"]::-webkit-slider-thumb {
+            border-color: var(--border);
+        }
+
+        body.light-mode .ratio-slider input[type="range"]::-moz-range-thumb {
+            border-color: var(--border);
+        }
+
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .param-box {
+            background: var(--bg-card);
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .param-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .param-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .brew-steps {
+            background: var(--bg-card);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        .brew-steps h4 {
+            margin-bottom: 14px;
+            color: var(--text-primary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step {
+            margin-bottom: 12px;
+            padding-left: 12px;
+            border-left: 2px solid var(--accent);
+            position: relative;
+        }
+
+        .step-time {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .step-action {
+            color: var(--text-secondary);
+            margin-top: 3px;
+            line-height: 1.4;
+            font-size: 0.85rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .step-progress {
+            margin-top: 6px;
+            height: 3px;
+            background: rgba(76, 175, 80, 0.15);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .step-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4CAF50 0%, #66BB6A 100%);
+            border-radius: 3px;
+            transition: width 0.5s ease-out;
+            will-change: width;
+        }
+
+        body.light-mode .step-progress {
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        body.light-mode .step-progress-bar {
+            background: linear-gradient(90deg, #2E7D32 0%, #43A047 100%);
+        }
+
+        .brew-timer-section {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-controls-main {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .timer-controls-secondary {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .timer-btn {
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .v60-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            flex-shrink: 0;
+            filter: brightness(0) invert(1);
+        }
+
+        .timer-btn-secondary {
+            min-width: 100px;
+        }
+
+        .v60-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .timer-btn.start-brew {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+            min-width: 200px;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+        }
+
+        .timer-btn.start-brew:hover {
+            background: #45a049;
+        }
+
+        .timer-btn.brewing {
+            background: #ff9800;
+            border-color: #ff9800;
+            color: white;
+        }
+
+        .timer-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .timer-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .feedback-section {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 16px;
+            height: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
+        }
+
+        .feedback-section h4 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feedback-group {
+            margin-bottom: 18px;
+        }
+
+        .feedback-label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .feedback-scale {
+            display: flex;
+            gap: 6px;
+        }
+
+        .scale-option {
+            flex: 1;
+            padding: 10px 6px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+        }
+
+        .scale-option:hover {
+            border-color: var(--accent);
+        }
+
+        .scale-option.selected {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+
+        .feedback-suggestion {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 24px;
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .suggestion-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .suggestion-values {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-value {
+            background: var(--bg-card);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .suggestion-value strong {
+            color: var(--accent);
+        }
+
+        .apply-suggestion-btn {
+            margin-top: 16px;
+            background: var(--accent);
+            color: white;
+        }
+
+        .fixed-controls {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            width: 56px;
+            height: 56px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px var(--shadow);
+            transition: all 0.2s;
+        }
+
+        .control-icon {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-primary);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .control-btn:hover .control-icon {
+            stroke: var(--accent);
+        }
+
+        #waterControlBtn.active {
+            background: rgba(66, 165, 245, 0.2);
+            border-color: rgba(66, 165, 245, 0.4);
+        }
+
+        #waterControlBtn.active .control-icon {
+            stroke: #42a5f5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0;
+            width: auto;
+            line-height: 1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading, .error-message, .success-message {
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .error-message {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #ff6b7a;
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            color: #5fda7d;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 16px 100px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                letter-spacing: 0.2em;
+            }
+
+            .logo {
+                width: 36px;
+                height: 36px;
+            }
+
+            .upload-button,
+            .manual-button {
+                width: 130px;
+                padding: 8px 18px;
+                font-size: 0.7rem;
+            }
+
+            .button-icon {
+                width: 12px;
+                height: 12px;
+            }
+
+            .param-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .timer-display {
+                font-size: 2rem;
+            }
+
+            .coffee-card {
+                padding: 18px;
+            }
+
+            .ratio-control {
+                padding: 14px;
+                margin-bottom: 14px;
+            }
+
+            .brew-steps {
+                padding: 14px;
+                margin-bottom: 14px;
+            }
+
+            .feedback-section {
+                padding: 18px;
+            }
+
+            .scale-option {
+                padding: 9px 5px;
+                font-size: 0.7rem;
+            }
+
+            .param-box {
+                padding: 12px;
+            }
+
+            .param-value {
+                font-size: 1.1rem;
+            }
+
+            .step-action {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.3rem;
+                letter-spacing: 0.18em;
+            }
+
+            .logo {
+                width: 32px;
+                height: 32px;
+            }
+
+            .coffee-name {
+                font-size: 1.3rem;
+            }
+
+            .param-box {
+                padding: 16px;
+            }
+
+            .param-value {
+                font-size: 1.2rem;
+            }
+
+            .camera-button {
+                padding: 18px 32px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-title-group">
+                <svg class="logo" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 15 15 L 15 30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M 15 15 L 30 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M 45 15 L 30 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M 45 15 L 45 30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M 45 45 L 45 30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="30" cy="30" r="3.5" fill="currentColor"/>
+                </svg>
+                <h1>brewbuddy</h1>
+            </div>
+            <div class="header-subtitle">precision meets ritual</div>
+        </header>
+
+        <div class="add-section">
+            <div class="camera-section active">
+                <input type="file" id="imageInput" accept="image/*" capture="environment" style="display: none;">
+                <input type="file" id="uploadInput" accept="image/*" style="display: none;">
+                
+                <button class="camera-button" id="cameraBtn">
+                    <svg class="camera-icon" viewBox="0 0 24 24">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    <span>Coffee Shot</span>
+                </button>
+                
+                <div class="button-group">
+                    <button class="upload-button" id="uploadBtn">
+                        <svg class="button-icon" viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        Upload Image
+                    </button>
+                    <button class="manual-button" id="manualBtn" onclick="toggleManual()">
+                        <svg class="button-icon" viewBox="0 0 24 24">
+                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                            <path d="M13.5 6.5l4 4"></path>
+                        </svg>
+                        Manual
+                    </button>
+                </div>
+                
+                <img id="imagePreview" alt="Preview" style="display: none; margin-top: 16px; width: 100%; border-radius: 12px;">
+                <div id="loadingMessage" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 12px;">Analyzing coffee...</p>
+                </div>
+                <div id="errorMessage" class="error-message hidden"></div>
+                <div id="successMessage" class="success-message hidden"></div>
+            </div>
+
+            <div class="manual-section hidden">
+                <div class="form-group">
+                    <label>Name / Farm</label>
+                    <input type="text" id="name" placeholder="e.g. Finca Milán">
+                </div>
+                
+                <div class="form-group">
+                    <label>Origin</label>
+                    <input type="text" id="origin" placeholder="e.g. Colombia, Calarcá">
+                </div>
+                
+                <div class="form-group">
+                    <label>Processing Method</label>
+                    <select id="process">
+                        <option value="">-- Select --</option>
+                        <option value="washed">Washed</option>
+                        <option value="natural">Natural</option>
+                        <option value="honey">Honey</option>
+                        <option value="anaerobic natural">Anaerobic Natural</option>
+                        <option value="anaerobic washed">Anaerobic Washed</option>
+                        <option value="carbonic maceration">Carbonic Maceration</option>
+                        <option value="yeast inoculated natural">Yeast Inoculated Natural</option>
+                        <option value="nitro washed">Nitro Washed</option>
+                        <option value="extended fermentation">Extended Fermentation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Variety</label>
+                    <input type="text" id="cultivar" placeholder="e.g. Caturra">
+                </div>
+                
+                <div class="form-group">
+                    <label>Altitude (masl)</label>
+                    <input type="text" id="altitude" placeholder="e.g. 1650">
+                </div>
+                
+                <div class="form-group">
+                    <label>Roaster</label>
+                    <input type="text" id="roaster" placeholder="Optional">
+                </div>
+                
+                <div class="form-group">
+                    <label>Tasting Notes</label>
+                    <textarea id="tastingNotes" placeholder="e.g. Watermelon, Lemonade"></textarea>
+                </div>
+                
+                <button onclick="saveCoffeeManual()">✓ Save</button>
+            </div>
+        </div>
+
+        <div id="coffeeList" class="coffee-list"></div>
+        
+        <div id="emptyState" class="empty-state">
+            <div class="empty-state-icon">☕</div>
+            <h2>No coffees yet</h2>
+            <p style="margin-top: 12px;">Add your first coffee to get started</p>
+        </div>
+    </div>
+
+    <div class="fixed-controls">
+        <div class="control-btn" onclick="toggleTheme()">
+            <svg class="control-icon" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+        <div class="control-btn" id="waterControlBtn" onclick="openWaterModal()">
+            <svg class="control-icon" viewBox="0 0 24 24">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+            </svg>
+        </div>
+        <div class="control-btn" onclick="openSettings()">
+            <svg class="control-icon" viewBox="0 0 24 24">
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-btn" onclick="closeSettings()">✕</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Backend URL</label>
+                <input type="text" id="backendUrl" placeholder="https://your-backend.railway.app">
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                    Enter your deployed backend URL here.
+                </p>
+            </div>
+            
+            <button onclick="saveSettings()">Save Settings</button>
+        </div>
+    </div>
+
+    <div id="waterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💧 Wasserhärte</h2>
+                <button class="close-btn" onclick="closeWaterModal()">✕</button>
+            </div>
+            
+            <div style="margin-bottom: 24px; padding: 16px; background: var(--bg-card); border-radius: 12px; border-left: 4px solid #42a5f5;">
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                    Die Wasserhärte beeinflusst die Kaffee-Extraktion. Weiches Wasser benötigt feineren Mahlgrad und höhere Temperatur, hartes Wasser gröberen Mahlgrad und niedrigere Temperatur.
+                </p>
+            </div>
+            
+            <div class="form-group">
+                <label>Postleitzahl (PLZ)</label>
+                <input type="text" id="zipCodeInput" placeholder="z.B. 10115" maxlength="5" pattern="[0-9]{5}">
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                    Geben Sie Ihre 5-stellige Postleitzahl ein, um die lokale Wasserhärte zu ermitteln.
+                </p>
+            </div>
+            
+            <div id="waterHardnessDisplay" style="display: none; margin-top: 24px; padding: 20px; background: var(--bg-card); border-radius: 12px;">
+                <div style="text-align: center; margin-bottom: 16px;">
+                    <div style="font-size: 3rem; margin-bottom: 8px;">💧</div>
+                    <div style="font-size: 1.8rem; font-weight: 700; color: var(--accent); margin-bottom: 4px;" id="hardnessValueDisplay">-</div>
+                    <div style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 16px;" id="hardnessCategoryDisplay">-</div>
+                </div>
+                
+                <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; margin-bottom: 16px;">
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">
+                        <strong style="color: var(--text-primary);">Region:</strong> <span id="hardnessRegion">-</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary);">Quelle:</strong> <span id="hardnessSource">-</span>
+                    </div>
+                </div>
+                
+                <div style="padding: 16px; background: rgba(66, 165, 245, 0.1); border: 1px solid rgba(66, 165, 245, 0.3); border-radius: 8px; margin-bottom: 16px;">
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #42a5f5; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+                        Brew-Anpassungen
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;" id="hardnessDescriptionDisplay">-</div>
+                </div>
+            </div>
+            
+            <button onclick="saveWaterHardness()" style="width: 100%; margin-top: 16px;">Wasserhärte Speichern</button>
+            
+            <div style="margin-top: 24px; padding: 16px; background: var(--bg-card); border-radius: 8px;">
+                <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+                    Wasserhärte-Skala (°dH)
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem; color: var(--text-secondary);">
+                    <div>0-7 °dH: <strong style="color: var(--text-primary);">Sehr weich</strong></div>
+                    <div>7-14 °dH: <strong style="color: var(--text-primary);">Weich</strong></div>
+                    <div>14-21 °dH: <strong style="color: var(--text-primary);">Mittel</strong></div>
+                    <div>21-28 °dH: <strong style="color: var(--text-primary);">Hart</strong></div>
+                    <div>28+ °dH: <strong style="color: var(--text-primary);">Sehr hart</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="water-hardness.js"></script>
+    <script>
+        const CONFIG = {
+            backendUrl: 'https://brew-buddy-backend-production.up.railway.app',
+        };
+
+        let coffees = JSON.parse(localStorage.getItem('coffees') || '[]');
+        let currentMode = 'camera';
+        let coffeeAmount = parseInt(localStorage.getItem('coffeeAmount')) || 15;
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let isTimerRunning = false;
+        
+        let brewTimers = {};
+        let animationFrames = {};
+
+        // Grinder preferences
+        let preferredGrinder = localStorage.getItem('preferredGrinder') || 'fellow';
+
+        // Water hardness
+        let waterHardness = null;
+        let userZipCode = localStorage.getItem('userZipCode') || '';
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+        }
+
+        // Load water hardness on startup
+        if (userZipCode && typeof WaterHardness !== 'undefined') {
+            WaterHardness.getHardness(userZipCode).then(data => {
+                waterHardness = data;
+                // Mark water button as active
+                const waterBtn = document.getElementById('waterControlBtn');
+                if (waterBtn) waterBtn.classList.add('active');
+            }).catch(err => {
+                console.log('Could not load water hardness:', err);
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleManual() {
+            const manualSection = document.querySelector('.manual-section');
+            manualSection.classList.toggle('hidden');
+        }
+
+        function updateRoastDate(index, dateValue) {
+            const coffee = coffees[index];
+            coffee.roastDate = dateValue;
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+            
+            // Update freshness badge
+            const badgeWrapper = document.getElementById(`freshness-badge-${index}`);
+            if (badgeWrapper) {
+                badgeWrapper.innerHTML = getRoastFreshnessBadge(coffee.roastDate);
+            }
+        }
+
+        function getRoastFreshnessBadge(roastDate) {
+            if (!roastDate) {
+                return '';
+            }
+
+            const roastTime = new Date(roastDate).getTime();
+            const currentTime = new Date().getTime();
+            const daysDiff = Math.floor((currentTime - roastTime) / (1000 * 60 * 60 * 24));
+
+            // Flame icon for all three states
+            const flameIcon = `<svg class="freshness-icon" viewBox="0 0 24 24">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+            </svg>`;
+
+            // Freshness logic: 0-7 days: Still Resting, 7-30 days: Sweet Spot, 30+ days: Fading
+            let category, label, gradientStyle;
+
+            if (daysDiff < 7) {
+                category = 'resting';
+                label = 'Still Resting';
+                gradientStyle = '';
+            } else if (daysDiff < 30) {
+                category = 'sweet';
+                label = 'Sweet Spot';
+                
+                if (daysDiff < 10) {
+                    const progress = (daysDiff - 7) / 3;
+                    const blueOpacity = 0.15 * (1 - progress);
+                    const orangeOpacity = 0.15 * progress;
+                    gradientStyle = `background: linear-gradient(135deg, rgba(33, 150, 243, ${blueOpacity}) 0%, rgba(255, 152, 0, ${orangeOpacity}) 100%);`;
+                } else if (daysDiff >= 25) {
+                    const progress = (daysDiff - 25) / 5;
+                    const orangeOpacity = 0.15 * (1 - progress);
+                    const grayOpacity = 0.15 * progress;
+                    gradientStyle = `background: linear-gradient(135deg, rgba(255, 152, 0, ${orangeOpacity}) 0%, rgba(158, 158, 158, ${grayOpacity}) 100%);`;
+                } else {
+                    gradientStyle = '';
+                }
+            } else {
+                category = 'fading';
+                label = 'Fading';
+                gradientStyle = '';
+            }
+
+            return `<div class="freshness-badge ${category}" style="${gradientStyle}">${flameIcon}${label}</div>`;
+        }
+
+        function switchGrinder(event, index, grinder) {
+            event.stopPropagation();
+            const coffee = coffees[index];
+            coffee.selectedGrinder = grinder;
+            preferredGrinder = grinder;
+            localStorage.setItem('preferredGrinder', grinder);
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+            
+            // Re-render und dann die Karte wieder öffnen
+            renderCoffees();
+            
+            // Karte wieder öffnen nach render
+            setTimeout(() => {
+                const card = document.querySelector(`.coffee-card[data-index="${index}"]`);
+                if (card) {
+                    card.classList.add('expanded');
+                }
+            }, 0);
+        }
+
+        function getGrinderSettings(grinder, processLower) {
+            let baseSettings;
+            
+            if (grinder === 'comandante') {
+                // Comandante C40 MK3 Nitro Blade settings
+                // 1 full rotation = 8 clicks
+                if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
+                    processLower.includes('carbonic') || processLower.includes('extended')) {
+                    baseSettings = { min: 20, max: 22 };
+                } else if (processLower.includes('natural') || processLower.includes('honey') || 
+                           processLower.includes('yeast')) {
+                    baseSettings = { min: 24, max: 26 };
+                } else {
+                    baseSettings = { min: 22, max: 24 };
+                }
+                
+                // Adjust for water hardness
+                if (waterHardness) {
+                    if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
+                        baseSettings.min -= 2;
+                        baseSettings.max -= 2;
+                    } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
+                        baseSettings.min += 2;
+                        baseSettings.max += 2;
+                    }
+                }
+                
+                return `${baseSettings.min}-${baseSettings.max} clicks`;
+            } else {
+                // Fellow Ode Gen2 settings
+                if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
+                    processLower.includes('carbonic') || processLower.includes('extended')) {
+                    baseSettings = { min: 3.0, max: 3.5 };
+                } else if (processLower.includes('natural') || processLower.includes('honey') || 
+                           processLower.includes('yeast')) {
+                    baseSettings = { min: 4.0, max: 4.5 };
+                } else {
+                    baseSettings = { min: 3.5, max: 4.0 };
+                }
+                
+                // Adjust for water hardness
+                if (waterHardness) {
+                    if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
+                        baseSettings.min -= 0.5;
+                        baseSettings.max -= 0.5;
+                    } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
+                        baseSettings.min += 0.5;
+                        baseSettings.max += 0.5;
+                    }
+                }
+                
+                return `${baseSettings.min.toFixed(1)}-${baseSettings.max.toFixed(1)}`;
+            }
+        }
+
+        function getGrinderLabel(grinder) {
+            return grinder === 'comandante' ? 'Comandante C40 MK3' : 'Fellow Ode Gen2';
+        }
+
+        function getBrewRecommendations(coffee) {
+            const processLower = coffee.process.toLowerCase();
+            const amount = coffee.customAmount || coffeeAmount;
+            const grinder = coffee.selectedGrinder || preferredGrinder;
+            
+            const grindSetting = coffee.customGrind || getGrinderSettings(grinder, processLower);
+            const temperature = coffee.customTemp || getDefaultTemp(processLower);
+            
+            const waterAmount = Math.round(amount * 16);
+            const bloom = Math.round(amount * 3);
+            const secondPour = Math.round(waterAmount * 0.5);
+            const thirdPour = Math.round(waterAmount * 0.83);
+            const finalPour = waterAmount;
+            
+            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
+                processLower.includes('carbonic') || processLower.includes('extended')) {
+                return {
+                    grindSetting,
+                    grinderLabel: getGrinderLabel(grinder),
+                    temperature,
+                    ratio: `1:16 (${amount}g)`,
+                    steps: [
+                        { time: '0:00', action: `Bloom: ${bloom}g water, wait 30-45 sec` },
+                        { time: '0:45', action: `To ${secondPour}g: Pour slowly in circles` },
+                        { time: '1:15', action: `To ${thirdPour}g: Concentric circles` },
+                        { time: '1:45', action: `To ${finalPour}g: Final pour` }
+                    ],
+                    targetTime: '2:30-3:00',
+                    notes: getBrewNotes(processLower)
+                };
+            } else if (processLower.includes('natural') || processLower.includes('honey') || 
+                       processLower.includes('yeast')) {
+                const waterAmountNatural = Math.round(amount * 16.7);
+                const bloomNatural = Math.round(amount * 3.3);
+                const secondPourNatural = Math.round(waterAmountNatural * 0.52);
+                const thirdPourNatural = Math.round(waterAmountNatural * 0.84);
+                return {
+                    grindSetting,
+                    grinderLabel: getGrinderLabel(grinder),
+                    temperature,
+                    ratio: `1:16.7 (${amount}g)`,
+                    steps: [
+                        { time: '0:00', action: `Bloom: ${bloomNatural}g water, make crater, 45 sec` },
+                        { time: '0:45', action: `To ${secondPourNatural}g: Pour slowly` },
+                        { time: '1:20', action: `To ${thirdPourNatural}g: Concentric circles` },
+                        { time: '1:50', action: `To ${waterAmountNatural}g: Final pour` }
+                    ],
+                    targetTime: '2:45-3:15',
+                    notes: getBrewNotes(processLower)
+                };
+            } else {
+                return {
+                    grindSetting,
+                    grinderLabel: getGrinderLabel(grinder),
+                    temperature,
+                    ratio: `1:16 (${amount}g)`,
+                    steps: [
+                        { time: '0:00', action: `Bloom: ${bloom}g water, 30-40 sec` },
+                        { time: '0:40', action: `To ${secondPour}g: Pour evenly` },
+                        { time: '1:15', action: `To ${thirdPour}g: Concentric circles` },
+                        { time: '1:45', action: `To ${finalPour}g: Final pour` }
+                    ],
+                    targetTime: '2:30-3:00',
+                    notes: getBrewNotes(processLower)
+                };
+            }
+        }
+
+        function getBrewNotes(processLower) {
+            let notes = [];
+            
+            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
+                processLower.includes('carbonic') || processLower.includes('extended')) {
+                notes.push('Experimental process - cooler temp for volatile aromas');
+            } else if (processLower.includes('natural') || processLower.includes('honey') || 
+                       processLower.includes('yeast')) {
+                notes.push('Natural process - coarser grind, higher temp');
+            } else {
+                notes.push('Standard washed - balanced profile');
+            }
+            
+            if (waterHardness) {
+                if (waterHardness.category === 'very_soft') {
+                    notes.push('Very soft water - grind finer, higher temp');
+                } else if (waterHardness.category === 'soft') {
+                    notes.push('Soft water - slightly finer grind');
+                } else if (waterHardness.category === 'hard') {
+                    notes.push('Hard water - grind coarser, lower temp');
+                } else if (waterHardness.category === 'very_hard') {
+                    notes.push('Very hard water - much coarser grind, consider filtering');
+                }
+            }
+            
+            return notes.join('. ');
+        }
+
+        function getDefaultTemp(processLower) {
+            let baseTemp;
+            
+            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
+                processLower.includes('carbonic') || processLower.includes('extended')) {
+                baseTemp = { min: 91, max: 92 };
+            } else if (processLower.includes('natural') || processLower.includes('honey') || 
+                       processLower.includes('yeast')) {
+                baseTemp = { min: 93, max: 94 };
+            } else {
+                baseTemp = { min: 92, max: 93 };
+            }
+            
+            // Adjust for water hardness
+            if (waterHardness) {
+                if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
+                    baseTemp.min += 1;
+                    baseTemp.max += 1;
+                } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
+                    baseTemp.min -= 1;
+                    baseTemp.max -= 1;
+                }
+            }
+            
+            return `${baseTemp.min}-${baseTemp.max}°C`;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function parseTimeToSeconds(timeStr) {
+            const parts = timeStr.split(':');
+            const minutes = parseInt(parts[0]) || 0;
+            const seconds = parseInt(parts[1]) || 0;
+            return minutes * 60 + seconds;
+        }
+
+        function startBrewTimer(index) {
+            const coffee = coffees[index];
+            const brewParams = getBrewRecommendations(coffee);
+            
+            const steps = brewParams.steps.map((step, i) => ({
+                ...step,
+                startSeconds: parseTimeToSeconds(step.time),
+                index: i
+            }));
+            
+            const totalBrewTime = steps[steps.length - 1].startSeconds + 60;
+            
+            steps.forEach((step, i) => {
+                step.endSeconds = i < steps.length - 1 
+                    ? steps[i + 1].startSeconds 
+                    : totalBrewTime;
+                step.duration = step.endSeconds - step.startSeconds;
+            });
+            
+            brewTimers[index] = {
+                startTime: performance.now(),
+                steps: steps,
+                isRunning: true,
+                isPaused: false
+            };
+            
+            const startBtn = document.getElementById(`start-brew-${index}`);
+            const pauseBtn = document.getElementById(`pause-brew-${index}`);
+            const resetBtn = document.getElementById(`reset-brew-${index}`);
+            
+            if (startBtn) {
+                startBtn.textContent = 'Brewing...';
+                startBtn.classList.add('brewing');
+                startBtn.disabled = true;
+            }
+            if (pauseBtn) pauseBtn.disabled = false;
+            if (resetBtn) resetBtn.disabled = false;
+            
+            updateBrewProgress(index);
+        }
+
+        function pauseBrewTimer(index) {
+            const timer = brewTimers[index];
+            if (!timer) return;
+            
+            if (timer.isPaused) {
+                timer.startTime = performance.now() - (timer.pausedAt || 0);
+                timer.isPaused = false;
+                timer.isRunning = true;
+                updateBrewProgress(index);
+                
+                const pauseBtn = document.getElementById(`pause-brew-${index}`);
+                if (pauseBtn) pauseBtn.textContent = 'Pause';
+            } else {
+                timer.pausedAt = performance.now() - timer.startTime;
+                timer.isPaused = true;
+                timer.isRunning = false;
+                
+                if (animationFrames[index]) {
+                    cancelAnimationFrame(animationFrames[index]);
+                }
+                
+                const pauseBtn = document.getElementById(`pause-brew-${index}`);
+                if (pauseBtn) pauseBtn.textContent = 'Resume';
+            }
+        }
+
+        function resetBrewTimer(index) {
+            const timer = brewTimers[index];
+            if (!timer) return;
+            
+            timer.isRunning = false;
+            if (animationFrames[index]) {
+                cancelAnimationFrame(animationFrames[index]);
+            }
+            
+            timer.steps.forEach((step, i) => {
+                const bar = document.getElementById(`progress-bar-${index}-${i}`);
+                if (bar) bar.style.width = '0%';
+            });
+            
+            const display = document.getElementById(`brew-timer-display-${index}`);
+            if (display) display.textContent = '00:00';
+            
+            const startBtn = document.getElementById(`start-brew-${index}`);
+            const pauseBtn = document.getElementById(`pause-brew-${index}`);
+            const resetBtn = document.getElementById(`reset-brew-${index}`);
+            
+            if (startBtn) {
+                startBtn.textContent = 'Start Brew';
+                startBtn.classList.remove('brewing');
+                startBtn.disabled = false;
+            }
+            if (pauseBtn) {
+                pauseBtn.textContent = 'Pause';
+                pauseBtn.disabled = true;
+            }
+            if (resetBtn) resetBtn.disabled = true;
+            
+            delete brewTimers[index];
+            delete animationFrames[index];
+        }
+
+        function updateBrewProgress(index) {
+            const timer = brewTimers[index];
+            if (!timer || !timer.isRunning) return;
+            
+            const elapsedMs = performance.now() - timer.startTime;
+            const elapsedSeconds = elapsedMs / 1000;
+            const displaySeconds = Math.floor(elapsedSeconds);
+            
+            const display = document.getElementById(`brew-timer-display-${index}`);
+            if (display) {
+                display.textContent = formatTime(displaySeconds);
+            }
+            
+            timer.steps.forEach((step, i) => {
+                const bar = document.getElementById(`progress-bar-${index}-${i}`);
+                if (!bar) return;
+                
+                let percentage = 0;
+                
+                if (elapsedSeconds < step.startSeconds) {
+                    percentage = 0;
+                } else if (elapsedSeconds >= step.endSeconds) {
+                    percentage = 100;
+                } else {
+                    const stepElapsed = elapsedSeconds - step.startSeconds;
+                    percentage = (stepElapsed / step.duration) * 100;
+                    percentage = Math.min(100, Math.max(0, percentage));
+                }
+                
+                bar.style.width = `${percentage.toFixed(2)}%`;
+            });
+            
+            animationFrames[index] = requestAnimationFrame(() => updateBrewProgress(index));
+        }
+
+        function selectFeedback(index, category, value) {
+            const coffee = coffees[index];
+            if (!coffee.feedback) {
+                coffee.feedback = {};
+            }
+            coffee.feedback[category] = value;
+            
+            const options = document.querySelectorAll(`[data-feedback="${index}-${category}"]`);
+            options.forEach(opt => {
+                if (opt.dataset.value === value) {
+                    opt.classList.add('selected');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+            
+            generateSuggestion(index);
+            
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+        }
+
+        function generateSuggestion(index) {
+            const coffee = coffees[index];
+            const feedback = coffee.feedback || {};
+            
+            const suggestionDiv = document.getElementById(`suggestion-${index}`);
+            if (!suggestionDiv) return;
+            
+            let suggestions = [];
+            let newGrind = null;
+            let newTemp = null;
+            
+            if (feedback.extraction === 'under') {
+                suggestions.push('Coffee is underextracted - tastes sour/weak');
+                suggestions.push('→ Grind finer');
+                suggestions.push('→ Or increase temperature by 2°C');
+                newGrind = adjustGrind(coffee, -0.5);
+                newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), +2);
+            } else if (feedback.extraction === 'over') {
+                suggestions.push('Coffee is overextracted - tastes bitter/harsh');
+                suggestions.push('→ Grind coarser');
+                suggestions.push('→ Or decrease temperature by 2°C');
+                newGrind = adjustGrind(coffee, +0.5);
+                newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), -2);
+            }
+            
+            if (feedback.taste === 'flat') {
+                suggestions.push('Flavors not coming through clearly');
+                suggestions.push('→ Increase temperature by 2°C');
+                newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), +2);
+            } else if (feedback.taste === 'harsh') {
+                suggestions.push('Taste is too harsh/aggressive');
+                suggestions.push('→ Lower temperature by 2°C');
+                newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), -2);
+            }
+            
+            if (feedback.body === 'thin') {
+                suggestions.push('Body too thin/watery');
+                suggestions.push('→ Grind slightly finer');
+                newGrind = adjustGrind(coffee, -0.3);
+            } else if (feedback.body === 'heavy') {
+                suggestions.push('Body too heavy/muddy');
+                suggestions.push('→ Grind slightly coarser');
+                newGrind = adjustGrind(coffee, +0.3);
+            }
+            
+            if (suggestions.length === 0 || feedback.extraction === 'perfect') {
+                suggestionDiv.innerHTML = `
+                    <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                        ✓ Perfect! No adjustments needed.
+                    </div>
+                `;
+                suggestionDiv.classList.remove('hidden');
+                return;
+            }
+            
+            suggestionDiv.innerHTML = `
+                <div class="suggestion-title">💡 Suggested Adjustments</div>
+                <div class="suggestion-text">${suggestions.join('<br>')}</div>
+                <div class="suggestion-values">
+                    ${newGrind ? `<div class="suggestion-value"><strong>New Grind:</strong> ${newGrind}</div>` : ''}
+                    ${newTemp ? `<div class="suggestion-value"><strong>New Temp:</strong> ${newTemp}</div>` : ''}
+                </div>
+                <button class="apply-suggestion-btn" onclick="applySuggestion(${index}, '${newGrind}', '${newTemp}')">
+                    Apply These Settings
+                </button>
+            `;
+            suggestionDiv.classList.remove('hidden');
+        }
+
+        function adjustGrind(coffee, change) {
+            const grinder = coffee.selectedGrinder || preferredGrinder;
+            const current = coffee.customGrind || getGrinderSettings(grinder, coffee.process.toLowerCase());
+            
+            if (grinder === 'comandante') {
+                // Comandante: clicks (e.g., "20-22 clicks")
+                const match = current.match(/(\d+)(?:-(\d+))?/);
+                if (!match) return current;
+                
+                const clickChange = change * 2; // Convert to clicks (rougher adjustment)
+                const low = parseInt(match[1]) + clickChange;
+                const high = match[2] ? parseInt(match[2]) + clickChange : null;
+                
+                if (high) {
+                    return `${Math.round(low)}-${Math.round(high)} clicks`;
+                }
+                return `${Math.round(low)} clicks`;
+            } else {
+                // Fellow Ode: decimal settings
+                const match = current.match(/([\d.]+)(?:-([\d.]+))?/);
+                if (!match) return current;
+                
+                const low = parseFloat(match[1]) + change;
+                const high = match[2] ? parseFloat(match[2]) + change : null;
+                
+                if (high) {
+                    return `${low.toFixed(1)}-${high.toFixed(1)}`;
+                }
+                return low.toFixed(1);
+            }
+        }
+
+        function adjustTemp(current, change) {
+            const match = current.match(/(\d+)(?:-(\d+))?/);
+            if (!match) return current;
+            
+            const low = parseInt(match[1]) + change;
+            const high = match[2] ? parseInt(match[2]) + change : null;
+            
+            if (high) {
+                return `${low}-${high}°C`;
+            }
+            return `${low}°C`;
+        }
+
+        function applySuggestion(index, newGrind, newTemp) {
+            const coffee = coffees[index];
+            if (newGrind && newGrind !== 'null') coffee.customGrind = newGrind;
+            if (newTemp && newTemp !== 'null') coffee.customTemp = newTemp;
+            
+            coffee.feedback = {};
+            
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+            renderCoffees();
+            
+            alert('Settings applied! The brew parameters have been updated.');
+        }
+
+        function renderCoffeeCard(coffee, index) {
+            const brewParams = getBrewRecommendations(coffee);
+            const amount = coffee.customAmount || coffeeAmount;
+            const grinder = coffee.selectedGrinder || preferredGrinder;
+            
+            return `
+                <div class="coffee-card" data-index="${index}">
+                    <div class="coffee-header">
+                        <div>
+                            <div class="coffee-name">${coffee.name}</div>
+                            <div class="coffee-origin">${coffee.origin}</div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteCoffee(${index}); event.stopPropagation();">
+                            <svg class="delete-icon" viewBox="0 0 24 24">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="process-freshness-row">
+                        <div class="coffee-process-small">${coffee.process}</div>
+                        <div class="freshness-badge-inline" id="freshness-badge-${index}">
+                            ${getRoastFreshnessBadge(coffee.roastDate)}
+                        </div>
+                    </div>
+                    
+                    <div class="brew-params">
+                        <div class="roast-date-section">
+                            <div class="roast-date-input-wrapper">
+                                <svg class="roast-icon" viewBox="0 0 24 24">
+                                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                                </svg>
+                                <span class="roast-label">Roast Date</span>
+                                <input 
+                                    type="date" 
+                                    id="roastDate-${index}" 
+                                    class="roast-date-input"
+                                    value="${coffee.roastDate || ''}"
+                                    onchange="updateRoastDate(${index}, this.value); event.stopPropagation();"
+                                    onclick="event.stopPropagation();"
+                                />
+                            </div>
+                        </div>
+                        
+                        <div class="grinder-selector">
+                            <button class="grinder-btn ${grinder === 'fellow' ? 'active' : ''}" 
+                                    onclick="switchGrinder(event, ${index}, 'fellow')">
+                                Fellow Ode
+                            </button>
+                            <button class="grinder-btn ${grinder === 'comandante' ? 'active' : ''}" 
+                                    onclick="switchGrinder(event, ${index}, 'comandante')">
+                                Comandante
+                            </button>
+                        </div>
+                        
+                        <div class="ratio-control">
+                            <h4>Coffee Amount</h4>
+                            <div class="ratio-slider">
+                                <div class="ratio-value-display">
+                                    <span class="ratio-value" id="ratioValue-${index}">${amount}g</span>
+                                </div>
+                                <div class="slider-track">
+                                    <span>10g</span>
+                                    <input type="range" min="10" max="30" value="${amount}" 
+                                           oninput="updateCoffeeAmountLive(this.value, ${index}); event.stopPropagation();" 
+                                           onmousedown="event.stopPropagation();"
+                                           ontouchstart="event.stopPropagation();"
+                                           onclick="event.stopPropagation();">
+                                    <span>30g</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="param-grid">
+                            <div class="param-box">
+                                <div class="param-label">${brewParams.grinderLabel}</div>
+                                <div class="param-value">${brewParams.grindSetting}</div>
+                            </div>
+                            <div class="param-box">
+                                <div class="param-label">Temperature</div>
+                                <div class="param-value">${brewParams.temperature}</div>
+                            </div>
+                            <div class="param-box">
+                                <div class="param-label">Ratio</div>
+                                <div class="param-value">${brewParams.ratio}</div>
+                            </div>
+                            <div class="param-box">
+                                <div class="param-label">Target Time</div>
+                                <div class="param-value">${brewParams.targetTime}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="brew-timer-section">
+                            <div class="timer-display" id="brew-timer-display-${index}">00:00</div>
+                            <div class="timer-controls-main">
+                                <button class="timer-btn start-brew" id="start-brew-${index}" onclick="startBrewTimer(${index}); event.stopPropagation();">
+                                    <img src="v60-icon.png" class="v60-icon" alt="V60">
+                                    Start Brew
+                                </button>
+                            </div>
+                            <div class="timer-controls-secondary">
+                                <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="pauseBrewTimer(${index}); event.stopPropagation();" disabled>Pause</button>
+                                <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="resetBrewTimer(${index}); event.stopPropagation();" disabled>Reset</button>
+                            </div>
+                        </div>
+                        
+                        <div class="brew-steps">
+                            <h4>V60 Pour-Over Steps</h4>
+                            ${brewParams.steps.map((step, stepIndex) => `
+                                <div class="step">
+                                    <div class="step-time">${step.time}</div>
+                                    <div class="step-action">${step.action}</div>
+                                    <div class="step-progress">
+                                        <div class="step-progress-bar" id="progress-bar-${index}-${stepIndex}"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <h4>Brew Feedback</h4>
+                            
+                            <div class="feedback-group">
+                                <div class="feedback-label">Extraction</div>
+                                <div class="feedback-scale">
+                                    <div class="scale-option ${coffee.feedback?.extraction === 'under' ? 'selected' : ''}" 
+                                         data-feedback="${index}-extraction" data-value="under"
+                                         onclick="selectFeedback(${index}, 'extraction', 'under'); event.stopPropagation();">
+                                        Under
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.extraction === 'perfect' ? 'selected' : ''}" 
+                                         data-feedback="${index}-extraction" data-value="perfect"
+                                         onclick="selectFeedback(${index}, 'extraction', 'perfect'); event.stopPropagation();">
+                                        Perfect
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.extraction === 'over' ? 'selected' : ''}" 
+                                         data-feedback="${index}-extraction" data-value="over"
+                                         onclick="selectFeedback(${index}, 'extraction', 'over'); event.stopPropagation();">
+                                        Over
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feedback-group">
+                                <div class="feedback-label">Taste Clarity</div>
+                                <div class="feedback-scale">
+                                    <div class="scale-option ${coffee.feedback?.taste === 'flat' ? 'selected' : ''}" 
+                                         data-feedback="${index}-taste" data-value="flat"
+                                         onclick="selectFeedback(${index}, 'taste', 'flat'); event.stopPropagation();">
+                                        Flat
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.taste === 'good' ? 'selected' : ''}" 
+                                         data-feedback="${index}-taste" data-value="good"
+                                         onclick="selectFeedback(${index}, 'taste', 'good'); event.stopPropagation();">
+                                        Good
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.taste === 'perfect' ? 'selected' : ''}" 
+                                         data-feedback="${index}-taste" data-value="perfect"
+                                         onclick="selectFeedback(${index}, 'taste', 'perfect'); event.stopPropagation();">
+                                        Perfect
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.taste === 'harsh' ? 'selected' : ''}" 
+                                         data-feedback="${index}-taste" data-value="harsh"
+                                         onclick="selectFeedback(${index}, 'taste', 'harsh'); event.stopPropagation();">
+                                        Harsh
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feedback-group">
+                                <div class="feedback-label">Body</div>
+                                <div class="feedback-scale">
+                                    <div class="scale-option ${coffee.feedback?.body === 'thin' ? 'selected' : ''}" 
+                                         data-feedback="${index}-body" data-value="thin"
+                                         onclick="selectFeedback(${index}, 'body', 'thin'); event.stopPropagation();">
+                                        Thin
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.body === 'balanced' ? 'selected' : ''}" 
+                                         data-feedback="${index}-body" data-value="balanced"
+                                         onclick="selectFeedback(${index}, 'body', 'balanced'); event.stopPropagation();">
+                                        Balanced
+                                    </div>
+                                    <div class="scale-option ${coffee.feedback?.body === 'heavy' ? 'selected' : ''}" 
+                                         data-feedback="${index}-body" data-value="heavy"
+                                         onclick="selectFeedback(${index}, 'body', 'heavy'); event.stopPropagation();">
+                                        Heavy
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feedback-suggestion hidden" id="suggestion-${index}"></div>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 16px; background: var(--bg-secondary); border-radius: 8px; font-size: 0.9rem;">
+                            <strong style="color: var(--accent);">💡 Tip:</strong>
+                            <span style="color: var(--text-secondary);"> ${brewParams.notes}</span>
+                        </div>
+                        
+                        ${coffee.cultivar && coffee.cultivar !== 'Unknown' ? `
+                        <div style="margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem;">
+                            <strong>Variety:</strong> ${coffee.cultivar} | <strong>Altitude:</strong> ${coffee.altitude} masl
+                        </div>
+                        ` : ''}
+                        
+                        <div style="margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem;">
+                            <strong>Tasting Notes:</strong> ${coffee.tastingNotes}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCoffees() {
+            const listEl = document.getElementById('coffeeList');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (coffees.length === 0) {
+                listEl.innerHTML = '';
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+                listEl.innerHTML = coffees.map((coffee, index) => renderCoffeeCard(coffee, index)).join('');
+                
+                document.querySelectorAll('.coffee-card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        // Prevent card toggle for interactive elements
+                        if (e.target.closest('.delete-btn') || 
+                            e.target.closest('.timer-btn') || 
+                            e.target.closest('.scale-option') ||
+                            e.target.closest('.apply-suggestion-btn') ||
+                            e.target.closest('.grinder-btn') ||
+                            e.target.closest('.grinder-selector') ||
+                            e.target.closest('input[type="range"]')) {
+                            return;
+                        }
+                        
+                        document.querySelectorAll('.coffee-card').forEach(c => {
+                            if (c !== this) c.classList.remove('expanded');
+                        });
+                        this.classList.toggle('expanded');
+                    });
+                });
+            }
+        }
+
+        function deleteCoffee(index) {
+            if (confirm('Really delete this coffee?')) {
+                coffees.splice(index, 1);
+                localStorage.setItem('coffees', JSON.stringify(coffees));
+                renderCoffees();
+            }
+        }
+
+        function updateCoffeeAmountLive(value, cardIndex) {
+            const amount = parseInt(value);
+            coffees[cardIndex].customAmount = amount;
+            
+            const valueDisplay = document.getElementById(`ratioValue-${cardIndex}`);
+            if (valueDisplay) {
+                valueDisplay.textContent = amount + 'g';
+            }
+            
+            const expandedCard = document.querySelector(`.coffee-card[data-index="${cardIndex}"]`);
+            if (expandedCard && expandedCard.classList.contains('expanded')) {
+                const coffee = coffees[cardIndex];
+                const brewParams = getBrewRecommendations(coffee);
+                
+                const paramBoxes = expandedCard.querySelectorAll('.param-box .param-value');
+                if (paramBoxes.length >= 3) {
+                    paramBoxes[2].textContent = brewParams.ratio;
+                }
+                
+                const steps = expandedCard.querySelectorAll('.step');
+                brewParams.steps.forEach((step, i) => {
+                    if (steps[i]) {
+                        steps[i].querySelector('.step-action').textContent = step.action;
+                    }
+                });
+            }
+            
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+        }
+
+        function showMessage(type, message) {
+            const errorEl = document.getElementById('errorMessage');
+            const successEl = document.getElementById('successMessage');
+            
+            if (type === 'error') {
+                errorEl.textContent = message;
+                errorEl.classList.remove('hidden');
+                successEl.classList.add('hidden');
+            } else if (type === 'info') {
+                successEl.textContent = '⏳ ' + message;
+                successEl.classList.remove('hidden');
+                errorEl.classList.add('hidden');
+            } else {
+                successEl.textContent = message;
+                successEl.classList.remove('hidden');
+                errorEl.classList.add('hidden');
+            }
+            
+            if (type !== 'info') {
+                setTimeout(() => {
+                    errorEl.classList.add('hidden');
+                    successEl.classList.add('hidden');
+                }, 5000);
+            }
+        }
+
+        async function analyzeCoffeeImage(imageData, mediaType) {
+            if (!CONFIG.backendUrl) {
+                throw new Error('Backend URL not configured. Please enter it in settings.');
+            }
+
+            const response = await fetch(`${CONFIG.backendUrl}/api/analyze-coffee`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    imageData,
+                    mediaType
+                }),
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error || 'Analysis error');
+            }
+
+            const result = await response.json();
+            if (!result.success) {
+                throw new Error(result.error || 'Analysis failed');
+            }
+
+            return result.data;
+        }
+
+        document.getElementById('cameraBtn').addEventListener('click', () => {
+            document.getElementById('imageInput').click();
+        });
+
+        document.getElementById('uploadBtn').addEventListener('click', () => {
+            document.getElementById('uploadInput').click();
+        });
+
+        // IMPROVED: More aggressive image compression with multiple attempts
+        async function compressImage(file, maxSizeMB = 4.0) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let width = img.width;
+                        let height = img.height;
+                        let maxDim = 1920;
+                        
+                        if (width > maxDim || height > maxDim) {
+                            if (width > height) {
+                                height = (height / width) * maxDim;
+                                width = maxDim;
+                            } else {
+                                width = (width / height) * maxDim;
+                                height = maxDim;
+                            }
+                        }
+                        
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        let quality = 0.85;
+                        let dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        let attempts = 0;
+                        const maxAttempts = 10;
+                        const targetSize = maxSizeMB * 1024 * 1024 * 1.37;
+                        let consecutiveResets = 0;
+                        
+                        while (dataUrl.length > targetSize && attempts < maxAttempts) {
+                            quality -= 0.08;
+                            
+                            if (quality < 0.4 && attempts > 5) {
+                                consecutiveResets++;
+                                if (consecutiveResets > 2) {
+                                    console.warn('Image compression: too many resets, using current size');
+                                    break;
+                                }
+                                width = Math.floor(width * 0.85);
+                                height = Math.floor(height * 0.85);
+                                canvas.width = width;
+                                canvas.height = height;
+                                ctx.drawImage(img, 0, 0, width, height);
+                                quality = 0.7;
+                            }
+                            
+                            dataUrl = canvas.toDataURL('image/jpeg', Math.max(0.1, quality));
+                            attempts++;
+                        }
+                        
+                        if (dataUrl.length > targetSize) {
+                            canvas.width = Math.floor(width * 0.7);
+                            canvas.height = Math.floor(height * 0.7);
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+                        }
+                        
+                        console.log(`Compression: ${attempts} attempts, quality: ${quality.toFixed(2)}, size: ${(dataUrl.length * 0.75 / 1024 / 1024).toFixed(2)}MB`);
+                        
+                        resolve({
+                            dataUrl: dataUrl,
+                            base64: dataUrl.split(',')[1],
+                            type: 'image/jpeg',
+                            originalSize: file.size,
+                            compressedSize: Math.round(dataUrl.length * 0.75)
+                        });
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function processImageUpload(file, uploadBtn) {
+            const preview = document.getElementById('imagePreview');
+            const loadingEl = document.getElementById('loadingMessage');
+            const cameraBtn = document.getElementById('cameraBtn');
+            
+            loadingEl.classList.remove('hidden');
+            cameraBtn.disabled = true;
+            if (uploadBtn) uploadBtn.disabled = true;
+            
+            try {
+                const previewReader = new FileReader();
+                previewReader.onload = (event) => {
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                previewReader.readAsDataURL(file);
+                
+                const fileSizeMB = file.size / (1024 * 1024);
+                let imageData;
+                let mediaType;
+                
+                if (fileSizeMB > 4.0) {
+                    showMessage('info', `Compressing image (${fileSizeMB.toFixed(1)}MB → smaller)...`);
+                    
+                    const compressed = await compressImage(file);
+                    imageData = compressed.base64;
+                    mediaType = compressed.type;
+                    
+                    console.log(`Compressed: ${(compressed.originalSize / 1024 / 1024).toFixed(1)}MB → ${(compressed.compressedSize / 1024 / 1024).toFixed(1)}MB`);
+                } else {
+                    imageData = await new Promise((resolve, reject) => {
+                        const r = new FileReader();
+                        r.onload = () => resolve(r.result.split(',')[1]);
+                        r.onerror = reject;
+                        r.readAsDataURL(file);
+                    });
+                    mediaType = file.type;
+                }
+                
+                const coffeeInfo = await analyzeCoffeeImage(imageData, mediaType);
+                
+                coffees.unshift(coffeeInfo);
+                localStorage.setItem('coffees', JSON.stringify(coffees));
+                renderCoffees();
+                
+                showMessage('success', '✓ Coffee added successfully!');
+                
+                preview.style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('error', error.message || 'Failed to process image');
+            } finally {
+                loadingEl.classList.add('hidden');
+                cameraBtn.disabled = false;
+                if (uploadBtn) uploadBtn.disabled = false;
+            }
+        }
+
+        document.getElementById('imageInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            await processImageUpload(file, null);
+            e.target.value = '';
+        });
+
+        document.getElementById('uploadInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const uploadBtn = document.getElementById('uploadBtn');
+            await processImageUpload(file, uploadBtn);
+            e.target.value = '';
+        });
+
+        function saveCoffeeManual() {
+            const name = document.getElementById('name').value.trim();
+            const origin = document.getElementById('origin').value.trim();
+            const process = document.getElementById('process').value;
+            const cultivar = document.getElementById('cultivar').value.trim();
+            const altitude = document.getElementById('altitude').value.trim();
+            const roaster = document.getElementById('roaster').value.trim();
+            const tastingNotes = document.getElementById('tastingNotes').value.trim();
+            
+            if (!name || !origin || !process) {
+                alert('Please fill in at least Name, Origin and Processing Method.');
+                return;
+            }
+            
+            const coffee = {
+                name,
+                origin,
+                process,
+                cultivar: cultivar || 'Unknown',
+                altitude: altitude || '1500',
+                roaster: roaster || 'Unknown',
+                tastingNotes: tastingNotes || 'No notes',
+                addedDate: new Date().toISOString()
+            };
+            
+            coffees.unshift(coffee);
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+            
+            document.getElementById('name').value = '';
+            document.getElementById('origin').value = '';
+            document.getElementById('process').value = '';
+            document.getElementById('cultivar').value = '';
+            document.getElementById('altitude').value = '';
+            document.getElementById('roaster').value = '';
+            document.getElementById('tastingNotes').value = '';
+            
+            // Schließe die Manual-Section automatisch
+            const manualSection = document.querySelector('.manual-section');
+            if (manualSection) {
+                manualSection.classList.add('hidden');
+            }
+            
+            renderCoffees();
+            showMessage('success', '✓ Coffee added successfully!');
+        }
+
+        function openSettings() {
+            document.getElementById('settingsModal').classList.add('active');
+            document.getElementById('backendUrl').value = CONFIG.backendUrl;
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function saveSettings() {
+            const backendUrl = document.getElementById('backendUrl').value.trim();
+            
+            if (backendUrl && !backendUrl.startsWith('http')) {
+                showMessage('error', 'Backend URL must start with http:// or https://');
+                return;
+            }
+            
+            CONFIG.backendUrl = backendUrl;
+            localStorage.setItem('backendUrl', backendUrl);
+            showMessage('success', '✓ Settings saved successfully!');
+            
+            setTimeout(() => {
+                closeSettings();
+            }, 1000);
+        }
+
+        function openWaterModal() {
+            document.getElementById('waterModal').classList.add('active');
+            document.getElementById('zipCodeInput').value = userZipCode;
+            
+            // Show current water hardness if available
+            if (waterHardness) {
+                displayWaterHardness(waterHardness);
+            }
+        }
+
+        function closeWaterModal() {
+            document.getElementById('waterModal').classList.remove('active');
+        }
+
+        function displayWaterHardness(hardness) {
+            document.getElementById('hardnessValueDisplay').textContent = `${hardness.value} °dH`;
+            document.getElementById('hardnessCategoryDisplay').textContent = hardness.category_de.toUpperCase();
+            document.getElementById('hardnessRegion').textContent = hardness.region;
+            document.getElementById('hardnessSource').textContent = hardness.source;
+            document.getElementById('hardnessDescriptionDisplay').textContent = hardness.description;
+            document.getElementById('waterHardnessDisplay').style.display = 'block';
+        }
+
+        async function saveWaterHardness() {
+            const zipCode = document.getElementById('zipCodeInput').value.trim();
+            
+            if (!zipCode) {
+                alert('Bitte geben Sie eine Postleitzahl ein.');
+                return;
+            }
+            
+            if (!/^\d{5}$/.test(zipCode)) {
+                alert('Bitte geben Sie eine gültige 5-stellige Postleitzahl ein.');
+                return;
+            }
+            
+            if (typeof WaterHardness === 'undefined') {
+                alert('Wasserhärte-Modul nicht geladen. Bitte laden Sie die Seite neu.');
+                return;
+            }
+            
+            try {
+                const hardness = await WaterHardness.getHardness(zipCode);
+                waterHardness = hardness;
+                userZipCode = zipCode;
+                localStorage.setItem('userZipCode', zipCode);
+                
+                // Display water hardness info
+                displayWaterHardness(hardness);
+                
+                // Mark water button as active
+                const waterBtn = document.getElementById('waterControlBtn');
+                if (waterBtn) waterBtn.classList.add('active');
+                
+                // Re-render coffees with new water hardness adjustments
+                renderCoffees();
+                
+                // Show success message
+                setTimeout(() => {
+                    alert(`✓ Wasserhärte gespeichert!\n\n${hardness.region}: ${hardness.value} °dH (${hardness.category_de})\n\nIhre Brew-Parameter wurden angepasst.`);
+                }, 100);
+                
+            } catch (error) {
+                alert(`Fehler beim Laden der Wasserhärte:\n${error.message}`);
+            }
+        }
+
+        renderCoffees();
+
+        if (!CONFIG.backendUrl) {
+            setTimeout(() => {
+                alert('Welcome to BrewBuddy! Please configure your Backend URL in settings (⚙️) first.');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
