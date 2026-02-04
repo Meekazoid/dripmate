@@ -36,59 +36,65 @@ function getOrCreateDeviceId() {
 }
 
 // ==========================================
-// USER MANAGEMENT
+// TOKEN VALIDATION
 // ==========================================
 
-async function ensureUserRegistered() {
-    let token = localStorage.getItem('token');
-    let deviceId = getOrCreateDeviceId();
+async function validateAndSaveToken(token) {
+    const deviceId = getOrCreateDeviceId();
     
-    // Falls Token vorhanden, validiere ihn
-    if (token) {
-        try {
-            const response = await fetch(
-                `${BACKEND_CONFIG.url}/api/auth/validate?token=${token}&deviceId=${deviceId}`
-            );
-            const data = await response.json();
-            
-            if (data.valid) {
-                console.log('✅ User bereits registriert und gültig');
-                return { token, deviceId };
-            }
-        } catch (err) {
-            console.log('Token-Validierung fehlgeschlagen, re-registriere...');
-        }
-    }
-    
-    // Falls kein gültiger Token, registriere neuen User
     try {
-        // Generiere anonymen Username
-        const username = 'user-' + deviceId.substring(0, 8);
-        
-        const response = await fetch(`${BACKEND_CONFIG.url}/api/auth/register`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, deviceId })
-        });
-        
+        const response = await fetch(
+            `${BACKEND_CONFIG.url}/api/auth/validate?token=${token}&deviceId=${deviceId}`
+        );
         const data = await response.json();
         
-        if (data.success) {
-            token = data.user.token;
-            deviceId = data.user.deviceId;
-            
+        if (data.valid) {
+            // Token ist gültig, speichern
             localStorage.setItem('token', token);
             localStorage.setItem('deviceId', deviceId);
             
-            console.log('✅ User erfolgreich registriert:', username);
-            return { token, deviceId };
+            console.log('✅ Token erfolgreich validiert und gespeichert');
+            return { success: true, user: data.user };
         } else {
-            console.error('❌ Registrierung fehlgeschlagen:', data.error);
-            return null;
+            console.error('❌ Token ungültig:', data.error);
+            return { success: false, error: data.error || 'Invalid token' };
         }
     } catch (err) {
-        console.error('❌ Registrierung Fehler:', err);
-        return null;
+        console.error('❌ Token-Validierung fehlgeschlagen:', err);
+        return { success: false, error: 'Network error' };
+    }
+}
+
+// ==========================================
+// USER MANAGEMENT (Simplified - No Auto-Register)
+// ==========================================
+
+async function checkUserStatus() {
+    const token = localStorage.getItem('token');
+    const deviceId = getOrCreateDeviceId();
+    
+    if (!token) {
+        console.log('⚠️ Kein Token vorhanden - Aktivierung erforderlich');
+        return { hasToken: false };
+    }
+    
+    // Token validieren
+    try {
+        const response = await fetch(
+            `${BACKEND_CONFIG.url}/api/auth/validate?token=${token}&deviceId=${deviceId}`
+        );
+        const data = await response.json();
+        
+        if (data.valid) {
+            console.log('✅ Token gültig');
+            return { hasToken: true, valid: true, user: data.user };
+        } else {
+            console.log('❌ Token ungültig oder Device-Mismatch');
+            return { hasToken: true, valid: false, error: data.error };
+        }
+    } catch (err) {
+        console.error('❌ Token-Check fehlgeschlagen:', err);
+        return { hasToken: true, valid: false, error: 'Network error' };
     }
 }
 
@@ -108,9 +114,8 @@ async function syncCoffeesToBackend(coffees) {
         const deviceId = localStorage.getItem('deviceId');
         
         if (!token) {
-            console.log('⚠️ Kein Token - registriere User erst');
-            await ensureUserRegistered();
-            return syncCoffeesToBackend(coffees); // Retry
+            console.log('⚠️ Kein Token - Sync nicht möglich (Aktivierung erforderlich)');
+            return;
         }
         
         const response = await fetch(`${BACKEND_CONFIG.url}/api/coffees`, {
@@ -205,11 +210,17 @@ function mergeCoffees(localCoffees, backendCoffees) {
 async function initBackendSync() {
     console.log('🔄 Initialisiere Backend-Sync...');
     
-    // 1. Registriere User falls nötig
-    const user = await ensureUserRegistered();
+    // 1. Prüfe User-Status (kein Auto-Register!)
+    const userStatus = await checkUserStatus();
     
-    if (!user) {
-        console.log('⚠️ Backend-Sync deaktiviert (Offline oder Fehler)');
+    if (!userStatus.hasToken) {
+        console.log('⚠️ Kein Token - Backend-Sync pausiert bis zur Aktivierung');
+        BACKEND_CONFIG.syncEnabled = false;
+        return;
+    }
+    
+    if (!userStatus.valid) {
+        console.log('⚠️ Token ungültig - Backend-Sync deaktiviert');
         BACKEND_CONFIG.syncEnabled = false;
         return;
     }
@@ -223,15 +234,19 @@ async function initBackendSync() {
     
     // 4. Speichere merged version
     localStorage.setItem('coffees', JSON.stringify(mergedCoffees));
-    coffees = mergedCoffees;
+    if (typeof coffees !== 'undefined') {
+        coffees = mergedCoffees;
+    }
     
     // 5. Sync zurück zum Backend (falls lokale Änderungen)
     if (mergedCoffees.length > 0) {
         await syncCoffeesToBackend(mergedCoffees);
     }
     
-    // 6. Re-render UI
-    renderCoffees();
+    // 6. Re-render UI (falls renderCoffees existiert)
+    if (typeof renderCoffees === 'function') {
+        renderCoffees();
+    }
     
     console.log('✅ Backend-Sync initialisiert');
 }
@@ -287,3 +302,7 @@ if (document.readyState === 'loading') {
 }
 
 console.log('📦 Backend-Sync Modul geladen');
+
+// Expose functions für index.html
+window.validateAndSaveToken = validateAndSaveToken;
+window.checkUserStatus = checkUserStatus;
