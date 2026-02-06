@@ -1647,187 +1647,462 @@
             }, 0);
         }
 
-        function getGrinderSettings(grinder, processLower) {
-            let baseSettings;
-            
-            if (grinder === 'comandante') {
-                // Comandante C40 MK3 Nitro Blade settings
-                // 1 full rotation = 8 clicks
-                if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
-                    processLower.includes('carbonic') || processLower.includes('extended')) {
-                    baseSettings = { min: 20, max: 22 };
-                } else if (processLower.includes('natural') || processLower.includes('honey') || 
-                           processLower.includes('yeast')) {
-                    baseSettings = { min: 24, max: 26 };
-                } else {
-                    baseSettings = { min: 22, max: 24 };
-                }
-                
-                // Adjust for water hardness
-                if (waterHardness) {
-                    if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
-                        baseSettings.min -= 2;
-                        baseSettings.max -= 2;
-                    } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
-                        baseSettings.min += 2;
-                        baseSettings.max += 2;
-                    }
-                }
-                
-                return `${baseSettings.min}-${baseSettings.max} clicks`;
-            } else {
-                // Fellow Ode Gen2 settings
-                if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
-                    processLower.includes('carbonic') || processLower.includes('extended')) {
-                    baseSettings = { min: 3.0, max: 3.5 };
-                } else if (processLower.includes('natural') || processLower.includes('honey') || 
-                           processLower.includes('yeast')) {
-                    baseSettings = { min: 4.0, max: 4.5 };
-                } else {
-                    baseSettings = { min: 3.5, max: 4.0 };
-                }
-                
-                // Adjust for water hardness
-                if (waterHardness) {
-                    if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
-                        baseSettings.min -= 0.5;
-                        baseSettings.max -= 0.5;
-                    } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
-                        baseSettings.min += 0.5;
-                        baseSettings.max += 0.5;
-                    }
-                }
-                
-                return `${baseSettings.min.toFixed(1)}-${baseSettings.max.toFixed(1)}`;
-            }
-        }
+
 
         function getGrinderLabel(grinder) {
             return grinder === 'comandante' ? 'Comandante C40 MK3' : 'Fellow Ode Gen2';
         }
 
+        // ==========================================
+        // ERWEITERTE BREW-PARAMETER ENGINE
+        // Processing + Altitude + Cultivar + Origin
+        // ==========================================
+
+        /**
+         * Hauptfunktion - orchestriert alle Parameter
+         */
         function getBrewRecommendations(coffee) {
-            const processLower = coffee.process.toLowerCase();
             const amount = coffee.customAmount || coffeeAmount;
             const grinder = coffee.selectedGrinder || preferredGrinder;
             
-            const grindSetting = coffee.customGrind || getGrinderSettings(grinder, processLower);
-            const temperature = coffee.customTemp || getDefaultTemp(processLower);
+            // 1. Basis-Parameter aus Processing
+            const baseParams = getProcessingBaseParams(coffee.process);
             
-            const waterAmount = Math.round(amount * 16);
-            const bloom = Math.round(amount * 3);
-            const secondPour = Math.round(waterAmount * 0.5);
-            const thirdPour = Math.round(waterAmount * 0.83);
-            const finalPour = waterAmount;
+            // 2. Altitude-Anpassung
+            const altitudeAdjusted = adjustForAltitude(baseParams, coffee.altitude);
             
-            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
-                processLower.includes('carbonic') || processLower.includes('extended')) {
+            // 3. Cultivar-Anpassung
+            const cultivarAdjusted = adjustForCultivar(altitudeAdjusted, coffee.cultivar);
+            
+            // 4. Origin-Anpassung
+            const originAdjusted = adjustForOrigin(cultivarAdjusted, coffee.origin);
+            
+            // 5. Wasserhärte
+            const finalParams = adjustForWaterHardness(originAdjusted);
+            
+            // 6. Custom Overrides
+            const grindSetting = coffee.customGrind || getGrinderValue(finalParams.grindBase, grinder);
+            const temperature = coffee.customTemp || formatTemp(finalParams.tempBase);
+            
+            // 7. Brew Steps berechnen
+            const steps = generateBrewSteps(amount, finalParams.ratio, finalParams.brewStyle);
+            
+            return {
+                grindSetting,
+                grinderLabel: getGrinderLabel(grinder),
+                temperature,
+                ratio: `1:${finalParams.ratio} (${amount}g)`,
+                steps,
+                targetTime: finalParams.targetTime,
+                notes: generateBrewNotes(coffee, finalParams)
+            };
+        }
+
+        /**
+         * Processing-spezifische Basis-Parameter (10 Kategorien)
+         */
+        function getProcessingBaseParams(process) {
+            const processLower = process.toLowerCase();
+            
+            // Experimental: Nitro, CO2-Infused
+            if (processLower.includes('nitro') || processLower.includes('co2') || 
+                processLower.includes('co-infused')) {
                 return {
-                    grindSetting,
-                    grinderLabel: getGrinderLabel(grinder),
-                    temperature,
-                    ratio: `1:16 (${amount}g)`,
-                    steps: [
-                        { time: '0:00', action: `Bloom: ${bloom}g water, wait 30-45 sec` },
-                        { time: '0:45', action: `To ${secondPour}g: Pour slowly in circles` },
-                        { time: '1:15', action: `To ${thirdPour}g: Concentric circles` },
-                        { time: '1:45', action: `To ${finalPour}g: Final pour` }
-                    ],
-                    targetTime: '2:30-3:00',
-                    notes: getBrewNotes(processLower)
-                };
-            } else if (processLower.includes('natural') || processLower.includes('honey') || 
-                       processLower.includes('yeast')) {
-                const waterAmountNatural = Math.round(amount * 16.7);
-                const bloomNatural = Math.round(amount * 3.3);
-                const secondPourNatural = Math.round(waterAmountNatural * 0.52);
-                const thirdPourNatural = Math.round(waterAmountNatural * 0.84);
-                return {
-                    grindSetting,
-                    grinderLabel: getGrinderLabel(grinder),
-                    temperature,
-                    ratio: `1:16.7 (${amount}g)`,
-                    steps: [
-                        { time: '0:00', action: `Bloom: ${bloomNatural}g water, make crater, 45 sec` },
-                        { time: '0:45', action: `To ${secondPourNatural}g: Pour slowly` },
-                        { time: '1:20', action: `To ${thirdPourNatural}g: Concentric circles` },
-                        { time: '1:50', action: `To ${waterAmountNatural}g: Final pour` }
-                    ],
+                    grindBase: { comandante: 18, fellow: 2.8 },
+                    tempBase: { min: 90, max: 91 },
+                    ratio: 15.5,
+                    brewStyle: 'slow',
                     targetTime: '2:45-3:15',
-                    notes: getBrewNotes(processLower)
+                    category: 'experimental-nitro'
                 };
-            } else {
+            }
+            
+            // Anaerobic Natural
+            if (processLower.includes('anaerobic') && processLower.includes('natural')) {
                 return {
-                    grindSetting,
-                    grinderLabel: getGrinderLabel(grinder),
-                    temperature,
-                    ratio: `1:16 (${amount}g)`,
-                    steps: [
-                        { time: '0:00', action: `Bloom: ${bloom}g water, 30-40 sec` },
-                        { time: '0:40', action: `To ${secondPour}g: Pour evenly` },
-                        { time: '1:15', action: `To ${thirdPour}g: Concentric circles` },
-                        { time: '1:45', action: `To ${finalPour}g: Final pour` }
-                    ],
+                    grindBase: { comandante: 20, fellow: 3.2 },
+                    tempBase: { min: 91, max: 92 },
+                    ratio: 16.5,
+                    brewStyle: 'controlled',
                     targetTime: '2:30-3:00',
-                    notes: getBrewNotes(processLower)
+                    category: 'anaerobic-natural'
                 };
+            }
+            
+            // Anaerobic Washed
+            if (processLower.includes('anaerobic') && processLower.includes('washed')) {
+                return {
+                    grindBase: { comandante: 19, fellow: 3.0 },
+                    tempBase: { min: 91, max: 92 },
+                    ratio: 16,
+                    brewStyle: 'controlled',
+                    targetTime: '2:30-3:00',
+                    category: 'anaerobic-washed'
+                };
+            }
+            
+            // Carbonic Maceration
+            if (processLower.includes('carbonic')) {
+                return {
+                    grindBase: { comandante: 20, fellow: 3.3 },
+                    tempBase: { min: 90, max: 91 },
+                    ratio: 16,
+                    brewStyle: 'slow',
+                    targetTime: '2:45-3:15',
+                    category: 'carbonic'
+                };
+            }
+            
+            // Extended Fermentation
+            if (processLower.includes('extended') || processLower.includes('long ferment')) {
+                return {
+                    grindBase: { comandante: 21, fellow: 3.4 },
+                    tempBase: { min: 91, max: 92 },
+                    ratio: 16.2,
+                    brewStyle: 'controlled',
+                    targetTime: '2:30-3:00',
+                    category: 'extended-fermentation'
+                };
+            }
+            
+            // Yeast Inoculated
+            if (processLower.includes('yeast')) {
+                return {
+                    grindBase: { comandante: 23, fellow: 3.8 },
+                    tempBase: { min: 92, max: 93 },
+                    ratio: 16.5,
+                    brewStyle: 'standard',
+                    targetTime: '2:30-3:00',
+                    category: 'yeast'
+                };
+            }
+            
+            // Honey Process (Yellow/Red/Black)
+            if (processLower.includes('honey')) {
+                let grindBase, tempBase;
+                
+                if (processLower.includes('yellow')) {
+                    grindBase = { comandante: 23, fellow: 3.6 };
+                    tempBase = { min: 92, max: 93 };
+                } else if (processLower.includes('black')) {
+                    grindBase = { comandante: 26, fellow: 4.2 };
+                    tempBase = { min: 93, max: 94 };
+                } else {
+                    // Red Honey oder unspecified
+                    grindBase = { comandante: 24, fellow: 3.9 };
+                    tempBase = { min: 93, max: 94 };
+                }
+                
+                return {
+                    grindBase,
+                    tempBase,
+                    ratio: 16.7,
+                    brewStyle: 'fruity',
+                    targetTime: '2:45-3:15',
+                    category: 'honey'
+                };
+            }
+            
+            // Natural Process
+            if (processLower.includes('natural')) {
+                return {
+                    grindBase: { comandante: 25, fellow: 4.1 },
+                    tempBase: { min: 93, max: 94 },
+                    ratio: 16.7,
+                    brewStyle: 'fruity',
+                    targetTime: '2:45-3:15',
+                    category: 'natural'
+                };
+            }
+            
+            // Washed (Default)
+            return {
+                grindBase: { comandante: 22, fellow: 3.5 },
+                tempBase: { min: 92, max: 93 },
+                ratio: 16,
+                brewStyle: 'standard',
+                targetTime: '2:30-3:00',
+                category: 'washed'
+            };
+        }
+
+        /**
+         * Altitude-Anpassung (Höhenlage)
+         */
+        function adjustForAltitude(params, altitudeStr) {
+            const altitude = parseInt(altitudeStr) || 1500;
+            
+            let grindAdjust = 0;
+            let tempAdjust = 0;
+            
+            if (altitude < 1200) {
+                grindAdjust = +2;
+                tempAdjust = -1;
+            } else if (altitude < 1400) {
+                grindAdjust = +1;
+                tempAdjust = 0;
+            } else if (altitude >= 1800) {
+                grindAdjust = -2;
+                tempAdjust = +1;
+            } else if (altitude >= 1600) {
+                grindAdjust = -1;
+                tempAdjust = 0;
+            }
+            
+            return {
+                ...params,
+                grindBase: {
+                    comandante: params.grindBase.comandante + grindAdjust,
+                    fellow: params.grindBase.fellow + (grindAdjust * 0.25)
+                },
+                tempBase: {
+                    min: params.tempBase.min + tempAdjust,
+                    max: params.tempBase.max + tempAdjust
+                },
+                altitudeAdjustment: { grindAdjust, tempAdjust, altitude }
+            };
+        }
+
+        /**
+         * Cultivar-Anpassung (Varietät)
+         */
+        function adjustForCultivar(params, cultivarStr) {
+            const cultivar = cultivarStr.toLowerCase();
+            
+            let grindAdjust = 0;
+            let tempAdjust = 0;
+            let category = 'balanced';
+            
+            // Delicate Cultivars
+            if (cultivar.includes('gesha') || cultivar.includes('geisha') ||
+                cultivar.includes('sl28') || cultivar.includes('sl34') ||
+                cultivar.includes('bourbon') || cultivar.includes('typica')) {
+                grindAdjust = -1;
+                tempAdjust = -1;
+                category = 'delicate';
+            }
+            
+            // Robust Cultivars
+            else if (cultivar.includes('pacamara') || cultivar.includes('maragogype') ||
+                     cultivar.includes('catimor') || cultivar.includes('sarchimor') ||
+                     cultivar.includes('robusta')) {
+                grindAdjust = +1;
+                tempAdjust = +1;
+                category = 'robust';
+            }
+            
+            return {
+                ...params,
+                grindBase: {
+                    comandante: params.grindBase.comandante + grindAdjust,
+                    fellow: params.grindBase.fellow + (grindAdjust * 0.25)
+                },
+                tempBase: {
+                    min: params.tempBase.min + tempAdjust,
+                    max: params.tempBase.max + tempAdjust
+                },
+                cultivarAdjustment: { grindAdjust, tempAdjust, category }
+            };
+        }
+
+        /**
+         * Origin-Anpassung (Region)
+         */
+        function adjustForOrigin(params, originStr) {
+            const origin = originStr.toLowerCase();
+            
+            let grindAdjust = 0;
+            let tempAdjust = 0;
+            let region = 'unknown';
+            
+            // Afrika
+            if (origin.includes('ethiopia') || origin.includes('kenya') ||
+                origin.includes('rwanda') || origin.includes('burundi') ||
+                origin.includes('tanzania')) {
+                grindAdjust = -1;
+                tempAdjust = 0;
+                region = 'africa';
+            }
+            
+            // Asien
+            else if (origin.includes('indonesia') || origin.includes('sumatra') ||
+                     origin.includes('java') || origin.includes('india') ||
+                     origin.includes('vietnam') || origin.includes('papua')) {
+                grindAdjust = +1;
+                tempAdjust = +1;
+                region = 'asia';
+            }
+            
+            // Lateinamerika (balanced)
+            else {
+                region = 'latin-america';
+            }
+            
+            return {
+                ...params,
+                grindBase: {
+                    comandante: params.grindBase.comandante + grindAdjust,
+                    fellow: params.grindBase.fellow + (grindAdjust * 0.25)
+                },
+                tempBase: {
+                    min: params.tempBase.min + tempAdjust,
+                    max: params.tempBase.max + tempAdjust
+                },
+                originAdjustment: { grindAdjust, tempAdjust, region }
+            };
+        }
+
+        /**
+         * Wasserhärte-Anpassung
+         */
+        function adjustForWaterHardness(params) {
+            if (!waterHardness) return params;
+            
+            let grindAdjust = 0;
+            let tempAdjust = 0;
+            
+            if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
+                grindAdjust = -2;
+                tempAdjust = +1;
+            } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
+                grindAdjust = +2;
+                tempAdjust = -1;
+            }
+            
+            return {
+                ...params,
+                grindBase: {
+                    comandante: params.grindBase.comandante + grindAdjust,
+                    fellow: params.grindBase.fellow + (grindAdjust * 0.5)
+                },
+                tempBase: {
+                    min: params.tempBase.min + tempAdjust,
+                    max: params.tempBase.max + tempAdjust
+                },
+                waterAdjustment: { grindAdjust, tempAdjust }
+            };
+        }
+
+        /**
+         * Grinder-Wert formatieren
+         */
+        function getGrinderValue(grindBase, grinder) {
+            if (grinder === 'comandante') {
+                const clicks = Math.round(grindBase.comandante);
+                return `${clicks} clicks`;
+            } else {
+                const setting = grindBase.fellow.toFixed(1);
+                return setting;
             }
         }
 
-        function getBrewNotes(processLower) {
-            let notes = [];
+        /**
+         * Temperatur formatieren
+         */
+        function formatTemp(tempBase) {
+            return `${tempBase.min}-${tempBase.max}°C`;
+        }
+
+        /**
+         * Brew Steps generieren
+         */
+        function generateBrewSteps(amount, ratio, brewStyle) {
+            const waterAmount = Math.round(amount * ratio);
+            const bloom = Math.round(amount * (brewStyle === 'slow' ? 3.5 : 3));
             
-            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
-                processLower.includes('carbonic') || processLower.includes('extended')) {
-                notes.push('Experimental process - cooler temp for volatile aromas');
-            } else if (processLower.includes('natural') || processLower.includes('honey') || 
-                       processLower.includes('yeast')) {
-                notes.push('Natural process - coarser grind, higher temp');
+            if (brewStyle === 'slow') {
+                return [
+                    { time: '0:00', action: `Bloom: ${bloom}g water, wait 45 sec` },
+                    { time: '0:45', action: `To ${Math.round(waterAmount * 0.45)}g: Very slow circular pour` },
+                    { time: '1:30', action: `To ${Math.round(waterAmount * 0.75)}g: Continue slowly` },
+                    { time: '2:15', action: `To ${waterAmount}g: Final pour` }
+                ];
+            } else if (brewStyle === 'fruity') {
+                const secondPour = Math.round(waterAmount * 0.52);
+                const thirdPour = Math.round(waterAmount * 0.84);
+                return [
+                    { time: '0:00', action: `Bloom: ${bloom}g, create crater, 45 sec` },
+                    { time: '0:45', action: `To ${secondPour}g: Pour slowly` },
+                    { time: '1:20', action: `To ${thirdPour}g: Concentric circles` },
+                    { time: '1:50', action: `To ${waterAmount}g: Final pour` }
+                ];
             } else {
-                notes.push('Standard washed - balanced profile');
+                const secondPour = Math.round(waterAmount * 0.5);
+                const thirdPour = Math.round(waterAmount * 0.83);
+                return [
+                    { time: '0:00', action: `Bloom: ${bloom}g water, 30-40 sec` },
+                    { time: '0:40', action: `To ${secondPour}g: Pour evenly` },
+                    { time: '1:15', action: `To ${thirdPour}g: Concentric circles` },
+                    { time: '1:45', action: `To ${waterAmount}g: Final pour` }
+                ];
+            }
+        }
+
+        /**
+         * Erweiterte Brew Notes generieren
+         */
+        function generateBrewNotes(coffee, params) {
+            const notes = [];
+            
+            // Processing Note
+            const categoryNotes = {
+                'experimental-nitro': 'Nitro process - very delicate, preserve volatile compounds',
+                'anaerobic-natural': 'Anaerobic natural - funky & fruity, control extraction',
+                'anaerobic-washed': 'Anaerobic washed - clean but complex, cooler temp',
+                'carbonic': 'Carbonic maceration - wine-like characteristics, slow extraction',
+                'extended-fermentation': 'Extended fermentation - intense flavors, careful extraction',
+                'yeast': 'Yeast inoculated - unique fermentation notes, standard approach',
+                'honey': 'Honey process - sweet & fruity, balanced extraction',
+                'natural': 'Natural process - full fruit body, coarser grind',
+                'washed': 'Washed process - clean & bright, standard parameters'
+            };
+            notes.push(categoryNotes[params.category] || 'Standard brewing approach');
+            
+            // Altitude Note
+            if (params.altitudeAdjustment) {
+                const alt = params.altitudeAdjustment;
+                if (alt.altitude >= 1800) {
+                    notes.push('High altitude beans - very dense, ground finer');
+                } else if (alt.altitude < 1200) {
+                    notes.push('Low altitude beans - softer, ground coarser');
+                }
             }
             
+            // Cultivar Note
+            if (params.cultivarAdjustment) {
+                const cult = params.cultivarAdjustment;
+                if (cult.category === 'delicate') {
+                    notes.push('Delicate cultivar - gentle extraction, lower temp');
+                } else if (cult.category === 'robust') {
+                    notes.push('Robust cultivar - can handle higher temps & coarser grind');
+                }
+            }
+            
+            // Origin Note
+            if (params.originAdjustment) {
+                const orig = params.originAdjustment;
+                if (orig.region === 'africa') {
+                    notes.push('African origin - floral notes, finer grind');
+                } else if (orig.region === 'asia') {
+                    notes.push('Asian origin - earthy body, coarser grind');
+                }
+            }
+            
+            // Water Note
             if (waterHardness) {
-                if (waterHardness.category === 'very_soft') {
-                    notes.push('Very soft water - grind finer, higher temp');
-                } else if (waterHardness.category === 'soft') {
-                    notes.push('Soft water - slightly finer grind');
-                } else if (waterHardness.category === 'hard') {
-                    notes.push('Hard water - grind coarser, lower temp');
-                } else if (waterHardness.category === 'very_hard') {
-                    notes.push('Very hard water - much coarser grind, consider filtering');
+                if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
+                    notes.push('Soft water - ground finer, higher temp');
+                } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
+                    notes.push('Hard water - ground coarser, consider filtering');
                 }
             }
             
             return notes.join('. ');
         }
 
-        function getDefaultTemp(processLower) {
-            let baseTemp;
-            
-            if (processLower.includes('nitro') || processLower.includes('anaerobic') || 
-                processLower.includes('carbonic') || processLower.includes('extended')) {
-                baseTemp = { min: 91, max: 92 };
-            } else if (processLower.includes('natural') || processLower.includes('honey') || 
-                       processLower.includes('yeast')) {
-                baseTemp = { min: 93, max: 94 };
-            } else {
-                baseTemp = { min: 92, max: 93 };
-            }
-            
-            // Adjust for water hardness
-            if (waterHardness) {
-                if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
-                    baseTemp.min += 1;
-                    baseTemp.max += 1;
-                } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
-                    baseTemp.min -= 1;
-                    baseTemp.max -= 1;
-                }
-            }
-            
-            return `${baseTemp.min}-${baseTemp.max}°C`;
-        }
+
+
+
 
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
