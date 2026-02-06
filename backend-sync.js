@@ -12,7 +12,16 @@ const BACKEND_URL = 'https://brew-buddy-backend-production.up.railway.app';
 function getOrCreateDeviceId() {
     let deviceId = localStorage.getItem('deviceId');
     if (!deviceId) {
-        deviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substring(2, 15);
+        // Gleicher Fingerprint wie in index.html
+        const fingerprint = [
+            navigator.userAgent,
+            navigator.language,
+            screen.width + 'x' + screen.height,
+            new Date().getTimezoneOffset(),
+            navigator.hardwareConcurrency || 'unknown'
+        ].join('|');
+        
+        deviceId = 'device-' + btoa(fingerprint).substring(0, 32).replace(/[^a-zA-Z0-9]/g, '');
         localStorage.setItem('deviceId', deviceId);
         console.log('🆔 Neue Device-ID erstellt:', deviceId);
     }
@@ -24,16 +33,16 @@ function getOrCreateDeviceId() {
 // ==========================================
 
 function saveToken(token) {
-    localStorage.setItem('userToken', token);
+    localStorage.setItem('token', token);
     console.log('💾 Token gespeichert');
 }
 
 function getToken() {
-    return localStorage.getItem('userToken');
+    return localStorage.getItem('token');
 }
 
 function clearToken() {
-    localStorage.removeItem('userToken');
+    localStorage.removeItem('token');
     console.log('🗑️ Token gelöscht');
 }
 
