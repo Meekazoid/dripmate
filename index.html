@@ -1546,36 +1546,49 @@
             </div>
             
             <div class="form-group">
-                <input type="text" id="accessCodeInput" placeholder="insert Token">
+                <label>Access Code / Zugangscode</label>
+                <input type="text" id="accessCodeInput" placeholder="Enter your access code">
                 <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
                     Enter the code you received to activate this device.
                 </p>
             </div>
             
-            <div id="activationStatus" style="display: none; padding: 16px; border-radius: 8px; margin-top: 16px; margin-bottom: 16px;"></div>
+            <div id="activationStatus" style="display: none; padding: 16px; border-radius: 8px; margin-top: 16px;"></div>
             
             <button id="activateDeviceBtn">Activate Device</button>
+            
+            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
+                <div class="form-group">
+                    <label>Backend URL</label>
+                    <input type="text" id="backendUrl" placeholder="https://your-backend.railway.app">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                        Advanced: Change backend URL if needed.
+                    </p>
+                </div>
+                
+                <button id="saveBackendUrlBtn" style="background: var(--bg-secondary); color: var(--text-primary);">Save Backend URL</button>
+            </div>
         </div>
     </div>
 
     <div id="waterModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>💧 Water Hardness</h2>
+                <h2>💧 Wasserhärte</h2>
                 <button class="close-btn" onclick="closeWaterModal()">✕</button>
             </div>
             
             <div style="margin-bottom: 24px; padding: 16px; background: var(--bg-card); border-radius: 12px; border-left: 4px solid #42a5f5;">
-                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">
-                    Water hardness affects coffee extraction. Soft water requires a finer grind and higher temperature, while hard water requires a coarser grind and lower temperature.
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                    Die Wasserhärte beeinflusst die Kaffee-Extraktion. Weiches Wasser benötigt feineren Mahlgrad und höhere Temperatur, hartes Wasser gröberen Mahlgrad und niedrigere Temperatur.
                 </p>
             </div>
             
             <div class="form-group">
-                <label>Postal Code (ZIP)</label>
-                <input type="text" id="zipCodeInput" placeholder="e.g. 10115" maxlength="5" pattern="[0-9]{5}">
+                <label>Postleitzahl (PLZ)</label>
+                <input type="text" id="zipCodeInput" placeholder="z.B. 10115" maxlength="5" pattern="[0-9]{5}">
                 <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
-                    Enter your 5-digit postal code to determine the local water hardness.
+                    Geben Sie Ihre 5-stellige Postleitzahl ein, um die lokale Wasserhärte zu ermitteln.
                 </p>
             </div>
             
@@ -1591,30 +1604,30 @@
                         <strong style="color: var(--text-primary);">Region:</strong> <span id="hardnessRegion">-</span>
                     </div>
                     <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                        <strong style="color: var(--text-primary);">Source:</strong> <span id="hardnessSource">-</span>
+                        <strong style="color: var(--text-primary);">Quelle:</strong> <span id="hardnessSource">-</span>
                     </div>
                 </div>
                 
                 <div style="padding: 16px; background: rgba(66, 165, 245, 0.1); border: 1px solid rgba(66, 165, 245, 0.3); border-radius: 8px; margin-bottom: 16px;">
                     <div style="font-size: 0.75rem; font-weight: 600; color: #42a5f5; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
-                        Brew Adjustments
+                        Brew-Anpassungen
                     </div>
                     <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;" id="hardnessDescriptionDisplay">-</div>
                 </div>
             </div>
             
-            <button onclick="saveWaterHardness()" style="width: 100%; margin-top: 16px;">Save Water Hardness</button>
+            <button onclick="saveWaterHardness()" style="width: 100%; margin-top: 16px;">Wasserhärte Speichern</button>
             
             <div style="margin-top: 24px; padding: 16px; background: var(--bg-card); border-radius: 8px;">
                 <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
-                    Water Hardness Scale (°dH)
+                    Wasserhärte-Skala (°dH)
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem; color: var(--text-secondary);">
-                    <div>0-7 °dH: <strong style="color: var(--text-primary);">Very soft</strong></div>
-                    <div>7-14 °dH: <strong style="color: var(--text-primary);">Soft</strong></div>
-                    <div>14-21 °dH: <strong style="color: var(--text-primary);">Medium</strong></div>
-                    <div>21-28 °dH: <strong style="color: var(--text-primary);">Hard</strong></div>
-                    <div>28+ °dH: <strong style="color: var(--text-primary);">Very hard</strong></div>
+                    <div>0-7 °dH: <strong style="color: var(--text-primary);">Sehr weich</strong></div>
+                    <div>7-14 °dH: <strong style="color: var(--text-primary);">Weich</strong></div>
+                    <div>14-21 °dH: <strong style="color: var(--text-primary);">Mittel</strong></div>
+                    <div>21-28 °dH: <strong style="color: var(--text-primary);">Hart</strong></div>
+                    <div>28+ °dH: <strong style="color: var(--text-primary);">Sehr hart</strong></div>
                 </div>
             </div>
         </div>
@@ -3055,6 +3068,7 @@
 
         function openSettings() {
             document.getElementById('settingsModal').classList.add('active');
+            document.getElementById('backendUrl').value = CONFIG.backendUrl;
             
             const token = localStorage.getItem('token');
             const statusDiv = document.getElementById('activationStatus');
@@ -3074,6 +3088,25 @@
             document.getElementById('settingsModal').classList.remove('active');
         }
 
+        function saveBackendUrl() {
+            const backendUrl = document.getElementById('backendUrl').value.trim();
+            
+            if (backendUrl && !backendUrl.startsWith('http')) {
+                showMessage('error', 'Backend URL must start with http:// or https://');
+                return;
+            }
+            
+            CONFIG.backendUrl = backendUrl;
+            if (typeof BACKEND_CONFIG !== 'undefined') {
+                BACKEND_CONFIG.url = backendUrl;
+            }
+            localStorage.setItem('backendUrl', backendUrl);
+            showMessage('success', '✓ Backend URL saved successfully!');
+            
+            setTimeout(() => {
+                closeSettings();
+            }, 1000);
+        }
 
         async function activateDevice() {
             try {
@@ -3168,17 +3201,17 @@
             const zipCode = document.getElementById('zipCodeInput').value.trim();
             
             if (!zipCode) {
-                alert('Please enter a postal code.');
+                alert('Bitte geben Sie eine Postleitzahl ein.');
                 return;
             }
             
             if (!/^\d{5}$/.test(zipCode)) {
-                alert('Please enter a valid 5-digit postal code.');
+                alert('Bitte geben Sie eine gültige 5-stellige Postleitzahl ein.');
                 return;
             }
             
             if (typeof WaterHardness === 'undefined') {
-                alert('Water hardness module not loaded. Please reload the page.');
+                alert('Wasserhärte-Modul nicht geladen. Bitte laden Sie die Seite neu.');
                 return;
             }
             
@@ -3196,16 +3229,22 @@
                 renderCoffees();
                 
                 setTimeout(() => {
-                    alert(`✓ Water hardness saved!\n\n${hardness.region}: ${hardness.value} °dH (${hardness.category_de})\n\nYour brew parameters have been adjusted.`);
+                    alert(`✓ Wasserhärte gespeichert!\n\n${hardness.region}: ${hardness.value} °dH (${hardness.category_de})\n\nIhre Brew-Parameter wurden angepasst.`);
                 }, 100);
                 
             } catch (error) {
-                alert(`Error loading water hardness:\n${error.message}`);
+                alert(`Fehler beim Laden der Wasserhärte:\n${error.message}`);
             }
         }
 
         // Initialize
         renderCoffees();
+
+        if (!CONFIG.backendUrl) {
+            setTimeout(() => {
+                alert('Welcome to BrewBuddy! Please configure your Backend URL in settings (⚙️) first.');
+            }, 500);
+        }
 
         // Event Listeners
         const settingsBtnControl = document.getElementById('settingsBtnControl');
@@ -3245,6 +3284,12 @@
             };
         }
         
+        const saveBackendBtnElement = document.getElementById('saveBackendUrlBtn');
+        if (saveBackendBtnElement) {
+            saveBackendBtnElement.onclick = function() {
+                saveBackendUrl();
+            };
+        }
 
         const themeBtnElement = document.getElementById('themeToggleBtn');
         if (themeBtnElement) {
