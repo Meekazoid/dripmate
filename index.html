@@ -486,6 +486,57 @@
             opacity: 0.6;
         }
 
+        .favorite-btn {
+            position: absolute;
+            top: -10px;
+            right: 25px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 0;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            opacity: 0.6;
+        }
+
+        .favorite-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            opacity: 1;
+        }
+
+        .favorite-btn:hover {
+            opacity: 1;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .favorite-btn.active:hover {
+            color: white;
+        }
+
+        .star-icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .favorite-btn.active .star-icon {
+            fill: currentColor;
+        }
+
         .delete-icon {
             width: 16px;
             height: 16px;
@@ -664,6 +715,12 @@
             border-radius: 12px;
             font-size: 0.75rem;
             font-weight: 600;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .water-hardness-badge:hover {
+            opacity: 1;
         }
 
         body.light-mode .water-hardness-badge {
@@ -1107,8 +1164,8 @@
         }
 
         .control-btn {
-            width: 56px;
-            height: 56px;
+            width: 50px;
+            height: 50px;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 50%;
@@ -1118,11 +1175,12 @@
             cursor: pointer;
             box-shadow: 0 4px 16px var(--shadow);
             transition: all 0.2s;
+            opacity: 0.6;
         }
 
         .control-icon {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             stroke: var(--text-primary);
             stroke-width: 1.5;
             stroke-linecap: round;
@@ -1133,6 +1191,7 @@
         .control-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px var(--shadow);
+            opacity: 1;
         }
 
         .control-btn:hover .control-icon {
@@ -1142,6 +1201,11 @@
         #waterControlBtn.active {
             background: rgba(66, 165, 245, 0.2);
             border-color: rgba(66, 165, 245, 0.4);
+            opacity: 0.6;
+        }
+
+        #waterControlBtn.active:hover {
+            opacity: 1;
         }
 
         #waterControlBtn.active .control-icon {
@@ -1202,6 +1266,56 @@
 
         .hidden {
             display: none !important;
+        }
+
+        .decaf-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .decaf-card-info {
+            flex: 1;
+        }
+
+        .decaf-card-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .decaf-card-origin {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .restore-btn {
+            padding: 8px 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .restore-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .decaf-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
         }
 
         .loading, .error-message, .success-message {
@@ -1537,6 +1651,14 @@
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
         </div>
+        <div class="control-btn" id="trashBinBtn">
+            <svg class="control-icon" viewBox="0 0 24 24">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+        </div>
         <div class="control-btn" id="waterControlBtn">
             <svg class="control-icon" viewBox="0 0 24 24">
                 <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
@@ -1628,6 +1750,22 @@
                     <div>21-28 °dH: <strong style="color: var(--text-primary);">Hard</strong></div>
                     <div>28+ °dH: <strong style="color: var(--text-primary);">Very hard</strong></div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="decafModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>☕ Decaf</h2>
+                <button class="close-btn" onclick="closeDecafModal()">✕</button>
+            </div>
+            
+            <div id="decafList"></div>
+            
+            <div id="decafEmpty" class="decaf-empty" style="display: none;">
+                <div style="font-size: 3rem; margin-bottom: 16px; opacity: 0.5;">🗑️</div>
+                <p>No deleted coffees</p>
             </div>
         </div>
     </div>
@@ -2238,7 +2376,7 @@
             if (resetBtn) resetBtn.disabled = false;
             
             // Smooth scroll to pour-over steps
-            const card = document.querySelector(`.coffee-card[data-index="${index}"]`);
+            const card = document.querySelector(`.coffee-card[data-original-index="${index}"]`);
             if (card) {
                 const brewSteps = card.querySelector('.brew-steps');
                 if (brewSteps) {
@@ -2518,12 +2656,17 @@
             const amount = coffee.customAmount || coffeeAmount;
             
             return `
-                <div class="coffee-card" data-index="${index}">
+                <div class="coffee-card" data-original-index="${index}">
                     <div class="coffee-header">
                         <div>
                             <div class="coffee-name">${coffee.name}</div>
                             <div class="coffee-origin">${coffee.origin}</div>
                         </div>
+                        <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="toggleFavorite(${index}); event.stopPropagation();">
+                            <svg class="star-icon" viewBox="0 0 24 24">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </button>
                         <button class="delete-btn" onclick="deleteCoffee(${index}); event.stopPropagation();">
                             <svg class="delete-icon" viewBox="0 0 24 24">
                                 <polyline points="3 6 5 6 21 6"></polyline>
@@ -2720,52 +2863,211 @@
             const listEl = document.getElementById('coffeeList');
             const emptyState = document.getElementById('emptyState');
             
-            if (coffees.length === 0) {
+            // SCHRITT 1: Filter - NUR nicht-gelöschte Karten anzeigen
+            const activeCoffees = coffees
+                .map((coffee, originalIndex) => ({ coffee, originalIndex }))
+                .filter(item => item.coffee.deleted !== true);
+            
+            if (activeCoffees.length === 0) {
                 listEl.innerHTML = '';
                 emptyState.style.display = 'block';
-            } else {
-                emptyState.style.display = 'none';
-                listEl.innerHTML = coffees.map((coffee, index) => renderCoffeeCard(coffee, index)).join('');
-                
-                document.querySelectorAll('.coffee-card').forEach(card => {
-                    card.addEventListener('click', function(e) {
-                        if (e.target.closest('.delete-btn') || 
-                            e.target.closest('.timer-btn') || 
-                            e.target.closest('.scale-option') ||
-                            e.target.closest('.apply-suggestion-btn') ||
-                            e.target.closest('input[type="range"]')) {
-                            return;
-                        }
-                        
-                        document.querySelectorAll('.coffee-card').forEach(c => {
-                            if (c !== this) c.classList.remove('expanded');
-                        });
-                        this.classList.toggle('expanded');
-                    });
-                });
+                return;
             }
+            
+            emptyState.style.display = 'none';
+            
+            // SCHRITT 2: Sortierung
+            // Prio 1: Favoriten zuerst
+            // Prio 2: Innerhalb Favoriten - neueste Favorisierung zuerst (favoritedAt DESC)
+            // Prio 3: Nicht-Favoriten chronologisch nach Erstellungsdatum (addedDate DESC)
+            const sortedCoffees = activeCoffees.sort((a, b) => {
+                const aFav = a.coffee.favorite === true;
+                const bFav = b.coffee.favorite === true;
+                
+                // Favoriten kommen immer vor Nicht-Favoriten
+                if (aFav && !bFav) return -1;
+                if (!aFav && bFav) return 1;
+                
+                // Beide favorisiert: Sortiere nach Favorisierungs-Zeitstempel (neueste zuerst)
+                if (aFav && bFav) {
+                    const aTime = new Date(a.coffee.favoritedAt || 0).getTime();
+                    const bTime = new Date(b.coffee.favoritedAt || 0).getTime();
+                    return bTime - aTime;
+                }
+                
+                // Beide nicht favorisiert: Sortiere nach Erstellungsdatum (neueste zuerst)
+                const aDate = new Date(a.coffee.addedDate || 0).getTime();
+                const bDate = new Date(b.coffee.addedDate || 0).getTime();
+                return bDate - aDate;
+            });
+            
+            // SCHRITT 3: HTML rendern
+            listEl.innerHTML = sortedCoffees.map(item => 
+                renderCoffeeCard(item.coffee, item.originalIndex)
+            ).join('');
+            
+            // SCHRITT 4: Event Listeners für Click-Expansion
+            document.querySelectorAll('.coffee-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Ignoriere Clicks auf Buttons und Controls
+                    if (e.target.closest('.delete-btn') || 
+                        e.target.closest('.favorite-btn') ||
+                        e.target.closest('.timer-btn') || 
+                        e.target.closest('.scale-option') ||
+                        e.target.closest('.apply-suggestion-btn') ||
+                        e.target.closest('input[type="range"]') ||
+                        e.target.closest('input[type="date"]')) {
+                        return;
+                    }
+                    
+                    // Collapse alle anderen Karten
+                    document.querySelectorAll('.coffee-card').forEach(c => {
+                        if (c !== this) c.classList.remove('expanded');
+                    });
+                    
+                    // Toggle diese Karte
+                    this.classList.toggle('expanded');
+                });
+            });
         }
 
-        function deleteCoffee(index) {
-            if (confirm('Really delete this coffee?')) {
-                coffees.splice(index, 1);
+        function deleteCoffee(originalIndex) {
+            // Validiere Index
+            if (originalIndex < 0 || originalIndex >= coffees.length) {
+                console.error('Invalid index:', originalIndex);
+                return;
+            }
+            
+            if (confirm('Move this coffee to Decaf?')) {
+                // Setze deleted flag statt Karte zu entfernen
+                coffees[originalIndex].deleted = true;
+                coffees[originalIndex].deletedAt = new Date().toISOString();
+                
+                // Speichere SOFORT in localStorage
                 localStorage.setItem('coffees', JSON.stringify(coffees));
+                
+                // Backend sync
+                if (typeof window.backendSync !== 'undefined' && window.backendSync.syncCoffeesToBackend) {
+                    window.backendSync.syncCoffeesToBackend(coffees);
+                }
+                
+                // Render neu
                 renderCoffees();
             }
         }
 
-        function updateCoffeeAmountLive(value, cardIndex) {
-            const amount = parseInt(value);
-            coffees[cardIndex].customAmount = amount;
+        function toggleFavorite(originalIndex) {
+            // Validiere Index
+            if (originalIndex < 0 || originalIndex >= coffees.length) {
+                console.error('Invalid index:', originalIndex);
+                return;
+            }
             
-            const valueDisplay = document.getElementById(`ratioValue-${cardIndex}`);
+            const coffee = coffees[originalIndex];
+            
+            // Toggle favorite status
+            coffee.favorite = !coffee.favorite;
+            
+            if (coffee.favorite) {
+                coffee.favoritedAt = new Date().toISOString();
+            } else {
+                delete coffee.favoritedAt;
+            }
+            
+            // Speichere SOFORT in localStorage
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+            
+            // Backend sync
+            if (typeof window.backendSync !== 'undefined' && window.backendSync.syncCoffeesToBackend) {
+                window.backendSync.syncCoffeesToBackend(coffees);
+            }
+            
+            // Render neu - Favoriten kommen nach oben
+            renderCoffees();
+        }
+
+        function restoreCoffee(originalIndex) {
+            // Validiere Index
+            if (originalIndex < 0 || originalIndex >= coffees.length) {
+                console.error('Invalid index:', originalIndex);
+                return;
+            }
+            
+            // Entferne deleted flag
+            coffees[originalIndex].deleted = false;
+            delete coffees[originalIndex].deletedAt;
+            
+            // Speichere SOFORT in localStorage
+            localStorage.setItem('coffees', JSON.stringify(coffees));
+            
+            // Backend sync
+            if (typeof window.backendSync !== 'undefined' && window.backendSync.syncCoffeesToBackend) {
+                window.backendSync.syncCoffeesToBackend(coffees);
+            }
+            
+            // Render beide Listen neu
+            renderDecafList();
+            renderCoffees();
+        }
+
+        function renderDecafList() {
+            const decafListEl = document.getElementById('decafList');
+            const decafEmptyEl = document.getElementById('decafEmpty');
+            
+            // Filter: NUR gelöschte Karten anzeigen
+            const deletedCoffees = coffees
+                .map((coffee, index) => ({ coffee, index }))
+                .filter(item => item.coffee.deleted === true);
+            
+            if (deletedCoffees.length === 0) {
+                decafListEl.innerHTML = '';
+                decafEmptyEl.style.display = 'block';
+                return;
+            }
+            
+            decafEmptyEl.style.display = 'none';
+            
+            // Sortiere nach Lösch-Zeitpunkt (neueste zuerst)
+            const sortedDeleted = deletedCoffees.sort((a, b) => {
+                const aTime = new Date(a.coffee.deletedAt || 0).getTime();
+                const bTime = new Date(b.coffee.deletedAt || 0).getTime();
+                return bTime - aTime;
+            });
+            
+            decafListEl.innerHTML = sortedDeleted.map(item => `
+                <div class="decaf-card">
+                    <div class="decaf-card-info">
+                        <div class="decaf-card-name">${item.coffee.name}</div>
+                        <div class="decaf-card-origin">${item.coffee.origin}</div>
+                    </div>
+                    <button class="restore-btn" onclick="restoreCoffee(${item.index})">
+                        Restore
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openDecafModal() {
+            renderDecafList();
+            document.getElementById('decafModal').classList.add('active');
+        }
+
+        function closeDecafModal() {
+            document.getElementById('decafModal').classList.remove('active');
+        }
+
+        function updateCoffeeAmountLive(value, originalIndex) {
+            const amount = parseInt(value);
+            coffees[originalIndex].customAmount = amount;
+            
+            const valueDisplay = document.getElementById(`ratioValue-${originalIndex}`);
             if (valueDisplay) {
                 valueDisplay.textContent = amount + 'g';
             }
             
-            const expandedCard = document.querySelector(`.coffee-card[data-index="${cardIndex}"]`);
+            const expandedCard = document.querySelector(`.coffee-card[data-original-index="${originalIndex}"]`);
             if (expandedCard && expandedCard.classList.contains('expanded')) {
-                const coffee = coffees[cardIndex];
+                const coffee = coffees[originalIndex];
                 const brewParams = getBrewRecommendations(coffee);
                 
                 const paramBoxes = expandedCard.querySelectorAll('.param-box .param-value');
@@ -3296,6 +3598,24 @@
                 e.preventDefault();
                 e.stopPropagation();
                 openWaterModal();
+            };
+        }
+
+        const trashBinBtnElement = document.getElementById('trashBinBtn');
+        if (trashBinBtnElement) {
+            trashBinBtnElement.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openDecafModal();
+            };
+        }
+
+        const decafModalElement = document.getElementById('decafModal');
+        if (decafModalElement) {
+            decafModalElement.onclick = function(e) {
+                if (e.target === decafModalElement) {
+                    closeDecafModal();
+                }
             };
         }
 
