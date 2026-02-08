@@ -92,7 +92,7 @@ async function switchGlobalGrinder(grinder) {
 }
 
 function getGrinderLabel(grinder) {
-    return grinder === 'comandante' ? 'Comandante C40 MK3' : 'Fellow Ode Gen2';
+    return grinder === 'comandante' ? 'Comandante' : 'Fellow Ode';
 }
 
 // ==========================================
@@ -172,6 +172,7 @@ function getBrewRecommendations(coffee) {
         grinderLabel: getGrinderLabel(grinder),
         temperature,
         ratio: `1:${finalParams.ratio} (${amount}g)`,
+        ratioNumber: finalParams.ratio,
         waterAmountMl,
         steps,
         targetTime: finalParams.targetTime,
@@ -786,7 +787,7 @@ function renderCoffeeCard(coffee, index) {
                 </div>
                 
                 <div class="ratio-control">
-                    <h4>Coffee Amount</h4>
+                    <h4 id="amount-header-${index}">Coffee Amount – Ratio 1:${brewParams.ratioNumber}</h4>
                     <div class="ratio-slider">
                         <div class="ratio-value-display">
                             <span class="ratio-value" id="ratioValue-${index}">${amount}g</span>
@@ -825,8 +826,8 @@ function renderCoffeeCard(coffee, index) {
                         </div>
                     </div>
                     <div class="param-box">
-                        <div class="param-label">Ratio / Water</div>
-                        <div class="param-value">1:${brewParams.ratio.split(':')[1].split(' ')[0]} / (${brewParams.waterAmountMl} ml)</div>
+                        <div class="param-label">Water</div>
+                        <div class="param-value" id="water-value-${index}">${brewParams.waterAmountMl}ml</div>
                     </div>
                     <div class="param-box">
                         <div class="param-label">Target Time</div>
@@ -1053,15 +1054,19 @@ function updateCoffeeAmountLive(value, originalIndex) {
     const valueDisplay = document.getElementById(`ratioValue-${originalIndex}`);
     if (valueDisplay) valueDisplay.textContent = amount + 'g';
 
+    const brewParams = getBrewRecommendations(coffees[originalIndex]);
+
+    // Update header with new ratio
+    const headerEl = document.getElementById(`amount-header-${originalIndex}`);
+    if (headerEl) headerEl.textContent = `Coffee Amount – Ratio 1:${brewParams.ratioNumber}`;
+
+    // Update water value
+    const waterEl = document.getElementById(`water-value-${originalIndex}`);
+    if (waterEl) waterEl.textContent = `${brewParams.waterAmountMl}ml`;
+
+    // Update brew steps
     const expandedCard = document.querySelector(`.coffee-card[data-original-index="${originalIndex}"]`);
     if (expandedCard && expandedCard.classList.contains('expanded')) {
-        const brewParams = getBrewRecommendations(coffees[originalIndex]);
-
-        const paramBoxes = expandedCard.querySelectorAll('.param-box .param-value');
-        if (paramBoxes.length >= 3) {
-            paramBoxes[2].textContent = `(${brewParams.waterAmountMl} ml)`;
-        }
-
         const steps = expandedCard.querySelectorAll('.step');
         brewParams.steps.forEach((step, i) => {
             if (steps[i]) steps[i].querySelector('.step-action').textContent = step.action;
