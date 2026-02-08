@@ -715,7 +715,7 @@
             border-radius: 12px;
             font-size: 0.75rem;
             font-weight: 600;
-            opacity: 0.6;
+            opacity: 0.4;
             transition: opacity 0.2s;
         }
 
@@ -1123,6 +1123,9 @@
             color: var(--accent);
             margin-bottom: 12px;
             font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .suggestion-text {
@@ -1164,8 +1167,8 @@
         }
 
         .control-btn {
-            width: 50px;
-            height: 50px;
+            width: 42px;
+            height: 42px;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 50%;
@@ -1175,12 +1178,12 @@
             cursor: pointer;
             box-shadow: 0 4px 16px var(--shadow);
             transition: all 0.2s;
-            opacity: 0.6;
+            opacity: 0.4;
         }
 
         .control-icon {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             stroke: var(--text-primary);
             stroke-width: 1.5;
             stroke-linecap: round;
@@ -1201,7 +1204,7 @@
         #waterControlBtn.active {
             background: rgba(66, 165, 245, 0.2);
             border-color: rgba(66, 165, 245, 0.4);
-            opacity: 0.6;
+            opacity: 0.4;
         }
 
         #waterControlBtn.active:hover {
@@ -2270,6 +2273,11 @@
             }
         }
 
+        function boldWeights(text) {
+            // Macht alle Gewichtsangaben (z.B. 45g, 300g) fett
+            return text.replace(/(\d+g)/g, '<strong>$1</strong>');
+        }
+
         function generateBrewNotes(coffee, params) {
             const notes = [];
             
@@ -2571,7 +2579,14 @@
             }
             
             suggestionDiv.innerHTML = `
-                <div class="suggestion-title">💡 Suggested Adjustments</div>
+                <div class="suggestion-title">
+                    <svg style="width: 18px; height: 18px; flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                        <path d="M9 18h6"></path>
+                        <path d="M10 22h4"></path>
+                    </svg>
+                    Suggested Adjustments
+                </div>
                 <div class="suggestion-text">${suggestions.join('<br>')}</div>
                 <div class="suggestion-values">
                     ${newGrind ? `<div class="suggestion-value"><strong>New Grind:</strong> ${newGrind}</div>` : ''}
@@ -2731,7 +2746,7 @@
                             </div>
                             <div class="param-box">
                                 <div class="param-label">Ratio / Water</div>
-                                <div class="param-value">(${brewParams.waterAmountMl} ml)</div>
+                                <div class="param-value">1:${brewParams.ratio.split(':')[1].split(' ')[0]} / (${brewParams.waterAmountMl} ml)</div>
                             </div>
                             <div class="param-box">
                                 <div class="param-label">Target Time</div>
@@ -2758,7 +2773,7 @@
                             ${brewParams.steps.map((step, stepIndex) => `
                                 <div class="step">
                                     <div class="step-time">${step.time}</div>
-                                    <div class="step-action">${step.action}</div>
+                                    <div class="step-action">${boldWeights(step.action)}</div>
                                     <div class="step-progress">
                                         <div class="step-progress-bar" id="progress-bar-${index}-${stepIndex}"></div>
                                     </div>
@@ -2841,8 +2856,17 @@
                         </div>
                         
                         <div style="margin-top: 20px; padding: 16px; background: var(--bg-secondary); border-radius: 8px; font-size: 0.9rem;">
-                            <strong style="color: var(--accent);">💡 Tip:</strong>
-                            <span style="color: var(--text-secondary);"> ${brewParams.notes}</span>
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <svg style="width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                                    <path d="M9 18h6"></path>
+                                    <path d="M10 22h4"></path>
+                                </svg>
+                                <div>
+                                    <strong style="color: var(--accent); display: block; margin-bottom: 6px;">Tip:</strong>
+                                    <span style="color: var(--text-secondary); line-height: 1.5;">${brewParams.notes}</span>
+                                </div>
+                            </div>
                         </div>
                         
                         ${coffee.cultivar && coffee.cultivar !== 'Unknown' ? `
