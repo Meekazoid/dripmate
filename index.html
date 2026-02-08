@@ -23,6 +23,7 @@
             overflow-x: hidden;
             overflow-y: auto;
             width: 100%;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -308,9 +309,10 @@
             padding: 12px 20px;
             margin-bottom: 32px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
+            justify-content: center;
+            gap: 12px;
             box-shadow: 0 4px 12px var(--shadow);
             transition: all 0.3s ease;
         }
@@ -341,8 +343,9 @@
         .grinder-toggle {
             display: flex;
             gap: 8px;
-            flex: 1;
+            width: 100%;
             max-width: 420px;
+            justify-content: center;
         }
 
         .grinder-option {
@@ -803,7 +806,7 @@
 
         .param-box {
             background: var(--bg-card);
-            padding: 14px;
+            padding: 10px;
             border-radius: 10px;
             text-align: center;
         }
@@ -1273,19 +1276,13 @@
             }
 
             .global-grinder-selector {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
+                gap: 10px;
                 padding: 14px 16px;
                 top: 10px;
             }
             
-            .grinder-selector-label {
-                justify-content: center;
-            }
-            
             .grinder-toggle {
-                max-width: 100%;
+                width: 100%;
             }
             
             .grinder-option {
@@ -1333,15 +1330,30 @@
             }
 
             .param-box {
-                padding: 12px;
+                padding: 10px;
             }
 
             .param-value {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
 
             .step-action {
                 font-size: 0.8rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .global-grinder-selector {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .grinder-selector-label {
+                margin-right: auto;
+            }
+            
+            .grinder-toggle {
+                margin-right: auto;
             }
         }
 
@@ -1546,7 +1558,7 @@
             </div>
             
             <div class="form-group">
-                <input type="text" id="accessCodeInput" placeholder="insert Token">
+                <input type="text" id="accessCodeInput" placeholder="Insert Token">
                 <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
                     Enter the code you received to activate this device.
                 </p>
@@ -1804,11 +1816,15 @@
             
             const steps = generateBrewSteps(amount, finalParams.ratio, finalParams.brewStyle);
             
+            // Calculate water amount in ml
+            const waterAmountMl = Math.round(amount * finalParams.ratio);
+            
             return {
                 grindSetting,
                 grinderLabel: getGrinderLabel(grinder),
                 temperature,
                 ratio: `1:${finalParams.ratio} (${amount}g)`,
+                waterAmountMl: waterAmountMl,
                 steps,
                 targetTime: finalParams.targetTime,
                 notes: generateBrewNotes(coffee, finalParams)
@@ -2221,6 +2237,25 @@
             if (pauseBtn) pauseBtn.disabled = false;
             if (resetBtn) resetBtn.disabled = false;
             
+            // Smooth scroll to pour-over steps
+            const card = document.querySelector(`.coffee-card[data-index="${index}"]`);
+            if (card) {
+                const brewSteps = card.querySelector('.brew-steps');
+                if (brewSteps) {
+                    // Calculate offset to keep Target Time visible at top
+                    const targetTimeBox = card.querySelector('.param-grid');
+                    const offset = targetTimeBox ? targetTimeBox.offsetHeight + 60 : 100;
+                    
+                    const elementPosition = brewSteps.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
             updateBrewProgress(index);
         }
 
@@ -2552,8 +2587,8 @@
                                 <div class="param-value">${brewParams.temperature}</div>
                             </div>
                             <div class="param-box">
-                                <div class="param-label">Ratio</div>
-                                <div class="param-value">${brewParams.ratio}</div>
+                                <div class="param-label">Ratio / Water</div>
+                                <div class="param-value">(${brewParams.waterAmountMl} ml)</div>
                             </div>
                             <div class="param-box">
                                 <div class="param-label">Target Time</div>
@@ -2735,7 +2770,7 @@
                 
                 const paramBoxes = expandedCard.querySelectorAll('.param-box .param-value');
                 if (paramBoxes.length >= 3) {
-                    paramBoxes[2].textContent = brewParams.ratio;
+                    paramBoxes[2].textContent = `(${brewParams.waterAmountMl} ml)`;
                 }
                 
                 const steps = expandedCard.querySelectorAll('.step');
