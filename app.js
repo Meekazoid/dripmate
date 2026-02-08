@@ -633,8 +633,52 @@ function applySuggestion(index, newGrind, newTemp) {
 }
 
 // ==========================================
-// 8b. MANUAL PARAM ADJUSTMENTS (+/− Buttons)
+// 8b. INITIAL VALUES & MANUAL ADJUSTMENTS
 // ==========================================
+
+/**
+ * Compute engine-default grind & temp for a coffee,
+ * ignoring any custom overrides. This is the "pure" recommendation.
+ */
+function getInitialBrewValues(coffee) {
+    const clone = { ...coffee };
+    delete clone.customGrind;
+    delete clone.customTemp;
+    const rec = getBrewRecommendations(clone);
+    return { grind: rec.grindSetting, temp: rec.temperature };
+}
+
+/**
+ * Ensure every coffee object has initialGrind and initialTemp.
+ * Called once per card render – only writes if fields are missing.
+ */
+function ensureInitialValues(coffee) {
+    if (!coffee.initialGrind || !coffee.initialTemp) {
+        const initial = getInitialBrewValues(coffee);
+        coffee.initialGrind = initial.grind;
+        coffee.initialTemp = initial.temp;
+    }
+}
+
+/**
+ * Run migration on the entire coffees array.
+ * Stamps initial values on any coffee that lacks them,
+ * then persists once.
+ */
+function migrateCoffeesInitialValues() {
+    let changed = false;
+    coffees.forEach(coffee => {
+        if (!coffee.initialGrind || !coffee.initialTemp) {
+            ensureInitialValues(coffee);
+            changed = true;
+        }
+    });
+    if (changed) {
+        localStorage.setItem('coffees', JSON.stringify(coffees));
+    }
+}
+
+// ---- Manual +/− Buttons ----
 
 function adjustGrindManual(index, direction) {
     const coffee = coffees[index];
@@ -652,7 +696,6 @@ function adjustGrindManual(index, direction) {
         coffee.customGrind = newVal.toFixed(1);
     }
 
-    // Direct DOM update – no re-render needed
     const el = document.getElementById(`grind-value-${index}`);
     if (el) el.textContent = coffee.customGrind;
     saveCoffeesAndSync();
@@ -669,19 +712,47 @@ function adjustTempManual(index, direction) {
     const high = match[2] ? parseInt(match[2]) + direction : null;
     coffee.customTemp = high ? `${low}-${high}°C` : `${low}°C`;
 
-    // Direct DOM update – no re-render needed
     const el = document.getElementById(`temp-value-${index}`);
     if (el) el.textContent = coffee.customTemp;
     saveCoffeesAndSync();
 }
 
+// ---- Reset to Initial ----
+
 function resetCoffeeAdjustments(index) {
     const coffee = coffees[index];
+
+    // Recompute fresh engine defaults (respects current grinder & water)
+    const initial = getInitialBrewValues(coffee);
+
+    // Update the stored anchors to current engine state
+    coffee.initialGrind = initial.grind;
+    coffee.initialTemp = initial.temp;
+
+    // Wipe all custom overrides
     delete coffee.customGrind;
     delete coffee.customTemp;
     delete coffee.feedback;
+
+    // Direct DOM update – card stays open
+    const grindEl = document.getElementById(`grind-value-${index}`);
+    const tempEl = document.getElementById(`temp-value-${index}`);
+    if (grindEl) grindEl.textContent = initial.grind;
+    if (tempEl) tempEl.textContent = initial.temp;
+
+    // Clear feedback visual state
+    document.querySelectorAll(`[data-feedback^="${index}-"]`).forEach(opt => {
+        opt.classList.remove('selected');
+    });
+
+    // Hide suggestion box
+    const suggestionEl = document.getElementById(`suggestion-${index}`);
+    if (suggestionEl) {
+        suggestionEl.innerHTML = '';
+        suggestionEl.classList.add('hidden');
+    }
+
     saveCoffeesAndSync();
-    renderCoffees(index);
 }
 
 // ==========================================
@@ -689,6 +760,7 @@ function resetCoffeeAdjustments(index) {
 // ==========================================
 
 function renderCoffeeCard(coffee, index) {
+    ensureInitialValues(coffee);
     const brewParams = getBrewRecommendations(coffee);
     const amount = coffee.customAmount || coffeeAmount;
 
@@ -699,12 +771,12 @@ function renderCoffeeCard(coffee, index) {
                     <div class="coffee-name">${coffee.name}</div>
                     <div class="coffee-origin">${coffee.origin}</div>
                 </div>
-                <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="toggleFavorite(${index}); event.stopPropagation();">
+                <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${index});">
                     <svg class="star-icon" viewBox="0 0 24 24">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                     </svg>
                 </button>
-                <button class="delete-btn" onclick="deleteCoffee(${index}); event.stopPropagation();">
+                <button class="delete-btn" onclick="event.stopPropagation(); deleteCoffee(${index});">
                     <svg class="delete-icon" viewBox="0 0 24 24">
                         <polyline points="3 6 5 6 21 6"></polyline>
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -787,14 +859,14 @@ function renderCoffeeCard(coffee, index) {
                 <div class="brew-timer-section">
                     <div class="timer-display" id="brew-timer-display-${index}">00:00</div>
                     <div class="timer-controls-main">
-                        <button class="timer-btn start-brew" id="start-brew-${index}" onclick="startBrewTimer(${index}); event.stopPropagation();">
+                        <button class="timer-btn start-brew" id="start-brew-${index}" onclick="event.stopPropagation(); startBrewTimer(${index});">
                             <img src="v60-icon.png" class="v60-icon" alt="V60">
                             Start Brew
                         </button>
                     </div>
                     <div class="timer-controls-secondary">
-                        <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="pauseBrewTimer(${index}); event.stopPropagation();" disabled>Pause</button>
-                        <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="resetBrewTimer(${index}); event.stopPropagation();" disabled>Reset</button>
+                        <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="event.stopPropagation(); pauseBrewTimer(${index});" disabled>Pause</button>
+                        <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index});" disabled>Reset</button>
                     </div>
                 </div>
                 
@@ -819,7 +891,7 @@ function renderCoffeeCard(coffee, index) {
                             ${['under', 'perfect', 'over'].map(v => `
                                 <div class="scale-option ${coffee.feedback?.extraction === v ? 'selected' : ''}" 
                                      data-feedback="${index}-extraction" data-value="${v}"
-                                     onclick="selectFeedback(${index}, 'extraction', '${v}'); event.stopPropagation();">
+                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'extraction', '${v}');">
                                     ${v.charAt(0).toUpperCase() + v.slice(1)}
                                 </div>
                             `).join('')}
@@ -831,7 +903,7 @@ function renderCoffeeCard(coffee, index) {
                             ${['flat', 'good', 'perfect', 'harsh'].map(v => `
                                 <div class="scale-option ${coffee.feedback?.taste === v ? 'selected' : ''}" 
                                      data-feedback="${index}-taste" data-value="${v}"
-                                     onclick="selectFeedback(${index}, 'taste', '${v}'); event.stopPropagation();">
+                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'taste', '${v}');">
                                     ${v.charAt(0).toUpperCase() + v.slice(1)}
                                 </div>
                             `).join('')}
@@ -843,7 +915,7 @@ function renderCoffeeCard(coffee, index) {
                             ${['thin', 'balanced', 'heavy'].map(v => `
                                 <div class="scale-option ${coffee.feedback?.body === v ? 'selected' : ''}" 
                                      data-feedback="${index}-body" data-value="${v}"
-                                     onclick="selectFeedback(${index}, 'body', '${v}'); event.stopPropagation();">
+                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'body', '${v}');">
                                     ${v.charAt(0).toUpperCase() + v.slice(1)}
                                 </div>
                             `).join('')}
@@ -1460,6 +1532,9 @@ function initEventListeners() {
 // ==========================================
 
 function initApp() {
+    // Migrate existing coffees: stamp initialGrind/initialTemp
+    migrateCoffeesInitialValues();
+
     // Load water hardness from saved ZIP
     if (userZipCode && typeof WaterHardness !== 'undefined') {
         WaterHardness.getHardness(userZipCode).then(data => {
