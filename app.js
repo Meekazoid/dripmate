@@ -162,7 +162,7 @@ function getBrewRecommendations(coffee) {
     const originAdjusted = adjustForOrigin(cultivarAdjusted, coffee.origin);
     const finalParams = adjustForWaterHardness(originAdjusted);
 
-    const grindSetting = coffee.customGrind || getGrinderValue(finalParams.grindBase, grinder);
+    const grindSetting = getGrinderValue(finalParams.grindBase, grinder, coffee.grindOffset);
     const temperature = coffee.customTemp || formatTemp(finalParams.tempBase);
     const steps = generateBrewSteps(amount, finalParams.ratio, finalParams.brewStyle);
     const waterAmountMl = Math.round(amount * finalParams.ratio);
@@ -301,11 +301,12 @@ function adjustForWaterHardness(params) {
     };
 }
 
-function getGrinderValue(grindBase, grinder) {
+function getGrinderValue(grindBase, grinder, offset) {
+    const o = offset || 0;
     if (grinder === 'comandante') {
-        return `${Math.round(grindBase.comandante)} clicks`;
+        return `${Math.max(1, Math.round(grindBase.comandante + o))} clicks`;
     }
-    return grindBase.fellow.toFixed(1);
+    return Math.max(0.1, grindBase.fellow + o * 0.1).toFixed(1);
 }
 
 function formatTemp(tempBase) {
@@ -534,16 +535,16 @@ function generateSuggestion(index) {
     if (!suggestionDiv) return;
 
     let suggestions = [];
-    let newGrind = null;
+    let grindOffsetDelta = 0;
     let newTemp = null;
 
     if (feedback.extraction === 'under') {
         suggestions.push('Coffee is underextracted - tastes sour/weak', '→ Grind finer', '→ Or increase temperature by 2°C');
-        newGrind = adjustGrind(coffee, -0.5);
+        grindOffsetDelta += -5;
         newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), +2);
     } else if (feedback.extraction === 'over') {
         suggestions.push('Coffee is overextracted - tastes bitter/harsh', '→ Grind coarser', '→ Or decrease temperature by 2°C');
-        newGrind = adjustGrind(coffee, +0.5);
+        grindOffsetDelta += +5;
         newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), -2);
     }
 
@@ -557,10 +558,10 @@ function generateSuggestion(index) {
 
     if (feedback.body === 'thin') {
         suggestions.push('Body too thin/watery', '→ Grind slightly finer');
-        newGrind = adjustGrind(coffee, -0.3);
+        grindOffsetDelta += -3;
     } else if (feedback.body === 'heavy') {
         suggestions.push('Body too heavy/muddy', '→ Grind slightly coarser');
-        newGrind = adjustGrind(coffee, +0.3);
+        grindOffsetDelta += +3;
     }
 
     if (suggestions.length === 0 || feedback.extraction === 'perfect') {
@@ -568,6 +569,11 @@ function generateSuggestion(index) {
         suggestionDiv.classList.remove('hidden');
         return;
     }
+
+    // Preview what the grind would look like with the new offset
+    const previewGrind = grindOffsetDelta !== 0
+        ? getBrewRecommendations({ ...coffee, grindOffset: (coffee.grindOffset || 0) + grindOffsetDelta }).grindSetting
+        : null;
 
     suggestionDiv.innerHTML = `
         <div class="suggestion-title">
@@ -579,34 +585,14 @@ function generateSuggestion(index) {
         </div>
         <div class="suggestion-text">${suggestions.join('<br>')}</div>
         <div class="suggestion-values">
-            ${newGrind ? `<div class="suggestion-value"><strong>New Grind:</strong> ${newGrind}</div>` : ''}
+            ${previewGrind ? `<div class="suggestion-value"><strong>New Grind:</strong> ${previewGrind}</div>` : ''}
             ${newTemp ? `<div class="suggestion-value"><strong>New Temp:</strong> ${newTemp}</div>` : ''}
         </div>
-        <button class="apply-suggestion-btn" onclick="applySuggestion(${index}, '${newGrind}', '${newTemp}')">
+        <button class="apply-suggestion-btn" onclick="applySuggestion(${index}, ${grindOffsetDelta}, '${newTemp}')">
             Apply These Settings
         </button>
     `;
     suggestionDiv.classList.remove('hidden');
-}
-
-function adjustGrind(coffee, change) {
-    const grinder = preferredGrinder;
-    const current = coffee.customGrind || getBrewRecommendations(coffee).grindSetting;
-
-    if (grinder === 'comandante') {
-        const match = current.match(/(\d+)(?:-(\d+))?/);
-        if (!match) return current;
-        const clickChange = change * 2;
-        const low = parseInt(match[1]) + clickChange;
-        const high = match[2] ? parseInt(match[2]) + clickChange : null;
-        return high ? `${Math.round(low)}-${Math.round(high)} clicks` : `${Math.round(low)} clicks`;
-    } else {
-        const match = current.match(/([\d.]+)(?:-([\d.]+))?/);
-        if (!match) return current;
-        const low = parseFloat(match[1]) + change;
-        const high = match[2] ? parseFloat(match[2]) + change : null;
-        return high ? `${low.toFixed(1)}-${high.toFixed(1)}` : low.toFixed(1);
-    }
 }
 
 function getDefaultTemp(processType) {
@@ -622,14 +608,15 @@ function adjustTemp(current, change) {
     return high ? `${low}-${high}°C` : `${low}°C`;
 }
 
-function applySuggestion(index, newGrind, newTemp) {
+function applySuggestion(index, grindOffsetDelta, newTemp) {
     const coffee = coffees[index];
-    if (newGrind && newGrind !== 'null') coffee.customGrind = newGrind;
+    if (grindOffsetDelta && grindOffsetDelta !== 0) {
+        coffee.grindOffset = (coffee.grindOffset || 0) + grindOffsetDelta;
+    }
     if (newTemp && newTemp !== 'null') coffee.customTemp = newTemp;
     coffee.feedback = {};
-    localStorage.setItem('coffees', JSON.stringify(coffees));
+    saveCoffeesAndSync();
     renderCoffees(index);
-    alert('Settings applied! The brew parameters have been updated.');
 }
 
 // ==========================================
@@ -643,6 +630,7 @@ function applySuggestion(index, newGrind, newTemp) {
 function getInitialBrewValues(coffee) {
     const clone = { ...coffee };
     delete clone.customGrind;
+    delete clone.grindOffset;
     delete clone.customTemp;
     const rec = getBrewRecommendations(clone);
     return { grind: rec.grindSetting, temp: rec.temperature };
@@ -682,22 +670,11 @@ function migrateCoffeesInitialValues() {
 
 function adjustGrindManual(index, direction) {
     const coffee = coffees[index];
-    const currentGrind = coffee.customGrind || getBrewRecommendations(coffee).grindSetting;
+    coffee.grindOffset = (coffee.grindOffset || 0) + direction;
 
-    if (preferredGrinder === 'comandante') {
-        const match = currentGrind.match(/(\d+)/);
-        if (!match) return;
-        const newVal = Math.max(1, parseInt(match[1]) + direction);
-        coffee.customGrind = `${newVal} clicks`;
-    } else {
-        const match = currentGrind.match(/([\d.]+)/);
-        if (!match) return;
-        const newVal = Math.max(0.1, parseFloat(match[1]) + (direction * 0.1));
-        coffee.customGrind = newVal.toFixed(1);
-    }
-
+    // Direct DOM update using recalculated value
     const el = document.getElementById(`grind-value-${index}`);
-    if (el) el.textContent = coffee.customGrind;
+    if (el) el.textContent = getBrewRecommendations(coffee).grindSetting;
     saveCoffeesAndSync();
 }
 
@@ -731,6 +708,7 @@ function resetCoffeeAdjustments(index) {
 
     // Wipe all custom overrides
     delete coffee.customGrind;
+    delete coffee.grindOffset;
     delete coffee.customTemp;
     delete coffee.feedback;
 
