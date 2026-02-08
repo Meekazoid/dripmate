@@ -692,7 +692,7 @@ function adjustGrindManual(index, direction) {
     } else {
         const match = currentGrind.match(/([\d.]+)/);
         if (!match) return;
-        const newVal = Math.max(0.5, parseFloat(match[1]) + (direction * 0.5));
+        const newVal = Math.max(0.1, parseFloat(match[1]) + (direction * 0.1));
         coffee.customGrind = newVal.toFixed(1);
     }
 
