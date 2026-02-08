@@ -113,7 +113,7 @@ header {
 
 body.light-mode .header-logo {
     /* Light mode: deeper warm gold */
-    filter: sepia(0.8) saturate(1.4) hue-rotate(-12deg) brightness(0.82) contrast(1.15);
+    filter: sepia(0.8) saturate(1.8) hue-rotate(-12deg) brightness(0.95) contrast(1.15);
 }
 
 h1 {
