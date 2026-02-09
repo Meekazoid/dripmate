@@ -16,7 +16,9 @@ const CONFIG = {
 let coffees = JSON.parse(localStorage.getItem('coffees') || '[]');
 let coffeeAmount = parseInt(localStorage.getItem('coffeeAmount')) || 15;
 let preferredGrinder = localStorage.getItem('preferredGrinder') || 'fellow';
-let waterHardness = null;
+let waterHardness = null; // Current active water hardness (manual or API)
+let manualWaterHardness = JSON.parse(localStorage.getItem('manualWaterHardness') || 'null');
+let apiWaterHardness = null; // Water hardness from ZIP lookup
 let userZipCode = localStorage.getItem('userZipCode') || '';
 
 // Brew timer state (per-card)
@@ -306,13 +308,15 @@ function adjustForOrigin(params, originStr) {
 }
 
 function adjustForWaterHardness(params) {
-    if (!waterHardness) return params;
+    const activeHardness = getActiveWaterHardness();
+    if (!activeHardness) return params;
 
     let grindAdjust = 0, tempAdjust = 0;
+    const category = activeHardness.category || getWaterHardnessCategory(activeHardness.value);
 
-    if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') {
+    if (category === 'very_soft' || category === 'soft') {
         grindAdjust = -2; tempAdjust = +1;
-    } else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') {
+    } else if (category === 'hard' || category === 'very_hard') {
         grindAdjust = +2; tempAdjust = -1;
     }
 
@@ -403,9 +407,12 @@ function generateBrewNotes(coffee, params) {
         if (params.originAdjustment.region === 'africa') notes.push('African origin - floral notes, finer grind');
         else if (params.originAdjustment.region === 'asia') notes.push('Asian origin - earthy body, coarser grind');
     }
-    if (waterHardness) {
-        if (waterHardness.category === 'very_soft' || waterHardness.category === 'soft') notes.push('Soft water - ground finer, higher temp');
-        else if (waterHardness.category === 'hard' || waterHardness.category === 'very_hard') notes.push('Hard water - ground coarser, consider filtering');
+    
+    const activeHardness = getActiveWaterHardness();
+    if (activeHardness) {
+        const category = activeHardness.category || getWaterHardnessCategory(activeHardness.value);
+        if (category === 'very_soft' || category === 'soft') notes.push('Soft water - ground finer, higher temp');
+        else if (category === 'hard' || category === 'very_hard') notes.push('Hard water - ground coarser, consider filtering');
     }
 
     return notes.join('. ');
@@ -1315,23 +1322,90 @@ function showMessage(type, message) {
 // 16. WATER HARDNESS
 // ==========================================
 
+/**
+ * Get the active water hardness value (manual overrides API)
+ */
+function getActiveWaterHardness() {
+    return manualWaterHardness || apiWaterHardness;
+}
+
+/**
+ * Get category for a given hardness value
+ */
+function getWaterHardnessCategory(value) {
+    if (value < 7) return 'very_soft';
+    if (value < 14) return 'soft';
+    if (value < 21) return 'medium';
+    if (value < 28) return 'hard';
+    return 'very_hard';
+}
+
 function openWaterModal() {
     document.getElementById('waterModal').classList.add('active');
     document.getElementById('zipCodeInput').value = userZipCode;
-    if (waterHardness) displayWaterHardness(waterHardness);
+    
+    // Load manual hardness value if exists
+    const manualInput = document.getElementById('manualHardnessInput');
+    if (manualWaterHardness) {
+        manualInput.value = manualWaterHardness.value;
+    } else {
+        manualInput.value = '';
+    }
+    
+    // Display current active hardness
+    const activeHardness = getActiveWaterHardness();
+    if (activeHardness) {
+        displayWaterHardness(activeHardness, manualWaterHardness ? 'manual' : 'api');
+    }
 }
 
 function closeWaterModal() {
     document.getElementById('waterModal').classList.remove('active');
 }
 
-function displayWaterHardness(hardness) {
+function displayWaterHardness(hardness, source = 'api') {
+    const categoryMap = {
+        'very_soft': 'SEHR WEICH',
+        'soft': 'WEICH',
+        'medium': 'MITTEL',
+        'hard': 'HART',
+        'very_hard': 'SEHR HART'
+    };
+    
+    const category = hardness.category || getWaterHardnessCategory(hardness.value);
+    const categoryText = hardness.category_de ? hardness.category_de.toUpperCase() : categoryMap[category];
+    
     document.getElementById('hardnessValueDisplay').textContent = `${hardness.value} °dH`;
-    document.getElementById('hardnessCategoryDisplay').textContent = hardness.category_de.toUpperCase();
-    document.getElementById('hardnessRegion').textContent = hardness.region;
-    document.getElementById('hardnessSource').textContent = hardness.source;
-    document.getElementById('hardnessDescriptionDisplay').textContent = hardness.description;
+    document.getElementById('hardnessCategoryDisplay').textContent = categoryText;
+    
+    // Display source badge
+    const sourceDisplay = document.getElementById('hardnessSourceDisplay');
+    if (source === 'manual') {
+        sourceDisplay.textContent = '✏️ MANUAL OVERRIDE';
+        sourceDisplay.style.background = 'rgba(76, 175, 80, 0.15)';
+        sourceDisplay.style.color = '#4CAF50';
+    } else {
+        sourceDisplay.textContent = '📍 AUTO-DETECTED';
+        sourceDisplay.style.background = 'rgba(212, 165, 116, 0.15)';
+        sourceDisplay.style.color = 'var(--accent)';
+    }
+    
+    document.getElementById('hardnessRegion').textContent = hardness.region || 'Manual Entry';
+    document.getElementById('hardnessSource').textContent = hardness.source || 'User Input';
+    document.getElementById('hardnessDescriptionDisplay').textContent = 
+        hardness.description || getHardnessDescription(category);
     document.getElementById('waterHardnessDisplay').style.display = 'block';
+}
+
+function getHardnessDescription(category) {
+    const descriptions = {
+        'very_soft': 'Sehr weiches Wasser - feinerer Mahlgrad und höhere Temperatur empfohlen',
+        'soft': 'Weiches Wasser - leicht feinerer Mahlgrad empfohlen',
+        'medium': 'Mittelhartes Wasser - Standard-Einstellungen funktionieren gut',
+        'hard': 'Hartes Wasser - gröberer Mahlgrad und niedrigere Temperatur empfohlen',
+        'very_hard': 'Sehr hartes Wasser - deutlich gröberer Mahlgrad, Filterung empfohlen'
+    };
+    return descriptions[category] || '';
 }
 
 async function saveWaterHardness() {
@@ -1343,21 +1417,82 @@ async function saveWaterHardness() {
 
     try {
         const hardness = await WaterHardness.getHardness(zipCode);
-        waterHardness = hardness;
+        apiWaterHardness = hardness;
         userZipCode = zipCode;
         localStorage.setItem('userZipCode', zipCode);
-        displayWaterHardness(hardness);
+        
+        // Only update active hardness if no manual override exists
+        if (!manualWaterHardness) {
+            waterHardness = apiWaterHardness;
+            displayWaterHardness(hardness, 'api');
+        } else {
+            // Show API value but indicate manual is active
+            displayWaterHardness(manualWaterHardness, 'manual');
+            alert('Note: Manual water hardness override is active. ZIP-based value saved as fallback.');
+        }
 
         const waterBtn = document.getElementById('waterControlBtn');
         if (waterBtn) waterBtn.classList.add('active');
 
         renderCoffees();
-        setTimeout(() => {
-            alert(`✓ Water hardness saved!\n\n${hardness.region}: ${hardness.value} °dH (${hardness.category_de})\n\nYour brew parameters have been adjusted.`);
-        }, 100);
     } catch (error) {
         alert(`Error loading water hardness:\n${error.message}`);
     }
+}
+
+async function saveManualWaterHardness() {
+    const manualInput = document.getElementById('manualHardnessInput');
+    const value = parseFloat(manualInput.value);
+    
+    if (!value || value < 0 || value > 50) {
+        alert('Please enter a valid water hardness value between 0 and 50 °dH.');
+        return;
+    }
+    
+    // Create manual hardness object
+    manualWaterHardness = {
+        value: value,
+        category: getWaterHardnessCategory(value),
+        region: 'Manual Entry',
+        source: 'User Input',
+        isManual: true
+    };
+    
+    // Save to localStorage
+    localStorage.setItem('manualWaterHardness', JSON.stringify(manualWaterHardness));
+    
+    // Set as active hardness
+    waterHardness = manualWaterHardness;
+    
+    // Display updated value
+    displayWaterHardness(manualWaterHardness, 'manual');
+    
+    // Sync to backend
+    if (typeof window.backendSync !== 'undefined' && window.backendSync.syncWaterHardness) {
+        await window.backendSync.syncWaterHardness(value);
+    }
+    
+    // Update UI
+    const waterBtn = document.getElementById('waterControlBtn');
+    if (waterBtn) waterBtn.classList.add('active');
+    
+    renderCoffees();
+    
+    alert(`✓ Manual water hardness saved: ${value} °dH\n\nYour brew parameters have been adjusted.`);
+}
+
+function clearManualWaterHardness() {
+    manualWaterHardness = null;
+    localStorage.removeItem('manualWaterHardness');
+    
+    // Fallback to API value if available
+    waterHardness = apiWaterHardness;
+    
+    if (apiWaterHardness) {
+        displayWaterHardness(apiWaterHardness, 'api');
+    }
+    
+    renderCoffees();
 }
 
 // ==========================================
@@ -1527,6 +1662,7 @@ function initEventListeners() {
     document.getElementById('waterControlBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openWaterModal(); });
     document.getElementById('closeWaterBtn').addEventListener('click', closeWaterModal);
     document.getElementById('saveWaterBtn').addEventListener('click', saveWaterHardness);
+    document.getElementById('saveManualHardnessBtn').addEventListener('click', saveManualWaterHardness);
 
     // Trash bin / Decaf
     document.getElementById('trashBinBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openDecafModal(); });
@@ -1551,10 +1687,17 @@ function initApp() {
     // Migrate existing coffees: stamp initialGrind/initialTemp
     migrateCoffeesInitialValues();
 
-    // Load water hardness from saved ZIP
-    if (userZipCode && typeof WaterHardness !== 'undefined') {
+    // Load water hardness with priority: manual > API
+    if (manualWaterHardness) {
+        // Manual override exists - use it
+        waterHardness = manualWaterHardness;
+        const waterBtn = document.getElementById('waterControlBtn');
+        if (waterBtn) waterBtn.classList.add('active');
+    } else if (userZipCode && typeof WaterHardness !== 'undefined') {
+        // No manual override - load from ZIP
         WaterHardness.getHardness(userZipCode).then(data => {
-            waterHardness = data;
+            apiWaterHardness = data;
+            waterHardness = apiWaterHardness;
             const waterBtn = document.getElementById('waterControlBtn');
             if (waterBtn) waterBtn.classList.add('active');
         }).catch(err => console.log('Could not load water hardness:', err));

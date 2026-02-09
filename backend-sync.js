@@ -1,6 +1,7 @@
 // ==========================================
 // BACKEND-SYNC MODULE
 // Handles token validation and syncing
+// UPDATED: Water Hardness Sync Support
 // ==========================================
 
 const BACKEND_URL = 'https://brew-buddy-backend-production.up.railway.app';
@@ -202,6 +203,69 @@ async function fetchGrinderPreference() {
 }
 
 // ==========================================
+// WATER HARDNESS SYNC (NEW)
+// ==========================================
+
+async function syncWaterHardness(hardnessValue) {
+    const token = getToken();
+    const deviceId = getOrCreateDeviceId();
+
+    if (!token) {
+        console.log('⚠️ Kein Token vorhanden. Water-Hardness-Sync übersprungen.');
+        return false;
+    }
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/user/water-hardness`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token,
+                deviceId,
+                waterHardness: hardnessValue
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            console.log(`✅ Water hardness synchronisiert: ${hardnessValue} °dH`);
+            return true;
+        } else {
+            console.error('Water hardness sync failed:', data.error);
+            return false;
+        }
+    } catch (error) {
+        console.error('Water hardness sync error:', error);
+        return false;
+    }
+}
+
+async function fetchWaterHardness() {
+    const token = getToken();
+    const deviceId = getOrCreateDeviceId();
+
+    if (!token) return null;
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/user/water-hardness?token=${token}&deviceId=${deviceId}`);
+        const data = await response.json();
+
+        if (response.ok && data.success && data.waterHardness !== null) {
+            console.log(`📦 Water hardness vom Backend geladen: ${data.waterHardness} °dH`);
+            return data.waterHardness;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Fetch water hardness error:', error);
+        return null;
+    }
+}
+
+// ==========================================
 // INITIALIZATION
 // ==========================================
 
@@ -222,6 +286,25 @@ async function initBackendSync() {
                 // Update UI if grinder selector exists
                 if (typeof initGlobalGrinder === 'function') {
                     initGlobalGrinder();
+                }
+            }
+            
+            // Water hardness vom Backend laden (manual override)
+            const remoteWaterHardness = await fetchWaterHardness();
+            if (remoteWaterHardness !== null) {
+                const manualHardness = {
+                    value: remoteWaterHardness,
+                    category: null, // Will be calculated
+                    region: 'Manual Entry',
+                    source: 'User Input (Synced)',
+                    isManual: true
+                };
+                window.manualWaterHardness = manualHardness;
+                localStorage.setItem('manualWaterHardness', JSON.stringify(manualHardness));
+                
+                // Set as active hardness if initApp hasn't run yet
+                if (typeof window.waterHardness === 'undefined' || window.waterHardness === null) {
+                    window.waterHardness = manualHardness;
                 }
             }
             
@@ -323,6 +406,8 @@ window.backendSync = {
     syncCoffeesToBackend,
     syncGrinderPreference,
     fetchGrinderPreference,
+    syncWaterHardness,
+    fetchWaterHardness,
     checkUserStatus,
     getToken
 };

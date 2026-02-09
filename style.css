@@ -1363,6 +1363,45 @@ body.light-mode .step-progress-bar {
     line-height: 1;
 }
 
+/* Manual Water Hardness Input Group */
+.manual-hardness-group {
+    margin-top: 24px;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border-left: 4px solid var(--accent);
+}
+
+.manual-hardness-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.manual-hardness-input-row input[type="number"] {
+    flex: 1;
+    min-width: 0;
+}
+
+.manual-hardness-input-row button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 14px 20px;
+    width: auto;
+}
+
+/* Mobile optimization */
+@media (max-width: 480px) {
+    .manual-hardness-input-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .manual-hardness-input-row button {
+        width: 100%;
+    }
+}
+
 /* ==========================================
    20. DECAF (TRASH BIN) CARDS
    ========================================== */
