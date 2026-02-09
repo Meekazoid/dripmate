@@ -1304,7 +1304,32 @@ body.light-mode .step-progress-bar {
 }
 
 /* ==========================================
-   19. MODALS
+   19. COMPOST FAB ICON (CSS MASK)
+   ========================================== */
+
+.compost-fab-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    background-color: var(--text-primary);
+    -webkit-mask-image: url('compost.svg');
+    mask-image: url('compost.svg');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+#trashBinBtn:hover .compost-fab-icon {
+    opacity: 1;
+}
+
+/* ==========================================
+   20. MODALS
    ========================================== */
 
 .modal {
@@ -1360,7 +1385,7 @@ body.light-mode .step-progress-bar {
 }
 
 /* ==========================================
-   20. DECAF (TRASH BIN) CARDS
+   21. DECAF (TRASH BIN) CARDS
    ========================================== */
 
 .decaf-card {
@@ -1438,7 +1463,7 @@ body.light-mode .step-progress-bar {
 }
 
 /* ==========================================
-   21. STATUS MESSAGES & STATES
+   22. STATUS MESSAGES & STATES
    ========================================== */
 
 .loading, .error-message, .success-message {
@@ -1473,7 +1498,7 @@ body.light-mode .step-progress-bar {
 }
 
 /* ==========================================
-   22. SPINNER ANIMATION
+   23. SPINNER ANIMATION
    ========================================== */
 
 @keyframes spin {
@@ -1491,7 +1516,7 @@ body.light-mode .step-progress-bar {
 }
 
 /* ==========================================
-   23. RESPONSIVE BREAKPOINTS
+   24. RESPONSIVE BREAKPOINTS
    ========================================== */
 
 /* Tablet & Mobile (≤768px) */
