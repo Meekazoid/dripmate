@@ -35,6 +35,8 @@ let animationFrames = {};
  */
 function sanitizeHTML(str) {
     if (str === null || str === undefined) return '';
+    // IMPORTANT: Ampersand must be replaced first to avoid double-encoding
+    // (e.g., if we replace < first, then &, we'd turn &lt; into &amp;lt;)
     return String(str)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
