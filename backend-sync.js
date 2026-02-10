@@ -47,7 +47,7 @@ function getOrCreateDeviceId() {
 
 function saveToken(token) {
     localStorage.setItem('token', token);
-    console.log('💾 Token gespeichert');
+    console.log('💾 Token saved');
 }
 
 function getToken() {
@@ -56,7 +56,7 @@ function getToken() {
 
 function clearToken() {
     localStorage.removeItem('token');
-    console.log('🗑️ Token gelöscht');
+    console.log('🗑️ Token cleared');
 }
 
 // ==========================================
@@ -116,7 +116,7 @@ async function fetchCoffeesFromBackend() {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            console.log(`📦 ${data.coffees.length} Kaffees vom Backend geladen`);
+            console.log(`📦 ${data.coffees.length} coffees loaded from backend`);
             return data.coffees;
         } else {
             console.error('Backend fetch failed:', data.error);
@@ -133,7 +133,7 @@ async function syncCoffeesToBackend(coffees) {
     const deviceId = getOrCreateDeviceId();
 
     if (!token) {
-        console.log('⚠️ Kein Token vorhanden. Sync übersprungen.');
+        console.log('⚠️ No token available. Sync skipped.');
         return false;
     }
 
@@ -151,7 +151,7 @@ async function syncCoffeesToBackend(coffees) {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            console.log(`✅ ${data.saved} Kaffees zum Backend synchronisiert`);
+            console.log(`☁️ ${data.saved} coffees synced to backend`);
             return true;
         } else {
             console.error('Sync failed:', data.error);
@@ -168,7 +168,7 @@ async function syncGrinderPreference(grinder) {
     const deviceId = getOrCreateDeviceId();
 
     if (!token) {
-        console.log('⚠️ Kein Token vorhanden. Grinder-Sync übersprungen.');
+        console.log('⚠️ No token available. Grinder sync skipped.');
         return false;
     }
 
@@ -186,7 +186,7 @@ async function syncGrinderPreference(grinder) {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            console.log(`✅ Grinder-Präferenz synchronisiert: ${grinder}`);
+            console.log(`✅ Grinder preference synced: ${grinder}`);
             return true;
         } else {
             console.error('Grinder sync failed:', data.error);
@@ -214,7 +214,7 @@ async function fetchGrinderPreference() {
         const data = await response.json();
 
         if (response.ok && data.success && data.grinder) {
-            console.log(`📦 Grinder-Präferenz vom Backend geladen: ${data.grinder}`);
+            console.log(`📦 Grinder preference loaded from backend: ${data.grinder}`);
             return data.grinder;
         } else {
             return null;
@@ -234,7 +234,7 @@ async function syncWaterHardness(hardnessValue) {
     const deviceId = getOrCreateDeviceId();
 
     if (!token) {
-        console.log('⚠️ Kein Token vorhanden. Water-Hardness-Sync übersprungen.');
+        console.log('⚠️ No token available. Water hardness sync skipped.');
         return false;
     }
 
@@ -252,7 +252,7 @@ async function syncWaterHardness(hardnessValue) {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            console.log(`✅ Water hardness synchronisiert: ${hardnessValue} °dH`);
+            console.log(`✅ Water hardness synced: ${hardnessValue} °dH`);
             return true;
         } else {
             console.error('Water hardness sync failed:', data.error);
@@ -280,7 +280,7 @@ async function fetchWaterHardness() {
         const data = await response.json();
 
         if (response.ok && data.success && data.waterHardness !== null) {
-            console.log(`📦 Water hardness vom Backend geladen: ${data.waterHardness} °dH`);
+            console.log(`📦 Water hardness loaded from backend: ${data.waterHardness} °dH`);
             return data.waterHardness;
         } else {
             return null;
@@ -297,13 +297,13 @@ async function fetchWaterHardness() {
 
 async function initBackendSync() {
     try {
-        console.log('🔄 Initialisiere Backend-Sync...');
+        console.log('🔄 Initializing backend sync...');
         const status = await checkUserStatus();
         
         if (status.valid) {
-            console.log(`✅ Eingeloggt als: ${status.user.username}`);
+            console.log(`✅ Logged in as: ${status.user.username}`);
             
-            // Grinder-Präferenz vom Backend laden
+            // Load grinder preference from backend
             const remoteGrinder = await fetchGrinderPreference();
             if (remoteGrinder) {
                 window.preferredGrinder = remoteGrinder;
@@ -315,7 +315,7 @@ async function initBackendSync() {
                 }
             }
             
-            // Water hardness vom Backend laden (manual override)
+            // Load water hardness from backend (manual override)
             const remoteWaterHardness = await fetchWaterHardness();
             if (remoteWaterHardness !== null) {
                 const manualHardness = {
@@ -334,21 +334,21 @@ async function initBackendSync() {
                 }
             }
             
-            // Coffees vom Backend laden
+            // Load coffees from backend
             const remoteCoffees = await fetchCoffeesFromBackend();
             if (remoteCoffees) {
-                // Lokale Liste aktualisieren
+                // Update local list
                 window.coffees = remoteCoffees;
                 localStorage.setItem('coffees', JSON.stringify(window.coffees));
                 if (typeof renderCoffees === 'function') renderCoffees();
             }
         } else {
-            console.log('ℹ️ Kein gültiger Token vorhanden. Bitte in den Settings eingeben.');
+            console.log('ℹ️ No valid token available. Please enter in Settings.');
         }
     } catch (error) {
-        // Dieser Block ist entscheidend: Er fängt Fehler ab, damit das UI weiterlebt
-        console.warn('⚠️ Backend-Sync konnte nicht initialisiert werden:', error.message);
-        console.log('📦 App läuft im lokalen Modus weiter.');
+        // This block is critical: it catches errors so the UI continues to work
+        console.warn('⚠️ Backend sync could not be initialized:', error.message);
+        console.log('📦 App continues in local mode.');
     }
 }
 
@@ -362,10 +362,10 @@ function setupTokenUI() {
     const clearTokenBtn = document.getElementById('clearTokenBtn');
     const tokenStatus = document.getElementById('tokenStatus');
 
-    // Nur ausführen wenn die Token-UI-Elemente existieren
-    // (sie existieren NICHT in der neuen index.html)
+    // Only execute if token UI elements exist
+    // (they do NOT exist in the new index.html)
     if (!tokenInput || !saveTokenBtn || !clearTokenBtn || !tokenStatus) {
-        console.log('ℹ️ Token-UI nicht gefunden (wird über Settings-Modal verwaltet)');
+        console.log('ℹ️ Token UI not found (managed via Settings modal)');
         return;
     }
 

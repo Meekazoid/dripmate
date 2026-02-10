@@ -14,7 +14,7 @@ const WaterHardness = (() => {
         very_hard: { min: 28, max: 50, de: 'sehr hart', en: 'very hard' }
     };
 
-    // Regional water hardness database (°dH - Deutsche Härte)
+    // Regional water hardness database (°dH - German Hardness)
     const regionalData = {
         // Berlin
         '10': { value: 16, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
