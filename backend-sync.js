@@ -23,7 +23,7 @@ function getOrCreateDeviceId() {
             crypto.getRandomValues(bytes);
             bytes[6] = (bytes[6] & 0x0f) | 0x40; // Version 4
             bytes[8] = (bytes[8] & 0x3f) | 0x80; // Variant 10
-            const hex = Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+            const hex = Array.from(bytes, function(b) { return ('0' + b.toString(16)).slice(-2); }).join('');
             deviceId = 'device-' + hex.substring(0, 8) + '-' + hex.substring(8, 12) + '-' + 
                        hex.substring(12, 16) + '-' + hex.substring(16, 20) + '-' + hex.substring(20, 32);
         } else {
