@@ -3,19 +3,19 @@
  * Tests that the sanitizeHTML function properly escapes malicious content
  */
 
-// Import the sanitizeHTML function by extracting it from app.js
+// Import the sanitizeHTML function by extracting it from js/state.js
 const fs = require('fs');
-const appCode = fs.readFileSync('./app.js', 'utf8');
+const stateCode = fs.readFileSync('./js/state.js', 'utf8');
 
 // Extract sanitizeHTML function
-const sanitizeMatch = appCode.match(/function sanitizeHTML\(str\) \{[\s\S]*?\n\}/);
+const sanitizeMatch = stateCode.match(/export function sanitizeHTML\(str\) \{[\s\S]*?\n\}/);
 if (!sanitizeMatch) {
-    console.error('❌ Could not find sanitizeHTML function in app.js');
+    console.error('❌ Could not find sanitizeHTML function in js/state.js');
     process.exit(1);
 }
 
-// Evaluate the function in our scope
-eval(sanitizeMatch[0]);
+// Evaluate the function in our scope (remove export keyword)
+eval(sanitizeMatch[0].replace('export ', ''));
 
 // Color codes for terminal output
 const GREEN = '\x1b[32m';
@@ -147,6 +147,9 @@ function runTests() {
 function verifySanitizationInCode() {
     console.log('\n=== Verifying Sanitization in renderCoffeeCard ===\n');
     
+    // Read the coffee-cards.js module
+    const coffeeCardsCode = fs.readFileSync('./js/coffee-cards.js', 'utf8');
+    
     const requiredSanitizations = [
         { field: 'coffee.name', pattern: /sanitizeHTML\(coffee\.name\)/ },
         { field: 'coffee.origin', pattern: /sanitizeHTML\(coffee\.origin\)/ },
@@ -159,7 +162,7 @@ function verifySanitizationInCode() {
     let allFound = true;
     
     requiredSanitizations.forEach(item => {
-        if (item.pattern.test(appCode)) {
+        if (item.pattern.test(coffeeCardsCode)) {
             console.log(`${GREEN}✓${RESET} ${item.field} is sanitized`);
         } else {
             console.log(`${RED}✗${RESET} ${item.field} is NOT sanitized`);
