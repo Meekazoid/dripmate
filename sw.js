@@ -3,14 +3,29 @@
  * Provides offline PWA support with intelligent caching strategies
  */
 
-const CACHE_VERSION = 'brewbuddy-v1';
+const CACHE_VERSION = 'brewbuddy-v2';
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/style.css',
-  '/app.js',
+  '/js/app.js',
+  '/js/state.js',
+  '/js/config.js',
+  '/js/theme.js',
+  '/js/grinder.js',
+  '/js/brew-engine.js',
+  '/js/brew-timer.js',
+  '/js/freshness.js',
+  '/js/feedback.js',
+  '/js/coffee-cards.js',
+  '/js/coffee-list.js',
+  '/js/image-handler.js',
+  '/js/manual-entry.js',
+  '/js/messages.js',
+  '/js/water-hardness.js',
+  '/js/settings.js',
   '/backend-sync.js',
   '/water-hardness.js',
   '/manifest.json',
