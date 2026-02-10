@@ -12,6 +12,9 @@ export let manualWaterHardness = JSON.parse(localStorage.getItem('manualWaterHar
 export let apiWaterHardness = null; // Water hardness from ZIP lookup
 export let userZipCode = localStorage.getItem('userZipCode') || '';
 
+// Expose coffees on window for legacy non-module scripts (backend-sync.js)
+window.coffees = coffees;
+
 // Brew timer state (per-card)
 export let brewTimers = {};
 export let animationFrames = {};
@@ -20,6 +23,7 @@ export let animationFrames = {};
 export function setCoffees(value) {
     coffees = value;
     localStorage.setItem('coffees', JSON.stringify(coffees));
+    window.coffees = coffees; // Keep window in sync for legacy scripts
 }
 
 export function setCoffeeAmount(value) {
