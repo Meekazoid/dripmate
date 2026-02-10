@@ -27,6 +27,9 @@ const STATIC_ASSETS = [
 // API domain for network-first strategy
 const API_DOMAIN = 'brew-buddy-backend-production.up.railway.app';
 
+// Static file extensions to cache
+const STATIC_EXTENSIONS = ['.html', '.css', '.js', '.json', '.png', '.svg', '.jpg', '.jpeg', '.gif', '.webp', '.ico'];
+
 /**
  * INSTALL EVENT
  * Pre-cache all static assets and activate immediately
@@ -88,7 +91,8 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   
   // API requests: Network-first with cache fallback
-  if (url.hostname === API_DOMAIN) {
+  // Only cache HTTPS requests to the API domain for security
+  if (url.hostname === API_DOMAIN && url.protocol === 'https:') {
     event.respondWith(networkFirstStrategy(request));
     return;
   }
@@ -181,8 +185,7 @@ function isStaticAsset(request) {
   const pathname = url.pathname;
   
   // Check if it's one of our static files
-  const staticExtensions = ['.html', '.css', '.js', '.json', '.png', '.svg', '.jpg', '.jpeg', '.gif', '.webp', '.ico'];
-  const hasStaticExtension = staticExtensions.some(ext => pathname.endsWith(ext));
+  const hasStaticExtension = STATIC_EXTENSIONS.some(ext => pathname.endsWith(ext));
   
   // Also check if it's the root path or an explicitly cached file
   const isRootOrCached = pathname === '/' || STATIC_ASSETS.includes(pathname);
