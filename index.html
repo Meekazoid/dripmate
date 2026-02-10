@@ -293,5 +293,31 @@ c-25 33 -56 38 -82 12z m44 -41 c3 -5 1 -10 -4 -10 -6 0 -11 5 -11 10 0 6 2
     <script src="water-hardness.js"></script>
     <script src="app.js"></script>
     <script src="backend-sync.js"></script>
+    
+    <!-- Service Worker Registration for Offline PWA Support -->
+    <script>
+      // Register Service Worker for offline PWA support
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('✅ Service Worker registered:', registration.scope);
+              
+              // Check for updates
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'activated') {
+                    console.log('🔄 New Service Worker activated — refresh for updates');
+                  }
+                });
+              });
+            })
+            .catch(error => {
+              console.warn('⚠️ Service Worker registration failed:', error);
+            });
+        });
+      }
+    </script>
 </body>
 </html>
