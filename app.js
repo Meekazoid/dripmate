@@ -1547,7 +1547,7 @@ function showActivationError(message) {
     statusDiv.style.background = 'rgba(220, 53, 69, 0.1)';
     statusDiv.style.border = '1px solid rgba(220, 53, 69, 0.3)';
     statusDiv.style.color = '#ff6b7a';
-    statusDiv.innerHTML = '❌ ' + message;
+    statusDiv.innerHTML = '❌ ' + sanitizeHTML(message);
 }
 
 async function activateDevice() {
@@ -1644,8 +1644,8 @@ function renderDecafList() {
     decafListEl.innerHTML = sorted.map(item => `
         <div class="decaf-card">
             <div class="decaf-card-info">
-                <div class="decaf-card-name">${item.coffee.name}</div>
-                <div class="decaf-card-origin">${item.coffee.origin}</div>
+                <div class="decaf-card-name">${sanitizeHTML(item.coffee.name)}</div>
+                <div class="decaf-card-origin">${sanitizeHTML(item.coffee.origin)}</div>
             </div>
             <div class="decaf-card-actions">
                 <button class="restore-btn" onclick="restoreCoffee(${item.index})">Restore</button>
