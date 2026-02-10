@@ -20,7 +20,16 @@ const WaterHardness = (() => {
         '10': { value: 16, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
         '12': { value: 18, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
         '13': { value: 17, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
-        '14': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
+        '140': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
+        '141': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
+        '142': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
+        '143': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
+        '144': { value: 15, region: 'Potsdam', source: 'EWP' },
+        '145': { value: 15, region: 'Potsdam', source: 'EWP' },
+        '146': { value: 15, region: 'Potsdam/Umland', source: 'EWP' },
+        '147': { value: 15, region: 'Potsdam/Umland', source: 'EWP' },
+        '148': { value: 15, region: 'Potsdam/Umland', source: 'EWP' },
+        '149': { value: 15, region: 'Potsdam/Umland', source: 'EWP' },
         
         // Hamburg
         '20': { value: 13, region: 'Hamburg', source: 'Hamburg Wasser' },
@@ -31,12 +40,21 @@ const WaterHardness = (() => {
         '80': { value: 19, region: 'München', source: 'Stadtwerke München' },
         '81': { value: 20, region: 'München', source: 'Stadtwerke München' },
         '82': { value: 18, region: 'München Umland', source: 'Lokale Versorger' },
-        '85': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
+        '850': { value: 21, region: 'Ingolstadt', source: 'Stadtwerke Ingolstadt' },
+        '851': { value: 21, region: 'Ingolstadt', source: 'Stadtwerke Ingolstadt' },
+        '852': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
+        '853': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
+        '854': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
+        '855': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
+        '856': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
+        '857': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
+        '858': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
+        '859': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
         
         // Köln
         '50': { value: 16, region: 'Köln', source: 'Rheinenergie' },
         '51': { value: 17, region: 'Köln', source: 'Rheinenergie' },
-        '52': { value: 15, region: 'Köln Umland', source: 'Lokale Versorger' },
+        '52': { value: 14, region: 'Aachen', source: 'ENWOR' },
         
         // Frankfurt
         '60': { value: 15, region: 'Frankfurt', source: 'Mainova' },
@@ -123,12 +141,6 @@ const WaterHardness = (() => {
         // Kassel
         '34': { value: 13, region: 'Kassel', source: 'Städtische Werke Kassel' },
         
-        // Potsdam
-        '14': { value: 15, region: 'Potsdam', source: 'EWP' },
-        
-        // Aachen
-        '52': { value: 14, region: 'Aachen', source: 'ENWOR' },
-        
         // Bielefeld
         '33': { value: 15, region: 'Bielefeld', source: 'Stadtwerke Bielefeld' },
         
@@ -142,10 +154,7 @@ const WaterHardness = (() => {
         '97': { value: 19, region: 'Würzburg', source: 'Würzburger Versorgungs- und Verkehrs GmbH' },
         
         // Ulm
-        '89': { value: 16, region: 'Ulm', source: 'SWU' },
-        
-        // Ingolstadt
-        '85': { value: 21, region: 'Ingolstadt', source: 'Stadtwerke Ingolstadt' }
+        '89': { value: 16, region: 'Ulm', source: 'SWU' }
     };
 
     /**
@@ -187,12 +196,13 @@ const WaterHardness = (() => {
                 return;
             }
 
-            // Get first 2 digits for regional lookup
-            const region = zipCode.substring(0, 2);
+            // Get first 3 digits for specific lookup, then fall back to 2 digits for regional lookup
+            const prefix3 = zipCode.substring(0, 3);
+            const prefix2 = zipCode.substring(0, 2);
             
-            // Check if we have data for this region
-            if (regionalData[region]) {
-                const data = regionalData[region];
+            // Check if we have data for this region (try 3-digit first, then 2-digit)
+            const data = regionalData[prefix3] || regionalData[prefix2];
+            if (data) {
                 const category = getCategory(data.value);
                 const categoryInfo = categories[category];
                 
