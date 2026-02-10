@@ -60,7 +60,12 @@ async function checkUserStatus() {
     }
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/auth/validate?token=${token}&deviceId=${deviceId}`);
+        const response = await fetch(`${BACKEND_URL}/api/auth/validate`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'X-Device-ID': deviceId
+            }
+        });
         const data = await response.json();
 
         if (response.ok && data.valid) {
@@ -90,7 +95,12 @@ async function fetchCoffeesFromBackend() {
     if (!token) return null;
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/coffees?token=${token}&deviceId=${deviceId}`);
+        const response = await fetch(`${BACKEND_URL}/api/coffees`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'X-Device-ID': deviceId
+            }
+        });
         const data = await response.json();
 
         if (response.ok && data.success) {
@@ -119,13 +129,11 @@ async function syncCoffeesToBackend(coffees) {
         const response = await fetch(`${BACKEND_URL}/api/coffees`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'X-Device-ID': deviceId
             },
-            body: JSON.stringify({
-                token,
-                deviceId,
-                coffees
-            })
+            body: JSON.stringify({ coffees })
         });
 
         const data = await response.json();
@@ -156,13 +164,11 @@ async function syncGrinderPreference(grinder) {
         const response = await fetch(`${BACKEND_URL}/api/user/grinder`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'X-Device-ID': deviceId
             },
-            body: JSON.stringify({
-                token,
-                deviceId,
-                grinder
-            })
+            body: JSON.stringify({ grinder })
         });
 
         const data = await response.json();
@@ -187,7 +193,12 @@ async function fetchGrinderPreference() {
     if (!token) return null;
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/user/grinder?token=${token}&deviceId=${deviceId}`);
+        const response = await fetch(`${BACKEND_URL}/api/user/grinder`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'X-Device-ID': deviceId
+            }
+        });
         const data = await response.json();
 
         if (response.ok && data.success && data.grinder) {
@@ -219,13 +230,11 @@ async function syncWaterHardness(hardnessValue) {
         const response = await fetch(`${BACKEND_URL}/api/user/water-hardness`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'X-Device-ID': deviceId
             },
-            body: JSON.stringify({
-                token,
-                deviceId,
-                waterHardness: hardnessValue
-            })
+            body: JSON.stringify({ waterHardness: hardnessValue })
         });
 
         const data = await response.json();
@@ -250,7 +259,12 @@ async function fetchWaterHardness() {
     if (!token) return null;
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/user/water-hardness?token=${token}&deviceId=${deviceId}`);
+        const response = await fetch(`${BACKEND_URL}/api/user/water-hardness`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'X-Device-ID': deviceId
+            }
+        });
         const data = await response.json();
 
         if (response.ok && data.success && data.waterHardness !== null) {

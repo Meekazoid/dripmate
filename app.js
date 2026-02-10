@@ -1189,8 +1189,12 @@ async function analyzeCoffeeImage(imageData, mediaType) {
 
     const response = await fetch(`${CONFIG.backendUrl}/api/analyze-coffee`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageData, mediaType, token, deviceId }),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+            'X-Device-ID': deviceId
+        },
+        body: JSON.stringify({ imageData, mediaType }),
     });
 
     if (!response.ok) {
@@ -1551,7 +1555,12 @@ async function activateDevice() {
 
     try {
         const deviceId = getOrCreateDeviceId();
-        const response = await fetch(`${CONFIG.backendUrl}/api/auth/validate?token=${accessCode}&deviceId=${deviceId}`);
+        const response = await fetch(`${CONFIG.backendUrl}/api/auth/validate`, {
+            headers: {
+                'Authorization': `Bearer ${accessCode}`,
+                'X-Device-ID': deviceId
+            }
+        });
 
         if (!response.ok) {
             const error = await response.json();
