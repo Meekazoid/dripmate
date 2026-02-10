@@ -26,6 +26,26 @@ let brewTimers = {};
 let animationFrames = {};
 
 // ==========================================
+// 1b. UTILITIES - XSS PROTECTION
+// ==========================================
+
+/**
+ * Sanitize a string for safe HTML insertion
+ * Prevents XSS by escaping HTML special characters
+ */
+function sanitizeHTML(str) {
+    if (str === null || str === undefined) return '';
+    // IMPORTANT: Ampersand must be replaced first to avoid double-encoding
+    // (e.g., if we replace < first, then &, we'd turn &lt; into &amp;lt;)
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+// ==========================================
 // 2. THEME
 // ==========================================
 
@@ -787,8 +807,8 @@ function renderCoffeeCard(coffee, index) {
         <div class="coffee-card" data-original-index="${index}">
             <div class="coffee-header">
                 <div>
-                    <div class="coffee-name">${coffee.name}</div>
-                    <div class="coffee-origin">${coffee.origin}</div>
+                    <div class="coffee-name">${sanitizeHTML(coffee.name)}</div>
+                    <div class="coffee-origin">${sanitizeHTML(coffee.origin)}</div>
                 </div>
                 <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${index});">
                     <svg class="star-icon" viewBox="0 0 24 24">
@@ -806,7 +826,7 @@ function renderCoffeeCard(coffee, index) {
             </div>
             
             <div class="process-freshness-row">
-                <div class="coffee-process-small">${coffee.process}</div>
+                <div class="coffee-process-small">${sanitizeHTML(coffee.process)}</div>
                 <div class="freshness-badge-inline" id="freshness-badge-${index}">
                     ${getRoastFreshnessBadge(coffee.roastDate)}
                 </div>
@@ -959,11 +979,11 @@ function renderCoffeeCard(coffee, index) {
                 
                 ${coffee.cultivar && coffee.cultivar !== 'Unknown' ? `
                 <div style="margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem;">
-                    <strong>Variety:</strong> ${coffee.cultivar} | <strong>Altitude:</strong> ${coffee.altitude} masl
+                    <strong>Variety:</strong> ${sanitizeHTML(coffee.cultivar)} | <strong>Altitude:</strong> ${sanitizeHTML(coffee.altitude)} masl
                 </div>` : ''}
                 
                 <div style="margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem;">
-                    <strong>Tasting Notes:</strong> ${coffee.tastingNotes}
+                    <strong>Tasting Notes:</strong> ${sanitizeHTML(coffee.tastingNotes)}
                 </div>
             </div>
         </div>
@@ -1529,7 +1549,7 @@ function showActivationError(message) {
     statusDiv.style.background = 'rgba(220, 53, 69, 0.1)';
     statusDiv.style.border = '1px solid rgba(220, 53, 69, 0.3)';
     statusDiv.style.color = '#ff6b7a';
-    statusDiv.innerHTML = '❌ ' + message;
+    statusDiv.innerHTML = '❌ ' + sanitizeHTML(message);
 }
 
 async function activateDevice() {
@@ -1626,8 +1646,8 @@ function renderDecafList() {
     decafListEl.innerHTML = sorted.map(item => `
         <div class="decaf-card">
             <div class="decaf-card-info">
-                <div class="decaf-card-name">${item.coffee.name}</div>
-                <div class="decaf-card-origin">${item.coffee.origin}</div>
+                <div class="decaf-card-name">${sanitizeHTML(item.coffee.name)}</div>
+                <div class="decaf-card-origin">${sanitizeHTML(item.coffee.origin)}</div>
             </div>
             <div class="decaf-card-actions">
                 <button class="restore-btn" onclick="restoreCoffee(${item.index})">Restore</button>
