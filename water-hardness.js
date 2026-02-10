@@ -5,7 +5,7 @@
 
 const WaterHardness = (() => {
     
-    // Water hardness categories (international standard)
+    // Water hardness categories (German standard)
     const categories = {
         very_soft: { min: 0, max: 7, de: 'sehr weich', en: 'very soft' },
         soft: { min: 7, max: 14, de: 'weich', en: 'soft' },
