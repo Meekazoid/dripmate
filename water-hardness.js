@@ -21,6 +21,7 @@ const WaterHardness = (() => {
         '12': { value: 18, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
         '13': { value: 17, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
         // 3-digit disambiguation: Berlin (140-143) vs Potsdam (144-149)
+        // Covers all 14xxx ZIP codes with specific 3-digit entries
         '140': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
         '141': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
         '142': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' },
@@ -31,7 +32,7 @@ const WaterHardness = (() => {
         '147': { value: 15, region: 'Potsdam', source: 'EWP' },
         '148': { value: 15, region: 'Potsdam', source: 'EWP' },
         '149': { value: 15, region: 'Potsdam', source: 'EWP' },
-        '14': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' }, // Fallback for 14xxx
+        '14': { value: 15, region: 'Berlin', source: 'Berliner Wasserbetriebe' }, // Fallback (shouldn't be used due to complete 3-digit coverage)
         
         // Hamburg
         '20': { value: 13, region: 'Hamburg', source: 'Hamburg Wasser' },
@@ -43,6 +44,7 @@ const WaterHardness = (() => {
         '81': { value: 20, region: 'München', source: 'Stadtwerke München' },
         '82': { value: 18, region: 'München Umland', source: 'Lokale Versorger' },
         // 3-digit disambiguation: Ingolstadt (850-851) vs München Umland (852-859)
+        // Covers all 85xxx ZIP codes with specific 3-digit entries
         '850': { value: 21, region: 'Ingolstadt', source: 'Stadtwerke Ingolstadt' },
         '851': { value: 21, region: 'Ingolstadt', source: 'Stadtwerke Ingolstadt' },
         '852': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
@@ -53,12 +55,13 @@ const WaterHardness = (() => {
         '857': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
         '858': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
         '859': { value: 22, region: 'München Umland', source: 'Lokale Versorger' },
-        '85': { value: 22, region: 'München Umland', source: 'Lokale Versorger' }, // Fallback for 85xxx
+        '85': { value: 22, region: 'München Umland', source: 'Lokale Versorger' }, // Fallback (shouldn't be used due to complete 3-digit coverage)
         
         // Köln
         '50': { value: 16, region: 'Köln', source: 'Rheinenergie' },
         '51': { value: 17, region: 'Köln', source: 'Rheinenergie' },
         // 3-digit disambiguation: Aachen (520-521) vs Köln Umland (522-529)
+        // Covers all 52xxx ZIP codes with specific 3-digit entries
         '520': { value: 14, region: 'Aachen', source: 'ENWOR' },
         '521': { value: 14, region: 'Aachen', source: 'ENWOR' },
         '522': { value: 15, region: 'Köln Umland', source: 'Lokale Versorger' },
@@ -69,7 +72,7 @@ const WaterHardness = (() => {
         '527': { value: 15, region: 'Köln Umland', source: 'Lokale Versorger' },
         '528': { value: 15, region: 'Köln Umland', source: 'Lokale Versorger' },
         '529': { value: 15, region: 'Köln Umland', source: 'Lokale Versorger' },
-        '52': { value: 14, region: 'Aachen', source: 'ENWOR' }, // Fallback for 52xxx
+        '52': { value: 14, region: 'Aachen', source: 'ENWOR' }, // Fallback (shouldn't be used due to complete 3-digit coverage)
         
         // Frankfurt
         '60': { value: 15, region: 'Frankfurt', source: 'Mainova' },
