@@ -93,7 +93,11 @@ export let animationFrames = {};
 export async function saveCoffeesAndSync() {
   setCoffees(coffees);
   if (window.backendSync?.getToken?.()) {
-    await window.backendSync.syncCoffeesToBackend(coffees);
+    try {
+      await window.backendSync.syncCoffeesToBackend(coffees);
+    } catch (error) {
+      console.warn('Failed to sync coffees to backend:', error);
+    }
   }
 }
 
