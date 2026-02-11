@@ -7,8 +7,11 @@ import { coffees, saveCoffeesAndSync } from './state.js'; // <--- saveCoffeesAnd
 
 export function updateRoastDate(index, dateValue) {
     coffees[index].roastDate = dateValue;
+    console.log("[DEBUG] Setting roastDate", index, dateValue, coffees[index]);
     localStorage.setItem('coffees', JSON.stringify(coffees));
-    saveCoffeesAndSync(); // <--- Backend-Sync und State
+    console.log("[DEBUG] Wrote to localStorage:", localStorage.getItem('coffees'));
+    saveCoffeesAndSync();
+}
 
     const badgeWrapper = document.getElementById(`freshness-badge-${index}`);
     if (badgeWrapper) {
