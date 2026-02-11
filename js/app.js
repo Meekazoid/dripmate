@@ -25,6 +25,7 @@ import {
     closeDecafModal
 } from './settings.js';
 import { updateRoastDate } from './freshness.js';
+import './brew-timer.js';
 import { 
     manualWaterHardness,
     userZipCode,
