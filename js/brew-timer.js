@@ -131,8 +131,3 @@ function updateBrewProgress(index) {
 
     animationFrames[index] = requestAnimationFrame(() => updateBrewProgress(index));
 }
-
-// Register functions on window for onclick handlers
-window.startBrewTimer = startBrewTimer;
-window.pauseBrewTimer = pauseBrewTimer;
-window.resetBrewTimer = resetBrewTimer;
