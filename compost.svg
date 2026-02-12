@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c8a97e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- pot/bin -->
+  <path d="M7 14h10l-1.5 6H8.5L7 14z"/>
+  <line x1="6" y1="14" x2="18" y2="14"/>
+  <!-- stem -->
+  <line x1="12" y1="14" x2="12" y2="9"/>
+  <!-- left leaf -->
+  <path d="M12 11 C10 11 8 10 8 7 C9.5 7 11.5 8 12 11z"/>
+  <!-- right leaf -->
+  <path d="M12 9 C14 9 16 8 16 5 C14.5 5 12.5 7 12 9z"/>
+</svg>
