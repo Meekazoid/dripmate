@@ -164,7 +164,7 @@ h1 {
     position: relative;
     display: flex;
     width: 100%;
-    max-width: 260px;
+    max-width: 215px;
     margin: 0 auto;
     padding: 0;
     background: none;
@@ -448,11 +448,24 @@ body.light-mode .grinder-option:not(.active) {
 }
 
 .grinder-option.active {
-    background: var(--accent) !important;
+    background: linear-gradient(
+        160deg,
+        rgba(80, 44, 14, 0.75) 0%,
+        rgba(50, 26, 8, 0.6) 70%
+    ) !important;
     border-color: var(--accent);
-    color: white;
+    color: var(--text-primary);
     font-weight: 600;
-    box-shadow: 0 3px 12px rgba(212, 165, 116, 0.35);
+    box-shadow: 0 3px 12px rgba(212, 165, 116, 0.25);
+}
+
+body.light-mode .grinder-option.active {
+    background: linear-gradient(
+        160deg,
+        rgba(210, 175, 130, 0.35) 0%,
+        rgba(210, 175, 130, 0.1) 70%
+    ) !important;
+    color: var(--text-primary);
 }
 
 .grinder-option.active::before {
@@ -1376,28 +1389,7 @@ body.light-mode .step-progress-bar {
     stroke: var(--accent);
 }
 
-#waterControlBtn.active {
-    background: rgba(212, 165, 116, 0.15);
-    border-color: rgba(212, 165, 116, 0.35);
-    opacity: 0.7;
-}
-
-#waterControlBtn.active:hover {
-    opacity: 1;
-}
-
-#waterControlBtn.active .control-icon {
-    stroke: var(--accent);
-}
-
-body.light-mode #waterControlBtn.active {
-    background: rgba(139, 90, 43, 0.12);
-    border-color: rgba(139, 90, 43, 0.3);
-}
-
-body.light-mode #waterControlBtn.active .control-icon {
-    stroke: var(--accent);
-}
+/* waterControlBtn: no active state — identical to all other control buttons */
 
 /* ==========================================
    19. MODALS
