@@ -85,19 +85,19 @@ body {
 header {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    text-align: left;
+    text-align: center;
     margin-bottom: 48px;
     padding: 0;
 }
 
 .logo-title-group {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: 16px;
+    justify-content: center;
+    gap: 6px;
     width: 100%;
 }
 
@@ -112,7 +112,7 @@ header {
     height: 72px;
     width: auto;
     display: block;
-    margin: 0;
+    margin: 0 auto;
     transition: filter 0.3s ease;
     /* Dark mode: warm gold tone matching --accent (#d4a574) */
     filter: invert(1) sepia(0.6) saturate(1.2) hue-rotate(-10deg) brightness(1.05) contrast(1.05);
@@ -129,7 +129,7 @@ h1 {
     font-weight: 300;
     letter-spacing: 0.28em;
     text-transform: lowercase;
-    text-align: left;
+    text-align: center;
     margin: 0;
     padding: 0;
 }
@@ -151,8 +151,8 @@ h1 {
     text-transform: uppercase;
     color: var(--accent);
     font-weight: 400;
-    margin-top: 0;
-    text-align: left;
+    margin-top: 2px;
+    align-self: flex-start;
 }
 
 /* ==========================================
