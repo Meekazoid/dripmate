@@ -360,12 +360,12 @@ c-25 33 -56 38 -82 12z m44 -41 c3 -5 1 -10 -4 -10 -6 0 -11 5 -11 10 0 6 2
     <script>
       // Match logo height to combined height of title + subtitle
       function alignHeader() {
-        const logo    = document.getElementById('header-logo');
-        const title   = document.getElementById('brand-title');
+        const logo     = document.getElementById('header-logo');
+        const title    = document.getElementById('brand-title');
         const subtitle = document.getElementById('brand-subtitle');
         if (!logo || !title || !subtitle) return;
-        const totalH = title.offsetHeight + subtitle.offsetHeight +
-                       parseInt(getComputedStyle(subtitle).marginTop || 0);
+        const gap    = parseInt(getComputedStyle(subtitle).marginTop) || 2;
+        const totalH = title.offsetHeight + subtitle.offsetHeight + gap;
         logo.style.height = totalH + 'px';
         logo.style.width  = 'auto';
       }
