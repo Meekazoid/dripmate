@@ -22,9 +22,11 @@
         <!-- ====== HEADER ====== -->
         <header>
             <div class="logo-title-group">
-                <img class="header-logo" src="logo-512.png" alt="pourpose Logo">
-                <h1 id="brand-title">p o u r <span class="brand-dot">·</span> p o s e</h1>
-                <div class="header-subtitle" id="brand-subtitle">Brew with Intention.</div>
+                <img class="header-logo" id="header-logo" src="logo-512.png" alt="pourpose Logo">
+                <div class="brand-text-group">
+                    <h1 id="brand-title">p o u r <span class="brand-dot">·</span> p o s e</h1>
+                    <div class="header-subtitle" id="brand-subtitle">Brew with Intention.</div>
+                </div>
             </div>
         </header>
 
@@ -356,17 +358,19 @@ c-25 33 -56 38 -82 12z m44 -41 c3 -5 1 -10 -4 -10 -6 0 -11 5 -11 10 0 6 2
       }
     </script>
     <script>
-      // Align subtitle left edge with h1 title left edge
-      function alignSubtitle() {
-        const title = document.getElementById('brand-title');
+      // Match logo height to combined height of title + subtitle
+      function alignHeader() {
+        const logo    = document.getElementById('header-logo');
+        const title   = document.getElementById('brand-title');
         const subtitle = document.getElementById('brand-subtitle');
-        if (!title || !subtitle) return;
-        const titleRect = title.getBoundingClientRect();
-        const subtitleParentRect = subtitle.parentElement.getBoundingClientRect();
-        subtitle.style.paddingLeft = (titleRect.left - subtitleParentRect.left) + 'px';
+        if (!logo || !title || !subtitle) return;
+        const totalH = title.offsetHeight + subtitle.offsetHeight +
+                       parseInt(getComputedStyle(subtitle).marginTop || 0);
+        logo.style.height = totalH + 'px';
+        logo.style.width  = 'auto';
       }
-      window.addEventListener('load', alignSubtitle);
-      window.addEventListener('resize', alignSubtitle);
+      window.addEventListener('load', alignHeader);
+      window.addEventListener('resize', alignHeader);
     </script>
 </body>
 </html>
