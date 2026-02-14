@@ -147,8 +147,8 @@ body.light-mode .logo-light { display: block; }
 h1 {
     font-family: 'Sora', sans-serif;
     font-size: 1.8rem;
-    font-weight: 300;
-    letter-spacing: 0.28em;
+    font-weight: 200;
+    letter-spacing: 0.32em;
     text-transform: lowercase;
     text-align: center;
     margin: 0;
@@ -167,13 +167,15 @@ h1 {
 }
 
 .header-subtitle {
-    font-size: 0.648rem;
-    letter-spacing: 0.18em;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
-    font-weight: 400;
+    font-weight: 200;
     margin-top: 2px;
     align-self: flex-start;
+    opacity: 0.7;
 }
 
 /* ==========================================
@@ -291,9 +293,13 @@ body.light-mode .cs-content {
 .manual-button {
     width: 150px;
     padding: 9px 22px;
-    background: var(--bg-secondary);
+    background: linear-gradient(
+        160deg,
+        rgba(60, 32, 10, 0.35) 0%,
+        rgba(26, 26, 26, 0.95) 70%
+    );
     color: var(--text-primary);
-    border: 2px solid var(--border);
+    border: 1px solid rgba(212, 165, 116, 0.12);
     border-radius: 12px;
     font-size: 0.765rem;
     font-weight: 500;
@@ -302,16 +308,44 @@ body.light-mode .cs-content {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(212, 165, 116, 0.06);
+}
+
+body.light-mode .upload-button,
+body.light-mode .manual-button {
+    background: linear-gradient(
+        160deg,
+        rgba(210, 175, 130, 0.1) 0%,
+        rgba(248, 248, 248, 0.95) 70%
+    );
+    border: 1px solid rgba(139, 111, 71, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(139, 111, 71, 0.08);
 }
 
 .upload-button:hover,
 .manual-button:hover {
-    background: var(--bg-card);
-    border-color: var(--accent);
+    background: linear-gradient(
+        160deg,
+        rgba(80, 44, 14, 0.45) 0%,
+        rgba(26, 26, 26, 0.95) 70%
+    );
+    border-color: rgba(212, 165, 116, 0.35);
     color: var(--accent);
     transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(139, 90, 43, 0.15), 0 0 0 0.5px rgba(212, 165, 116, 0.12);
+}
+
+body.light-mode .upload-button:hover,
+body.light-mode .manual-button:hover {
+    background: linear-gradient(
+        160deg,
+        rgba(210, 175, 130, 0.18) 0%,
+        rgba(255, 255, 255, 0.95) 70%
+    );
+    border-color: rgba(139, 111, 71, 0.35);
+    box-shadow: 0 4px 14px rgba(139, 90, 43, 0.08), 0 0 0 0.5px rgba(139, 111, 71, 0.12);
 }
 
 .upload-button:disabled,
@@ -421,8 +455,9 @@ button:hover {
     align-items: center;
     gap: 10px;
     color: var(--text-secondary);
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.765rem;
+    font-weight: 200;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     white-space: nowrap;
@@ -601,10 +636,51 @@ body.light-mode .coffee-card.expanded {
 .coffee-name {
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--text-primary);
     margin-bottom: 8px;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    /* Premium gold-to-cream text gradient */
+    background: linear-gradient(
+        135deg,
+        #d4a574 0%,
+        #e8cba8 45%,
+        #f5e1c8 70%,
+        #d4a574 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* Subtle warm micro-glow */
+    filter: drop-shadow(0 0 6px rgba(212, 165, 116, 0.15));
+    transition: filter 0.3s ease, background-position 0.6s ease;
+}
+
+/* Animate gradient on card hover for a rewarding shimmer */
+.coffee-card:hover .coffee-name {
+    background-position: 100% center;
+    filter: drop-shadow(0 0 10px rgba(212, 165, 116, 0.25));
+}
+
+/* Light mode: darker gold gradient that reads well on white */
+body.light-mode .coffee-name {
+    background: linear-gradient(
+        135deg,
+        #8b6f47 0%,
+        #a6844f 45%,
+        #c49a5c 70%,
+        #8b6f47 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 4px rgba(139, 111, 71, 0.1));
+}
+
+body.light-mode .coffee-card:hover .coffee-name {
+    background-position: 100% center;
+    filter: drop-shadow(0 0 8px rgba(139, 111, 71, 0.18));
 }
 
 .coffee-origin {
@@ -1669,7 +1745,7 @@ body.light-mode .step-progress-bar {
 
     h1 {
         font-size: 1.5rem;
-        letter-spacing: 0.2em;
+        letter-spacing: 0.24em;
     }
 
     .header-logo {
@@ -1776,7 +1852,7 @@ body.light-mode .step-progress-bar {
 @media (max-width: 400px) {
     h1 {
         font-size: 1.3rem;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.22em;
     }
 
     .header-logo {
