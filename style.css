@@ -357,13 +357,14 @@ body.light-mode .manual-button:hover {
 }
 
 .button-icon {
-    width: 14px;
-    height: 14px;
+    width: 15px;
+    height: 15px;
     stroke: currentColor;
-    stroke-width: 1.5;
+    stroke-width: 1.4;
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
+    flex-shrink: 0;
 }
 
 /* ==========================================
@@ -1731,14 +1732,14 @@ body.light-mode .step-progress-bar {
 }
 
 .empty-state {
-    padding: 48px 20px;
+    padding: 20px 16px 48px;
 }
 
 .onboarding-card {
-    max-width: 340px;
+    max-width: 420px;
     margin: 0 auto;
     text-align: center;
-    padding: 40px 28px;
+    padding: 22px 18px;
     background: linear-gradient(
         160deg,
         rgba(212, 165, 116, 0.06) 0%,
@@ -1747,38 +1748,33 @@ body.light-mode .step-progress-bar {
     );
     border: 1px solid rgba(212, 165, 116, 0.1);
     border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .onboarding-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 24px;
+    width: 44px;
+    height: 44px;
+    margin: 0;
     background: rgba(212, 165, 116, 0.06);
     border: 1px solid rgba(212, 165, 116, 0.12);
-    border-radius: 16px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .onboarding-text {
     font-family: 'Sora', sans-serif;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 200;
-    line-height: 1.7;
+    line-height: 1.65;
     color: var(--accent);
     letter-spacing: 0.01em;
-    margin-bottom: 20px;
-}
-
-.onboarding-cta {
-    font-family: 'Sora', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 300;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    opacity: 0.5;
+    margin: 0;
 }
 
 body.light-mode .onboarding-card {
@@ -1841,8 +1837,30 @@ body.light-mode .onboarding-icon {
     }
 
     .button-icon {
-        width: 12px;
-        height: 12px;
+        width: 14px;
+        height: 14px;
+    }
+
+    .empty-state {
+        padding-top: 12px;
+    }
+
+    .onboarding-card {
+        max-width: 100%;
+        margin-top: -2px;
+        padding: 18px 14px;
+        gap: 8px;
+    }
+
+    .onboarding-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+    }
+
+    .onboarding-text {
+        font-size: 0.76rem;
+        line-height: 1.55;
     }
 
     .global-grinder-selector {
@@ -2130,52 +2148,18 @@ body.light-mode .onboarding-icon {
     max-width: 480px;
 }
 
-.modal-header--compost {
-    margin-bottom: 0;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0;
-}
-
-.modal-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.modal-header-identity {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.compost-icon-tile {
-    width: 46px;
-    height: 46px;
-    background: rgba(200, 169, 126, 0.1);
-    border: 1px solid rgba(200, 169, 126, 0.2);
+.compost-info-box {
+    margin-bottom: 18px;
+    padding: 16px;
+    background: var(--bg-card);
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    border-left: 4px solid var(--accent);
 }
 
-.compost-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    line-height: 1.2;
-}
-
-.compost-subtitle {
-    font-size: 0.75rem;
+.compost-info-text {
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    margin-top: 2px;
-    font-weight: 300;
+    line-height: 1.6;
 }
 
 .decaf-list {

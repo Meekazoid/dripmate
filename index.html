@@ -60,16 +60,16 @@
                 <div class="button-group">
                     <button class="upload-button" id="uploadBtn">
                         <svg class="button-icon" viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
+                            <path d="M4 4h16v16H4z"></path>
+                            <path d="M7 4v5h10V4"></path>
+                            <rect x="8" y="13" width="8" height="5" rx="0.8"></rect>
                         </svg>
                         Upload Image
                     </button>
                     <button class="manual-button" id="manualBtn">
                         <svg class="button-icon" viewBox="0 0 24 24">
-                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                            <path d="M13.5 6.5l4 4"></path>
+                            <path d="M4 20l4.8-1.2L19 8.6a2 2 0 0 0 0-2.8l-.8-.8a2 2 0 0 0-2.8 0L5.2 15.2 4 20z"></path>
+                            <path d="M13.7 6.7l3.6 3.6"></path>
                         </svg>
                         Manual
                     </button>
@@ -153,7 +153,7 @@
         <div id="emptyState" class="empty-state">
             <div class="onboarding-card">
                 <div class="onboarding-icon">
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
                         <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"></path>
                         <line x1="6" y1="2" x2="6" y2="4"></line>
@@ -162,10 +162,8 @@
                     </svg>
                 </div>
                 <p class="onboarding-text">
-                    First, take a picture of your coffee bag or add it manually. 
-                    You'll get a card where you can explore your brew settings.
+                    First, choose your grinder. Then, take a picture of your coffee or add it manually. You get a card where you can explore your brew settings.<br>Enjoy!
                 </p>
-                <p class="onboarding-cta">Have fun.</p>
             </div>
         </div>
     </div>
@@ -203,7 +201,13 @@
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Settings</h2>
+                <h2 class="modal-title-with-icon">
+                    <svg class="modal-title-icon" viewBox="0 0 24 24">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Settings
+                </h2>
                 <button class="close-btn" id="closeSettingsBtn">✕</button>
             </div>
             <div class="form-group">
@@ -286,25 +290,21 @@
     <!-- ====== COMPOST MODAL ====== -->
     <div id="decafModal" class="modal">
         <div class="modal-content modal-content--narrow">
-            <div class="modal-header modal-header--compost">
-                <div class="modal-header-row">
-                    <div class="modal-header-identity">
-                        <div class="compost-icon-tile">
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6.5 13h11l-1.8 7H8.3L6.5 13z"/>
-                                <line x1="5.5" y1="13" x2="18.5" y2="13"/>
-                                <line x1="12" y1="13" x2="12" y2="8"/>
-                                <path d="M12 11.5 C9.5 11.5 7 10 7 6.5 C9 6.5 11.5 8 12 11.5z"/>
-                                <path d="M12 9 C14.5 9 17 7.5 17 4 C15 4 12.5 6.5 12 9z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 class="compost-title">Compost</h2>
-                            <p class="compost-subtitle">Deleted &amp; archived coffees</p>
-                        </div>
-                    </div>
-                    <button class="close-btn" id="closeDecafBtn">✕</button>
-                </div>
+            <div class="modal-header">
+                <h2 class="modal-title-with-icon">
+                    <svg class="modal-title-icon" viewBox="0 0 24 24">
+                        <path d="M6.5 13h11l-1.8 7H8.3L6.5 13z"></path>
+                        <line x1="5.5" y1="13" x2="18.5" y2="13"></line>
+                        <line x1="12" y1="13" x2="12" y2="8"></line>
+                        <path d="M12 11.5 C9.5 11.5 7 10 7 6.5 C9 6.5 11.5 8 12 11.5z"></path>
+                        <path d="M12 9 C14.5 9 17 7.5 17 4 C15 4 12.5 6.5 12 9z"></path>
+                    </svg>
+                    Compost
+                </h2>
+                <button class="close-btn" id="closeDecafBtn">✕</button>
+            </div>
+            <div class="compost-info-box">
+                <p class="compost-info-text">Deleted &amp; archived coffees</p>
             </div>
             <div id="decafList" class="decaf-list"></div>
             <div id="decafEmpty" class="decaf-empty" style="display: none;">
