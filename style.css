@@ -156,26 +156,26 @@ h1 {
 }
 
 .brand-dot {
-    display: inline-flex;
-    align-items: center;
-    width: 5px;
-    height: 5px;
-    background: var(--accent);
-    border-radius: 50%;
-    margin: 0 0.25em;
-    vertical-align: middle;
-    font-size: 0;
-    transform: translateY(0);
-}
-
-#brand-title {
+    color: var(--accent);
+    /* margin simuliert exakt ein Leerzeichen in der Sora-Schriftart */
+    margin: 0 0.25em !important; 
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    line-height: 0;
+    transform: translateY(-0.05em); /* Optische Zentrierung auf der Buchstabenachse */
+}
+
+#brand-title {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0 !important;
 }
 
 .brand-word {
     display: inline-block;
+    white-space: nowrap;
 }
 
 #brand-title {
@@ -390,9 +390,12 @@ body.light-mode .manual-button:hover {
 .action-buttons .btn svg {
     width: 18px !important;
     height: 18px !important;
-    min-width: 18px;
-    stroke-width: 1.5;
-    margin: 0;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    stroke-width: 2 !important; 
+    margin: 0 !important;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /* ==========================================
@@ -1592,8 +1595,26 @@ body.light-mode .step-progress-bar {
 }
 
 .popup-header-aligned {
-    display: flex;
+    display: flex !important;
     align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(212, 165, 116, 0.15);
+    width: 100%;
+}
+
+.popup-header-aligned svg {
+    width: 24px !important;
+    height: 24px !important;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.popup-header-aligned h2 {
+    margin: 0 !important;
+    font-size: 1.2rem !important;
+    font-weight: 200 !important;
 }
 
 .modal-title-with-icon {
