@@ -1738,7 +1738,7 @@ body.light-mode .step-progress-bar {
 .onboarding-card {
     max-width: 420px;
     margin: 0 auto;
-    text-align: left;
+    text-align: center;
     padding: 22px 18px;
     background: linear-gradient(
         160deg,
@@ -1749,14 +1749,15 @@ body.light-mode .step-progress-bar {
     border: 1px solid rgba(212, 165, 116, 0.1);
     border-radius: 16px;
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .onboarding-icon {
     width: 44px;
     height: 44px;
-    margin: 2px 0 0;
+    margin: 0;
     background: rgba(212, 165, 116, 0.06);
     border: 1px solid rgba(212, 165, 116, 0.12);
     border-radius: 12px;
@@ -1774,6 +1775,11 @@ body.light-mode .step-progress-bar {
     color: var(--accent);
     letter-spacing: 0.01em;
     margin: 0;
+}
+
+.onboarding-enjoy {
+    display: block;
+    margin-top: 4px;
 }
 
 body.light-mode .onboarding-card {
@@ -1848,7 +1854,7 @@ body.light-mode .onboarding-icon {
         max-width: 100%;
         margin-top: -2px;
         padding: 18px 14px;
-        gap: 10px;
+        gap: 8px;
     }
 
     .onboarding-icon {
@@ -2147,13 +2153,8 @@ body.light-mode .onboarding-icon {
     max-width: 480px;
 }
 
-.compost-subtitle {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    margin-top: -16px;
-    margin-bottom: 16px;
-    font-weight: 300;
-    padding-left: 32px;
+.compost-info-box {
+    margin-bottom: 20px;
 }
 
 .decaf-list {
