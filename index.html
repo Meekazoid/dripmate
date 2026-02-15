@@ -28,7 +28,7 @@
                 </div>
                 
                 <div class="brand-text-group">
-                    <h1 id="brand-title">d r i p <span class="brand-dot">·</span> m a t e </h1>
+                    <h1 id="brand-title">d r i p<span class="brand-dot">·</span> m a t e </h1>
                     <div class="header-subtitle" id="brand-subtitle">Precision meets Ritual.</div>
                 </div>
             </div>
@@ -149,19 +149,26 @@
 
         <!-- ====== COFFEE LIST ====== -->
         <div id="coffeeList" class="coffee-list"></div>
-        <div id="empty-state" class="empty-state">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                <line x1="6" y1="1" x2="6" y2="4"></line>
-                <line x1="10" y1="1" x2="10" y2="4"></line>
-                <line x1="14" y1="1" x2="14" y2="4"></line>
-            </svg>
-            <p>
-                First, take a picture of your coffee or add it manually. <strong>Then, choose your grinder.</strong> 
-                You get a card where you can explore your brew settings. Have fun.
-            </p>
+        
+        <div id="emptyState" class="empty-state">
+            <div class="onboarding-card">
+                <div class="onboarding-icon">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+                        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"></path>
+                        <line x1="6" y1="2" x2="6" y2="4"></line>
+                        <line x1="10" y1="2" x2="10" y2="4"></line>
+                        <line x1="14" y1="2" x2="14" y2="4"></line>
+                    </svg>
+                </div>
+                <p class="onboarding-text">
+                    First, take a picture of your coffee bag or add it manually. 
+                    You'll get a card where you can explore your brew settings.
+                </p>
+                <p class="onboarding-cta">Have fun.</p>
+            </div>
         </div>
+    </div>
 
     <!-- ====== FIXED CONTROLS ====== -->
     <div class="fixed-controls">
@@ -196,13 +203,7 @@
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="popup-header-aligned">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                    <h2 class="sora-200">Settings</h2>
-                </div>
+                <h2>Settings</h2>
                 <button class="close-btn" id="closeSettingsBtn">✕</button>
             </div>
             <div class="form-group">
@@ -298,13 +299,7 @@
                             </svg>
                         </div>
                         <div>
-                            <div class="popup-header-aligned">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 5.2 6 1.5 2.3 3 3.3 7 7z"></path>
-                                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
-                                </svg>
-                                <h2 class="sora-200">Compost</h2>
-                            </div>
+                            <h2 class="compost-title">Compost</h2>
                             <p class="compost-subtitle">Deleted &amp; archived coffees</p>
                         </div>
                     </div>
