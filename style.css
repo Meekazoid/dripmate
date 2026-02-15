@@ -156,14 +156,25 @@ h1 {
 }
 
 .brand-dot {
-    display: inline-block;
+    display: inline-flex;
     width: 5px;
     height: 5px;
     background: var(--accent);
     border-radius: 50%;
-    margin: 0 0.1em 0.2em;
+    margin: 0 0.12em;
     vertical-align: middle;
     font-size: 0;
+    transform: translateY(0);
+}
+
+#brand-title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-word {
+    display: inline-block;
 }
 
 .header-subtitle {
@@ -2157,6 +2168,10 @@ body.light-mode .onboarding-icon {
     margin-bottom: 20px;
 }
 
+.settings-info-box {
+    margin-bottom: 20px;
+}
+
 .decaf-list {
     margin-top: 20px;
 }
@@ -2187,13 +2202,6 @@ body.light-mode .onboarding-icon {
     font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: 6px;
-}
-
-.compost-empty-sub {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    opacity: 0.5;
-    font-weight: 300;
 }
 
 /* ==========================================
