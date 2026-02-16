@@ -1023,7 +1023,7 @@ body.light-mode .water-hardness-badge {
 
 .param-value {
     font-family: 'Sora', sans-serif; /* Schriftart hinzufügen */
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     font-weight: 300;                /* Von 700 auf 200/300 reduziert */
     color: var(--accent);
 }
@@ -1120,8 +1120,8 @@ body.light-mode .water-hardness-badge {
 }
 
 .ratio-value {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.3rem;
+    font-weight: 500;
     color: var(--accent);
 }
 
