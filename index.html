@@ -200,21 +200,23 @@
     <!-- ====== SETTINGS MODAL ====== -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header" id="settings-popup">
-                <div class="popup-header-aligned">
-                    <h2 class="modal-title-with-icon">
-                        <svg class="modal-title-icon" viewBox="0 0 24 24">
-                            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        Settings
-                    </h2>
+            <!-- Header (closed before content) -->
+            <div class="popup-header-standard" id="settings-popup">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <h2>Settings</h2>
                 </div>
                 <button class="close-btn" id="closeSettingsBtn">✕</button>
             </div>
-            <div class="water-info-box settings-info-box">
-                <p class="water-info-text">Enter the code you received to activate this device.</p>
+            <!-- Info box -->
+            <div class="info-box-standard">
+                <strong>Device Activation</strong>
+                <p>Enter the code you received to activate this device.</p>
             </div>
+            <!-- Content -->
             <div class="form-group">
                 <input type="text" id="accessCodeInput" placeholder="Insert Token">
             </div>
@@ -226,19 +228,20 @@
     <!-- ====== WATER HARDNESS MODAL ====== -->
     <div id="waterModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title-with-icon">
-                    <svg class="modal-title-icon" viewBox="0 0 24 24">
+            <!-- Header (closed before content) -->
+            <div class="popup-header-standard">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24">
                         <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
                     </svg>
-                    Water Hardness
-                </h2>
+                    <h2>Water Hardness</h2>
+                </div>
                 <button class="close-btn" id="closeWaterBtn">✕</button>
             </div>
-            <div class="water-info-box">
-                <p class="water-info-text">
-                    Water hardness affects coffee extraction. Soft water requires a finer grind and higher temperature, while hard water requires a coarser grind and lower temperature.
-                </p>
+            <!-- Info box -->
+            <div class="info-box-standard">
+                <strong>How it works</strong>
+                <p>Water hardness affects coffee extraction. Soft water requires a finer grind and higher temperature, while hard water requires a coarser grind and lower temperature.</p>
             </div>
             <div class="form-group">
                 <label>Postal Code (ZIP)</label>
@@ -278,8 +281,8 @@
                     <div class="water-brew-text" id="hardnessDescriptionDisplay">-</div>
                 </div>
             </div>
-            <div class="water-scale-box">
-                <div class="water-scale-title">Water Hardness Scale (°dH)</div>
+            <div class="info-box-standard">
+                <strong>Water Hardness Scale (°dH)</strong>
                 <div class="water-scale-list">
                     <div>0–7 °dH: <strong>Very soft</strong></div>
                     <div>7–14 °dH: <strong>Soft</strong></div>
@@ -294,24 +297,26 @@
     <!-- ====== COMPOST MODAL ====== -->
     <div id="decafModal" class="modal">
         <div class="modal-content modal-content--narrow">
-            <div class="modal-header" id="compost-popup">
-                <div class="popup-header-aligned">
-                    <h2 class="modal-title-with-icon">
-                        <svg class="modal-title-icon" viewBox="0 0 24 24">
-                            <path d="M6.5 13h11l-1.8 7H8.3L6.5 13z"></path>
-                            <line x1="5.5" y1="13" x2="18.5" y2="13"></line>
-                            <line x1="12" y1="13" x2="12" y2="8"></line>
-                            <path d="M12 11.5 C9.5 11.5 7 10 7 6.5 C9 6.5 11.5 8 12 11.5z"></path>
-                            <path d="M12 9 C14.5 9 17 7.5 17 4 C15 4 12.5 6.5 12 9z"></path>
-                        </svg>
-                        Compost
-                    </h2>
+            <!-- Header (closed before content) -->
+            <div class="popup-header-standard" id="compost-popup">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6.5 13h11l-1.8 7H8.3L6.5 13z"></path>
+                        <line x1="5.5" y1="13" x2="18.5" y2="13"></line>
+                        <line x1="12" y1="13" x2="12" y2="8"></line>
+                        <path d="M12 11.5 C9.5 11.5 7 10 7 6.5 C9 6.5 11.5 8 12 11.5z"></path>
+                        <path d="M12 9 C14.5 9 17 7.5 17 4 C15 4 12.5 6.5 12 9z"></path>
+                    </svg>
+                    <h2 class="popup-title--medium">Compost</h2>
                 </div>
                 <button class="close-btn" id="closeDecafBtn">✕</button>
             </div>
-            <div class="water-info-box compost-info-box">
-                <p class="water-info-text">Deleted &amp; archived coffees</p>
+            <!-- Info box -->
+            <div class="info-box-standard">
+                <strong>Archive</strong>
+                <p>Deleted &amp; archived coffees</p>
             </div>
+            <!-- Content -->
             <div id="decafList" class="decaf-list"></div>
             <div id="decafEmpty" class="decaf-empty" style="display: none;">
                 <div class="compost-empty-icon">

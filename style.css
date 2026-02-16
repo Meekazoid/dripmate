@@ -2256,3 +2256,104 @@ body.light-mode .onboarding-icon {
 .loading-text {
     margin-top: 12px;
 }
+
+/* ==========================================
+   27. UI COMPONENTS — STANDARDIZED POPUPS
+   ========================================== */
+
+/* ─── .popup-header-standard ─── 
+   Universal flex header for all popup/modal heads.
+   Icon + h2 title sit side-by-side, with a fine gold
+   separator underneath. The header MUST be closed
+   before the rest of the modal content begins.        */
+
+.popup-header-standard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(212, 165, 116, 0.15);
+    position: relative;          /* keeps z-context local */
+    z-index: 1;
+}
+
+.popup-header-standard .popup-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;               /* allow text truncation */
+}
+
+.popup-header-standard svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    flex-shrink: 0;
+}
+
+.popup-header-standard h2 {
+    margin: 0;
+    font-family: 'Sora', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 200;           /* default thin weight */
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+}
+
+/* Compost variant: slightly heavier title */
+.popup-header-standard h2.popup-title--medium {
+    font-weight: 400;
+}
+
+.popup-header-standard .close-btn {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+/* ─── .info-box-standard ─── 
+   Universal info-box / callout.
+   Transparent gold background, subtle border,
+   <strong> title in accent colour, body text below.    */
+
+.info-box-standard {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: rgba(212, 165, 116, 0.05);
+    border: 1px solid rgba(212, 165, 116, 0.15);
+    border-radius: 12px;
+}
+
+body.light-mode .info-box-standard {
+    background: rgba(139, 111, 71, 0.04);
+    border-color: rgba(139, 111, 71, 0.12);
+}
+
+.info-box-standard strong {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 6px;
+}
+
+.info-box-standard p,
+.info-box-standard .info-box-text {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* When the info-box holds a scale/list */
+.info-box-standard .water-scale-list {
+    margin-top: 10px;
+}
