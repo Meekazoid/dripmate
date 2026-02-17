@@ -224,6 +224,97 @@
             </div>
             <div id="activationStatus" class="activation-status" style="display: none;"></div>
             <button id="activateDeviceBtn">Activate Device</button>
+
+            <!-- Divider -->
+            <hr class="settings-divider">
+
+            <!-- Legal Section -->
+            <div class="settings-legal">
+                <button class="settings-legal-btn" id="openImpressumBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    Impressum
+                </button>
+                <button class="settings-legal-btn" id="openDatenschutzBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    Datenschutz
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== IMPRESSUM MODAL ====== -->
+    <div id="impressumModal" class="modal">
+        <div class="modal-content">
+            <div class="popup-header-standard">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <h2>Impressum</h2>
+                </div>
+                <button class="close-btn" id="closeImpressumBtn">✕</button>
+            </div>
+            <div class="legal-content">
+                <p><strong>Angaben gemäß § 5 TMG</strong></p>
+                <p>
+                    [Vorname Nachname / Firmenname]<br>
+                    [Straße Hausnummer]<br>
+                    [PLZ Ort]<br>
+                    Deutschland
+                </p>
+                <p><strong>Kontakt</strong></p>
+                <p>
+                    E-Mail: [email@example.com]<br>
+                    Telefon: [+49 ...]
+                </p>
+                <p><strong>Verantwortlich für den Inhalt</strong></p>
+                <p>[Vorname Nachname], [Adresse wie oben]</p>
+                <p class="legal-note">Bitte ersetze die Platzhalter in eckigen Klammern mit deinen tatsächlichen Angaben vor dem Release.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== DATENSCHUTZ MODAL ====== -->
+    <div id="datenschutzModal" class="modal">
+        <div class="modal-content">
+            <div class="popup-header-standard">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <h2>Datenschutz</h2>
+                </div>
+                <button class="close-btn" id="closeDatenschutzBtn">✕</button>
+            </div>
+            <div class="legal-content">
+                <p><strong>Datenschutzerklärung</strong></p>
+                <p>Diese App erhebt und verarbeitet personenbezogene Daten ausschließlich im Rahmen der geltenden Datenschutzgesetze, insbesondere der DSGVO (EU) 2016/679.</p>
+
+                <p><strong>Verantwortlicher</strong></p>
+                <p>[Vorname Nachname / Firmenname], [Adresse], [E-Mail]</p>
+
+                <p><strong>Erhobene Daten</strong></p>
+                <p>Die App speichert Einstellungen und Präferenzen ausschließlich lokal auf deinem Gerät (localStorage). Es werden keine personenbezogenen Daten an Dritte übermittelt oder auf externen Servern gespeichert.</p>
+
+                <p><strong>Aktivierungscode</strong></p>
+                <p>Der bei der Geräteaktivierung eingegebene Code wird zur Verifikation übermittelt und danach nicht dauerhaft gespeichert.</p>
+
+                <p><strong>Deine Rechte (Art. 15–22 DSGVO)</strong></p>
+                <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie Datenübertragbarkeit. Wende dich dazu an: [email@example.com]</p>
+
+                <p><strong>Beschwerderecht</strong></p>
+                <p>Du hast das Recht, dich bei der zuständigen Datenschutzbehörde zu beschweren.</p>
+
+                <p class="legal-note">Stand: [Monat Jahr] · Bitte Platzhalter vor dem Release ersetzen.</p>
+            </div>
         </div>
     </div>
 

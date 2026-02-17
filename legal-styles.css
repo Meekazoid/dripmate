@@ -1,0 +1,83 @@
+/* ====== SETTINGS: IMPRESSUM & DATENSCHUTZ ====== */
+
+/* Thin divider line between "Activate Device" and legal section */
+.settings-divider {
+    border: none;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    margin: 20px 0 16px;
+}
+
+/* Legal buttons row */
+.settings-legal {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.settings-legal-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    background: transparent;
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    color: var(--text-secondary, #888);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    letter-spacing: 0.02em;
+}
+
+.settings-legal-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.settings-legal-btn:hover {
+    background: rgba(128, 128, 128, 0.08);
+    border-color: rgba(128, 128, 128, 0.45);
+    color: var(--text-primary, #333);
+}
+
+/* Legal modal content area */
+.legal-content {
+    padding: 4px 0 8px;
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--text-secondary, #666);
+    overflow-y: auto;
+    max-height: 65vh;
+}
+
+.legal-content p {
+    margin: 0 0 10px;
+}
+
+.legal-content strong {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 2px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-primary, #444);
+    opacity: 0.75;
+}
+
+/* Placeholder reminder note */
+.legal-note {
+    margin-top: 20px !important;
+    padding: 10px 12px;
+    background: rgba(255, 180, 0, 0.08);
+    border-left: 3px solid rgba(255, 180, 0, 0.5);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary, #888);
+    font-style: italic;
+}
