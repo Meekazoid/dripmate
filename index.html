@@ -132,22 +132,20 @@
         <!-- ====== BREW SETUP — STICKY SELECTOR (V5.2) ====== -->
         <div class="global-grinder-selector">
             <div class="brew-chip-row">
-                <button class="brew-chip" id="grinder-chip" aria-label="Choose grinder">
-                    <svg class="brew-chip-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
-                    </svg>
-                    <span class="brew-chip-label" id="grinder-chip-label">Fellow Ode Gen 2</span>
-                    <svg class="brew-chip-caret" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
-                </button>
-                <button class="brew-chip" id="method-chip" aria-label="Choose method">
-                    <svg class="brew-chip-icon" viewBox="0 0 24 24">
-                        <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
-                        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"></path>
-                    </svg>
-                    <span class="brew-chip-label" id="method-chip-label">V60</span>
-                    <svg class="brew-chip-caret" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
-                </button>
+                <div class="brew-chip-group">
+                    <span class="brew-chip-group-label">Grinder</span>
+                    <button class="brew-chip" id="grinder-chip" aria-label="Choose grinder">
+                        <span class="brew-chip-label" id="grinder-chip-label">Fellow Ode Gen 2</span>
+                        <svg class="brew-chip-caret" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
+                <div class="brew-chip-group">
+                    <span class="brew-chip-group-label">Brew Method</span>
+                    <button class="brew-chip" id="method-chip" aria-label="Choose method">
+                        <span class="brew-chip-label" id="method-chip-label">V60</span>
+                        <svg class="brew-chip-caret" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
         <!-- ====== COFFEE LIST ====== -->
@@ -343,12 +341,12 @@
                 </button>
                 <button class="picker-option" data-value="timemore_c2">
                     <span class="picker-option-name">Timemore Chestnut C2</span>
-                    <span class="picker-option-detail">Steel conical · 38mm</span>
+                    <span class="picker-option-detail">38mm conical · 80µm/click</span>
                     <span class="picker-check">✓</span>
                 </button>
                 <button class="picker-option" data-value="timemore_s3">
-                    <span class="picker-option-name">Timemore Sculptor 078S</span>
-                    <span class="picker-option-detail">S2C burrs · 64mm conical</span>
+                    <span class="picker-option-name">Timemore Chestnut S3</span>
+                    <span class="picker-option-detail">S2C890 · 42mm conical · 15µm/click</span>
                     <span class="picker-check">✓</span>
                 </button>
             </div>
