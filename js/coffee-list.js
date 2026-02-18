@@ -51,7 +51,7 @@ export function renderCoffees(expandAfterIndex) {
     document.querySelectorAll('.coffee-card').forEach(card => {
         card.addEventListener('click', function (e) {
             // ── Updated: added .edit-btn and .inline-edit-input to ignore list ──
-            if (e.target.closest('.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .timer-btn, .scale-option, .apply-suggestion-btn, .adjust-btn, .reset-adjustments-btn, input[type="range"], input[type="date"]')) return;
+            if (e.target.closest('.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .timer-btn, .scale-option, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input[type="range"], input[type="date"]')) return;
             document.querySelectorAll('.coffee-card').forEach(c => { if (c !== this) c.classList.remove('expanded'); });
             this.classList.toggle('expanded');
         });

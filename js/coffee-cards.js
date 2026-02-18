@@ -146,25 +146,38 @@ export function renderCoffeeCard(coffee, index) {
                 
                 <div class="feedback-section">
                     <h4>Brew Feedback</h4>
+                    <div class="feedback-cupping-note">Cupping-style quick rating (low / balanced / high).</div>
                     <div class="feedback-group">
-                        <div class="feedback-label">Extraction</div>
+                        <div class="feedback-label">Bitterness</div>
                         <div class="feedback-scale">
-                            ${['under', 'perfect', 'over'].map(v => `
-                                <div class="scale-option ${coffee.feedback?.extraction === v ? 'selected' : ''}" 
-                                     data-feedback="${index}-extraction" data-value="${v}"
-                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'extraction', '${v}');">
+                            ${['low', 'balanced', 'high'].map(v => `
+                                <div class="scale-option ${coffee.feedback?.bitterness === v ? 'selected' : ''}" 
+                                     data-feedback="${index}-bitterness" data-value="${v}"
+                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'bitterness', '${v}');">
                                     ${v.charAt(0).toUpperCase() + v.slice(1)}
                                 </div>
                             `).join('')}
                         </div>
                     </div>
                     <div class="feedback-group">
-                        <div class="feedback-label">Taste Clarity</div>
+                        <div class="feedback-label">Sweetness</div>
                         <div class="feedback-scale">
-                            ${['flat', 'good', 'perfect', 'harsh'].map(v => `
-                                <div class="scale-option ${coffee.feedback?.taste === v ? 'selected' : ''}" 
-                                     data-feedback="${index}-taste" data-value="${v}"
-                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'taste', '${v}');">
+                            ${['low', 'balanced', 'high'].map(v => `
+                                <div class="scale-option ${coffee.feedback?.sweetness === v ? 'selected' : ''}" 
+                                     data-feedback="${index}-sweetness" data-value="${v}"
+                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'sweetness', '${v}');">
+                                    ${v.charAt(0).toUpperCase() + v.slice(1)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="feedback-group">
+                        <div class="feedback-label">Acidity</div>
+                        <div class="feedback-scale">
+                            ${['low', 'balanced', 'high'].map(v => `
+                                <div class="scale-option ${coffee.feedback?.acidity === v ? 'selected' : ''}" 
+                                     data-feedback="${index}-acidity" data-value="${v}"
+                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'acidity', '${v}');">
                                     ${v.charAt(0).toUpperCase() + v.slice(1)}
                                 </div>
                             `).join('')}
@@ -173,7 +186,7 @@ export function renderCoffeeCard(coffee, index) {
                     <div class="feedback-group">
                         <div class="feedback-label">Body</div>
                         <div class="feedback-scale">
-                            ${['thin', 'balanced', 'heavy'].map(v => `
+                            ${['low', 'balanced', 'high'].map(v => `
                                 <div class="scale-option ${coffee.feedback?.body === v ? 'selected' : ''}" 
                                      data-feedback="${index}-body" data-value="${v}"
                                      onclick="event.stopPropagation(); selectFeedback(${index}, 'body', '${v}');">
@@ -183,6 +196,7 @@ export function renderCoffeeCard(coffee, index) {
                         </div>
                     </div>
                     <div class="feedback-suggestion hidden" id="suggestion-${index}"></div>
+                    <button class="history-btn" onclick="event.stopPropagation(); openFeedbackHistory(${index});">View Adjustment History</button>
                     <button class="reset-adjustments-btn" onclick="event.stopPropagation(); resetCoffeeAdjustments(${index});">Reset Adjustments</button>
                 </div>
                 

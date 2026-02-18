@@ -1,9 +1,9 @@
 // ==========================================
 // FEEDBACK SYSTEM
-// Extraction/taste feedback and AI suggestions
+// Cupping-inspired sensory feedback and parameter suggestions
 // ==========================================
 
-import { coffees, saveCoffeesAndSync } from './state.js';
+import { coffees, saveCoffeesAndSync, sanitizeHTML } from './state.js';
 import { getBrewRecommendations } from './brew-engine.js';
 
 export function selectFeedback(index, category, value) {
@@ -19,6 +19,10 @@ export function selectFeedback(index, category, value) {
     localStorage.setItem('coffees', JSON.stringify(coffees));
 }
 
+function hasAnyCuppingInput(feedback) {
+    return ['bitterness', 'sweetness', 'acidity', 'body'].some(key => Boolean(feedback[key]));
+}
+
 function generateSuggestion(index) {
     const coffee = coffees[index];
     const feedback = coffee.feedback || {};
@@ -27,44 +31,94 @@ function generateSuggestion(index) {
 
     let suggestions = [];
     let grindOffsetDelta = 0;
+    let tempDelta = 0;
     let newTemp = null;
 
-    if (feedback.extraction === 'under') {
-        suggestions.push('Coffee is underextracted - tastes sour/weak', '→ Grind finer', '→ Or increase temperature by 2°C');
-        grindOffsetDelta += -5;
-        newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), +2);
-    } else if (feedback.extraction === 'over') {
-        suggestions.push('Coffee is overextracted - tastes bitter/harsh', '→ Grind coarser', '→ Or decrease temperature by 2°C');
+    if (!hasAnyCuppingInput(feedback)) {
+        suggestionDiv.innerHTML = '';
+        suggestionDiv.classList.add('hidden');
+        return;
+    }
+
+    // Cupping-inspired mappings (low / balanced / high)
+    const hasBitterHigh = feedback.bitterness === 'high';
+    const hasSweetLow = feedback.sweetness === 'low';
+    const hasAcidityHigh = feedback.acidity === 'high';
+    const hasAcidityLow = feedback.acidity === 'low';
+
+    if (hasBitterHigh) {
+        suggestions.push('Bitterness is high', '→ Grind coarser', '→ Lower temperature by 2°C');
         grindOffsetDelta += +5;
-        newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), -2);
+        tempDelta -= 2;
+    } else if (feedback.bitterness === 'low') {
+        suggestions.push('Bitterness is very low / cup feels sharp-thin', '→ Slightly finer grind');
+        grindOffsetDelta += -2;
     }
 
-    if (feedback.taste === 'flat') {
-        suggestions.push('Flavors not coming through clearly', '→ Increase temperature by 2°C');
-        newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), +2);
-    } else if (feedback.taste === 'harsh') {
-        suggestions.push('Taste is too harsh/aggressive', '→ Lower temperature by 2°C');
-        newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), -2);
-    }
-
-    if (feedback.body === 'thin') {
-        suggestions.push('Body too thin/watery', '→ Grind slightly finer');
+    if (hasSweetLow) {
+        suggestions.push('Sweetness is low', '→ Increase extraction slightly (finer + warmer)');
         grindOffsetDelta += -3;
-    } else if (feedback.body === 'heavy') {
-        suggestions.push('Body too heavy/muddy', '→ Grind slightly coarser');
+        tempDelta += 1;
+    } else if (feedback.sweetness === 'high') {
+        suggestions.push('Sweetness is high', '→ Keep this profile as a reference cup');
+    }
+
+    if (hasAcidityHigh) {
+        suggestions.push('Acidity feels too sharp', '→ Grind finer', '→ Raise temperature by 1–2°C');
+        grindOffsetDelta += -4;
+        tempDelta += 2;
+    } else if (hasAcidityLow) {
+        if (hasBitterHigh) {
+            suggestions.push('Acidity is low + bitterness high', '→ Keep coarser/cooler direction to reduce harshness');
+            grindOffsetDelta += +1;
+            tempDelta -= 1;
+        } else if (hasSweetLow) {
+            suggestions.push('Acidity is low + sweetness low', '→ Increase extraction (slightly finer + warmer)');
+            grindOffsetDelta += -2;
+            tempDelta += 1;
+        } else {
+            suggestions.push('Acidity feels muted', '→ Coarser by 1 click equivalent only');
+            grindOffsetDelta += +1;
+        }
+    }
+
+    if (feedback.body === 'low') {
+        suggestions.push('Body is too light', '→ Grind slightly finer');
+        grindOffsetDelta += -3;
+    } else if (feedback.body === 'high') {
+        suggestions.push('Body is too heavy', '→ Grind slightly coarser');
         grindOffsetDelta += +3;
     }
 
-    if (suggestions.length === 0 || feedback.extraction === 'perfect') {
+    const allBalanced = ['bitterness', 'sweetness', 'acidity', 'body']
+        .every(key => !feedback[key] || feedback[key] === 'balanced');
+
+    if (suggestions.length === 0 || allBalanced) {
         suggestionDiv.innerHTML = `<div style="text-align: center; padding: 24px; color: var(--text-secondary);">✓ Perfect! No adjustments needed.</div>`;
         suggestionDiv.classList.remove('hidden');
         return;
     }
 
+    // Conflict guidance for opposite extraction signals
+    if (hasBitterHigh && hasAcidityHigh) {
+        suggestions.push('Conflict: bitterness high + acidity high', '→ Keep temperature stable; change grind first, then taste again');
+    }
+
+    // Cap step size per iteration to keep loop stable/reproducible
+    const cappedGrindDelta = Math.max(-4, Math.min(4, grindOffsetDelta));
+    const cappedTempDelta = Math.max(-2, Math.min(2, tempDelta));
+    if (cappedGrindDelta !== grindOffsetDelta || cappedTempDelta !== tempDelta) {
+        suggestions.push('Adjustment cap applied', '→ Changes limited to stable single-step iteration');
+    }
+
     // Preview what the grind would look like with the new offset
-    const previewGrind = grindOffsetDelta !== 0
-        ? getBrewRecommendations({ ...coffee, grindOffset: (coffee.grindOffset || 0) + grindOffsetDelta }).grindSetting
+    const previewGrind = cappedGrindDelta !== 0
+        ? getBrewRecommendations({ ...coffee, grindOffset: (coffee.grindOffset || 0) + cappedGrindDelta }).grindSetting
         : null;
+
+    if (cappedTempDelta !== 0) {
+        newTemp = adjustTemp(coffee.customTemp || getDefaultTemp(coffee.process.toLowerCase()), cappedTempDelta);
+    }
 
     suggestionDiv.innerHTML = `
         <div class="suggestion-title">
@@ -79,7 +133,7 @@ function generateSuggestion(index) {
             ${previewGrind ? `<div class="suggestion-value"><strong>New Grind:</strong> ${previewGrind}</div>` : ''}
             ${newTemp ? `<div class="suggestion-value"><strong>New Temp:</strong> ${newTemp}</div>` : ''}
         </div>
-        <button class="apply-suggestion-btn" onclick="applySuggestion(${index}, ${grindOffsetDelta}, '${newTemp}')">
+        <button class="apply-suggestion-btn" onclick="applySuggestion(${index}, ${cappedGrindDelta}, '${newTemp}')">
             Apply These Settings
         </button>
     `;
@@ -104,13 +158,97 @@ export async function applySuggestion(index, grindOffsetDelta, newTemp) {
     const { renderCoffees } = await import('./coffee-list.js');
     
     const coffee = coffees[index];
+    const before = getBrewRecommendations(coffee);
+
     if (grindOffsetDelta && grindOffsetDelta !== 0) {
         coffee.grindOffset = (coffee.grindOffset || 0) + grindOffsetDelta;
     }
     if (newTemp && newTemp !== 'null') coffee.customTemp = newTemp;
+
+    const after = getBrewRecommendations(coffee);
+    addHistoryEntry(coffee, {
+        timestamp: new Date().toISOString(),
+        previousGrind: before.grindSetting,
+        previousTemp: before.temperature,
+        newGrind: after.grindSetting,
+        newTemp: after.temperature,
+        grindOffsetDelta: grindOffsetDelta || 0,
+        customTempApplied: newTemp && newTemp !== 'null' ? newTemp : null
+    });
+
     coffee.feedback = {};
     saveCoffeesAndSync();
     renderCoffees(index);
+}
+
+function addHistoryEntry(coffee, entry) {
+    if (!coffee.feedbackHistory) coffee.feedbackHistory = [];
+    coffee.feedbackHistory.unshift(entry);
+    if (coffee.feedbackHistory.length > 30) {
+        coffee.feedbackHistory = coffee.feedbackHistory.slice(0, 30);
+    }
+}
+
+function formatHistoryDate(iso) {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return 'Unknown date';
+    return date.toLocaleString();
+}
+
+function formatHistoryDelta(entry) {
+    if (entry.resetToInitial) {
+        return 'Reset to engine baseline values';
+    }
+
+    const parts = [];
+    if (entry.grindOffsetDelta) {
+        const sign = entry.grindOffsetDelta > 0 ? '+' : '';
+        parts.push(`Grind offset ${sign}${entry.grindOffsetDelta}`);
+    }
+    if (entry.customTempApplied) {
+        parts.push(`Temp override ${entry.customTempApplied}`);
+    }
+    if (parts.length === 0) return 'No direct offset change';
+    return parts.join(' · ');
+}
+
+export function openFeedbackHistory(index) {
+    const modal = document.getElementById('feedbackHistoryModal');
+    const titleEl = document.getElementById('feedbackHistoryTitle');
+    const listEl = document.getElementById('feedbackHistoryList');
+    const emptyEl = document.getElementById('feedbackHistoryEmpty');
+    const coffee = coffees[index];
+
+    if (!modal || !titleEl || !listEl || !emptyEl || !coffee) return;
+
+    titleEl.textContent = `Adjustment History · ${coffee.name || 'Coffee'}`;
+
+    const history = Array.isArray(coffee.feedbackHistory) ? coffee.feedbackHistory : [];
+    if (history.length === 0) {
+        listEl.innerHTML = '';
+        emptyEl.style.display = 'block';
+    } else {
+        emptyEl.style.display = 'none';
+        listEl.innerHTML = history.map(entry => `
+            <div class="history-item">
+                <div class="history-item-top">
+                    <strong>${sanitizeHTML(formatHistoryDate(entry.timestamp))}</strong>
+                    <span>${sanitizeHTML(formatHistoryDelta(entry))}</span>
+                </div>
+                <div class="history-item-grid">
+                    <div><span>Grind</span><strong>${sanitizeHTML(entry.previousGrind)} → ${sanitizeHTML(entry.newGrind)}</strong></div>
+                    <div><span>Temp</span><strong>${sanitizeHTML(entry.previousTemp)} → ${sanitizeHTML(entry.newTemp)}</strong></div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    modal.classList.add('active');
+}
+
+export function closeFeedbackHistory() {
+    const modal = document.getElementById('feedbackHistoryModal');
+    if (modal) modal.classList.remove('active');
 }
 
 // Manual adjustment functions
@@ -142,6 +280,7 @@ export function adjustTempManual(index, direction) {
 
 export function resetCoffeeAdjustments(index) {
     const coffee = coffees[index];
+    const before = getBrewRecommendations(coffee);
 
     // Recompute fresh engine defaults (respects current grinder & water)
     const initial = getInitialBrewValues(coffee);
@@ -155,6 +294,18 @@ export function resetCoffeeAdjustments(index) {
     delete coffee.grindOffset;
     delete coffee.customTemp;
     delete coffee.feedback;
+
+    const after = getBrewRecommendations(coffee);
+    addHistoryEntry(coffee, {
+        timestamp: new Date().toISOString(),
+        previousGrind: before.grindSetting,
+        previousTemp: before.temperature,
+        newGrind: after.grindSetting,
+        newTemp: after.temperature,
+        grindOffsetDelta: 0,
+        customTempApplied: null,
+        resetToInitial: true
+    });
 
     // Direct DOM update – card stays open
     const grindEl = document.getElementById(`grind-value-${index}`);
@@ -213,3 +364,5 @@ window.applySuggestion = applySuggestion;
 window.adjustGrindManual = adjustGrindManual;
 window.adjustTempManual = adjustTempManual;
 window.resetCoffeeAdjustments = resetCoffeeAdjustments;
+window.openFeedbackHistory = openFeedbackHistory;
+window.closeFeedbackHistory = closeFeedbackHistory;

@@ -6,7 +6,7 @@
 // Import all modules
 import { initTheme, toggleTheme, toggleManual } from './theme.js';
 import { initGlobalGrinder } from './grinder.js';
-import { migrateCoffeesInitialValues } from './feedback.js';
+import { closeFeedbackHistory, migrateCoffeesInitialValues } from './feedback.js';
 import { renderCoffees } from './coffee-list.js';
 import { processImageUpload } from './image-handler.js';
 import { saveCoffeeManual } from './manual-entry.js';
@@ -103,6 +103,8 @@ function initEventListeners() {
     // Modal backdrop close
     document.getElementById('settingsModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeSettings(); });
     document.getElementById('decafModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeDecafModal(); });
+    document.getElementById('closeFeedbackHistoryBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeFeedbackHistory(); });
+    document.getElementById('feedbackHistoryModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeFeedbackHistory(); });
     document.getElementById('waterModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeWaterModal(); });
     document.getElementById('impressumModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal('impressumModal'); });
     document.getElementById('datenschutzModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal('datenschutzModal'); });

@@ -73,7 +73,13 @@ async function analyzeCoffeeImage(imageData, mediaType) {
 
     const token = localStorage.getItem('token');
     const deviceId = localStorage.getItem('deviceId');
-    if (!token || !deviceId) throw new Error('Device not activated. Please enter your access code in Settings (⚙️).');
+    if (!token || !deviceId) {
+        throw new Error('Device not activated. Please add your access code in Settings (⚙️) to use AI scan.');
+    }
+
+    if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+        throw new Error('You are offline. Reconnect to the internet to analyze coffee bags.');
+    }
 
     const response = await fetch(`${CONFIG.backendUrl}/api/analyze-coffee`, {
         method: 'POST',
@@ -86,12 +92,41 @@ async function analyzeCoffeeImage(imageData, mediaType) {
     });
 
     if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Analysis error');
+        let errorPayload = null;
+        try {
+            errorPayload = await response.json();
+        } catch (_) {
+            errorPayload = null;
+        }
+
+        if (response.status === 429) {
+            throw new Error('AI limit reached. Please wait and try again later (rate limit).');
+        }
+
+        if (response.status === 401 || response.status === 403) {
+            throw new Error('Access invalid or expired. Please reactivate your device in Settings (⚙️).');
+        }
+
+        if (response.status === 413) {
+            throw new Error('Image is too large. Please try a smaller image or crop the photo.');
+        }
+
+        const backendMessage = errorPayload?.error || errorPayload?.message;
+        if (backendMessage && /blurry|unclear|illegible|cannot read|not readable/i.test(backendMessage)) {
+            throw new Error('Image looks too unclear for OCR. Use better light and keep the label sharp.');
+        }
+
+        throw new Error(backendMessage || 'AI analysis failed. Please try a clearer photo.');
     }
 
     const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'Analysis failed');
+    if (!result.success) {
+        const backendMessage = result.error || result.message || '';
+        if (/blurry|unclear|illegible|cannot read|not readable/i.test(backendMessage)) {
+            throw new Error('Image looks too unclear for OCR. Use better light and keep the label sharp.');
+        }
+        throw new Error(backendMessage || 'AI analysis failed. Please try a clearer photo.');
+    }
     return result.data;
 }
 
@@ -135,7 +170,14 @@ export async function processImageUpload(file, uploadBtn) {
         preview.style.display = 'none';
     } catch (error) {
         console.error('Error:', error);
-        showMessage('error', error.message || 'Failed to process image');
+        const msg = error?.message || '';
+        if (!msg) {
+            showMessage('error', 'Scan failed. Please retry with a clear, well-lit coffee bag photo.');
+        } else if (/Failed to fetch|NetworkError|network/i.test(msg)) {
+            showMessage('error', 'Network problem while scanning. Check your connection and try again.');
+        } else {
+            showMessage('error', msg);
+        }
     } finally {
         loadingEl.classList.add('hidden');
         cameraBtn.disabled = false;
