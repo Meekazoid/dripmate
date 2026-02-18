@@ -237,8 +237,8 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 11px 24px;
+    gap: 11px;
+    padding: 12px 26px;
     width: 100%;
     background: linear-gradient(135deg, #5c3a1e 0%, #3d2410 60%, #2e1a0c 100%);
     border: 1px solid rgba(180, 120, 60, 0.25);
@@ -252,16 +252,16 @@ body.light-mode .cs-content {
 
 .cs-icon-wrap {
     flex-shrink: 0;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .cs-viewfinder {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
 }
 
 .cs-text {
@@ -272,7 +272,7 @@ body.light-mode .cs-content {
 }
 
 .cs-label {
-    font-size: 0.88rem;
+    font-size: 0.97rem;
     font-weight: 400;
     color: #ffffff;
     letter-spacing: 0.01em;
@@ -280,7 +280,7 @@ body.light-mode .cs-content {
 }
 
 .cs-sub {
-    font-size: 0.6rem;
+    font-size: 0.66rem;
     color: rgba(255, 255, 255, 0.4);
     letter-spacing: 0.03em;
     line-height: 1;
@@ -484,7 +484,15 @@ button:hover {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--accent);
-    padding-left: 2px;
+    text-align: center;
+}
+
+.brew-chip-group:first-child {
+    flex: 1.45;
+}
+
+.brew-chip-group:last-child {
+    flex: 0.85;
 }
 
 /* ── Individual Chip (tappable) ── */
@@ -519,6 +527,12 @@ button:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
+}
+
+#grinder-chip .brew-chip-label {
+    font-size: 0.78rem;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .brew-chip-caret {
@@ -599,6 +613,50 @@ body.light-mode .brew-chip:hover {
 
 .picker-option.active .picker-check {
     opacity: 1;
+}
+
+#grinderModal .modal-content,
+#methodModal .modal-content {
+    max-width: 408px;
+    padding: 27px;
+}
+
+#grinderModal .popup-header-standard,
+#methodModal .popup-header-standard {
+    padding-bottom: 12px;
+    margin-bottom: 17px;
+}
+
+#grinderModal .popup-header-standard svg,
+#methodModal .popup-header-standard svg {
+    width: 20px;
+    height: 20px;
+}
+
+#grinderModal .popup-header-standard h2,
+#methodModal .popup-header-standard h2 {
+    font-size: 1.02rem;
+}
+
+#grinderModal .picker-option,
+#methodModal .picker-option {
+    padding: 12px 14px;
+    gap: 10px;
+}
+
+#grinderModal .picker-option-name,
+#methodModal .picker-option-name {
+    font-size: 0.75rem;
+}
+
+#grinderModal .picker-option-detail,
+#methodModal .picker-option-detail {
+    font-size: 0.6rem;
+}
+
+#grinderModal .picker-check,
+#methodModal .picker-check {
+    font-size: 0.85rem;
 }
 
 body.light-mode .picker-option:hover {
