@@ -5,6 +5,57 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [2.4.4] – 2026-02-18 · Docs Refresh & Documentation Folder
+
+### Changed
+- Updated `README.md` and `CHANGELOG.md` to reflect the latest ruleset, cupping feedback, grinder calibration matrix, and scan UX behavior.
+- Moved all Markdown documentation files into a dedicated repository folder for cleaner project structure.
+
+---
+
+## [2.4.3] – 2026-02-18 · Grinder Calibration Matrix v1.1
+
+### Added
+- **Calibration Matrix v1.1** with practical start bands, offset sensitivity, confidence hints, and suggested per-brew caps.
+- **Shareable PDF** export: `GRINDER_CALIBRATION_OVERVIEW.pdf`.
+
+### Changed
+- Grinder conversion refactored to a centralized profile-based matrix in `js/brew-engine.js`.
+
+---
+
+## [2.4.2] – 2026-02-18 · History UX & Reset Logging
+
+### Added
+- Reset actions are now written to adjustment history with explicit baseline reset annotation.
+
+### Changed
+- `View Adjustment History` button styled to green (matching Start Brew), centered, and scaled down.
+
+---
+
+## [2.4.1] – 2026-02-18 · Ruleset Transparency & Stability
+
+### Added
+- `RULESET_CALCULATION_FLOW.md` and `AI_FEEDBACK_FLOW.md` with Mermaid flowcharts and rule explanations.
+
+### Changed
+- Brew engine now includes roast-age micro temperature adjustment.
+- Feedback rules include conflict guidance, context handling, and capped per-iteration deltas.
+
+---
+
+## [2.4.0] – 2026-02-18 · Cupping Feedback + Scan Error UX
+
+### Added
+- Cupping-style feedback dimensions: **Bitterness, Sweetness, Acidity, Body**.
+- Per-coffee adjustment history modal with timeline entries.
+
+### Changed
+- AI scan errors now provide differentiated guidance (activation, offline, rate limit, auth, image too large, blurry OCR).
+
+---
+
 ## [2.3.0] – 2026-02-08 · Documentation & Polish
 
 ### Changed

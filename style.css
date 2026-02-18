@@ -1432,6 +1432,17 @@ body.light-mode .step-progress-bar {
     margin-bottom: 18px;
 }
 
+.feedback-cupping-note {
+    margin-top: -4px;
+    margin-bottom: 16px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    border: 1px dashed var(--border);
+}
+
 .feedback-label {
     display: block;
     margin-bottom: 10px;
@@ -1514,6 +1525,79 @@ body.light-mode .step-progress-bar {
     margin-top: 16px;
     background: var(--accent);
     color: white;
+}
+
+.history-btn {
+    display: block;
+    width: fit-content;
+    margin: 14px auto 0;
+    padding: 8.5px 17px;
+    font-size: 0.7225rem;
+    background: #4CAF50;
+    border: 1px solid #4CAF50;
+    color: white;
+}
+
+.history-btn:hover {
+    background: #45a049;
+    border-color: #45a049;
+    color: white;
+}
+
+.history-list {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.history-item-top {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+}
+
+.history-item-top strong {
+    color: var(--text-primary);
+    font-size: 0.88rem;
+}
+
+.history-item-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.history-item-grid div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--bg-secondary);
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+
+.history-item-grid span {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.history-item-grid strong {
+    color: var(--text-primary);
+    font-size: 0.84rem;
+    font-weight: 600;
 }
 
 /* ==========================================

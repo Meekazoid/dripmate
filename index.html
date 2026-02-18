@@ -517,6 +517,30 @@
         </div>
     </div>
 
+    <!-- ====== FEEDBACK HISTORY MODAL ====== -->
+    <div id="feedbackHistoryModal" class="modal">
+        <div class="modal-content modal-content--narrow">
+            <div class="popup-header-standard">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 8v5l3 2"></path>
+                        <circle cx="12" cy="12" r="9"></circle>
+                    </svg>
+                    <h2 id="feedbackHistoryTitle">Adjustment History</h2>
+                </div>
+                <button class="close-btn" id="closeFeedbackHistoryBtn">✕</button>
+            </div>
+            <div class="info-box-standard">
+                <strong>Timeline</strong>
+                <p>Track applied grind and temperature changes per coffee.</p>
+            </div>
+            <div id="feedbackHistoryList" class="history-list"></div>
+            <div id="feedbackHistoryEmpty" class="decaf-empty" style="display: none;">
+                No adjustments applied yet.
+            </div>
+        </div>
+    </div>
+
     <!-- ====== SCRIPTS ====== -->
     <script src="water-hardness.js"></script>
 
