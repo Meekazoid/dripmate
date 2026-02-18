@@ -1,0 +1,107 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 7 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 4189 >>
+stream
+BT
+/F1 9 Tf
+1 0 0 1 44 794 Tm
+(Grinder Conversion & Calibration Matrix v1.1 \(BrewBuddy\)) Tj
+0 -13 Td () Tj
+0 -13 Td (Purpose) Tj
+0 -13 Td (This overview documents how BrewBuddy converts the internal grind reference to each supported grinder scale and how user feedback offsets are applied.) Tj
+0 -13 Td () Tj
+0 -13 Td (Internal reference model) Tj
+0 -13 Td (? BrewBuddy computes a method/process-adjusted base grind in a **Comandante-equivalent** scale \(grindBase.comandante\).) Tj
+0 -13 Td (? For Fellow, an additional grindBase.fellow base is used where available.) Tj
+0 -13 Td (? User feedback changes are applied via a grinder-neutral grindOffset and mapped with grinder-specific sensitivity.) Tj
+0 -13 Td () Tj
+0 -13 Td (Conversion matrix \(v1\)) Tj
+0 -13 Td () Tj
+0 -13 Td ( |  Grinder  |  Output Unit  |  Base Mapping  |  Offset Mapping  |  Clamp  | ) Tj
+0 -13 Td ( | --- | --- | --- | --- | --- | ) Tj
+0 -13 Td ( |  Comandante MK3/MK4  |  clicks  |  round\(base * 1.0\)  |  + offset * 1.0  |  min 1  | ) Tj
+0 -13 Td ( |  Fellow Ode Gen 2  |  dial value  |  grindBase.fellow  |  + offset * 0.1  |  min 0.1  | ) Tj
+0 -13 Td ( |  Fellow Ode Gen 1  |  dial value  |  \(grindBase.fellow - 1.5\)  |  + offset * 0.1  |  min 0.1  | ) Tj
+0 -13 Td ( |  Timemore S3  |  clicks  |  round\(base * 2.0\)  |  + offset * 2.0  |  min 1  | ) Tj
+0 -13 Td ( |  Timemore C2  |  clicks  |  round\(base * 0.82\)  |  + offset * 0.82  |  min 1  | ) Tj
+0 -13 Td ( |  1Zpresso JX  |  rotations  |  base * \(1.1/30\)  |  + offset * \(1.1/30\)  |  min 0.1 rot  | ) Tj
+0 -13 Td ( |  Baratza Encore  |  stepped number  |  round\(base * 0.8\)  |  + offset * 0.8  |  1..40  | ) Tj
+0 -13 Td () Tj
+0 -13 Td (Calibration matrix \(v1.1\)) Tj
+0 -13 Td () Tj
+0 -13 Td (The v1.1 layer adds a practical calibration overview for operations and QA.) Tj
+0 -13 Td () Tj
+0 -13 Td ( |  Grinder  |  Recommended Pour-Over Start Band*  |  Offset Sensitivity  |  Confidence Band  |  Suggested Cap per Brew  | ) Tj
+0 -13 Td ( | --- | --- | --- | --- | --- | ) Tj
+0 -13 Td ( |  Comandante MK3/MK4  |  21?25 clicks  |  1 offset = 1 click  |  High  |  3 clicks  | ) Tj
+0 -13 Td ( |  Fellow Ode Gen 2  |  3.0?5.0  |  1 offset = 0.1 dial  |  Medium-High  |  0.3  | ) Tj
+0 -13 Td ( |  Fellow Ode Gen 1  |  2.0?4.0 \(Gen2-equivalent shifted\)  |  1 offset = 0.1 dial  |  Medium  |  0.3  | ) Tj
+0 -13 Td ( |  Timemore S3  |  45?70 clicks  |  1 offset ? 2 clicks  |  Medium  |  6 clicks  | ) Tj
+0 -13 Td ( |  Timemore C2  |  14?22 clicks  |  1 offset ? 0.82 clicks  |  Medium-Low  |  4 clicks  | ) Tj
+0 -13 Td ( |  1Zpresso JX  |  0.7?1.2 rotations  |  1 offset ? 0.04 rot  |  Medium  |  0.15 rot  | ) Tj
+0 -13 Td ( |  Baratza Encore  |  12?20  |  1 offset ? 0.8 steps  |  Medium-Low  |  4 steps  | ) Tj
+0 -13 Td () Tj
+0 -13 Td (\\*Start band means first recommendation window for filter/pour-over style brews and should be interpreted alongside processing/method/water adjustments.) Tj
+0 -13 Td () Tj
+0 -13 Td (v1.1 interpretation rules) Tj
+0 -13 Td (1. Keep the existing conversion formula as the primary output.) Tj
+0 -13 Td (2. If output is outside the start band by >20%, show a "low confidence" hint in future UI iterations.) Tj
+0 -13 Td (3. Apply step caps first, then re-taste and iterate \(single-variable changes preferred when signals conflict\).) Tj
+0 -13 Td (4. Treat v1.1 bands as calibration guardrails, not hard limits.) Tj
+0 -13 Td () Tj
+0 -13 Td (Why this structure) Tj
+0 -13 Td (? One centralized profile table avoids hidden per-case drift.) Tj
+0 -13 Td (? Offset sensitivity is explicit and tunable per grinder.) Tj
+0 -13 Td (? Legacy keys remain compatible \(fellow, timemore, comandante\).) Tj
+0 -13 Td () Tj
+0 -13 Td (Recommendations for future calibration) Tj
+0 -13 Td (1. Add optional per-device calibration saved per user/grinder profile.) Tj
+0 -13 Td (2. Introduce confidence bands \(e.g., "18?20 clicks"\) where model uncertainty is higher.) Tj
+0 -13 Td (3. Collect anonymized brew outcome deltas to continuously tune factors.) Tj
+0 -13 Td () Tj
+0 -13 Td (Rule pipeline context) Tj
+0 -13 Td (Final grind recommendation is still produced after this chain:) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 7 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 165 >>
+stream
+BT
+/F1 9 Tf
+1 0 0 1 44 794 Tm
+() Tj
+0 -13 Td (processing -> altitude -> cultivar -> origin -> water hardness -> roast age -> brew method -> grinder conversion) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000247 00000 n 
+0000004445 00000 n 
+0000004571 00000 n 
+0000004787 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+4857
+%%EOF

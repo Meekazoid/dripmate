@@ -200,6 +200,15 @@ function formatHistoryDelta(entry) {
         return 'Reset to engine baseline values';
     }
 
+    if (entry.manualAdjust === 'grind') {
+        const sign = (entry.grindOffsetDelta || 0) > 0 ? '+' : '';
+        return `Manual grind adjust ${sign}${entry.grindOffsetDelta || 0}`;
+    }
+
+    if (entry.manualAdjust === 'temp') {
+        return `Manual temperature adjust ${entry.customTempApplied || ''}`.trim();
+    }
+
     const parts = [];
     if (entry.grindOffsetDelta) {
         const sign = entry.grindOffsetDelta > 0 ? '+' : '';
@@ -254,16 +263,30 @@ export function closeFeedbackHistory() {
 // Manual adjustment functions
 export function adjustGrindManual(index, direction) {
     const coffee = coffees[index];
+    const before = getBrewRecommendations(coffee);
     coffee.grindOffset = (coffee.grindOffset || 0) + direction;
+
+    const after = getBrewRecommendations(coffee);
+    addHistoryEntry(coffee, {
+        timestamp: new Date().toISOString(),
+        previousGrind: before.grindSetting,
+        previousTemp: before.temperature,
+        newGrind: after.grindSetting,
+        newTemp: after.temperature,
+        grindOffsetDelta: direction,
+        customTempApplied: null,
+        manualAdjust: 'grind'
+    });
 
     // Direct DOM update using recalculated value
     const el = document.getElementById(`grind-value-${index}`);
-    if (el) el.textContent = getBrewRecommendations(coffee).grindSetting;
+    if (el) el.textContent = after.grindSetting;
     saveCoffeesAndSync();
 }
 
 export function adjustTempManual(index, direction) {
     const coffee = coffees[index];
+    const before = getBrewRecommendations(coffee);
     const currentTemp = coffee.customTemp || getBrewRecommendations(coffee).temperature;
 
     const match = currentTemp.match(/(\d+)(?:-(\d+))?/);
@@ -272,6 +295,18 @@ export function adjustTempManual(index, direction) {
     const low = parseInt(match[1]) + direction;
     const high = match[2] ? parseInt(match[2]) + direction : null;
     coffee.customTemp = high ? `${low}-${high}°C` : `${low}°C`;
+
+    const after = getBrewRecommendations(coffee);
+    addHistoryEntry(coffee, {
+        timestamp: new Date().toISOString(),
+        previousGrind: before.grindSetting,
+        previousTemp: before.temperature,
+        newGrind: after.grindSetting,
+        newTemp: after.temperature,
+        grindOffsetDelta: 0,
+        customTempApplied: coffee.customTemp,
+        manualAdjust: 'temp'
+    });
 
     const el = document.getElementById(`temp-value-${index}`);
     if (el) el.textContent = coffee.customTemp;
