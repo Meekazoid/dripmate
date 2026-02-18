@@ -237,8 +237,8 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 11px 24px;
+    gap: 11px;
+    padding: 12px 26px;
     width: 100%;
     background: linear-gradient(135deg, #5c3a1e 0%, #3d2410 60%, #2e1a0c 100%);
     border: 1px solid rgba(180, 120, 60, 0.25);
@@ -252,16 +252,16 @@ body.light-mode .cs-content {
 
 .cs-icon-wrap {
     flex-shrink: 0;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .cs-viewfinder {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
 }
 
 .cs-text {
@@ -272,7 +272,7 @@ body.light-mode .cs-content {
 }
 
 .cs-label {
-    font-size: 0.88rem;
+    font-size: 0.97rem;
     font-weight: 400;
     color: #ffffff;
     letter-spacing: 0.01em;
@@ -280,7 +280,7 @@ body.light-mode .cs-content {
 }
 
 .cs-sub {
-    font-size: 0.6rem;
+    font-size: 0.66rem;
     color: rgba(255, 255, 255, 0.4);
     letter-spacing: 0.03em;
     line-height: 1;
@@ -484,7 +484,16 @@ button:hover {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--accent);
-    padding-left: 2px;
+    text-align: left;
+    padding-left: 0.3rem;
+}
+
+.brew-chip-group:first-child {
+    flex: 1.55;
+}
+
+.brew-chip-group:last-child {
+    flex: 0.75;
 }
 
 /* ── Individual Chip (tappable) ── */
@@ -519,6 +528,12 @@ button:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
+}
+
+#grinder-chip .brew-chip-label {
+    font-size: 0.76rem;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .brew-chip-caret {
@@ -599,6 +614,50 @@ body.light-mode .brew-chip:hover {
 
 .picker-option.active .picker-check {
     opacity: 1;
+}
+
+#grinderModal .modal-content,
+#methodModal .modal-content {
+    max-width: 408px;
+    padding: 27px;
+}
+
+#grinderModal .popup-header-standard,
+#methodModal .popup-header-standard {
+    padding-bottom: 12px;
+    margin-bottom: 17px;
+}
+
+#grinderModal .popup-header-standard svg,
+#methodModal .popup-header-standard svg {
+    width: 20px;
+    height: 20px;
+}
+
+#grinderModal .popup-header-standard h2,
+#methodModal .popup-header-standard h2 {
+    font-size: 1.02rem;
+}
+
+#grinderModal .picker-option,
+#methodModal .picker-option {
+    padding: 12px 14px;
+    gap: 10px;
+}
+
+#grinderModal .picker-option-name,
+#methodModal .picker-option-name {
+    font-size: 0.75rem;
+}
+
+#grinderModal .picker-option-detail,
+#methodModal .picker-option-detail {
+    font-size: 0.6rem;
+}
+
+#grinderModal .picker-check,
+#methodModal .picker-check {
+    font-size: 0.85rem;
 }
 
 body.light-mode .picker-option:hover {
@@ -1057,13 +1116,14 @@ body.light-mode .water-hardness-badge {
 }
 
 .param-label {
-    font-family: 'Sora', sans-serif; /* Schriftart hinzufügen */
-    font-size: 0.7rem;
-    font-weight: 200;                /* Schön dünn */
+    font-family: 'Sora', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 300;
     color: var(--text-secondary);
     margin-bottom: 6px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.35px;
+    white-space: nowrap;
 }
 
 .param-value {
@@ -1075,20 +1135,21 @@ body.light-mode .water-hardness-badge {
 
 .param-value-row {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .param-adjust {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    flex-direction: row;
+    gap: 4px;
 }
 
 .adjust-btn {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     padding: 0;
     background: var(--bg-secondary);
     color: var(--text-secondary);
@@ -2024,6 +2085,20 @@ body.light-mode .onboarding-icon {
         gap: 8px;
     }
 
+    .param-label {
+        font-size: 0.58rem;
+    }
+
+    .param-value-row {
+        gap: 5px;
+    }
+
+    .adjust-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 0.72rem;
+    }
+
     .timer-display {
         font-size: 2rem;
     }
@@ -2122,58 +2197,62 @@ body.light-mode .onboarding-icon {
     align-items: center;
 }
 
+.water-modal-content {
+    max-height: 86vh;
+}
+
 .input-btn-row input {
     flex: 1;
 }
 
 .inline-save-btn {
     width: auto;
-    padding: 14px 20px;
+    padding: 11px 16px;
+    font-size: 0.8rem;
+    font-weight: 400;
     white-space: nowrap;
 }
 
 .form-group--mt {
-    margin-top: 24px;
+    margin-top: 14px;
 }
 
 .form-helper {
-    font-size: 0.85rem;
+    font-size: 0.76rem;
     color: var(--text-secondary);
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 .water-result-box {
-    margin-top: 24px;
-    padding: 20px;
+    margin-top: 0;
+    margin-bottom: 14px;
+    padding: 16px;
     background: var(--bg-card);
+    border: 1px solid rgba(212, 165, 116, 0.16);
     border-radius: 12px;
 }
 
 .water-result-center {
     text-align: center;
-    margin-bottom: 16px;
-}
-
-.water-result-emoji {
-    font-size: 3rem;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .water-result-value {
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 1.65rem;
+    font-weight: 600;
     color: var(--accent);
     margin-bottom: 4px;
 }
 
 .water-result-category {
-    font-size: 1rem;
+    font-size: 0.84rem;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    letter-spacing: 0.08em;
 }
 
 .water-result-source {
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     padding: 4px 12px;
     background: rgba(212, 165, 116, 0.15);
     border-radius: 12px;
@@ -2183,16 +2262,19 @@ body.light-mode .onboarding-icon {
 }
 
 .water-result-meta {
-    padding: 16px;
+    padding: 11px 12px;
     background: var(--bg-secondary);
     border-radius: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 11px;
 }
 
 .water-meta-row {
-    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.76rem;
     color: var(--text-secondary);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 .water-meta-row:last-child {
@@ -2204,15 +2286,14 @@ body.light-mode .onboarding-icon {
 }
 
 .water-brew-adjustments {
-    padding: 16px;
+    padding: 11px 12px;
     background: rgba(212, 165, 116, 0.08);
     border: 1px solid rgba(212, 165, 116, 0.2);
     border-radius: 8px;
-    margin-bottom: 16px;
 }
 
 .water-brew-label {
-    font-size: 0.75rem;
+    font-size: 0.66rem;
     font-weight: 600;
     color: var(--accent);
     text-transform: uppercase;
@@ -2221,21 +2302,33 @@ body.light-mode .onboarding-icon {
 }
 
 .water-brew-text {
-    font-size: 0.85rem;
+    font-size: 0.76rem;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.45;
 }
 
-.water-scale-list {
+.water-impact-info {
+    margin-bottom: 10px;
+}
+
+.water-impact-info p {
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.water-scale-minimal {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.66rem;
     color: var(--text-secondary);
 }
 
-.water-scale-list strong {
-    color: var(--text-primary);
+.water-scale-minimal span {
+    padding: 4px 8px;
+    border: 1px solid rgba(212, 165, 116, 0.18);
+    border-radius: 999px;
+    background: rgba(212, 165, 116, 0.04);
 }
 
 /* ==========================================
