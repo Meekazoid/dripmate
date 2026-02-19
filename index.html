@@ -188,7 +188,8 @@
         </div>
         <div class="control-btn" id="waterControlBtn">
             <svg class="control-icon" viewBox="0 0 24 24">
-                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                <path d="M12 2.6c0 0-6.4 7.2-6.4 11.9a6.4 6.4 0 0 0 12.8 0C18.4 9.8 12 2.6 12 2.6z"></path>
+                <path d="M9.1 14.3c0 1.7 1.2 3 2.9 3.4" opacity="0.45"></path>
             </svg>
         </div>
         <div class="control-btn" id="settingsBtnControl">
@@ -320,69 +321,63 @@
 
     <!-- ====== WATER HARDNESS MODAL ====== -->
     <div id="waterModal" class="modal">
-        <div class="modal-content">
-            <!-- Header (closed before content) -->
+        <div class="modal-content modal-content--narrow water-modal-content">
             <div class="popup-header-standard">
                 <div class="popup-title-group">
                     <svg viewBox="0 0 24 24">
-                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                        <path d="M12 2.6c0 0-6.4 7.2-6.4 11.9a6.4 6.4 0 0 0 12.8 0C18.4 9.8 12 2.6 12 2.6z"></path>
+                        <path d="M9.1 14.3c0 1.7 1.2 3 2.9 3.4" opacity="0.45"></path>
                     </svg>
                     <h2>Water Hardness</h2>
                 </div>
                 <button class="close-btn" id="closeWaterBtn">✕</button>
             </div>
-            <!-- Info box -->
-            <div class="info-box-standard">
-                <strong>How it works</strong>
-                <p>Water hardness affects coffee extraction. Soft water requires a finer grind and higher temperature, while hard water requires a coarser grind and lower temperature.</p>
-            </div>
-            <div class="form-group">
-                <label>Postal Code (ZIP)</label>
-                <div class="input-btn-row">
-                    <input type="text" id="zipCodeInput" placeholder="e.g. 10115" maxlength="5" pattern="[0-9]{5}">
-                    <button id="saveWaterBtn" class="inline-save-btn">Save</button>
-                </div>
-                <p class="form-helper">Enter your 5-digit postal code to determine the local water hardness.</p>
-            </div>
-            
-            <div class="form-group form-group--mt">
-                <label>Manual Water Hardness (°dH)</label>
-                <div class="input-btn-row">
-                    <input type="number" id="manualHardnessInput" placeholder="e.g. 16" min="0" max="50" step="0.1">
-                    <button id="saveManualHardnessBtn" class="inline-save-btn">Save Manual</button>
-                </div>
-                <p class="form-helper">Override automatic detection with your own measurement. This value takes priority.</p>
-            </div>
-            
+
             <div id="waterHardnessDisplay" class="water-result-box" style="display: none;">
                 <div class="water-result-center">
-                    <div class="water-result-emoji">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-                        </svg>
-                    </div>
                     <div class="water-result-value" id="hardnessValueDisplay">-</div>
                     <div class="water-result-category" id="hardnessCategoryDisplay">-</div>
                     <div class="water-result-source" id="hardnessSourceDisplay">-</div>
                 </div>
                 <div class="water-result-meta">
-                    <div class="water-meta-row"><strong>Region:</strong> <span id="hardnessRegion">-</span></div>
-                    <div class="water-meta-row"><strong>Source:</strong> <span id="hardnessSource">-</span></div>
+                    <div class="water-meta-row"><strong>Location</strong><span id="hardnessRegion">-</span></div>
+                    <div class="water-meta-row"><strong>Input</strong><span id="hardnessSource">-</span></div>
                 </div>
                 <div class="water-brew-adjustments">
-                    <div class="water-brew-label">Brew Adjustments</div>
+                    <div class="water-brew-label">Brew Impact</div>
                     <div class="water-brew-text" id="hardnessDescriptionDisplay">-</div>
                 </div>
             </div>
-            <div class="info-box-standard">
-                <strong>Water Hardness Scale (°dH)</strong>
-                <div class="water-scale-list">
-                    <div>0–7 °dH: <strong>Very soft</strong></div>
-                    <div>7–14 °dH: <strong>Soft</strong></div>
-                    <div>14–21 °dH: <strong>Medium</strong></div>
-                    <div>21–28 °dH: <strong>Hard</strong></div>
-                    <div>28+ °dH: <strong>Very hard</strong></div>
+
+            <div class="form-group">
+                <label>ZIP code (automatic city lookup)</label>
+                <div class="input-btn-row">
+                    <input type="text" id="zipCodeInput" placeholder="Enter 5 digits (e.g. 10115)" maxlength="5" pattern="[0-9]{5}">
+                    <button id="saveWaterBtn" class="inline-save-btn">Use ZIP</button>
                 </div>
+                <p class="form-helper">If no value is shown above, enter ZIP and tap “Use ZIP”.</p>
+            </div>
+
+            <div class="form-group form-group--mt">
+                <label>Manual override (°dH)</label>
+                <div class="input-btn-row">
+                    <input type="number" id="manualHardnessInput" placeholder="e.g. 16 (medium)" min="0" max="50" step="0.1">
+                    <button id="saveManualHardnessBtn" class="inline-save-btn">Use Manual</button>
+                </div>
+                <p class="form-helper">Manual value has priority. Source will show “Manual override”.</p>
+            </div>
+
+            <div class="info-box-standard water-impact-info">
+                <strong>Brew adjustment logic</strong>
+                <p>Soft water → slightly finer grind & a bit hotter. Hard water → slightly coarser grind & a bit cooler.</p>
+            </div>
+
+            <div class="water-scale-minimal" aria-label="Water hardness scale">
+                <span>0–7 Very soft</span>
+                <span>7–14 Soft</span>
+                <span>14–21 Medium</span>
+                <span>21–28 Hard</span>
+                <span>28+ Very hard</span>
             </div>
         </div>
     </div>
@@ -393,8 +388,10 @@
             <div class="popup-header-standard">
                 <div class="popup-title-group">
                     <svg viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                        <rect x="7" y="3" width="10" height="7" rx="2"></rect>
+                        <path d="M8.5 10v3.5M15.5 10v3.5"></path>
+                        <rect x="6" y="13.5" width="12" height="7.5" rx="2"></rect>
+                        <path d="M10 17h4"></path>
                     </svg>
                     <h2>Grinder</h2>
                 </div>

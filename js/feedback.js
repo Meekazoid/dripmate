@@ -6,6 +6,28 @@
 import { coffees, saveCoffeesAndSync, sanitizeHTML } from './state.js';
 import { getBrewRecommendations } from './brew-engine.js';
 
+function sliderValueToFeedback(value) {
+    if (Number(value) <= 0) return 'low';
+    if (Number(value) >= 2) return 'high';
+    return 'balanced';
+}
+
+function feedbackToSliderValue(value) {
+    if (value === 'low') return '0';
+    if (value === 'high') return '2';
+    return '1';
+}
+
+function formatFeedbackLabel(value) {
+    return String(value || 'balanced').charAt(0).toUpperCase() + String(value || 'balanced').slice(1);
+}
+
+export function updateFeedbackSlider(index, category, sliderValue) {
+    const value = sliderValueToFeedback(sliderValue);
+    selectFeedback(index, category, value);
+}
+
+
 export function selectFeedback(index, category, value) {
     const coffee = coffees[index];
     if (!coffee.feedback) coffee.feedback = {};
@@ -14,6 +36,12 @@ export function selectFeedback(index, category, value) {
     document.querySelectorAll(`[data-feedback="${index}-${category}"]`).forEach(opt => {
         opt.classList.toggle('selected', opt.dataset.value === value);
     });
+
+    const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${category}"]`);
+    if (sliderEl) sliderEl.value = feedbackToSliderValue(value);
+
+    const valueEl = document.getElementById(`feedback-value-${index}-${category}`);
+    if (valueEl) valueEl.textContent = formatFeedbackLabel(value);
 
     generateSuggestion(index);
     localStorage.setItem('coffees', JSON.stringify(coffees));
@@ -395,6 +423,7 @@ export function migrateCoffeesInitialValues() {
 
 // Register functions on window for onclick handlers
 window.selectFeedback = selectFeedback;
+window.updateFeedbackSlider = updateFeedbackSlider;
 window.applySuggestion = applySuggestion;
 window.adjustGrindManual = adjustGrindManual;
 window.adjustTempManual = adjustTempManual;

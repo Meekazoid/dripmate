@@ -89,7 +89,7 @@ export function renderCoffeeCard(coffee, index) {
                 
                 <div class="param-grid">
                     <div class="param-box">
-                        <div class="param-label">${brewParams.grinderLabel}</div>
+                        <div class="param-label">Grind Setting</div>
                         <div class="param-value-row">
                             <div class="param-value" id="grind-value-${index}">${brewParams.grindSetting}</div>
                             <div class="param-adjust">
@@ -146,55 +146,36 @@ export function renderCoffeeCard(coffee, index) {
                 
                 <div class="feedback-section">
                     <h4>Brew Feedback</h4>
-                    <div class="feedback-cupping-note">Cupping-style quick rating (low / balanced / high).</div>
-                    <div class="feedback-group">
-                        <div class="feedback-label">Bitterness</div>
-                        <div class="feedback-scale">
-                            ${['low', 'balanced', 'high'].map(v => `
-                                <div class="scale-option ${coffee.feedback?.bitterness === v ? 'selected' : ''}" 
-                                     data-feedback="${index}-bitterness" data-value="${v}"
-                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'bitterness', '${v}');">
-                                    ${v.charAt(0).toUpperCase() + v.slice(1)}
+                    <div class="feedback-cupping-note">Cupping-style quick rating</div>
+                    ${[
+                        ['bitterness', 'Bitterness'],
+                        ['sweetness', 'Sweetness'],
+                        ['acidity', 'Acidity'],
+                        ['body', 'Body']
+                    ].map(([key, label]) => {
+                        const currentValue = coffee.feedback?.[key] || 'balanced';
+                        const sliderValue = currentValue === 'low' ? 0 : currentValue === 'high' ? 2 : 1;
+                        const displayValue = currentValue.charAt(0).toUpperCase() + currentValue.slice(1);
+                        return `
+                            <div class="feedback-group">
+                                <div class="feedback-label-row">
+                                    <div class="feedback-label">${label}</div>
+                                    <div class="feedback-current" id="feedback-value-${index}-${key}">${displayValue}</div>
                                 </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div class="feedback-group">
-                        <div class="feedback-label">Sweetness</div>
-                        <div class="feedback-scale">
-                            ${['low', 'balanced', 'high'].map(v => `
-                                <div class="scale-option ${coffee.feedback?.sweetness === v ? 'selected' : ''}" 
-                                     data-feedback="${index}-sweetness" data-value="${v}"
-                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'sweetness', '${v}');">
-                                    ${v.charAt(0).toUpperCase() + v.slice(1)}
+                                <div class="feedback-scale-wrap">
+                                    <input class="feedback-slider" type="range" min="0" max="2" step="1" value="${sliderValue}"
+                                        aria-label="${label} rating"
+                                        data-feedback-slider="${index}-${key}"
+                                        oninput="event.stopPropagation(); updateFeedbackSlider(${index}, '${key}', this.value);"
+                                        onclick="event.stopPropagation();">
+                                    <div class="feedback-slider-labels" aria-hidden="true">
+                                        <span>low</span>
+                                        <span>high</span>
+                                    </div>
                                 </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div class="feedback-group">
-                        <div class="feedback-label">Acidity</div>
-                        <div class="feedback-scale">
-                            ${['low', 'balanced', 'high'].map(v => `
-                                <div class="scale-option ${coffee.feedback?.acidity === v ? 'selected' : ''}" 
-                                     data-feedback="${index}-acidity" data-value="${v}"
-                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'acidity', '${v}');">
-                                    ${v.charAt(0).toUpperCase() + v.slice(1)}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div class="feedback-group">
-                        <div class="feedback-label">Body</div>
-                        <div class="feedback-scale">
-                            ${['low', 'balanced', 'high'].map(v => `
-                                <div class="scale-option ${coffee.feedback?.body === v ? 'selected' : ''}" 
-                                     data-feedback="${index}-body" data-value="${v}"
-                                     onclick="event.stopPropagation(); selectFeedback(${index}, 'body', '${v}');">
-                                    ${v.charAt(0).toUpperCase() + v.slice(1)}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
+                            </div>
+                        `;
+                    }).join('')}
                     <div class="feedback-suggestion hidden" id="suggestion-${index}"></div>
                     <button class="history-btn" onclick="event.stopPropagation(); openFeedbackHistory(${index});">View Adjustment History</button>
                     <button class="reset-adjustments-btn" onclick="event.stopPropagation(); resetCoffeeAdjustments(${index});">Reset Adjustments</button>
