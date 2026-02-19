@@ -155,13 +155,9 @@ export function renderCoffeeCard(coffee, index) {
                     ].map(([key, label]) => {
                         const currentValue = coffee.feedback?.[key] || 'balanced';
                         const sliderValue = currentValue === 'low' ? 0 : currentValue === 'high' ? 2 : 1;
-                        const displayValue = currentValue.charAt(0).toUpperCase() + currentValue.slice(1);
                         return `
                             <div class="feedback-group">
-                                <div class="feedback-label-row">
-                                    <div class="feedback-label">${label}</div>
-                                    <div class="feedback-current" id="feedback-value-${index}-${key}">${displayValue}</div>
-                                </div>
+                                <div class="feedback-label">${label}</div>
                                 <div class="feedback-scale-wrap">
                                     <input class="feedback-slider" type="range" min="0" max="2" step="1" value="${sliderValue}"
                                         aria-label="${label} rating"

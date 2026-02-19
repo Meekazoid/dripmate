@@ -18,10 +18,6 @@ function feedbackToSliderValue(value) {
     return '1';
 }
 
-function formatFeedbackLabel(value) {
-    return String(value || 'balanced').charAt(0).toUpperCase() + String(value || 'balanced').slice(1);
-}
-
 export function updateFeedbackSlider(index, category, sliderValue) {
     const value = sliderValueToFeedback(sliderValue);
     selectFeedback(index, category, value);
@@ -39,9 +35,6 @@ export function selectFeedback(index, category, value) {
 
     const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${category}"]`);
     if (sliderEl) sliderEl.value = feedbackToSliderValue(value);
-
-    const valueEl = document.getElementById(`feedback-value-${index}-${category}`);
-    if (valueEl) valueEl.textContent = formatFeedbackLabel(value);
 
     generateSuggestion(index);
     localStorage.setItem('coffees', JSON.stringify(coffees));
