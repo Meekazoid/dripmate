@@ -347,10 +347,10 @@ export function openFeedbackHistory(index) {
     if (!modal || !titleEl || !listEl || !emptyEl || !coffee) return;
 
     activeHistoryCoffeeRef = {
-        id: coffee?.id || null,
+        id: (coffee && coffee.id) || null,
         index,
-        name: coffee?.name || null,
-        addedDate: coffee?.addedDate || null
+        name: (coffee && coffee.name) || null,
+        addedDate: (coffee && coffee.addedDate) || null
     };
 
     titleEl.textContent = `Adjustment History · ${coffee.name || 'Coffee'}`;
