@@ -7,6 +7,7 @@ import { coffees, saveCoffeesAndSync, sanitizeHTML } from './state.js';
 import { getBrewRecommendations } from './brew-engine.js';
 
 const suggestionHideTimers = new Map();
+let activeHistoryCoffeeIndex = null;
 
 function clearSuggestionHideTimer(index) {
     const existing = suggestionHideTimers.get(index);
@@ -277,6 +278,8 @@ export function openFeedbackHistory(index) {
 
     if (!modal || !titleEl || !listEl || !emptyEl || !coffee) return;
 
+    activeHistoryCoffeeIndex = index;
+
     titleEl.textContent = `Adjustment History · ${coffee.name || 'Coffee'}`;
 
     const history = Array.isArray(coffee.feedbackHistory) ? coffee.feedbackHistory : [];
@@ -305,6 +308,24 @@ export function openFeedbackHistory(index) {
 export function closeFeedbackHistory() {
     const modal = document.getElementById('feedbackHistoryModal');
     if (modal) modal.classList.remove('active');
+    activeHistoryCoffeeIndex = null;
+}
+
+export function deleteFeedbackHistory() {
+    if (activeHistoryCoffeeIndex === null) return;
+
+    const coffee = coffees[activeHistoryCoffeeIndex];
+    if (!coffee) return;
+
+    const historyLength = Array.isArray(coffee.feedbackHistory) ? coffee.feedbackHistory.length : 0;
+    if (historyLength === 0) return;
+
+    const confirmed = window.confirm('Delete all adjustment history for this coffee? This cannot be undone.');
+    if (!confirmed) return;
+
+    coffee.feedbackHistory = [];
+    saveCoffeesAndSync();
+    openFeedbackHistory(activeHistoryCoffeeIndex);
 }
 
 // Manual adjustment functions
