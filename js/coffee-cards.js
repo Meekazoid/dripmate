@@ -148,11 +148,11 @@ export function renderCoffeeCard(coffee, index) {
                     <h4>Brew Feedback</h4>
                     <div class="feedback-cupping-note">Cupping-style quick rating</div>
                     ${[
-                        ['bitterness', 'Bitterness'],
-                        ['sweetness', 'Sweetness'],
-                        ['acidity', 'Acidity'],
-                        ['body', 'Body']
-                    ].map(([key, label]) => {
+                        ['bitterness', 'Bitterness', ['mild', 'balanced', 'bitter']],
+                        ['sweetness', 'Sweetness', ['dry', 'balanced', 'sweet']],
+                        ['acidity', 'Acidity', ['muted', 'balanced', 'bright']],
+                        ['body', 'Body', ['tea-like', 'balanced', 'heavy']]
+                    ].map(([key, label, scaleLabels]) => {
                         const currentValue = coffee.feedback?.[key] || 'balanced';
                         const sliderValue = currentValue === 'low' ? 0 : currentValue === 'high' ? 2 : 1;
                         return `
@@ -172,9 +172,9 @@ export function renderCoffeeCard(coffee, index) {
                                         </div>
                                     </div>
                                     <div class="feedback-slider-labels" aria-hidden="true">
-                                        <span>low</span>
-                                        <span>balanced</span>
-                                        <span>high</span>
+                                        <span>${scaleLabels[0]}</span>
+                                        <span>${scaleLabels[1]}</span>
+                                        <span>${scaleLabels[2]}</span>
                                     </div>
                                 </div>
                             </div>
