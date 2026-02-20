@@ -1047,14 +1047,14 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 
 .roast-date-input {
     width: fit-content;
-    min-width: 140px;
-    max-width: 140px;
-    padding: 10px 12px;
+    min-width: 130px;
+    max-width: 130px;
+    padding: 6px 8px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 8px;
     color: var(--text-primary);
-    font-size: 0.9rem;
+    font-size: 0.78rem;
     font-family: inherit;
     transition: all 0.2s;
     cursor: pointer;
@@ -1540,19 +1540,22 @@ body.light-mode .step-progress-bar {
     height: 3px;
     background: transparent;
     outline: none;
-    cursor: pointer;
+    cursor: default;
+    pointer-events: none;
 }
 
 .feedback-slider::-webkit-slider-runnable-track {
     height: 3px;
     border-radius: 999px;
     background: linear-gradient(var(--accent), var(--accent));
+    pointer-events: none;
 }
 
 .feedback-slider::-moz-range-track {
     height: 3px;
     border-radius: 999px;
     background: linear-gradient(var(--accent), var(--accent));
+    pointer-events: none;
 }
 
 .feedback-slider::-webkit-slider-thumb {
@@ -1564,6 +1567,9 @@ body.light-mode .step-progress-bar {
     background: #8b5a2b;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
     margin-top: -7.5px;
+    pointer-events: all;
+    cursor: grab;
+    touch-action: none;
 }
 
 .feedback-slider::-moz-range-thumb {
@@ -1573,6 +1579,8 @@ body.light-mode .step-progress-bar {
     border: 2px solid #6d3e1f;
     background: #8b5a2b;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+    pointer-events: all;
+    cursor: grab;
 }
 
 .feedback-slider-labels {
