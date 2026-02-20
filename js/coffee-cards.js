@@ -159,15 +159,17 @@ export function renderCoffeeCard(coffee, index) {
                             <div class="feedback-group">
                                 <div class="feedback-label">${label}</div>
                                 <div class="feedback-scale-wrap">
-                                    <input class="feedback-slider" type="range" min="0" max="2" step="1" value="${sliderValue}"
-                                        aria-label="${label} rating"
-                                        data-feedback-slider="${index}-${key}"
-                                        oninput="event.stopPropagation(); updateFeedbackSlider(${index}, '${key}', this.value);"
-                                        onclick="event.stopPropagation();">
-                                    <div class="feedback-slider-marks" aria-hidden="true">
-                                        <span class="feedback-slider-mark"></span>
-                                        <span class="feedback-slider-mark"></span>
-                                        <span class="feedback-slider-mark"></span>
+                                    <div class="feedback-slider-track-layer">
+                                        <input class="feedback-slider" type="range" min="0" max="2" step="1" value="${sliderValue}"
+                                            aria-label="${label} rating"
+                                            data-feedback-slider="${index}-${key}"
+                                            oninput="event.stopPropagation(); updateFeedbackSlider(${index}, '${key}', this.value);"
+                                            onclick="event.stopPropagation();">
+                                        <div class="feedback-slider-marks" aria-hidden="true">
+                                            <span class="feedback-slider-mark"></span>
+                                            <span class="feedback-slider-mark"></span>
+                                            <span class="feedback-slider-mark"></span>
+                                        </div>
                                     </div>
                                     <div class="feedback-slider-labels" aria-hidden="true">
                                         <span>low</span>
