@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
  */
 
-const CACHE_VERSION = 'v16.9';  // bumped from v10.9 – card editor feature
+const CACHE_VERSION = 'v17';  // bumped from v10.9 – card editor feature
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
