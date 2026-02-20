@@ -514,33 +514,6 @@
         </div>
     </div>
 
-    <!-- ====== MOVE TO COMPOST CONFIRMATION MODAL ====== -->
-    <div id="compostConfirmModal" class="modal">
-        <div class="modal-content modal-content--narrow compost-confirm-modal-content">
-            <div class="popup-header-standard">
-                <div class="popup-title-group">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M6.5 13h11l-1.8 7H8.3L6.5 13z"></path>
-                        <line x1="5.5" y1="13" x2="18.5" y2="13"></line>
-                        <line x1="12" y1="13" x2="12" y2="8"></line>
-                        <path d="M12 11.5 C9.5 11.5 7 10 7 6.5 C9 6.5 11.5 8 12 11.5z"></path>
-                        <path d="M12 9 C14.5 9 17 7.5 17 4 C15 4 12.5 6.5 12 9z"></path>
-                    </svg>
-                    <h2>Move to Compost?</h2>
-                </div>
-                <button class="close-btn" id="closeCompostConfirmBtn">✕</button>
-            </div>
-            <div class="info-box-standard">
-                <strong>Archive coffee</strong>
-                <p>Coffee can be stored here with all adjustments made, and restored anytime.</p>
-            </div>
-            <div class="compost-confirm-actions">
-                <button id="cancelCompostConfirmBtn" class="compost-confirm-btn-secondary">Cancel</button>
-                <button id="confirmCompostConfirmBtn">Okay</button>
-            </div>
-        </div>
-    </div>
-
     <!-- ====== FEEDBACK HISTORY MODAL ====== -->
     <div id="feedbackHistoryModal" class="modal">
         <div class="modal-content modal-content--narrow">
@@ -554,69 +527,13 @@
                 </div>
                 <button class="close-btn" id="closeFeedbackHistoryBtn">✕</button>
             </div>
-            <div class="info-box-standard info-box-standard--history">
-                <div>
-                    <strong>Timeline</strong>
-                    <p>Track applied grind and temperature changes per coffee.</p>
-                </div>
-                <button id="deleteFeedbackHistoryBtn" class="reset-adjustments-btn delete-history-btn" type="button">Delete History</button>
+            <div class="info-box-standard">
+                <strong>Timeline</strong>
+                <p>Track applied grind and temperature changes per coffee.</p>
             </div>
             <div id="feedbackHistoryList" class="history-list"></div>
             <div id="feedbackHistoryEmpty" class="decaf-empty" style="display: none;">
                 No adjustments applied yet.
-            </div>
-        </div>
-    </div>
-
-    <!-- ====== RESET ADJUSTMENTS CONFIRMATION MODAL ====== -->
-    <div id="resetAdjustmentsConfirmModal" class="modal">
-        <div class="modal-content modal-content--narrow compost-confirm-modal-content">
-            <div class="popup-header-standard">
-                <div class="popup-title-group">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M21 2v6h-6"></path>
-                        <path d="M3 12a9 9 0 0 1 15.5-6.36L21 8"></path>
-                        <path d="M3 22v-6h6"></path>
-                        <path d="M21 12a9 9 0 0 1-15.5 6.36L3 16"></path>
-                    </svg>
-                    <h2>Reset this coffee's tuning?</h2>
-                </div>
-                <button class="close-btn" id="closeResetAdjustmentsBtn">✕</button>
-            </div>
-            <div class="info-box-standard">
-                <strong>Restore recommended setup</strong>
-                <p>This clears manual tweaks and returns this coffee to BrewBuddy's current recommended values.</p>
-            </div>
-            <div class="compost-confirm-actions">
-                <button id="cancelResetAdjustmentsBtn" class="compost-confirm-btn-secondary" type="button">Cancel</button>
-                <button id="confirmResetAdjustmentsBtn" type="button">Reset</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ====== DELETE HISTORY CONFIRMATION MODAL ====== -->
-    <div id="deleteHistoryConfirmModal" class="modal">
-        <div class="modal-content modal-content--narrow compost-confirm-modal-content">
-            <div class="popup-header-standard">
-                <div class="popup-title-group">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 3h6"></path>
-                        <path d="M4 7h16"></path>
-                        <path d="M6 7l1 13h10l1-13"></path>
-                        <path d="M10 11v6"></path>
-                        <path d="M14 11v6"></path>
-                    </svg>
-                    <h2>Delete History?</h2>
-                </div>
-                <button class="close-btn" id="closeDeleteHistoryBtn">✕</button>
-            </div>
-            <div class="info-box-standard">
-                <strong>Clear adjustment timeline</strong>
-                <p>This permanently removes past entries. Your current settings stay exactly as they are.</p>
-            </div>
-            <div class="compost-confirm-actions">
-                <button id="cancelDeleteHistoryBtn" class="compost-confirm-btn-secondary" type="button">Cancel</button>
-                <button id="confirmDeleteHistoryBtn" class="compost-confirm-btn-danger" type="button">Delete</button>
             </div>
         </div>
     </div>
