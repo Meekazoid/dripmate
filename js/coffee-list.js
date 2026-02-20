@@ -7,6 +7,45 @@ import { coffees, saveCoffeesAndSync } from './state.js';
 import { renderCoffeeCard } from './coffee-cards.js';
 import { getBrewRecommendations } from './brew-engine.js';
 
+function showCompostConfirmModal() {
+    const modal = document.getElementById('compostConfirmModal');
+    const confirmBtn = document.getElementById('confirmCompostConfirmBtn');
+    const cancelBtn = document.getElementById('cancelCompostConfirmBtn');
+    const closeBtn = document.getElementById('closeCompostConfirmBtn');
+
+    if (!modal || !confirmBtn || !cancelBtn || !closeBtn) {
+        return Promise.resolve(confirm('Move this coffee to Compost?'));
+    }
+
+    modal.classList.add('active');
+
+    return new Promise(resolve => {
+        let resolved = false;
+
+        const cleanup = (result) => {
+            if (resolved) return;
+            resolved = true;
+            modal.classList.remove('active');
+            confirmBtn.removeEventListener('click', onConfirm);
+            cancelBtn.removeEventListener('click', onCancel);
+            closeBtn.removeEventListener('click', onCancel);
+            modal.removeEventListener('click', onBackdrop);
+            resolve(result);
+        };
+
+        const onConfirm = () => cleanup(true);
+        const onCancel = () => cleanup(false);
+        const onBackdrop = (e) => {
+            if (e.target === modal) onCancel();
+        };
+
+        confirmBtn.addEventListener('click', onConfirm);
+        cancelBtn.addEventListener('click', onCancel);
+        closeBtn.addEventListener('click', onCancel);
+        modal.addEventListener('click', onBackdrop);
+    });
+}
+
 export function renderCoffees(expandAfterIndex) {
     const listEl = document.getElementById('coffeeList');
     const emptyState = document.getElementById('emptyState');
@@ -58,15 +97,16 @@ export function renderCoffees(expandAfterIndex) {
     });
 }
 
-export function deleteCoffee(originalIndex) {
+export async function deleteCoffee(originalIndex) {
     if (originalIndex < 0 || originalIndex >= coffees.length) return;
 
-    if (confirm('Move this coffee to Compost?')) {
-        coffees[originalIndex].deleted = true;
-        coffees[originalIndex].deletedAt = new Date().toISOString();
-        saveCoffeesAndSync();
-        renderCoffees();
-    }
+    const shouldMoveToCompost = await showCompostConfirmModal();
+    if (!shouldMoveToCompost) return;
+
+    coffees[originalIndex].deleted = true;
+    coffees[originalIndex].deletedAt = new Date().toISOString();
+    saveCoffeesAndSync();
+    renderCoffees();
 }
 
 export async function restoreCoffee(originalIndex) {

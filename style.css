@@ -2544,6 +2544,32 @@ body.light-mode .onboarding-icon {
     margin-bottom: 6px;
 }
 
+
+.compost-confirm-modal-content {
+    max-width: 440px;
+}
+
+.compost-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.compost-confirm-actions button {
+    width: auto;
+}
+
+.compost-confirm-btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.compost-confirm-btn-secondary:hover {
+    background: color-mix(in srgb, var(--bg-card) 78%, var(--accent) 22%);
+    color: var(--text-primary);
+}
+
 /* ==========================================
    26. MISC UI HELPERS
    ========================================== */
