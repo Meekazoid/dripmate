@@ -8,6 +8,46 @@ import { getBrewRecommendations } from './brew-engine.js';
 
 const suggestionHideTimers = new Map();
 
+function showResetAdjustmentsConfirmModal() {
+    const modal = document.getElementById('resetAdjustmentsConfirmModal');
+    const confirmBtn = document.getElementById('confirmResetAdjustmentsConfirmBtn');
+    const cancelBtn = document.getElementById('cancelResetAdjustmentsConfirmBtn');
+    const closeBtn = document.getElementById('closeResetAdjustmentsConfirmBtn');
+
+    if (!modal || !confirmBtn || !cancelBtn || !closeBtn) {
+        return Promise.resolve(confirm("Reset this coffee's tuning?"));
+    }
+
+    modal.classList.add('active');
+
+    return new Promise(resolve => {
+        let resolved = false;
+
+        const cleanup = (result) => {
+            if (resolved) return;
+            resolved = true;
+            modal.classList.remove('active');
+            confirmBtn.removeEventListener('click', onConfirm);
+            cancelBtn.removeEventListener('click', onCancel);
+            closeBtn.removeEventListener('click', onCancel);
+            modal.removeEventListener('click', onBackdrop);
+            resolve(result);
+        };
+
+        const onConfirm = () => cleanup(true);
+        const onCancel = () => cleanup(false);
+        const onBackdrop = (e) => {
+            if (e.target === modal) onCancel();
+        };
+
+        confirmBtn.addEventListener('click', onConfirm);
+        cancelBtn.addEventListener('click', onCancel);
+        closeBtn.addEventListener('click', onCancel);
+        modal.addEventListener('click', onBackdrop);
+    });
+}
+
+
 function clearSuggestionHideTimer(index) {
     const existing = suggestionHideTimers.get(index);
     if (existing) {
@@ -360,7 +400,10 @@ export function adjustTempManual(index, direction) {
     saveCoffeesAndSync();
 }
 
-export function resetCoffeeAdjustments(index) {
+export async function resetCoffeeAdjustments(index) {
+    const confirmed = await showResetAdjustmentsConfirmModal();
+    if (!confirmed) return;
+
     const coffee = coffees[index];
     const before = getBrewRecommendations(coffee);
 
