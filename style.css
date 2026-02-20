@@ -1538,12 +1538,7 @@ body.light-mode .step-progress-bar {
     appearance: none;
     width: 100%;
     height: 3px;
-    border-radius: 999px;
-    background:
-        radial-gradient(circle at 0% 50%, var(--accent) 0 2px, transparent 2.2px),
-        radial-gradient(circle at 50% 50%, var(--accent) 0 2.4px, transparent 2.6px),
-        radial-gradient(circle at 100% 50%, var(--accent) 0 2px, transparent 2.2px),
-        linear-gradient(var(--accent), var(--accent));
+    background: transparent;
     outline: none;
     cursor: pointer;
 }
@@ -1551,7 +1546,7 @@ body.light-mode .step-progress-bar {
 .feedback-slider::-webkit-slider-runnable-track {
     height: 3px;
     border-radius: 999px;
-    background: inherit;
+    background: linear-gradient(var(--accent), var(--accent));
 }
 
 .feedback-slider::-moz-range-track {
