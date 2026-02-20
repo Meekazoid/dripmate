@@ -8,6 +8,48 @@ import { getBrewRecommendations } from './brew-engine.js';
 
 const suggestionHideTimers = new Map();
 let activeHistoryCoffeeIndex = null;
+<<<<<<< codex/add-delete-history-button-to-popup-2kjmac
+
+function showDripmateConfirmModal({ modalId, confirmBtnId, cancelBtnId, closeBtnId, fallbackMessage }) {
+    const modal = document.getElementById(modalId);
+    const confirmBtn = document.getElementById(confirmBtnId);
+    const cancelBtn = document.getElementById(cancelBtnId);
+    const closeBtn = document.getElementById(closeBtnId);
+
+    if (!modal || !confirmBtn || !cancelBtn || !closeBtn) {
+        return Promise.resolve(window.confirm(fallbackMessage));
+    }
+
+    modal.classList.add('active');
+
+    return new Promise(resolve => {
+        let resolved = false;
+
+        const cleanup = (result) => {
+            if (resolved) return;
+            resolved = true;
+            modal.classList.remove('active');
+            confirmBtn.removeEventListener('click', onConfirm);
+            cancelBtn.removeEventListener('click', onCancel);
+            closeBtn.removeEventListener('click', onCancel);
+            modal.removeEventListener('click', onBackdrop);
+            resolve(result);
+        };
+
+        const onConfirm = () => cleanup(true);
+        const onCancel = () => cleanup(false);
+        const onBackdrop = (e) => {
+            if (e.target === modal) onCancel();
+        };
+
+        confirmBtn.addEventListener('click', onConfirm);
+        cancelBtn.addEventListener('click', onCancel);
+        closeBtn.addEventListener('click', onCancel);
+        modal.addEventListener('click', onBackdrop);
+    });
+}
+=======
+>>>>>>> main
 
 function clearSuggestionHideTimer(index) {
     const existing = suggestionHideTimers.get(index);
@@ -311,7 +353,11 @@ export function closeFeedbackHistory() {
     activeHistoryCoffeeIndex = null;
 }
 
+<<<<<<< codex/add-delete-history-button-to-popup-2kjmac
+export async function deleteFeedbackHistory() {
+=======
 export function deleteFeedbackHistory() {
+>>>>>>> main
     if (activeHistoryCoffeeIndex === null) return;
 
     const coffee = coffees[activeHistoryCoffeeIndex];
@@ -320,11 +366,26 @@ export function deleteFeedbackHistory() {
     const historyLength = Array.isArray(coffee.feedbackHistory) ? coffee.feedbackHistory.length : 0;
     if (historyLength === 0) return;
 
+<<<<<<< codex/add-delete-history-button-to-popup-2kjmac
+    const confirmed = await showDripmateConfirmModal({
+        modalId: 'deleteHistoryConfirmModal',
+        confirmBtnId: 'confirmDeleteHistoryBtn',
+        cancelBtnId: 'cancelDeleteHistoryBtn',
+        closeBtnId: 'closeDeleteHistoryBtn',
+        fallbackMessage: "Delete this coffee's adjustment timeline? This cannot be undone. Current settings will stay the same."
+    });
+
+    if (!confirmed) return;
+
+    coffee.feedbackHistory = [];
+    await saveCoffeesAndSync();
+=======
     const confirmed = window.confirm('Delete all adjustment history for this coffee? This cannot be undone.');
     if (!confirmed) return;
 
     coffee.feedbackHistory = [];
     saveCoffeesAndSync();
+>>>>>>> main
     openFeedbackHistory(activeHistoryCoffeeIndex);
 }
 
@@ -381,7 +442,24 @@ export function adjustTempManual(index, direction) {
     saveCoffeesAndSync();
 }
 
-export function resetCoffeeAdjustments(index) {
+export async function resetCoffeeAdjustments(index) {
+    const coffee = coffees[index];
+    if (!coffee) return;
+
+    const confirmed = await showDripmateConfirmModal({
+        modalId: 'resetAdjustmentsConfirmModal',
+        confirmBtnId: 'confirmResetAdjustmentsBtn',
+        cancelBtnId: 'cancelResetAdjustmentsBtn',
+        closeBtnId: 'closeResetAdjustmentsBtn',
+        fallbackMessage: "Reset this coffee's tuning and restore recommended values?"
+    });
+
+    if (!confirmed) return;
+
+    performResetCoffeeAdjustments(index);
+}
+
+function performResetCoffeeAdjustments(index) {
     const coffee = coffees[index];
     const before = getBrewRecommendations(coffee);
 
