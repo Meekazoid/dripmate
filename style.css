@@ -1171,15 +1171,15 @@ body.light-mode .water-hardness-badge {
 }
 
 .adjust-btn {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     padding: 0;
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1189,8 +1189,8 @@ body.light-mode .water-hardness-badge {
 }
 
 .adjust-btn:hover {
-    background: var(--accent);
-    color: white;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--accent);
     border-color: var(--accent);
 }
 
@@ -2255,9 +2255,9 @@ body.light-mode .onboarding-icon {
     }
 
     .adjust-btn {
-        width: 22px;
-        height: 22px;
-        font-size: 0.72rem;
+        width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
     }
 
     .timer-display {
