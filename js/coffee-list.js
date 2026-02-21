@@ -46,6 +46,45 @@ function showCompostConfirmModal() {
     });
 }
 
+function showCompostDeleteConfirmModal() {
+    const modal = document.getElementById('compostDeleteConfirmModal');
+    const confirmBtn = document.getElementById('confirmCompostDeleteConfirmBtn');
+    const cancelBtn = document.getElementById('cancelCompostDeleteConfirmBtn');
+    const closeBtn = document.getElementById('closeCompostDeleteConfirmBtn');
+
+    if (!modal || !confirmBtn || !cancelBtn || !closeBtn) {
+        return Promise.resolve(confirm('Permanently delete this coffee? This cannot be undone.'));
+    }
+
+    modal.classList.add('active');
+
+    return new Promise(resolve => {
+        let resolved = false;
+
+        const cleanup = (result) => {
+            if (resolved) return;
+            resolved = true;
+            modal.classList.remove('active');
+            confirmBtn.removeEventListener('click', onConfirm);
+            cancelBtn.removeEventListener('click', onCancel);
+            closeBtn.removeEventListener('click', onCancel);
+            modal.removeEventListener('click', onBackdrop);
+            resolve(result);
+        };
+
+        const onConfirm = () => cleanup(true);
+        const onCancel = () => cleanup(false);
+        const onBackdrop = (e) => {
+            if (e.target === modal) onCancel();
+        };
+
+        confirmBtn.addEventListener('click', onConfirm);
+        cancelBtn.addEventListener('click', onCancel);
+        closeBtn.addEventListener('click', onCancel);
+        modal.addEventListener('click', onBackdrop);
+    });
+}
+
 export function renderCoffees(expandAfterIndex) {
     const listEl = document.getElementById('coffeeList');
     const emptyState = document.getElementById('emptyState');
@@ -122,7 +161,8 @@ export async function restoreCoffee(originalIndex) {
 export async function permanentDeleteCoffee(originalIndex) {
     if (originalIndex < 0 || originalIndex >= coffees.length) return;
 
-    if (confirm('Permanently delete this coffee? This cannot be undone.')) {
+    const shouldDelete = await showCompostDeleteConfirmModal();
+    if (shouldDelete) {
         coffees.splice(originalIndex, 1);
         saveCoffeesAndSync();
         await renderDecafList();

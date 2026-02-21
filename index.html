@@ -541,6 +541,32 @@
         </div>
     </div>
 
+    <!-- ====== PERMANENT DELETE CONFIRMATION MODAL ====== -->
+    <div id="compostDeleteConfirmModal" class="modal">
+        <div class="modal-content modal-content--narrow compost-confirm-modal-content">
+            <div class="popup-header-standard">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6.5 13h11l-1.8 7H8.3L6.5 13z"></path>
+                        <line x1="5.5" y1="13" x2="18.5" y2="13"></line>
+                        <line x1="9" y1="10" x2="15" y2="10"></line>
+                        <line x1="10" y1="6" x2="14" y2="6"></line>
+                    </svg>
+                    <h2>Delete Coffee?</h2>
+                </div>
+                <button class="close-btn" id="closeCompostDeleteConfirmBtn">✕</button>
+            </div>
+            <div class="info-box-standard">
+                <strong>Permanently delete this coffee?</strong>
+                <p>This cannot be undone.</p>
+            </div>
+            <div class="compost-confirm-actions">
+                <button id="cancelCompostDeleteConfirmBtn" class="compost-confirm-btn-secondary">Cancel</button>
+                <button id="confirmCompostDeleteConfirmBtn">Okay</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ====== RESET ADJUSTMENTS CONFIRMATION MODAL ====== -->
     <div id="resetAdjustmentsConfirmModal" class="modal">
         <div class="modal-content modal-content--narrow compost-confirm-modal-content">
