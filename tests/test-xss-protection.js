@@ -5,7 +5,10 @@
 
 // Import the sanitizeHTML function by extracting it from js/state.js
 const fs = require('fs');
-const stateCode = fs.readFileSync('./js/state.js', 'utf8');
+const path = require('path');
+
+const rootDir = path.resolve(__dirname, '..');
+const stateCode = fs.readFileSync(path.join(rootDir, 'js/state.js'), 'utf8');
 
 // Extract sanitizeHTML function
 const sanitizeMatch = stateCode.match(/export function sanitizeHTML\(str\) \{[\s\S]*?\n\}/);
@@ -148,7 +151,7 @@ function verifySanitizationInCode() {
     console.log('\n=== Verifying Sanitization in renderCoffeeCard ===\n');
     
     // Read the coffee-cards.js module
-    const coffeeCardsCode = fs.readFileSync('./js/coffee-cards.js', 'utf8');
+    const coffeeCardsCode = fs.readFileSync(path.join(rootDir, 'js/coffee-cards.js'), 'utf8');
     
     const requiredSanitizations = [
         { field: 'coffee.name', pattern: /sanitizeHTML\(coffee\.name\)/ },

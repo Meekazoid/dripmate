@@ -6,8 +6,10 @@
  */
 
 const fs = require('fs');
+const path = require('path');
 
-const stateCode = fs.readFileSync('./js/state.js', 'utf8');
+const rootDir = path.resolve(__dirname, '..');
+const stateCode = fs.readFileSync(path.join(rootDir, 'js/state.js'), 'utf8');
 
 function extractFunction(code, functionName) {
   const rgx = new RegExp(`export function ${functionName}\\([^)]*\\) \\{[\\s\\S]*?\\n\\}`, 'm');
@@ -64,7 +66,7 @@ function run() {
   passed++;
 
   // history rendering guard (code-level behavior)
-  const feedbackCode = fs.readFileSync('./js/feedback.js', 'utf8');
+  const feedbackCode = fs.readFileSync(path.join(rootDir, 'js/feedback.js'), 'utf8');
   assert(
     /const history = Array\.isArray\(coffee\.feedbackHistory\) \? coffee\.feedbackHistory : \[\];/.test(feedbackCode),
     'openFeedbackHistory should guard against missing feedbackHistory'

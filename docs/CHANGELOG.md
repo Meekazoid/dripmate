@@ -104,7 +104,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
   - `style.css` — all CSS (23 sections)
   - `app.js` — all logic (20 sections)
 - **Dead code eliminated:** Removed unused timer variables, orphaned `currentMode`, legacy per-card grinder remnants.
-- **Script loading:** External `<script src>` tags. Load order: `water-hardness.js` → `app.js` → `backend-sync.js`.
+- **Script loading:** External `<script src>` tags. Load order: `js/data/water-hardness-db.js` → `js/app.js` → `js/services/backend-sync.js`.
 
 ---
 
@@ -153,7 +153,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 - **Altitude adjustment:** < 1200 m → coarser grind; > 1800 m → finer grind + higher temp.
 - **Cultivar adjustment:** Delicate (Gesha, SL28, Bourbon, Typica) → finer, lower temp. Robust (Catimor, Pacamara) → coarser, higher temp.
 - **Origin adjustment:** Africa → finer; Asia → coarser + higher temp; Latin America → neutral.
-- **Water hardness module** (`water-hardness.js`): German postal code lookup with 50+ city data points. Adjusts grind ±2 and temperature ±1.
+- **Water hardness module** (`js/data/water-hardness-db.js`): German postal code lookup with 50+ city data points. Adjusts grind ±2 and temperature ±1.
 - **3 brew styles** (slow, fruity, standard) with tailored pour timing.
 - **Intelligent brew notes** explaining all cumulative adjustments.
 
@@ -172,7 +172,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Added
 - **Device binding:** Token locked to one device via fingerprint-based `deviceId`.
-- **Backend sync module** (`backend-sync.js`): Automatic coffee data sync to Railway PostgreSQL.
+- **Backend sync module** (`js/services/backend-sync.js`): Automatic coffee data sync to Railway PostgreSQL.
 - **Settings modal** with token activation flow.
 
 ---

@@ -3,7 +3,7 @@
  * Tests that 3-digit ZIP disambiguation works correctly
  */
 
-const WaterHardness = require('./water-hardness.js');
+const WaterHardness = require('../js/data/water-hardness-db.js');
 
 // Color codes for terminal output
 const GREEN = '\x1b[32m';

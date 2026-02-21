@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
  */
 
-const CACHE_VERSION = 'v18.1';  // bumped from v10.9 – card editor feature
+const CACHE_VERSION = 'v18.2';  // bumped from v10.9 – card editor feature
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
@@ -27,8 +27,8 @@ const STATIC_ASSETS = [
   '/js/messages.js',
   '/js/water-hardness.js',
   '/js/settings.js',
-  '/backend-sync.js',
-  '/water-hardness.js',
+  '/js/services/backend-sync.js',
+  '/js/data/water-hardness-db.js',
   '/manifest.json',
   '/logo.png',
   '/logo-192.png',
