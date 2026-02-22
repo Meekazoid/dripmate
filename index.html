@@ -43,12 +43,12 @@
                 <button class="cs-btn" id="cameraBtn" aria-label="Coffee Shot">
                     <span class="cs-content">
                         <span class="cs-icon-wrap">
-                            <svg class="cs-viewfinder" viewBox="0 0 28 28" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round">
-                                <path d="M2 8 V3 a1 1 0 0 1 1-1 H8"/>
-                                <path d="M20 2 H25 a1 1 0 0 1 1 1 V8"/>
-                                <path d="M2 20 V25 a1 1 0 0 1 1 1 H8"/>
-                                <path d="M20 26 H25 a1 1 0 0 1 1-1 V20"/>
-                                <circle cx="14" cy="14" r="1.5" fill="rgba(255,255,255,0.5)" stroke="none"/>
+                            <!-- Coffee Bag Icon (dripmate original) -->
+                            <svg class="cs-viewfinder" viewBox="0 0 116 116" fill="rgba(255,255,255,0.88)" stroke="none">
+                                <g transform="translate(0,116) scale(0.1,-0.1)">
+                                    <path d="M298 1105 c-31 -17 -48 -65 -48 -137 0 -29 -13 -81 -35 -138 l-35 -92 0 -318 0 -319 24 -28 24 -28 264 -3 c247 -3 268 -2 348 19 59 16 93 31 113 50 l27 27 0 301 0 301 -50 100 c-43 86 -50 108 -50 159 0 49 -4 65 -24 88 l-24 28 -254 2 c-209 2 -258 0 -280 -12z m502 -100 l0 -35 -235 0 -235 0 0 35 0 35 235 0 235 0 0 -35z m-41 -191 l-29 -75 0 -310 0 -309 -235 0 -235 0 0 133 c-2 500 -3 476 25 552 15 38 29 73 31 77 3 4 110 8 239 8 l233 0 -29 -76z m116 -35 l26 -51 -1 -281 c0 -155 -4 -285 -8 -288 -4 -4 -24 -12 -44 -17 l-38 -10 0 301 c0 259 2 309 17 350 9 26 18 47 20 47 1 0 14 -23 28 -51z"/>
+                                    <path d="M447 706 c-59 -16 -102 -55 -133 -121 -64 -135 15 -285 150 -285 85 0 141 38 182 125 59 124 -1 260 -126 288 -14 3 -47 -1 -73 -7z m49 -88 c-3 -13 -6 -28 -6 -33 0 -6 -19 -33 -41 -60 -23 -28 -46 -63 -52 -78 -13 -40 -27 -16 -27 48 0 56 21 96 66 126 41 27 68 25 60 -3z m94 -103 c0 -32 -7 -60 -19 -79 -22 -34 -69 -66 -95 -66 -16 0 -17 5 -12 32 4 18 20 49 36 68 17 19 40 54 52 77 26 51 38 41 38 -32z"/>
+                                </g>
                             </svg>
                         </span>
                         <span class="cs-text">
@@ -273,7 +273,7 @@
                 </p>
                 <p><strong>Kontakt</strong></p>
                 <p>
-                    E-Mail: [email@example.com]<br>
+                    E-Mail: [<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="37525a565e5b77524f565a475b521954585a">[email&#160;protected]</a>]<br>
                     Telefon: [+49 ...]
                 </p>
                 <p><strong>Verantwortlich für den Inhalt</strong></p>
@@ -309,7 +309,7 @@
                 <p>Der bei der Geräteaktivierung eingegebene Code wird zur Verifikation übermittelt und danach nicht dauerhaft gespeichert.</p>
 
                 <p><strong>Deine Rechte (Art. 15–22 DSGVO)</strong></p>
-                <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie Datenübertragbarkeit. Wende dich dazu an: [email@example.com]</p>
+                <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie Datenübertragbarkeit. Wende dich dazu an: [<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e5b535f57527e5b465f534e525b105d5153">[email&#160;protected]</a>]</p>
 
                 <p><strong>Beschwerderecht</strong></p>
                 <p>Du hast das Recht, dich bei der zuständigen Datenschutzbehörde zu beschweren.</p>
@@ -616,7 +616,7 @@
     </div>
 
     <!-- ====== SCRIPTS ====== -->
-    <script src="js/data/water-hardness-db.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/data/water-hardness-db.js"></script>
 
     <!-- Brew timer stubs: ensure functions exist on window before module loads -->
     <script>
@@ -672,15 +672,4 @@
         const gap    = parseInt(getComputedStyle(subtitle).marginTop) || 2;
         const totalH = title.offsetHeight + subtitle.offsetHeight + gap;
 
-        // Apply height to both logos so switching is seamless
-        [logoDark, logoLight].forEach(logo => {
-          if (!logo) return;
-          logo.style.height = totalH + 'px';
-          logo.style.width  = 'auto';
-        });
-      }
-      window.addEventListener('load', alignHeader);
-      window.addEventListener('resize', alignHeader);
-    </script>
-</body>
-</html>
+        // Apply height to both

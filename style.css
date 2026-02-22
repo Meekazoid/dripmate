@@ -94,7 +94,7 @@ header {
 
 .logo-title-group {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 14px;
@@ -104,23 +104,16 @@ header {
 .brand-text-group {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    align-items: center;
+    gap: 6px;
 }
 
 .header-logo {
-    /* Die Höhe wird vom Skript in der index.html gesteuert, 
-       wir skalieren das Ergebnis hier um 10% */
-    height: 52px; 
+    height: 68px;
     width: auto;
     display: block;
     flex-shrink: 0;
-
-    /* 10% Vergrößerung */
-    transform: scale(1.1);
-    transform-origin: center left; /* Vergrößert nach rechts/oben/unten */
-
-    /* WICHTIG: Alle alten Filter entfernen! */
+    transform: none;
     filter: none !important; 
     -webkit-filter: none !important;
 }
@@ -185,7 +178,7 @@ h1 {
     color: var(--accent);
     font-weight: 300;
     margin-top: 2px;
-    align-self: flex-start;
+    align-self: center;
     opacity: 0.7;
 }
 
@@ -256,16 +249,16 @@ body.light-mode .add-section {
 
 .cs-icon-wrap {
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .cs-viewfinder {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
 }
 
 .cs-text {
@@ -293,27 +286,27 @@ body.light-mode .add-section {
 .upload-button,
 .manual-button {
     width: auto;
-    padding: 5px 14px;
+    padding: 10px 20px;
     background: linear-gradient(
         160deg,
         rgba(60, 32, 10, 0.35) 0%,
         rgba(26, 26, 26, 0.95) 70%
     );
     color: var(--text-primary);
-    border: 1px solid rgba(212, 165, 116, 0.12);
-    border-radius: 8px;
+    border: 1px solid rgba(212, 165, 116, 0.2);
+    border-radius: 10px;
     font-family: 'Sora', sans-serif;
-    font-size: 0.62rem;
-    font-weight: 200;
-    letter-spacing: 0.02em;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.06em;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 7px;
     transition: all 0.25s ease;
     white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(212, 165, 116, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(212, 165, 116, 0.08);
 }
 
 body.light-mode .upload-button,
@@ -358,6 +351,8 @@ body.light-mode .manual-button:hover {
 }
 
 .button-icon {
+    width: 15px;
+    height: 15px;
     stroke: currentColor;
     stroke-width: 1.4;
     stroke-linecap: round;
@@ -2168,14 +2163,14 @@ body.light-mode .onboarding-icon {
     }
 
     .header-logo {
-        height: 56px;
+        height: 60px;
     }
 
     .upload-button,
     .manual-button {
         width: auto;
-        padding: 5px 12px;
-        font-size: 0.6rem;
+        padding: 9px 16px;
+        font-size: 0.76rem;
     }
 
     .empty-state {
@@ -2328,7 +2323,7 @@ body.light-mode .onboarding-icon {
     }
 
     .header-logo {
-        height: 48px;
+        height: 52px;
     }
 
     .coffee-name {
