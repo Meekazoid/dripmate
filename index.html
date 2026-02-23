@@ -45,7 +45,6 @@
                         <span class="cs-icon-wrap">
                             <!-- Coffee Bag + Viewfinder -->
                             <svg class="cs-viewfinder" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Coffee bag PNG, inverted to white via filter -->
                                 <filter id="invert-white">
                                     <feColorMatrix type="matrix"
                                         values="-1 0 0 0 1
@@ -57,15 +56,10 @@
                                     x="8" y="4" width="32" height="40"
                                     filter="url(#invert-white)"
                                     opacity="0.88"/>
-                                <!-- Viewfinder corner brackets -->
                                 <g stroke="rgba(255,255,255,0.9)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                                    <!-- top-left -->
                                     <path d="M2 10 V2 H10"/>
-                                    <!-- top-right -->
                                     <path d="M38 2 H46 V10"/>
-                                    <!-- bottom-left -->
                                     <path d="M2 38 V46 H10"/>
-                                    <!-- bottom-right -->
                                     <path d="M38 46 H46 V38"/>
                                 </g>
                             </svg>
@@ -236,10 +230,10 @@
             <!-- Info box -->
             <div class="info-box-standard">
                 <strong>Device Activation</strong>
-                <p>Enter the code you received to activate this device.</p>
+                <p id="activationSubtitle">Enter the code you received to activate this device.</p>
             </div>
             <!-- Content -->
-            <div class="form-group">
+            <div id="activationInputWrap" class="form-group">
                 <input type="text" id="accessCodeInput" placeholder="Insert Token">
             </div>
             <div id="activationStatus" class="activation-status" style="display: none;"></div>
