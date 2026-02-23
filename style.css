@@ -249,16 +249,16 @@ body.light-mode .add-section {
 
 .cs-icon-wrap {
     flex-shrink: 0;
-    width: 28px;
-    height: 28px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .cs-viewfinder {
-    width: 28px;
-    height: 28px;
+    width: 48px;
+    height: 48px;
 }
 
 .cs-text {
