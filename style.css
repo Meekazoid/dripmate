@@ -2481,52 +2481,6 @@ body.light-mode .onboarding-icon {
     font-weight: 600;
 }
 
-.water-result-meta {
-    padding: 11px 12px;
-    background: var(--bg-secondary);
-    border-radius: 8px;
-    margin-bottom: 11px;
-}
-
-.water-meta-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.76rem;
-    color: var(--text-secondary);
-    margin-bottom: 5px;
-}
-
-.water-meta-row:last-child {
-    margin-bottom: 0;
-}
-
-.water-meta-row strong {
-    color: var(--text-primary);
-}
-
-.water-brew-adjustments {
-    padding: 11px 12px;
-    background: rgba(212, 165, 116, 0.08);
-    border: 1px solid rgba(212, 165, 116, 0.2);
-    border-radius: 8px;
-}
-
-.water-brew-label {
-    font-size: 0.66rem;
-    font-weight: 600;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-}
-
-.water-brew-text {
-    font-size: 0.76rem;
-    color: var(--text-secondary);
-    line-height: 1.45;
-}
-
 .water-impact-info {
     margin-bottom: 10px;
 }
