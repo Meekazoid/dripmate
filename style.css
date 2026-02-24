@@ -545,7 +545,7 @@ button:hover {
 }
 
 #method-chip .brew-chip-label {
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
