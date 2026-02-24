@@ -9,7 +9,7 @@ import { initGlobalGrinder } from './grinder.js';
 import { closeFeedbackHistory, migrateCoffeesInitialValues } from './feedback.js';
 import { renderCoffees } from './coffee-list.js';
 import { processImageUpload } from './image-handler.js';
-import { saveCoffeeManual } from './manual-entry.js';
+import { saveCoffeeManual, initProcessPicker } from './manual-entry.js';
 import { 
     openWaterModal, 
     closeWaterModal, 
@@ -72,6 +72,7 @@ function initEventListeners() {
     // Manual entry
     document.getElementById('manualBtn').addEventListener('click', toggleManual);
     document.getElementById('saveManualBtn').addEventListener('click', saveCoffeeManual);
+    initProcessPicker();
 
     // Theme toggle
     document.getElementById('themeToggleBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); toggleTheme(); });
