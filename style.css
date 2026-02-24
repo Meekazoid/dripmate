@@ -2421,16 +2421,19 @@ body.light-mode .onboarding-icon {
     max-height: 86vh;
 }
 
-.input-btn-row input {
-    flex: 1;
+.water-modal-content .form-group label {
+    font-size: 0.72rem;
 }
 
-.inline-save-btn {
-    width: auto;
-    padding: 11px 16px;
-    font-size: 0.8rem;
-    font-weight: 400;
-    white-space: nowrap;
+.water-modal-content .input-btn-row input {
+    flex: 1;
+    padding: 9px 12px;
+    font-size: 0.82rem;
+}
+
+.water-modal-content .inline-save-btn {
+    padding: 9px 14px;
+    font-size: 0.72rem;
 }
 
 .form-group--mt {
