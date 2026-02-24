@@ -170,11 +170,13 @@ export async function processImageUpload(file, uploadBtn) {
         saveCoffeesAndSync();
         renderCoffees();
         showMessage('success', '✓ Coffee added successfully!');
-        preview.style.display = 'none';
     } catch (error) {
         console.error('Error:', error);
         showMessage('error', error?.message || 'Analysis failed. Please try again.');
     } finally {
+        // Always clean up: hide preview, loading, re-enable buttons
+        preview.style.display = 'none';
+        preview.src = '';
         loadingEl.classList.add('hidden');
         cameraBtn.disabled = false;
         if (uploadBtn) uploadBtn.disabled = false;

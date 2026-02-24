@@ -114,7 +114,7 @@ function adjustForMethod(params, method) {
 // ==========================================
 
 function getProcessingBaseParams(process) {
-    const p = process.toLowerCase();
+    const p = (process || 'unknown').toLowerCase();
 
     if (p.includes('nitro') || p.includes('co2') || p.includes('co-infused')) {
         return { grindBase: { comandante: 18, fellow: 2.8 }, tempBase: { min: 90, max: 91 }, ratio: 15.5, brewStyle: 'slow', targetTime: '2:45-3:15', category: 'experimental-nitro' };
@@ -151,6 +151,12 @@ function getProcessingBaseParams(process) {
     if (p.includes('natural')) {
         return { grindBase: { comandante: 25, fellow: 4.1 }, tempBase: { min: 93, max: 94 }, ratio: 16.7, brewStyle: 'fruity', targetTime: '2:45-3:15', category: 'natural' };
     }
+    // Unknown processing: neutral mid-range defaults, wider temp window
+    // Origin, altitude, cultivar adjustments will refine from here
+    if (p === 'unknown') {
+        return { grindBase: { comandante: 23, fellow: 3.7 }, tempBase: { min: 92, max: 94 }, ratio: 16, brewStyle: 'standard', targetTime: '2:30-3:15', category: 'unknown' };
+    }
+    // Default fallback (washed)
     return { grindBase: { comandante: 22, fellow: 3.5 }, tempBase: { min: 92, max: 93 }, ratio: 16, brewStyle: 'standard', targetTime: '2:30-3:00', category: 'washed' };
 }
 
@@ -176,7 +182,7 @@ function adjustForAltitude(params, altitudeStr) {
 }
 
 function adjustForCultivar(params, cultivarStr) {
-    const cultivar = cultivarStr.toLowerCase();
+    const cultivar = (cultivarStr || '').toLowerCase();
     let grindAdjust = 0, tempAdjust = 0, category = 'balanced';
 
     if (cultivar.includes('gesha') || cultivar.includes('geisha') ||
@@ -198,7 +204,7 @@ function adjustForCultivar(params, cultivarStr) {
 }
 
 function adjustForOrigin(params, originStr) {
-    const origin = originStr.toLowerCase();
+    const origin = (originStr || '').toLowerCase();
     let grindAdjust = 0, tempAdjust = 0, region = 'latin-america';
 
     if (origin.includes('ethiopia') || origin.includes('kenya') ||
@@ -372,7 +378,8 @@ function generateBrewNotes(coffee, params, method) {
             'yeast': 'Yeast inoculated - unique fermentation notes, standard approach',
             'honey': 'Honey process - sweet & fruity, balanced extraction',
             'natural': 'Natural process - full fruit body, coarser grind',
-            'washed': 'Washed process - clean & bright, standard parameters'
+            'washed': 'Washed process - clean & bright, standard parameters',
+            'unknown': 'Processing unknown - using balanced defaults. Adjust via feedback after first brew.'
         };
         notes.push(categoryNotes[params.category] || 'Standard brewing approach');
     }

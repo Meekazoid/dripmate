@@ -15,13 +15,14 @@ export async function saveCoffeeManual() {
     const roaster = document.getElementById('roaster').value.trim();
     const tastingNotes = document.getElementById('tastingNotes').value.trim();
 
-    if (!name || !origin || !process) {
-        alert('Please fill in at least Name, Origin and Processing Method.');
+    if (!name || !origin) {
+        alert('Please fill in at least Name and Origin.');
         return;
     }
 
     addCoffee({
-        name, origin, process,
+        name, origin,
+        process: process || 'unknown',
         cultivar: cultivar || 'Unknown',
         altitude: altitude || '1500',
         roaster: roaster || 'Unknown',
