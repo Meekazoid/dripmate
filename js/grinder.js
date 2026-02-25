@@ -73,8 +73,11 @@ export function initGlobalGrinder() {
 // ==========================================
 
 // Chip-only abbreviations (full names stay in picker popup)
-function abbreviateForChip(name) {
+function abbreviateGrinderName(name) {
     return name
+        .replace('Fellow Ode Gen 1', 'Fellow Gen 1')
+        .replace('Fellow Ode Gen 2', 'Fellow Gen 2')
+        .replace('Baratza Encore', 'Baratza')
         .replace('Comandante C40 MK3', 'Comandante MK3')
         .replace('Comandante C40 MK4', 'Comandante MK4')
         .replace('Timemore Chestnut C2', 'Timemore C2')
@@ -84,7 +87,7 @@ function abbreviateForChip(name) {
 function updateChipLabels() {
     const gLabel = document.getElementById('grinder-chip-label');
     const mLabel = document.getElementById('method-chip-label');
-    if (gLabel) gLabel.textContent = abbreviateForChip(getGrinderLabel(preferredGrinder));
+    if (gLabel) gLabel.textContent = abbreviateGrinderName(getGrinderLabel(preferredGrinder));
     if (mLabel) mLabel.textContent = getMethodLabel(preferredMethod || 'v60');
 }
 

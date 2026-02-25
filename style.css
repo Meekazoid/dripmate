@@ -2286,7 +2286,12 @@ body.light-mode .onboarding-icon {
 
     .brew-chip-group:last-child {
         min-width: 0;
-        flex: 0.92;
+        flex: 1.08;
+    }
+
+    #method-chip .brew-chip-group-label {
+        white-space: nowrap;
+        letter-spacing: 0.05em;
     }
 
     #grinder-chip .brew-chip-label {
