@@ -120,14 +120,6 @@ function closeModal(id) {
     document.getElementById(id).classList.remove('active');
 }
 
-// Short Grinder Name for GrinderSelectionShow
-function abbreviateGrinderName(name) {
-    return name
-        .replace('Comandante C40 MK3', 'Comandante MK3')
-        .replace('Comandante C40 MK4', 'Comandante MK4')
-        .replace('Timemore Chestnut C2', 'Timemore C2')
-        .replace('Timemore Chestnut S3', 'Timemore S3');
-}
 // Main initialization function
 function initApp() {
     // Handle magic link token from email
