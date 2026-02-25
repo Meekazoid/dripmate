@@ -72,6 +72,9 @@
                             <span class="cs-label">Coffee Shot</span>
                             <span class="cs-sub">scan bag · AI analysis</span>
                         </span>
+                        <svg class="cs-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                            <path d="M9 6l6 6-6 6"/>
+                        </svg>
                     </span>
                 </button>
                 
@@ -144,16 +147,20 @@
         <div class="global-grinder-selector">
             <div class="brew-chip-row">
                 <div class="brew-chip-group">
-                    <span class="brew-chip-group-label">Grinder</span>
                     <button class="brew-chip" id="grinder-chip" aria-label="Choose grinder">
-                        <span class="brew-chip-label" id="grinder-chip-label">Fellow Ode Gen 2</span>
+                        <span class="brew-chip-inner">
+                            <span class="brew-chip-group-label">Grinder</span>
+                            <span class="brew-chip-label" id="grinder-chip-label">Fellow Ode Gen 2</span>
+                        </span>
                         <svg class="brew-chip-caret" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
                     </button>
                 </div>
                 <div class="brew-chip-group">
-                    <span class="brew-chip-group-label">Brew Method</span>
                     <button class="brew-chip" id="method-chip" aria-label="Choose method">
-                        <span class="brew-chip-label" id="method-chip-label">V60</span>
+                        <span class="brew-chip-inner">
+                            <span class="brew-chip-group-label">Brew Method</span>
+                            <span class="brew-chip-label" id="method-chip-label">V60</span>
+                        </span>
                         <svg class="brew-chip-caret" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
                     </button>
                 </div>

@@ -200,11 +200,11 @@ h1 {
     margin-top: 12px;
 }
 
-/* ─── Coffee Shot Signature Button ─── */
+/* ─── Coffee Shot Signature Button (B2 — Accent Stripe) ─── */
 .cs-btn {
     position: relative;
     display: flex;
-    width: auto;
+    width: 100%;
     margin: 0 auto;
     padding: 0;
     background: none;
@@ -212,12 +212,17 @@ h1 {
     cursor: pointer;
     border-radius: 14px;
     overflow: hidden;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-    box-shadow: 0 4px 18px rgba(139, 90, 43, 0.28), 0 1px 4px rgba(0,0,0,0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 4px 20px rgba(139, 90, 43, 0.2), 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.cs-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(139, 90, 43, 0.28), 0 2px 6px rgba(0,0,0,0.3);
 }
 
 .cs-btn:active {
-    transform: scale(0.97);
+    transform: scale(0.98);
     box-shadow: 0 2px 8px rgba(139, 90, 43, 0.18), 0 1px 2px rgba(0,0,0,0.2);
 }
 
@@ -229,18 +234,19 @@ h1 {
 .cs-content {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 11px;
-    padding: 12px 26px;
+    gap: 14px;
+    padding: 16px 20px;
     width: 100%;
-    background: linear-gradient(135deg, #5c3a1e 0%, #3d2410 60%, #2e1a0c 100%);
+    background: linear-gradient(135deg, #5c3a1e 0%, #3d2410 55%, #2e1a0c 100%);
     border: 1px solid rgba(180, 120, 60, 0.25);
+    border-left: 3px solid var(--accent);
     border-radius: 14px;
 }
 
 body.light-mode .cs-content {
-    background: linear-gradient(135deg, #7a4a22 0%, #5c3318 60%, #4a2810 100%);
+    background: linear-gradient(135deg, #7a4a22 0%, #5c3318 55%, #4a2810 100%);
     border-color: rgba(200, 140, 70, 0.3);
+    border-left: 3px solid var(--accent);
 }
 
 body.light-mode .add-section {
@@ -249,99 +255,98 @@ body.light-mode .add-section {
 
 .cs-icon-wrap {
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .cs-viewfinder {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
 }
 
 .cs-text {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2px;
+    gap: 3px;
 }
 
 .cs-label {
-    font-size: 0.97rem;
-    font-weight: 400;
+    font-size: 0.82rem;
+    font-weight: 300;
     color: #ffffff;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.04em;
     line-height: 1.1;
 }
 
 .cs-sub {
-    font-size: 0.66rem;
-    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.38);
     letter-spacing: 0.03em;
     line-height: 1;
+    font-weight: 200;
 }
 
+/* ─── Coffee Shot Chevron Arrow ─── */
+.cs-arrow {
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+    opacity: 0.45;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.cs-btn:hover .cs-arrow {
+    opacity: 0.7;
+    transform: translateX(2px);
+}
+
+/* ─── Upload & Manual Buttons (Unified Flat Cards) ─── */
 .upload-button,
 .manual-button {
     width: auto;
-    padding: 10px 20px;
-    background: linear-gradient(
-        160deg,
-        rgba(60, 32, 10, 0.35) 0%,
-        rgba(26, 26, 26, 0.95) 70%
-    );
+    padding: 12px 16px;
+    background: var(--bg-card);
     color: var(--text-primary);
-    border: 1px solid rgba(212, 165, 116, 0.2);
-    border-radius: 10px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
     font-family: 'Sora', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 300;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.03em;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 7px;
-    transition: all 0.25s ease;
+    transition: border-color 0.2s ease;
     white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(212, 165, 116, 0.08);
+    box-shadow: none;
 }
 
 body.light-mode .upload-button,
 body.light-mode .manual-button {
-    background: linear-gradient(
-        160deg,
-        rgba(210, 175, 130, 0.1) 0%,
-        rgba(248, 248, 248, 0.95) 70%
-    );
-    border: 1px solid rgba(139, 111, 71, 0.15);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(139, 111, 71, 0.08);
+    background: #ffffff;
+    border: 1px solid var(--border);
+    box-shadow: none;
 }
 
 .upload-button:hover,
 .manual-button:hover {
-    background: linear-gradient(
-        160deg,
-        rgba(80, 44, 14, 0.45) 0%,
-        rgba(26, 26, 26, 0.95) 70%
-    );
     border-color: rgba(212, 165, 116, 0.35);
-    color: var(--accent);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(139, 90, 43, 0.15), 0 0 0 0.5px rgba(212, 165, 116, 0.12);
+    color: var(--text-primary);
+    transform: none;
+    box-shadow: none;
 }
 
 body.light-mode .upload-button:hover,
 body.light-mode .manual-button:hover {
-    background: linear-gradient(
-        160deg,
-        rgba(210, 175, 130, 0.18) 0%,
-        rgba(255, 255, 255, 0.95) 70%
-    );
     border-color: rgba(139, 111, 71, 0.35);
-    box-shadow: 0 4px 14px rgba(139, 90, 43, 0.08), 0 0 0 0.5px rgba(139, 111, 71, 0.12);
+    box-shadow: none;
 }
 
 .upload-button:disabled,
@@ -351,22 +356,26 @@ body.light-mode .manual-button:hover {
 }
 
 .button-icon {
-    width: 15px;
-    height: 15px;
-    stroke: currentColor;
+    width: 14px;
+    height: 14px;
+    stroke: var(--accent);
     stroke-width: 1.4;
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
     flex-shrink: 0;
+    opacity: 0.6;
 }
 
 .action-buttons .btn svg {
-    width: 13px !important;
-    height: 13px !important;
-    min-width: 13px !important;
-    min-height: 13px !important;
-    stroke-width: 1.3 !important; 
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+    stroke: var(--accent) !important;
+    stroke-width: 1.4 !important;
+    fill: none !important;
+    opacity: 0.6;
     margin: 0 !important;
     display: inline-block;
     vertical-align: middle;
@@ -468,30 +477,29 @@ button:hover {
 /* ── Chip Row ── */
 .brew-chip-row {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     width: 100%;
     max-width: 540px;
     justify-content: center;
 }
 
-/* ── Chip Group (label + chip) ── */
+/* ── Chip Group (smart card) ── */
 .brew-chip-group {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0;
     min-width: 0;
 }
 
 .brew-chip-group-label {
     font-family: 'Sora', sans-serif;
-    font-size: 0.62rem;
+    font-size: 0.56rem;
     font-weight: 200;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     color: var(--accent);
-    text-align: left;
-    padding-left: 0.3rem;
+    opacity: 0.7;
 }
 
 .brew-chip-group:first-child {
@@ -504,15 +512,23 @@ button:hover {
     min-width: 118px;
 }
 
-/* ── Individual Chip (tappable) ── */
+/* ── Smart Card Inner ── */
+.brew-chip-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+/* ── Individual Chip (tappable smart card) ── */
 .brew-chip {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 9px 14px;
+    padding: 10px 14px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 14px;
     cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
     min-width: 0;
@@ -525,11 +541,11 @@ button:hover {
 }
 
 .brew-chip:hover {
-    border-color: rgba(212, 165, 116, 0.35);
+    border-color: rgba(212, 165, 116, 0.3);
 }
 
 .brew-chip-label {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 300;
     color: var(--text-primary);
     white-space: nowrap;
@@ -539,17 +555,16 @@ button:hover {
 }
 
 #grinder-chip .brew-chip-label {
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 #method-chip .brew-chip-label {
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-right: 2px;
 }
 
 .brew-chip-caret {
@@ -557,13 +572,13 @@ button:hover {
     height: 10px;
     flex-shrink: 0;
     color: var(--accent);
-    opacity: 0.5;
+    opacity: 0.45;
     margin-left: auto;
 }
 
 body.light-mode .brew-chip {
     background: #ffffff;
-    border-color: rgba(139, 100, 60, 0.15);
+    border-color: var(--border);
 }
 
 body.light-mode .brew-chip:hover {
@@ -2221,8 +2236,8 @@ body.light-mode .onboarding-icon {
     .upload-button,
     .manual-button {
         width: auto;
-        padding: 9px 16px;
-        font-size: 0.76rem;
+        padding: 10px 14px;
+        font-size: 0.74rem;
     }
 
     .empty-state {
@@ -2254,12 +2269,12 @@ body.light-mode .onboarding-icon {
     }
 
     .brew-chip {
-        padding: 8px 12px;
+        padding: 9px 12px;
         gap: 6px;
     }
 
     .brew-chip-label {
-        font-size: 0.78rem;
+        font-size: 0.74rem;
     }
 
     .picker-option {
@@ -2285,7 +2300,7 @@ body.light-mode .onboarding-icon {
     }
 
     #method-chip .brew-chip-label {
-        font-size: 0.75rem;
+        font-size: 0.71rem;
     }
 
     .param-grid {
@@ -2391,11 +2406,11 @@ body.light-mode .onboarding-icon {
     }
 
     .brew-chip-label {
-        font-size: 0.74rem;
+        font-size: 0.7rem;
     }
 
     .brew-chip {
-        padding: 7px 10px;
+        padding: 8px 10px;
     }
 
     .picker-option-detail {
@@ -2403,7 +2418,7 @@ body.light-mode .onboarding-icon {
     }
 
     .brew-chip-group-label {
-        font-size: 0.56rem;
+        font-size: 0.52rem;
     }
 }
 
