@@ -1228,14 +1228,14 @@ body.light-mode .water-hardness-badge {
 }
 
 .adjust-btn {
-    width: 29px;
-    height: 29px;
+    width: 30px;
+    height: 30px;
     padding: 0;
     background: transparent;
     color: var(--accent);
     border: 1px solid var(--accent);
-    border-radius: 50%;
-    font-size: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -1598,7 +1598,7 @@ body.light-mode .step-progress-bar {
 .feedback-slider-track-layer {
     position: relative;
     height: 18px;
-    width: 87%;
+    width: 96%;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -1611,7 +1611,7 @@ body.light-mode .step-progress-bar {
     left: 0;
     right: 0;
     top: 50%;
-    height: 2.4px;
+    height: 1.6px;
     border-radius: 999px;
     background: var(--accent);
     transform: translateY(-50%);
@@ -1626,21 +1626,21 @@ body.light-mode .step-progress-bar {
     height: 18px;
     background: transparent;
     outline: none;
-    cursor: default;
-    pointer-events: none;
+    cursor: ew-resize;
+    pointer-events: all;
     position: relative;
     z-index: 3;
 }
 
 .feedback-slider::-webkit-slider-runnable-track {
-    height: 2.4px;
+    height: 1.6px;
     border-radius: 999px;
     background: transparent;
     pointer-events: none;
 }
 
 .feedback-slider::-moz-range-track {
-    height: 2.4px;
+    height: 1.6px;
     border-radius: 999px;
     background: transparent;
     pointer-events: none;
@@ -1660,6 +1660,9 @@ body.light-mode .step-progress-bar {
     touch-action: none;
 }
 
+.feedback-slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
+}
 .feedback-slider::-moz-range-thumb {
     width: 18px;
     height: 18px;
@@ -1669,6 +1672,10 @@ body.light-mode .step-progress-bar {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
     pointer-events: all;
     cursor: grab;
+}
+
+.feedback-slider::-moz-range-thumb:active {
+    cursor: grabbing;
 }
 
 .feedback-slider-marks {
@@ -1705,7 +1712,7 @@ body.light-mode .step-progress-bar {
 }
 
 .feedback-slider-labels {
-    width: 87%;
+    width: 96%;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2317,9 +2324,9 @@ body.light-mode .onboarding-icon {
     }
 
     .adjust-btn {
-        width: 26px;
-        height: 26px;
-        font-size: 0.75rem;
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
     }
 
     .timer-display {

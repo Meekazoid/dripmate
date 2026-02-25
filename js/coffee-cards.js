@@ -154,13 +154,13 @@ export function renderCoffeeCard(coffee, index) {
                         ['body', 'Body', ['tea-like', 'balanced', 'heavy']]
                     ].map(([key, label, scaleLabels]) => {
                         const currentValue = coffee.feedback?.[key] || 'balanced';
-                        const sliderValue = currentValue === 'low' ? 0 : currentValue === 'high' ? 2 : 1;
+                        const sliderValue = currentValue === 'low' ? 0 : currentValue === 'high' ? 100 : 50;
                         return `
                             <div class="feedback-group">
                                 <div class="feedback-label">${label}</div>
                                 <div class="feedback-scale-wrap">
                                     <div class="feedback-slider-track-layer">
-                                        <input class="feedback-slider" type="range" min="0" max="2" step="1" value="${sliderValue}"
+                                        <input class="feedback-slider" type="range" min="0" max="100" step="1" value="${sliderValue}"
                                             aria-label="${label} rating"
                                             data-feedback-slider="${index}-${key}"
                                             oninput="event.stopPropagation(); updateFeedbackSlider(${index}, '${key}', this.value);"

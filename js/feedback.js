@@ -57,15 +57,16 @@ function clearSuggestionHideTimer(index) {
 }
 
 function sliderValueToFeedback(value) {
-    if (Number(value) <= 0) return 'low';
-    if (Number(value) >= 2) return 'high';
+    const numeric = Number(value);
+    if (numeric <= 33) return 'low';
+    if (numeric >= 67) return 'high';
     return 'balanced';
 }
 
 function feedbackToSliderValue(value) {
     if (value === 'low') return '0';
-    if (value === 'high') return '2';
-    return '1';
+    if (value === 'high') return '100';
+    return '50';
 }
 
 export function updateFeedbackSlider(index, category, sliderValue) {
@@ -77,6 +78,8 @@ export function updateFeedbackSlider(index, category, sliderValue) {
 export function selectFeedback(index, category, value) {
     const coffee = coffees[index];
     if (!coffee.feedback) coffee.feedback = {};
+
+    const previousValue = coffee.feedback[category];
     coffee.feedback[category] = value;
 
     document.querySelectorAll(`[data-feedback="${index}-${category}"]`).forEach(opt => {
@@ -85,6 +88,8 @@ export function selectFeedback(index, category, value) {
 
     const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${category}"]`);
     if (sliderEl) sliderEl.value = feedbackToSliderValue(value);
+
+    if (previousValue === value) return;
 
     generateSuggestion(index);
     localStorage.setItem('coffees', JSON.stringify(coffees));
