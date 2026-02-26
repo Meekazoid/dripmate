@@ -241,16 +241,16 @@ h1 {
     width: 100%;
     background: linear-gradient(135deg, #5c3a1e 0%, #3d2410 55%, #2e1a0c 100%);
     border: 1px solid rgba(180, 120, 60, 0.25);
-    border-left: 3px solid var(--accent);
-    border-right: 3px solid var(--accent);
+    border-left: 2px solid var(--accent);
+    border-right: 2px solid var(--accent);
     border-radius: 14px;
 }
 
 body.light-mode .cs-content {
     background: linear-gradient(135deg, #7a4a22 0%, #5c3318 55%, #4a2810 100%);
     border-color: rgba(200, 140, 70, 0.3);
-    border-left: 3px solid var(--accent);
-    border-right: 3px solid var(--accent);
+    border-left: 2px solid var(--accent);
+    border-right: 2px solid var(--accent);
 }
 
 body.light-mode .add-section {
@@ -259,16 +259,22 @@ body.light-mode .add-section {
 
 .cs-icon-wrap {
     flex-shrink: 0;
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .cs-viewfinder {
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
+}
+
+.cs-bag {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(1.15);
 }
 
 /* Chevron arrows in the Coffee Shot icon — accent color */
@@ -276,6 +282,11 @@ body.light-mode .add-section {
     color: var(--accent);
     opacity: 0.88;
 }
+
+.cs-chevrons path:nth-child(1) { transform: translateY(-2px); }
+.cs-chevrons path:nth-child(2) { transform: translateY(2px); }
+.cs-chevrons path:nth-child(3) { transform: translateX(-2px); }
+.cs-chevrons path:nth-child(4) { transform: translateX(2px); }
 
 .cs-text {
     display: flex;
@@ -767,7 +778,7 @@ body.light-mode .picker-option.active {
         var(--bg-secondary) 55%
     );
     border: 1px solid var(--border);
-    border-left: 2px solid var(--accent);
+    border-left: 1.5px solid var(--accent);
     border-radius: 16px;
     padding: 24px;
     cursor: pointer;
@@ -1136,11 +1147,13 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 
 .roast-date-placeholder {
     position: absolute;
-    left: 10px;
+    left: 50%;
     top: 50%;
-    transform: translateY(-50%);
+    width: calc(100% - 26px);
+    transform: translate(-50%, -50%);
+    text-align: center;
     font-size: 0.72rem;
-    color: color-mix(in srgb, var(--text-secondary) 28%, transparent 72%);
+    color: color-mix(in srgb, var(--text-secondary) 48%, transparent 52%);
     pointer-events: none;
     opacity: 1;
     transition: opacity 0.15s ease;

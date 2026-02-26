@@ -75,6 +75,11 @@ export function updateFeedbackSlider(index, category, sliderValue) {
 }
 
 
+export function snapFeedbackSlider(index, category, sliderValue) {
+    const value = sliderValueToFeedback(sliderValue);
+    selectFeedback(index, category, value, true);
+}
+
 export function selectFeedback(index, category, value, syncSlider = true) {
     const coffee = coffees[index];
     if (!coffee.feedback) coffee.feedback = {};
@@ -88,8 +93,6 @@ export function selectFeedback(index, category, value, syncSlider = true) {
 
     const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${category}"]`);
     if (sliderEl && syncSlider) sliderEl.value = feedbackToSliderValue(value);
-
-    if (previousValue === value) return;
 
     if (previousValue === value) return;
 
@@ -493,6 +496,7 @@ export function migrateCoffeesInitialValues() {
 // Register functions on window for onclick handlers
 window.selectFeedback = selectFeedback;
 window.updateFeedbackSlider = updateFeedbackSlider;
+window.snapFeedbackSlider = snapFeedbackSlider;
 window.applySuggestion = applySuggestion;
 window.adjustGrindManual = adjustGrindManual;
 window.adjustTempManual = adjustTempManual;
