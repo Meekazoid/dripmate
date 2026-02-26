@@ -167,6 +167,7 @@ export function renderCoffeeCard(coffee, index) {
                                             aria-label="${label} rating"
                                             data-feedback-slider="${index}-${key}"
                                             oninput="event.stopPropagation(); updateFeedbackSlider(${index}, '${key}', this.value);"
+                                            onchange="event.stopPropagation(); snapFeedbackSlider(${index}, '${key}', this);"
                                             onclick="event.stopPropagation();">
                                         <div class="feedback-slider-marks" aria-hidden="true">
                                             <span class="feedback-slider-mark"></span>

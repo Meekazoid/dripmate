@@ -74,6 +74,13 @@ export function updateFeedbackSlider(index, category, sliderValue) {
     selectFeedback(index, category, value, false);
 }
 
+export function snapFeedbackSlider(index, category, sliderEl) {
+    if (!sliderEl) return;
+    const snappedValue = feedbackToSliderValue(sliderValueToFeedback(sliderEl.value));
+    sliderEl.value = snappedValue;
+    updateFeedbackSlider(index, category, snappedValue);
+}
+
 
 export function selectFeedback(index, category, value, syncSlider = true) {
     const coffee = coffees[index];
@@ -493,6 +500,7 @@ export function migrateCoffeesInitialValues() {
 // Register functions on window for onclick handlers
 window.selectFeedback = selectFeedback;
 window.updateFeedbackSlider = updateFeedbackSlider;
+window.snapFeedbackSlider = snapFeedbackSlider;
 window.applySuggestion = applySuggestion;
 window.adjustGrindManual = adjustGrindManual;
 window.adjustTempManual = adjustTempManual;

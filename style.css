@@ -247,10 +247,19 @@ h1 {
 }
 
 body.light-mode .cs-content {
-    background: linear-gradient(135deg, #7a4a22 0%, #5c3318 55%, #4a2810 100%);
-    border-color: rgba(200, 140, 70, 0.3);
-    border-left: 3px solid var(--accent);
-    border-right: 3px solid var(--accent);
+    background: linear-gradient(135deg, #8a5a2b 0%, #6b3e1e 55%, #573014 100%);
+    border-color: rgba(182, 125, 62, 0.42);
+    border-left: 3px solid #b58752;
+    border-right: 3px solid #b58752;
+}
+
+body.light-mode .cs-chevrons {
+    color: #b58752;
+    opacity: 0.96;
+}
+
+body.light-mode .cs-sub {
+    color: rgba(248, 223, 186, 0.86);
 }
 
 body.light-mode .add-section {
@@ -269,6 +278,12 @@ body.light-mode .add-section {
 .cs-viewfinder {
     width: 42px;
     height: 42px;
+}
+
+.cs-bag {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(1.15);
 }
 
 /* Chevron arrows in the Coffee Shot icon — accent color */
@@ -581,6 +596,11 @@ body.light-mode .brew-chip:hover {
     border-color: rgba(139, 100, 60, 0.3);
 }
 
+body.light-mode .brew-chip-group-label {
+    color: #9c6f3f;
+    opacity: 0.9;
+}
+
 /* ── Picker List (inside modal) ── */
 .picker-list {
     display: flex;
@@ -767,7 +787,7 @@ body.light-mode .picker-option.active {
         var(--bg-secondary) 55%
     );
     border: 1px solid var(--border);
-    border-left: 2px solid var(--accent);
+    border-left: 1.5px solid var(--accent);
     border-radius: 16px;
     padding: 24px;
     cursor: pointer;
@@ -1086,6 +1106,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 .roast-date-input-wrapper {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 
@@ -1093,7 +1114,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
     position: relative;
     width: 100%;
     min-width: 148px;
-    max-width: 172px;
+    max-width: 186px;
 }
 
 .roast-icon {
@@ -1108,7 +1129,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 }
 
 .roast-label {
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     font-weight: 500;
     color: var(--text-secondary);
     flex-shrink: 0;
@@ -1117,7 +1138,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 .roast-date-input {
     width: 100%;
     height: 30px;
-    padding: 4px 8px;
+    padding: 4px 26px 4px 10px;
     background: var(--bg-secondary);
     border: 1px solid color-mix(in srgb, var(--border) 80%, transparent 20%);
     border-radius: 8px;
@@ -1125,6 +1146,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
     font-size: 0.74rem;
     font-family: inherit;
     line-height: 1;
+    text-align: center;
     transition: all 0.2s;
     cursor: pointer;
 }
@@ -1136,11 +1158,11 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 
 .roast-date-placeholder {
     position: absolute;
-    left: 10px;
+    left: 50%;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
     font-size: 0.72rem;
-    color: color-mix(in srgb, var(--text-secondary) 28%, transparent 72%);
+    color: color-mix(in srgb, var(--text-secondary) 58%, transparent 42%);
     pointer-events: none;
     opacity: 1;
     transition: opacity 0.15s ease;
@@ -1155,6 +1177,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 .roast-date-input::-webkit-calendar-picker-indicator {
     cursor: pointer;
     filter: invert(0.5);
+    margin-right: 4px;
 }
 
 body.light-mode .roast-date-input::-webkit-calendar-picker-indicator {
