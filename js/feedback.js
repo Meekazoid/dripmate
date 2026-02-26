@@ -57,26 +57,34 @@ function clearSuggestionHideTimer(index) {
 }
 
 function sliderValueToFeedback(value) {
-    if (Number(value) <= 0) return 'low';
-    if (Number(value) >= 2) return 'high';
+    const numeric = Number(value);
+    if (numeric <= 33) return 'low';
+    if (numeric >= 67) return 'high';
     return 'balanced';
 }
 
 function feedbackToSliderValue(value) {
     if (value === 'low') return '0';
-    if (value === 'high') return '2';
-    return '1';
+    if (value === 'high') return '100';
+    return '50';
 }
 
 export function updateFeedbackSlider(index, category, sliderValue) {
     const value = sliderValueToFeedback(sliderValue);
-    selectFeedback(index, category, value);
+    selectFeedback(index, category, value, false);
 }
 
 
-export function selectFeedback(index, category, value) {
+export function snapFeedbackSlider(index, category, sliderValue) {
+    const value = sliderValueToFeedback(sliderValue);
+    selectFeedback(index, category, value, true);
+}
+
+export function selectFeedback(index, category, value, syncSlider = true) {
     const coffee = coffees[index];
     if (!coffee.feedback) coffee.feedback = {};
+
+    const previousValue = coffee.feedback[category];
     coffee.feedback[category] = value;
 
     document.querySelectorAll(`[data-feedback="${index}-${category}"]`).forEach(opt => {
@@ -84,7 +92,9 @@ export function selectFeedback(index, category, value) {
     });
 
     const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${category}"]`);
-    if (sliderEl) sliderEl.value = feedbackToSliderValue(value);
+    if (sliderEl && syncSlider) sliderEl.value = feedbackToSliderValue(value);
+
+    if (previousValue === value) return;
 
     generateSuggestion(index);
     localStorage.setItem('coffees', JSON.stringify(coffees));
@@ -486,6 +496,7 @@ export function migrateCoffeesInitialValues() {
 // Register functions on window for onclick handlers
 window.selectFeedback = selectFeedback;
 window.updateFeedbackSlider = updateFeedbackSlider;
+window.snapFeedbackSlider = snapFeedbackSlider;
 window.applySuggestion = applySuggestion;
 window.adjustGrindManual = adjustGrindManual;
 window.adjustTempManual = adjustTempManual;
