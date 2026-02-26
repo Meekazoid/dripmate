@@ -1142,7 +1142,11 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 .roast-date-input {
     width: 100%;
     height: 30px;
+<<<<<<< codex/style-buttons-and-improve-slider-in-coffecard-qish7b
+    padding: 4px 34px 4px 12px;
+=======
     padding: 4px 28px 4px 10px;
+>>>>>>> main
     background: var(--bg-secondary);
     border: 1px solid color-mix(in srgb, var(--border) 80%, transparent 20%);
     border-radius: 8px;
@@ -1153,6 +1157,10 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
     transition: all 0.2s;
     cursor: pointer;
     text-align: center;
+<<<<<<< codex/style-buttons-and-improve-slider-in-coffecard-qish7b
+    text-align-last: center;
+=======
+>>>>>>> main
 }
 
 .roast-date-input::-webkit-datetime-edit {
@@ -1193,7 +1201,11 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 .roast-date-input::-webkit-calendar-picker-indicator {
     cursor: pointer;
     filter: invert(0.5);
+<<<<<<< codex/style-buttons-and-improve-slider-in-coffecard-qish7b
+    margin-right: 8px;
+=======
     margin-right: 4px;
+>>>>>>> main
 }
 
 .roast-date-input::-moz-focus-inner {
