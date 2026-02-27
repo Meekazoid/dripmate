@@ -109,8 +109,8 @@ export function renderCoffeeCard(coffee, index) {
                         <div class="param-value-row">
                             <div class="param-value" id="grind-value-${index}">${brewParams.grindSetting}</div>
                             <div class="param-adjust">
-                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1, this);">−</button>
-                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustGrindManual(${index}, 1, this);">+</button>
+                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1);">−</button>
+                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustGrindManual(${index}, 1);">+</button>
                             </div>
                         </div>
                     </div>
@@ -119,8 +119,8 @@ export function renderCoffeeCard(coffee, index) {
                         <div class="param-value-row">
                             <div class="param-value" id="temp-value-${index}">${brewParams.temperature}</div>
                             <div class="param-adjust">
-                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustTempManual(${index}, -1, this);">−</button>
-                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustTempManual(${index}, 1, this);">+</button>
+                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustTempManual(${index}, -1);">−</button>
+                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustTempManual(${index}, 1);">+</button>
                             </div>
                         </div>
                     </div>
@@ -142,8 +142,8 @@ export function renderCoffeeCard(coffee, index) {
                         </button>
                     </div>
                     <div class="timer-controls-secondary">
-                        <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="event.stopPropagation(); pauseBrewTimer(${index}, this);" disabled>Pause</button>
-                        <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index}, this);" disabled>Reset</button>
+                        <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="event.stopPropagation(); pauseBrewTimer(${index});" disabled>Pause</button>
+                        <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index});" disabled>Reset</button>
                     </div>
                 </div>
                 

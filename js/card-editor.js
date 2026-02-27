@@ -4,7 +4,6 @@
 // ==========================================
 
 import { coffees, saveCoffeesAndSync, sanitizeHTML } from './state.js';
-import { flashClass } from './ui-flash.js';
 
 const BACKEND_URL = 'https://dripmate-backend-production.up.railway.app';
 
@@ -119,11 +118,7 @@ async function saveEdits(index, card) {
     if (iconEl) iconEl.innerHTML = PENCIL_SVG;
 
     const btnEl = document.getElementById(`edit-btn-${index}`);
-    if (btnEl) {
-        btnEl.classList.remove('editing');
-        // Brief golden confirmation flash — pencil just returned after a save
-        flashClass(btnEl, 'edit-confirmed', 600);
-    }
+    if (btnEl) btnEl.classList.remove('editing');
 
     // Replace inputs with display elements
     replaceInputWithDisplay(
