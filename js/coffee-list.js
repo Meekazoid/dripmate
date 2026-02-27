@@ -6,6 +6,7 @@
 import { coffees, saveCoffeesAndSync } from './state.js';
 import { renderCoffeeCard } from './coffee-cards.js';
 import { getBrewRecommendations } from './brew-engine.js';
+import { initFeedbackSliderVisuals } from './feedback.js';
 
 function showCompostConfirmModal() {
     const modal = document.getElementById('compostConfirmModal');
@@ -118,6 +119,7 @@ export function renderCoffees(expandAfterIndex) {
     });
 
     listEl.innerHTML = sorted.map(item => renderCoffeeCard(item.coffee, item.originalIndex)).join('');
+    initFeedbackSliderVisuals(listEl);
 
     // Re-expand card if requested (e.g. after reset adjustments)
     if (expandAfterIndex !== undefined) {
