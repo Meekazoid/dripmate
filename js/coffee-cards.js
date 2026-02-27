@@ -10,6 +10,32 @@ import { ensureInitialValues } from './feedback.js';
 import './brew-timer.js';
 import './card-editor.js';
 
+let pressedStateBound = false;
+
+export function autoResetPressedState(el, delay = 150) {
+    if (!el) return;
+    el.classList.add('is-pressed');
+    setTimeout(() => {
+        el.classList.remove('is-pressed');
+        if (typeof el.blur === 'function') el.blur();
+    }, delay);
+}
+
+export function initPressedStateInteractions() {
+    if (pressedStateBound) return;
+    pressedStateBound = true;
+
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .edit-btn');
+        if (!btn) return;
+
+        if (btn.classList.contains('edit-btn') && btn.classList.contains('editing')) return;
+        if (btn.classList.contains('timer-btn-secondary') && btn.id.startsWith('pause-brew-') && btn.textContent.trim() !== 'Resume') return;
+
+        autoResetPressedState(btn);
+    });
+}
+
 export function renderCoffeeCard(coffee, index) {
     ensureInitialValues(coffee);
     const brewParams = getBrewRecommendations(coffee);
@@ -109,8 +135,8 @@ export function renderCoffeeCard(coffee, index) {
                         <div class="param-value-row">
                             <div class="param-value" id="grind-value-${index}">${brewParams.grindSetting}</div>
                             <div class="param-adjust">
-                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1);">−</button>
-                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustGrindManual(${index}, 1);">+</button>
+                                <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1);">−</button>
+                                <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, 1);">+</button>
                             </div>
                         </div>
                     </div>
@@ -119,8 +145,8 @@ export function renderCoffeeCard(coffee, index) {
                         <div class="param-value-row">
                             <div class="param-value" id="temp-value-${index}">${brewParams.temperature}</div>
                             <div class="param-adjust">
-                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustTempManual(${index}, -1);">−</button>
-                                <button class="adjust-btn" onclick="event.stopPropagation(); adjustTempManual(${index}, 1);">+</button>
+                                <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, -1);">−</button>
+                                <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, 1);">+</button>
                             </div>
                         </div>
                     </div>
@@ -178,10 +204,7 @@ export function renderCoffeeCard(coffee, index) {
                                     <div class="feedback-slider-track-layer">
                                         <input class="feedback-slider" type="range" min="0" max="100" step="1" value="${sliderValue}"
                                             aria-label="${label} rating"
-                                            data-feedback-slider="${index}-${key}"
-                                            oninput="event.stopPropagation(); updateFeedbackSlider(${index}, '${key}', this.value);"
-                                            onchange="event.stopPropagation(); snapFeedbackSlider(${index}, '${key}', this);"
-                                            onclick="event.stopPropagation();">
+                                            data-feedback-slider="${index}-${key}">
                                         <div class="feedback-slider-marks" aria-hidden="true">
                                             <span class="feedback-slider-mark"></span>
                                             <span class="feedback-slider-mark"></span>

@@ -40,7 +40,7 @@ export function startBrewTimer(index) {
     const resetBtn = document.getElementById(`reset-brew-${index}`);
 
     if (startBtn) { startBtn.textContent = 'Brewing...'; startBtn.classList.add('brewing'); startBtn.disabled = true; }
-    if (pauseBtn) pauseBtn.disabled = false;
+    if (pauseBtn) { pauseBtn.disabled = false; pauseBtn.classList.remove('resume-active'); }
     if (resetBtn) resetBtn.disabled = false;
 
     // Smooth scroll to pour-over steps
@@ -68,14 +68,14 @@ export function pauseBrewTimer(index) {
         timer.isRunning = true;
         updateBrewProgress(index);
         const pauseBtn = document.getElementById(`pause-brew-${index}`);
-        if (pauseBtn) pauseBtn.textContent = 'Pause';
+        if (pauseBtn) { pauseBtn.textContent = 'Pause'; pauseBtn.classList.remove('resume-active'); }
     } else {
         timer.pausedAt = performance.now() - timer.startTime;
         timer.isPaused = true;
         timer.isRunning = false;
         if (animationFrames[index]) cancelAnimationFrame(animationFrames[index]);
         const pauseBtn = document.getElementById(`pause-brew-${index}`);
-        if (pauseBtn) pauseBtn.textContent = 'Resume';
+        if (pauseBtn) { pauseBtn.textContent = 'Resume'; pauseBtn.classList.add('resume-active'); }
     }
 }
 
@@ -99,7 +99,7 @@ export function resetBrewTimer(index) {
     const resetBtn = document.getElementById(`reset-brew-${index}`);
 
     if (startBtn) { startBtn.textContent = 'Start Brew'; startBtn.classList.remove('brewing'); startBtn.disabled = false; }
-    if (pauseBtn) { pauseBtn.textContent = 'Pause'; pauseBtn.disabled = true; }
+    if (pauseBtn) { pauseBtn.textContent = 'Pause'; pauseBtn.disabled = true; pauseBtn.classList.remove('resume-active'); }
     if (resetBtn) resetBtn.disabled = true;
 
     delete brewTimers[index];
