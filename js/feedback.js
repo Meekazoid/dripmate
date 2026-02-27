@@ -29,6 +29,7 @@ export function initFeedbackSliderInteractions() {
 
         const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
         if (index === undefined || !category) return;
+        updateSliderVisual(slider);
         updateFeedbackSlider(Number(index), category, slider.value);
     });
 
@@ -42,7 +43,8 @@ export function initFeedbackSliderInteractions() {
 
         const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
         if (index === undefined || !category) return;
-        snapFeedbackSlider(Number(index), category, slider);
+        updateSliderVisual(slider);
+        updateFeedbackSlider(Number(index), category, slider.value);
     });
 
     document.addEventListener('touchstart', (event) => {
@@ -51,12 +53,12 @@ export function initFeedbackSliderInteractions() {
 
         const touch = event.touches[0];
         const rect = slider.getBoundingClientRect();
-        const thumbSize = 24;
+        const thumbHitSize = 64;
         const min = Number(slider.min || 0);
         const max = Number(slider.max || 100);
         const ratio = (Number(slider.value) - min) / (max - min || 1);
         const thumbCenterX = rect.left + (ratio * rect.width);
-        const startsOnThumb = Math.abs(touch.clientX - thumbCenterX) <= thumbSize / 2;
+        const startsOnThumb = Math.abs(touch.clientX - thumbCenterX) <= thumbHitSize / 2;
 
         feedbackTouchState.set(slider, {
             touchActive: true,
@@ -98,6 +100,7 @@ export function initFeedbackSliderInteractions() {
             state.horizontalCommitted = true;
             const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
             if (index !== undefined && category) {
+                updateSliderVisual(slider);
                 updateFeedbackSlider(Number(index), category, slider.value);
             }
         }
@@ -113,10 +116,12 @@ export function initFeedbackSliderInteractions() {
         if (state.horizontalCommitted && !state.cancelled) {
             const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
             if (index !== undefined && category) {
-                snapFeedbackSlider(Number(index), category, slider);
+                updateSliderVisual(slider);
+                updateFeedbackSlider(Number(index), category, slider.value);
             }
         } else {
             slider.value = state.startValue;
+            updateSliderVisual(slider);
         }
 
         feedbackTouchState.delete(slider);
@@ -126,9 +131,29 @@ export function initFeedbackSliderInteractions() {
         const slider = event.target.closest('.feedback-slider');
         if (!slider) return;
         const state = feedbackTouchState.get(slider);
-        if (state) slider.value = state.startValue;
+        if (state) {
+            slider.value = state.startValue;
+            updateSliderVisual(slider);
+        }
         feedbackTouchState.delete(slider);
     });
+}
+
+function sliderProgressPercent(sliderEl) {
+    const min = Number(sliderEl.min || 0);
+    const max = Number(sliderEl.max || 100);
+    const value = Number(sliderEl.value || min);
+    const ratio = (value - min) / (max - min || 1);
+    return Math.min(100, Math.max(0, ratio * 100));
+}
+
+function updateSliderVisual(sliderEl) {
+    if (!sliderEl) return;
+    sliderEl.style.setProperty('--feedback-progress', `${sliderProgressPercent(sliderEl)}%`);
+}
+
+export function initFeedbackSliderVisuals(root = document) {
+    root.querySelectorAll('.feedback-slider').forEach(updateSliderVisual);
 }
 
 function showResetAdjustmentsConfirmModal() {
@@ -181,8 +206,8 @@ function clearSuggestionHideTimer(index) {
 
 function sliderValueToFeedback(value) {
     const numeric = Number(value);
-    if (numeric <= 33) return 'low';
-    if (numeric >= 67) return 'high';
+    if (numeric <= 20) return 'low';
+    if (numeric >= 80) return 'high';
     return 'balanced';
 }
 
@@ -201,6 +226,7 @@ export function snapFeedbackSlider(index, category, sliderEl) {
     if (!sliderEl) return;
     const snappedValue = feedbackToSliderValue(sliderValueToFeedback(sliderEl.value));
     sliderEl.value = snappedValue;
+    updateSliderVisual(sliderEl);
     updateFeedbackSlider(index, category, snappedValue);
 }
 
@@ -217,9 +243,10 @@ export function selectFeedback(index, category, value, syncSlider = true) {
     });
 
     const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${category}"]`);
-    if (sliderEl && syncSlider) sliderEl.value = feedbackToSliderValue(value);
-
-    if (previousValue === value) return;
+    if (sliderEl && syncSlider) {
+        sliderEl.value = feedbackToSliderValue(value);
+        updateSliderVisual(sliderEl);
+    }
 
     if (previousValue === value) return;
 

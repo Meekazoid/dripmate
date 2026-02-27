@@ -205,11 +205,6 @@ export function renderCoffeeCard(coffee, index) {
                                         <input class="feedback-slider" type="range" min="0" max="100" step="1" value="${sliderValue}"
                                             aria-label="${label} rating"
                                             data-feedback-slider="${index}-${key}">
-                                        <div class="feedback-slider-marks" aria-hidden="true">
-                                            <span class="feedback-slider-mark"></span>
-                                            <span class="feedback-slider-mark"></span>
-                                            <span class="feedback-slider-mark"></span>
-                                        </div>
                                     </div>
                                     <div class="feedback-slider-labels" aria-hidden="true">
                                         <span>${scaleLabels[0]}</span>
