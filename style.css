@@ -1827,8 +1827,8 @@ body.light-mode .step-progress-bar {
 
 .adjust-btn:active {
     background: transparent;
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: #ffffff;
+    color: #ffffff;
 }
 
 .timer-btn-secondary:active {
@@ -1852,6 +1852,14 @@ body.light-mode .step-progress-bar {
 
 .adjust-btn.is-pressed {
     background: transparent !important;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+}
+
+body.light-mode .adjust-btn:active,
+body.light-mode .adjust-btn.is-pressed {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
 }
 
 .timer-btn-secondary.is-pressed {
