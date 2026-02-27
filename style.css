@@ -197,7 +197,7 @@ h1 {
     display: flex;
     gap: 10px;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 0;
 }
 
 /* ─── Coffee Shot Signature Button (B2 — Accent Stripe) ─── */
@@ -380,7 +380,7 @@ body.light-mode .manual-button:hover {
 .action-buttons {
     width: 80%;
     max-width: 320px;
-    margin: 0 auto;
+    margin: 10px auto 0;
     display: flex;
     gap: 10px;
     justify-content: center;
