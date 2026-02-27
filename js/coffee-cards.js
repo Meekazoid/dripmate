@@ -15,7 +15,10 @@ let pressedStateBound = false;
 export function autoResetPressedState(el, delay = 150) {
     if (!el) return;
     el.classList.add('is-pressed');
-    setTimeout(() => el.classList.remove('is-pressed'), delay);
+    setTimeout(() => {
+        el.classList.remove('is-pressed');
+        if (typeof el.blur === 'function') el.blur();
+    }, delay);
 }
 
 export function initPressedStateInteractions() {

@@ -346,6 +346,7 @@ body.light-mode .manual-button {
 
 .upload-button:hover,
 .manual-button:hover {
+    background: var(--bg-card);
     border-color: rgba(212, 165, 116, 0.3);
     color: var(--text-primary);
     transform: none;
@@ -354,6 +355,7 @@ body.light-mode .manual-button {
 
 body.light-mode .upload-button:hover,
 body.light-mode .manual-button:hover {
+    background: #ffffff;
     border-color: rgba(139, 111, 71, 0.3);
     box-shadow: none;
 }
@@ -1369,7 +1371,7 @@ body.light-mode .water-hardness-badge {
 }
 
 .adjust-btn:hover {
-    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    background: transparent;
     color: var(--accent);
     border-color: var(--accent);
 }
@@ -2955,6 +2957,7 @@ body.light-mode .coffee-roastery {
 }
 
 .edit-btn:hover {
+    background: var(--bg-card);
     opacity: 1;
     border-color: var(--accent);
     color: var(--accent);
@@ -3050,6 +3053,14 @@ body.light-mode .coffee-card .inline-edit-input:focus {
 /* ── Edit-Button Hover-Glow im Editing-State ── */
 .edit-btn.editing:hover {
     background: rgba(76, 175, 80, 0.25);
+}
+
+body.light-mode .edit-btn:hover {
+    background: #ffffff;
+}
+
+body.light-mode .edit-btn.editing:hover {
+    background: rgba(46, 125, 50, 0.16);
 }
 
 /* ====== SETTINGS: IMPRESSUM & DATENSCHUTZ ====== */
