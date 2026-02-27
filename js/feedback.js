@@ -7,6 +7,129 @@ import { coffees, saveCoffeesAndSync, sanitizeHTML } from './state.js';
 import { getBrewRecommendations } from './brew-engine.js';
 
 const suggestionHideTimers = new Map();
+const feedbackTouchState = new WeakMap();
+let feedbackSliderEventsBound = false;
+
+export function initFeedbackSliderInteractions() {
+    if (feedbackSliderEventsBound) return;
+    feedbackSliderEventsBound = true;
+
+    document.addEventListener('click', (event) => {
+        const slider = event.target.closest('.feedback-slider');
+        if (slider) event.stopPropagation();
+    });
+
+    document.addEventListener('input', (event) => {
+        const slider = event.target.closest('.feedback-slider');
+        if (!slider) return;
+
+        event.stopPropagation();
+        const state = feedbackTouchState.get(slider);
+        if (state?.touchActive && !state.horizontalCommitted) return;
+
+        const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
+        if (index === undefined || !category) return;
+        updateFeedbackSlider(Number(index), category, slider.value);
+    });
+
+    document.addEventListener('change', (event) => {
+        const slider = event.target.closest('.feedback-slider');
+        if (!slider) return;
+
+        event.stopPropagation();
+        const state = feedbackTouchState.get(slider);
+        if (state?.touchActive && !state.horizontalCommitted) return;
+
+        const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
+        if (index === undefined || !category) return;
+        snapFeedbackSlider(Number(index), category, slider);
+    });
+
+    document.addEventListener('touchstart', (event) => {
+        const slider = event.target.closest('.feedback-slider');
+        if (!slider) return;
+
+        const touch = event.touches[0];
+        const rect = slider.getBoundingClientRect();
+        const thumbSize = 24;
+        const min = Number(slider.min || 0);
+        const max = Number(slider.max || 100);
+        const ratio = (Number(slider.value) - min) / (max - min || 1);
+        const thumbCenterX = rect.left + (ratio * rect.width);
+        const startsOnThumb = Math.abs(touch.clientX - thumbCenterX) <= thumbSize / 2;
+
+        feedbackTouchState.set(slider, {
+            touchActive: true,
+            startX: touch.clientX,
+            startY: touch.clientY,
+            startValue: slider.value,
+            startsOnThumb,
+            horizontalCommitted: false,
+            cancelled: !startsOnThumb
+        });
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (event) => {
+        const slider = event.target.closest('.feedback-slider');
+        if (!slider) return;
+
+        const state = feedbackTouchState.get(slider);
+        if (!state?.touchActive) return;
+
+        const touch = event.touches[0];
+        const deltaX = touch.clientX - state.startX;
+        const deltaY = touch.clientY - state.startY;
+        const movement = Math.hypot(deltaX, deltaY);
+
+        if (state.cancelled) {
+            slider.value = state.startValue;
+            event.preventDefault();
+            return;
+        }
+
+        if (Math.abs(deltaY) > Math.abs(deltaX) && movement > 6) {
+            state.cancelled = true;
+            slider.value = state.startValue;
+            event.preventDefault();
+            return;
+        }
+
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 8) {
+            state.horizontalCommitted = true;
+            const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
+            if (index !== undefined && category) {
+                updateFeedbackSlider(Number(index), category, slider.value);
+            }
+        }
+    }, { passive: false });
+
+    document.addEventListener('touchend', (event) => {
+        const slider = event.target.closest('.feedback-slider');
+        if (!slider) return;
+
+        const state = feedbackTouchState.get(slider);
+        if (!state) return;
+
+        if (state.horizontalCommitted && !state.cancelled) {
+            const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
+            if (index !== undefined && category) {
+                snapFeedbackSlider(Number(index), category, slider);
+            }
+        } else {
+            slider.value = state.startValue;
+        }
+
+        feedbackTouchState.delete(slider);
+    });
+
+    document.addEventListener('touchcancel', (event) => {
+        const slider = event.target.closest('.feedback-slider');
+        if (!slider) return;
+        const state = feedbackTouchState.get(slider);
+        if (state) slider.value = state.startValue;
+        feedbackTouchState.delete(slider);
+    });
+}
 
 function showResetAdjustmentsConfirmModal() {
     const modal = document.getElementById('resetAdjustmentsConfirmModal');

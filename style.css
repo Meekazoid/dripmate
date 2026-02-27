@@ -1658,6 +1658,18 @@ body.light-mode .step-progress-bar {
     border-color: var(--accent);
 }
 
+.timer-btn-secondary:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+
+.timer-btn-secondary.resume-active:hover {
+    background: var(--bg-secondary);
+    color: #22c55e;
+    border-color: #22c55e;
+}
+
 .timer-btn.active {
     background: var(--accent);
     color: white;
@@ -1755,6 +1767,7 @@ body.light-mode .step-progress-bar {
     pointer-events: all;
     position: relative;
     z-index: 3;
+    touch-action: pan-y;
 }
 
 .feedback-slider::-webkit-slider-runnable-track {
@@ -1782,7 +1795,6 @@ body.light-mode .step-progress-bar {
     margin-top: -7.8px;
     pointer-events: all;
     cursor: grab;
-    touch-action: none;
 }
 
 .feedback-slider::-webkit-slider-thumb:active {
@@ -1801,6 +1813,63 @@ body.light-mode .step-progress-bar {
 
 .feedback-slider::-moz-range-thumb:active {
     cursor: grabbing;
+}
+
+.upload-button:active,
+.manual-button:active,
+.edit-btn:not(.editing):active {
+    background: var(--bg-card);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.adjust-btn:active {
+    background: transparent;
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.timer-btn-secondary:active {
+    background: var(--bg-secondary);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.is-pressed {
+    border-color: var(--accent) !important;
+    background: inherit !important;
+}
+
+.upload-button.is-pressed,
+.manual-button.is-pressed,
+.adjust-btn.is-pressed,
+.timer-btn-secondary.is-pressed,
+.edit-btn.is-pressed {
+    color: var(--accent);
+}
+
+.adjust-btn.is-pressed {
+    background: transparent !important;
+}
+
+.timer-btn-secondary.is-pressed {
+    background: var(--bg-secondary) !important;
+}
+
+.upload-button.is-pressed,
+.manual-button.is-pressed,
+.edit-btn.is-pressed {
+    background: var(--bg-card) !important;
+}
+
+.timer-btn-secondary.resume-active {
+    color: #22c55e;
+    border-color: #22c55e;
+}
+
+.timer-btn-secondary.resume-active.is-pressed,
+.timer-btn-secondary.resume-active:active {
+    border-color: #16a34a;
 }
 
 .feedback-slider-marks {
