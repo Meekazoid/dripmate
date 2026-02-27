@@ -20,6 +20,18 @@ export function renderCoffeeCard(coffee, index) {
         ? `<div class="coffee-roastery" id="roastery-display-${index}">${sanitizeHTML(coffee.roastery)}</div>`
         : `<div class="coffee-roastery" id="roastery-display-${index}" style="display:none;"></div>`;
 
+    // Extra info lines: only render when value exists and isn't a default placeholder
+    const hasVariety = coffee.cultivar && coffee.cultivar !== 'Unknown';
+    const hasAltitude = coffee.altitude && coffee.altitude !== '1500';
+    const hasTastingNotes = coffee.tastingNotes && coffee.tastingNotes !== 'No notes';
+
+    const extraInfoHTML = (hasVariety || hasAltitude || hasTastingNotes) ? `
+                <div class="coffee-extra-info">
+                    ${hasVariety ? `<div class="coffee-extra-line"><span class="extra-label">Variety</span><span class="extra-value">${sanitizeHTML(coffee.cultivar)}</span></div>` : ''}
+                    ${hasAltitude ? `<div class="coffee-extra-line"><span class="extra-label">Altitude</span><span class="extra-value">${sanitizeHTML(coffee.altitude)} masl</span></div>` : ''}
+                    ${hasTastingNotes ? `<div class="coffee-extra-line"><span class="extra-label">Tasting Notes</span><span class="extra-value">${sanitizeHTML(coffee.tastingNotes)}</span></div>` : ''}
+                </div>` : '';
+
     return `
         <div class="coffee-card" data-original-index="${index}">
             <div class="coffee-header">
@@ -56,6 +68,7 @@ export function renderCoffeeCard(coffee, index) {
             </div>
             
             <div class="brew-params">
+                ${extraInfoHTML}
                 <div class="roast-date-section">
                     <div class="roast-date-input-wrapper">
                         <svg class="roast-icon" viewBox="0 0 24 24">
@@ -200,15 +213,6 @@ export function renderCoffeeCard(coffee, index) {
                             <span style="color: var(--text-secondary); line-height: 1.5;">${brewParams.notes}</span>
                         </div>
                     </div>
-                </div>
-                
-                ${coffee.cultivar && coffee.cultivar !== 'Unknown' ? `
-                <div style="margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem;">
-                    <strong>Variety:</strong> ${sanitizeHTML(coffee.cultivar)} | <strong>Altitude:</strong> ${sanitizeHTML(coffee.altitude)} masl
-                </div>` : ''}
-                
-                <div style="margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem;">
-                    <strong>Tasting Notes:</strong> ${sanitizeHTML(coffee.tastingNotes)}
                 </div>
             </div>
         </div>

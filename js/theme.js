@@ -20,3 +20,8 @@ export function toggleManual() {
     const manualSection = document.querySelector('.manual-section');
     manualSection.classList.toggle('hidden');
 }
+
+export function collapseManual() {
+    const manualSection = document.querySelector('.manual-section');
+    if (manualSection) manualSection.classList.add('hidden');
+}

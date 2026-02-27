@@ -4,7 +4,7 @@
 // ==========================================
 
 // Import all modules
-import { initTheme, toggleTheme, toggleManual } from './theme.js';
+import { initTheme, toggleTheme, toggleManual, collapseManual } from './theme.js';
 import { initGlobalGrinder } from './grinder.js';
 import { closeFeedbackHistory, migrateCoffeesInitialValues } from './feedback.js';
 import { renderCoffees } from './coffee-list.js';
@@ -49,11 +49,12 @@ console.log('✅ Brew timer functions attached to window:', {
     pauseBrewTimer: typeof window.pauseBrewTimer,
     resetBrewTimer: typeof window.resetBrewTimer
 });
+
 // Initialize event listeners
 function initEventListeners() {
-    // Camera & Upload
-    document.getElementById('cameraBtn').addEventListener('click', () => document.getElementById('imageInput').click());
-    document.getElementById('uploadBtn').addEventListener('click', () => document.getElementById('uploadInput').click());
+    // Camera & Upload — collapse manual entry when switching to image-based flows
+    document.getElementById('cameraBtn').addEventListener('click', () => { collapseManual(); document.getElementById('imageInput').click(); });
+    document.getElementById('uploadBtn').addEventListener('click', () => { collapseManual(); document.getElementById('uploadInput').click(); });
 
     document.getElementById('imageInput').addEventListener('change', async (e) => {
         const file = e.target.files[0];
