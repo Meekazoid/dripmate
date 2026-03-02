@@ -432,7 +432,7 @@ export async function applySuggestion(index, grindOffsetDelta, newTemp) {
     renderCoffees(index);
 }
 
-function addHistoryEntry(coffee, entry) {
+export function addHistoryEntry(coffee, entry) {
     if (!coffee.feedbackHistory) coffee.feedbackHistory = [];
     coffee.feedbackHistory.unshift(entry);
     if (coffee.feedbackHistory.length > 30) {
@@ -447,6 +447,10 @@ function formatHistoryDate(iso) {
 }
 
 function formatHistoryDelta(entry) {
+    if (entry.brewStart) {
+        return 'Brew started';
+    }
+
     if (entry.resetToInitial) {
         return 'Reset to engine baseline values';
     }
@@ -481,6 +485,8 @@ export function openFeedbackHistory(index) {
 
     if (!modal || !titleEl || !listEl || !emptyEl || !coffee) return;
 
+    modal.dataset.coffeeIndex = index;  // used by clearFeedbackHistory()
+
     titleEl.textContent = `Adjustment History · ${coffee.name || 'Coffee'}`;
 
     const history = Array.isArray(coffee.feedbackHistory) ? coffee.feedbackHistory : [];
@@ -489,18 +495,30 @@ export function openFeedbackHistory(index) {
         emptyEl.style.display = 'block';
     } else {
         emptyEl.style.display = 'none';
-        listEl.innerHTML = history.map(entry => `
+        listEl.innerHTML = history.map(entry => {
+            const dateStr = sanitizeHTML(formatHistoryDate(entry.timestamp));
+            const deltaStr = sanitizeHTML(formatHistoryDelta(entry));
+            if (entry.brewStart) {
+                return `
+            <div class="history-item history-item--brew-start">
+                <div class="history-item-top">
+                    <strong>${dateStr}</strong>
+                    <span>${deltaStr}</span>
+                </div>
+            </div>`;
+            }
+            return `
             <div class="history-item">
                 <div class="history-item-top">
-                    <strong>${sanitizeHTML(formatHistoryDate(entry.timestamp))}</strong>
-                    <span>${sanitizeHTML(formatHistoryDelta(entry))}</span>
+                    <strong>${dateStr}</strong>
+                    <span>${deltaStr}</span>
                 </div>
                 <div class="history-item-grid">
                     <div><span>Grind</span><strong>${sanitizeHTML(entry.previousGrind)} → ${sanitizeHTML(entry.newGrind)}</strong></div>
                     <div><span>Temp</span><strong>${sanitizeHTML(entry.previousTemp)} → ${sanitizeHTML(entry.newTemp)}</strong></div>
                 </div>
-            </div>
-        `).join('');
+            </div>`;
+        }).join('');
     }
 
     modal.classList.add('active');
@@ -647,6 +665,21 @@ export function migrateCoffeesInitialValues() {
     }
 }
 
+export function clearFeedbackHistory(index) {
+    const modal = document.getElementById('feedbackHistoryModal');
+    const resolvedIndex = index !== undefined ? index : Number(modal && modal.dataset.coffeeIndex);
+    if (isNaN(resolvedIndex) || !coffees[resolvedIndex]) return;
+
+    const coffee = coffees[resolvedIndex];
+    coffee.feedbackHistory = [];
+    saveCoffeesAndSync();
+
+    const listEl  = document.getElementById('feedbackHistoryList');
+    const emptyEl = document.getElementById('feedbackHistoryEmpty');
+    if (listEl)  listEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
+}
+
 // Register functions on window for onclick handlers
 window.selectFeedback = selectFeedback;
 window.updateFeedbackSlider = updateFeedbackSlider;
@@ -657,3 +690,4 @@ window.adjustTempManual = adjustTempManual;
 window.resetCoffeeAdjustments = resetCoffeeAdjustments;
 window.openFeedbackHistory = openFeedbackHistory;
 window.closeFeedbackHistory = closeFeedbackHistory;
+window.clearFeedbackHistory = clearFeedbackHistory;
