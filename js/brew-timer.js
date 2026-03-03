@@ -39,7 +39,26 @@ export function startBrewTimer(index) {
         step.duration = step.endSeconds - step.startSeconds;
     });
 
-    brewTimers[index] = { startTime: performance.now(), steps, isRunning: true, isPaused: false, brewStartedAt: brewTimers[index].brewStartedAt };
+    const brewStartedAt = Date.now();
+    brewTimers[index] = { startTime: performance.now(), steps, isRunning: true, isPaused: false, brewStartedAt };
+
+    // Automatically log history entry after 30 seconds
+    brewTimers[index].historyTimeout = setTimeout(() => {
+        const timer = brewTimers[index];
+        if (!timer || timer.historyLogged) return;
+        timer.historyLogged = true;
+        const rec = getBrewRecommendations(coffee);
+        const amount = coffee.amount || 20;
+        const method = coffee.method || rec.method || 'V60';
+        const grind = rec.grindSetting || '-';
+        const temp = coffee.customTemp || rec.temperature || '-';
+        addHistoryEntry(coffee, {
+            timestamp: new Date().toISOString(),
+            brewStart: true,
+            brewLabel: Brewed \g on \  \u203a  Grind \  \u203a  \
+        });
+        try { localStorage.setItem('coffees', JSON.stringify(coffees)); } catch(e) {}
+    }, 30000);
 
     const startBtn = document.getElementById(`start-brew-${index}`);
     const pauseBtn = document.getElementById(`pause-brew-${index}`);
@@ -89,21 +108,10 @@ export function resetBrewTimer(index) {
     const timer = brewTimers[index];
     if (!timer) return;
 
-    // Log brew to history if it ran for at least 30 seconds
-    const brewDuration = timer.brewStartedAt ? (Date.now() - timer.brewStartedAt) / 1000 : 0;
-    if (brewDuration >= 30) {
-        const coffee = coffees[index];
-        const rec = getBrewRecommendations(coffee);
-        const amount = coffee.amount || 20;
-        const method = coffee.method || rec.method || 'V60';
-        const grind = rec.grindSetting || '—';
-        const temp = coffee.customTemp || rec.temperature || '—';
-        addHistoryEntry(coffee, {
-            timestamp: new Date().toISOString(),
-            brewStart: true,
-            brewLabel: `Brewed ${amount}g on ${method}  ›  Grind ${grind}  ›  ${temp}`
-        });
-        try { localStorage.setItem('coffees', JSON.stringify(coffees)); } catch(e) {}
+    // Cancel the 30s auto-log timeout if reset fires before it triggers
+    if (timer.historyTimeout) {
+        clearTimeout(timer.historyTimeout);
+        timer.historyTimeout = null;
     }
 
     timer.isRunning = false;
