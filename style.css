@@ -807,7 +807,7 @@ body.light-mode .picker-option.active {
         var(--bg-secondary) 55%
     );
     border: 1px solid var(--border);
-    border-left: 1.1px solid var(--accent);
+    border-left: 1px solid rgba(212, 165, 116, 0.38);
     border-radius: 16px;
     padding: 24px;
     cursor: pointer;
@@ -826,6 +826,7 @@ body.light-mode .coffee-card {
         rgba(139, 90, 43, 0.025) 28%,
         var(--bg-secondary) 55%
     );
+    border-left: 1px solid rgba(139, 90, 43, 0.45);
 }
 
 .coffee-card:hover {
