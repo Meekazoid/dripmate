@@ -1164,7 +1164,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 .roast-date-input {
     width: 100%;
     height: 30px;
-    padding: 4px 26px 4px 8px;
+    padding: 4px 6px 4px 8px;
     background: var(--bg-secondary);
     border: 1px solid color-mix(in srgb, var(--border) 80%, transparent 20%);
     border-radius: 8px;
@@ -1208,12 +1208,9 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
     cursor: pointer;
     filter: invert(0.5);
     opacity: 0.7;
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
+    margin-left: 2px;
 }
 /* Was: hide icon when no date - removed, icon always visible � custom placeholder handles this state */
 
@@ -1223,8 +1220,12 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
     padding: 0;
 }
 body.light-mode .roast-date-input::-webkit-calendar-picker-indicator {
-    filter: invert(0.2);
-    opacity: 0.6;
+    cursor: pointer;
+    filter: invert(0.5);
+    opacity: 0.7;
+    width: 14px;
+    height: 14px;
+    margin-left: 2px;
 }
 
 body.light-mode .roast-date-section {
@@ -2620,11 +2621,24 @@ body.light-mode .onboarding-icon {
     }
 }
 
-/* -- Roast date: mobile centering, arrow offset, Android font -- */
+/* -- Roast date: mobile + Android Chrome fix -- */
 @media (max-width: 600px) {
     .roast-date-input-wrapper {
         justify-content: center;
     }
+
+    .roast-date-input {
+        font-size: 0.66rem;
+        min-width: 36px;
+    }
+
+    /* Android Chrome: force calendar icon visible */
+    .roast-date-input::-webkit-calendar-picker-indicator {
+        opacity: 0.8;
+        width: 18px;
+        height: 18px;
+    }
+}
 
     .roast-date-input.has-date {
         font-size: 0.66rem;
@@ -3222,20 +3236,11 @@ body.light-mode .edit-btn.editing:hover {
 }
 
 .history-timeline-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 5px 10px;
-    background: var(--bg-secondary);
-    border-radius: 8px;
-    margin-bottom: 8px;
+    display: none;
 }
 
 .history-timeline-text {
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-    flex: 1;
+    display: none;
 }
 
 .history-clear-inline-btn {
@@ -3255,4 +3260,30 @@ body.light-mode .edit-btn.editing:hover {
 
 .history-clear-inline-btn:hover {
     opacity: 1;
+}
+
+/* History infobox (replaces timeline bar) */
+.history-infobox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.history-infobox-icon {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    stroke: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.history-infobox span {
+    flex: 1;
+    line-height: 1.3;
 }

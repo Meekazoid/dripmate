@@ -444,17 +444,16 @@ export function addHistoryEntry(coffee, entry) {
 }
 
 function formatHistoryDate(iso) {
-    const date = new Date(iso);
-    if (Number.isNaN(date.getTime())) return 'Unknown date';
+    // Handle both ISO strings and legacy toLocaleString() values
+    let date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return iso || 'Unknown date';
     const dd   = String(date.getDate()).padStart(2, '0');
     const mm   = String(date.getMonth() + 1).padStart(2, '0');
     const yyyy = date.getFullYear();
     const hh   = String(date.getHours()).padStart(2, '0');
     const min  = String(date.getMinutes()).padStart(2, '0');
-    return `${dd}.${mm}.${yyyy}  ${hh}:${min}`;
-}
-
-function formatHistoryDelta(entry) {
+    return `${dd}.${mm}.${yyyy} \u00b7 ${hh}:${min}`;
+}function formatHistoryDelta(entry) {
     if (entry.brewStart) {
         return entry.brewLabel || 'Brew started';
     }
@@ -526,7 +525,6 @@ export function openFeedbackHistory(index) {
                 <div class="history-item-top">
                     <strong>${dateStr}</strong>
                 </div>
-                <div class="history-item-delta">${deltaStr}</div>
                 ${grid}
             </div>`;
         }).join('');
