@@ -691,13 +691,13 @@ export function openClearHistoryConfirm() {
     // Index merken und History-Modal schließen
     const idx = historyModal && historyModal.dataset.coffeeIndex;
     confirmModal.dataset.coffeeIndex = idx;
-    if (historyModal) historyModal.style.display = "none";
-    confirmModal.style.display = "flex";
+    if (historyModal) historyModal.classList.remove("active");
+    confirmModal.classList.add("active");
 }
 
 export function closeClearHistoryConfirm() {
     const confirmModal = document.getElementById("clearHistoryConfirmModal");
-    if (confirmModal) confirmModal.style.display = "none";
+    if (confirmModal) confirmModal.classList.remove("active");
 }
 
 function initClearHistoryConfirmListeners() {
@@ -713,6 +713,7 @@ function initClearHistoryConfirmListeners() {
         const idx = confirmModal && Number(confirmModal.dataset.coffeeIndex);
         closeClearHistoryConfirm();
         clearFeedbackHistory(idx);
+        openFeedbackHistory(idx);
     });
 }
 
