@@ -5,6 +5,7 @@
 
 import { coffees, brewTimers, animationFrames } from './state.js';
 import { getBrewRecommendations } from './brew-engine.js';
+import { addHistoryEntry } from './feedback.js';
 
 function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
@@ -18,7 +19,12 @@ function parseTimeToSeconds(timeStr) {
 }
 
 export function startBrewTimer(index) {
-    const brewParams = getBrewRecommendations(coffees[index]);
+    const coffee = coffees[index];
+    const brewParams = getBrewRecommendations(coffee);
+
+    // Record brew start timestamp for 30s history entry
+    if (!brewTimers[index]) brewTimers[index] = {};
+    brewTimers[index].brewStartedAt = Date.now();
 
     const steps = brewParams.steps.map((step, i) => ({
         ...step,
@@ -33,7 +39,7 @@ export function startBrewTimer(index) {
         step.duration = step.endSeconds - step.startSeconds;
     });
 
-    brewTimers[index] = { startTime: performance.now(), steps, isRunning: true, isPaused: false };
+    brewTimers[index] = { startTime: performance.now(), steps, isRunning: true, isPaused: false, brewStartedAt: brewTimers[index].brewStartedAt };
 
     const startBtn = document.getElementById(`start-brew-${index}`);
     const pauseBtn = document.getElementById(`pause-brew-${index}`);
@@ -82,6 +88,23 @@ export function pauseBrewTimer(index) {
 export function resetBrewTimer(index) {
     const timer = brewTimers[index];
     if (!timer) return;
+
+    // Log brew to history if it ran for at least 30 seconds
+    const brewDuration = timer.brewStartedAt ? (Date.now() - timer.brewStartedAt) / 1000 : 0;
+    if (brewDuration >= 30) {
+        const coffee = coffees[index];
+        const rec = getBrewRecommendations(coffee);
+        const amount = coffee.amount || 20;
+        const method = coffee.method || rec.method || 'V60';
+        const grind = rec.grindSetting || '—';
+        const temp = coffee.customTemp || rec.temperature || '—';
+        addHistoryEntry(coffee, {
+            timestamp: new Date().toISOString(),
+            brewStart: true,
+            brewLabel: `Brewed ${amount}g on ${method}  ›  Grind ${grind}  ›  ${temp}`
+        });
+        try { localStorage.setItem('coffees', JSON.stringify(coffees)); } catch(e) {}
+    }
 
     timer.isRunning = false;
     if (animationFrames[index]) cancelAnimationFrame(animationFrames[index]);

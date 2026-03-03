@@ -2020,8 +2020,39 @@ body.light-mode .feedback-slider-labels {
 
 /* Brew-start entries: subtler styling � no parameter diff, just a timestamp marker */
 .history-item--brew-start {
-    border-style: dashed;
-    opacity: 0.7;
+    border-color: rgba(74, 222, 128, 0.45);
+    background: rgba(74, 222, 128, 0.05);
+}
+
+.history-item-brew-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: rgb(74, 222, 128);
+    background: rgba(74, 222, 128, 0.12);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-radius: 6px;
+    padding: 2px 8px;
+    margin-bottom: 8px;
+}
+
+body.light-mode .history-item--brew-start {
+    border-color: rgba(22, 163, 74, 0.4);
+    background: rgba(22, 163, 74, 0.05);
+}
+
+body.light-mode .history-item-brew-badge {
+    color: rgb(22, 163, 74);
+    background: rgba(22, 163, 74, 0.1);
+    border-color: rgba(22, 163, 74, 0.3);
+}
+
+.history-item-brew-label {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: 2px;
 }
 
 .history-item-top {

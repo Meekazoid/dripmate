@@ -448,7 +448,7 @@ function formatHistoryDate(iso) {
 
 function formatHistoryDelta(entry) {
     if (entry.brewStart) {
-        return 'Brew started';
+        return entry.brewLabel || 'Brew started';
     }
 
     if (entry.resetToInitial) {
@@ -501,10 +501,11 @@ export function openFeedbackHistory(index) {
             if (entry.brewStart) {
                 return `
             <div class="history-item history-item--brew-start">
+                <div class="history-item-brew-badge">&#9749; Brew</div>
                 <div class="history-item-top">
                     <strong>${dateStr}</strong>
-                    <span>${deltaStr}</span>
                 </div>
+                <div class="history-item-brew-label">${deltaStr}</div>
             </div>`;
             }
             return `
