@@ -1,4 +1,4 @@
-﻿/* ==========================================
+/* ==========================================
    DRIPMATE - STYLE.CSS
    Extracted & cleaned from index.html
    ========================================== */
@@ -17,7 +17,7 @@
 }
 
 html {
-    font-size: 16px;                  /* Anchor rem units — Firefox & Safari use this */
+    font-size: 16px;                  /* Anchor rem units � Firefox & Safari use this */
     -webkit-text-size-adjust: 100%;   /* Prevent iOS Safari auto-zoom on orientation change */
     text-size-adjust: 100%;           /* Standard equivalent */
     overflow-x: hidden;
@@ -127,7 +127,7 @@ header {
     -webkit-filter: none !important;
 }
 
-/* ─── Logo dark/light swap ─── */
+/* --- Logo dark/light swap --- */
 .logo-swap {
     position: relative;
     flex-shrink: 0;
@@ -205,7 +205,7 @@ h1 {
     margin-top: 0;
 }
 
-/* ─── Coffee Shot Signature Button (B2 — Accent Stripe) ─── */
+/* --- Coffee Shot Signature Button (B2 � Accent Stripe) --- */
 .cs-btn {
     position: relative;
     display: flex;
@@ -291,7 +291,7 @@ body.light-mode .add-section {
     transform: scale(1.15);
 }
 
-/* Chevron arrows in the Coffee Shot icon — accent color */
+/* Chevron arrows in the Coffee Shot icon � accent color */
 .cs-chevrons {
     color: var(--accent);
     opacity: 0.88;
@@ -383,7 +383,7 @@ body.light-mode .manual-button:hover {
     opacity: 0.6;
 }
 
-/* ── Action buttons row matches CoffeeShot button width ── */
+/* -- Action buttons row matches CoffeeShot button width -- */
 .action-buttons {
     width: 80%;
     max-width: 320px;
@@ -481,7 +481,7 @@ button:hover {
 }
 
 /* ==========================================
-   7. GLOBAL BREW SETUP — CHIPS + PICKER MODALS
+   7. GLOBAL BREW SETUP � CHIPS + PICKER MODALS
    ========================================== */
 
 .global-grinder-selector {
@@ -507,7 +507,7 @@ button:hover {
     box-shadow: 0 6px 16px var(--shadow);
 }
 
-/* ── Chip Row ── */
+/* -- Chip Row -- */
 .brew-chip-row {
     display: flex;
     gap: 14px;
@@ -516,7 +516,7 @@ button:hover {
     justify-content: center;
 }
 
-/* ── Chip Group (smart card) ── */
+/* -- Chip Group (smart card) -- */
 .brew-chip-group {
     flex: 1;
     display: flex;
@@ -547,7 +547,7 @@ button:hover {
     min-width: 0;
 }
 
-/* ── Smart Card Inner (integrated label) ── */
+/* -- Smart Card Inner (integrated label) -- */
 .brew-chip-inner {
     display: flex;
     flex-direction: column;
@@ -557,7 +557,7 @@ button:hover {
     flex: 1;
 }
 
-/* ── Individual Chip (tappable smart card) ── */
+/* -- Individual Chip (tappable smart card) -- */
 .brew-chip {
     display: flex;
     align-items: center;
@@ -624,7 +624,7 @@ body.light-mode .brew-chip-group-label {
     opacity: 0.9;
 }
 
-/* ── Picker List (inside modal) ── */
+/* -- Picker List (inside modal) -- */
 .picker-list {
     display: flex;
     flex-direction: column;
@@ -740,7 +740,7 @@ body.light-mode .picker-option.active {
     border-color: rgba(139, 100, 60, 0.25);
 }
 
-/* ── Process chip in manual form ── */
+/* -- Process chip in manual form -- */
 .process-chip {
     width: 100%;
     justify-content: space-between;
@@ -755,7 +755,7 @@ body.light-mode .picker-option.active {
     color: var(--text-primary);
 }
 
-/* ── Process Picker Modal ── */
+/* -- Process Picker Modal -- */
 #processModal .modal-content {
     max-width: 408px;
     padding: 27px;
@@ -1022,7 +1022,7 @@ body.light-mode .delete-btn {
     font-weight: 500;
 }
 
-/* ─── Bottom-corner badge positioning ─── */
+/* --- Bottom-corner badge positioning --- */
 .process-freshness-row {
     display: flex;
     align-items: center;
@@ -1068,7 +1068,7 @@ body.light-mode .delete-btn {
     opacity: 0.85;
 }
 
-/* Freshness badge color overrides — keep tint but match card icon style */
+/* Freshness badge color overrides � keep tint but match card icon style */
 .freshness-badge-inline .freshness-badge.resting {
     background: rgba(33, 150, 243, 0.08);
     border-color: rgba(33, 150, 243, 0.2);
@@ -1185,7 +1185,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
 }
 
 /* Hide native date placeholder text when no value is set.
-   Firefox shows dd.mm.yy, Safari shows mm/dd/yyyy — custom overlay handles this state. */
+   Firefox shows dd.mm.yy, Safari shows mm/dd/yyyy � custom overlay handles this state. */
 .roast-date-input:not(.has-date) {
     color: transparent;
     caret-color: transparent;
@@ -1227,7 +1227,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
     opacity: 0.6;
     margin-right: 4px;
 }
-/* Hide calendar icon when no date set — custom placeholder handles this state */
+/* Hide calendar icon when no date set � custom placeholder handles this state */
 .roast-date-input:not(.has-date)::-webkit-calendar-picker-indicator {
     opacity: 0;
     pointer-events: none;
@@ -1246,7 +1246,7 @@ body.light-mode .roast-date-section {
     border-color: rgba(139, 90, 43, 0.28);
 }
 
-/* ── Extra coffee info fields (Variety / Altitude / Tasting Notes) ── */
+/* -- Extra coffee info fields (Variety / Altitude / Tasting Notes) -- */
 .coffee-extra-info {
     margin-bottom: 12px;
     padding-left: 4px;
@@ -1280,7 +1280,7 @@ body.light-mode .roast-date-section {
     overflow-wrap: break-word;
 }
 
-/* ── Roast date: mobile centering, arrow offset, Android font ── */
+/* -- Roast date: mobile centering, arrow offset, Android font -- */
 @media (max-width: 600px) {
     .roast-date-input-wrapper {
         justify-content: center;
@@ -1366,7 +1366,7 @@ body.light-mode .water-hardness-badge {
 }
 
 .param-value {
-    font-family: 'Sora', sans-serif; /* Schriftart hinzufügen */
+    font-family: 'Sora', sans-serif; /* Schriftart hinzuf�gen */
     font-size: 1.0rem;
     font-weight: 300;                /* Von 700 auf 200/300 reduziert */
     color: var(--accent);
@@ -2053,7 +2053,7 @@ body.light-mode .feedback-slider-labels {
     padding: 12px;
 }
 
-/* Brew-start entries: subtler styling — no parameter diff, just a timestamp marker */
+/* Brew-start entries: subtler styling � no parameter diff, just a timestamp marker */
 .history-item--brew-start {
     border-style: dashed;
     opacity: 0.7;
@@ -2149,7 +2149,7 @@ body.light-mode .feedback-slider-labels {
     stroke: var(--accent);
 }
 
-/* waterControlBtn: no active state — identical to all other control buttons */
+/* waterControlBtn: no active state � identical to all other control buttons */
 
 /* ==========================================
    19. MODALS
@@ -2419,7 +2419,7 @@ body.light-mode .onboarding-icon {
    23. RESPONSIVE BREAKPOINTS
    ========================================== */
 
-/* Tablet & Mobile (≤768px) */
+/* Tablet & Mobile (=768px) */
 @media (max-width: 768px) {
     body {
         padding: 20px 16px 100px;
@@ -2578,7 +2578,7 @@ body.light-mode .onboarding-icon {
     }
 }
 
-/* Desktop (≥769px) */
+/* Desktop (=769px) */
 @media (min-width: 769px) {
     .global-grinder-selector {
         flex-direction: row;
@@ -2586,7 +2586,7 @@ body.light-mode .onboarding-icon {
     }
 }
 
-/* Small phones (≤400px) */
+/* Small phones (=400px) */
 @media (max-width: 400px) {
     h1 {
         font-size: 1.3rem;
@@ -2809,10 +2809,10 @@ body.light-mode .onboarding-icon {
 }
 
 /* ==========================================
-   27. UI COMPONENTS — STANDARDIZED POPUPS
+   27. UI COMPONENTS � STANDARDIZED POPUPS
    ========================================== */
 
-/* ─── .popup-header-standard ─── 
+/* --- .popup-header-standard --- 
    Universal flex header for all popup/modal heads.
    Icon + h2 title sit side-by-side, with a fine gold
    separator underneath. The header MUST be closed
@@ -2868,7 +2868,7 @@ body.light-mode .onboarding-icon {
     margin-left: auto;
 }
 
-/* ─── .info-box-standard ─── 
+/* --- .info-box-standard --- 
    Universal info-box / callout.
    Transparent gold background, subtle border,
    <strong> title in accent colour, body text below.    */
@@ -2911,11 +2911,9 @@ body.light-mode .info-box-standard {
 
 /* ==========================================
    28. CARD EDITOR
-   ==========================================
-   
-/* ==========================================
-   28a. ROASTERY LABEL
-   ========================================== */
+   ==========================================  */
+
+/* -- 28a. Roastery Label -- */
 
 .coffee-roastery {
     font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -2933,9 +2931,7 @@ body.light-mode .coffee-roastery {
     opacity: 0.85;
 }
 
-/* ==========================================
-   28b. EDIT BUTTON
-   ========================================== */
+/* -- 28b. Edit Button -- */
 
 .edit-btn {
     position: absolute;
@@ -2991,9 +2987,7 @@ body.light-mode .edit-btn.editing {
     fill: none;
 }
 
-/* ==========================================
-   28c. INLINE EDIT INPUTS
-   ========================================== */
+/* -- 28c. Inline Edit Inputs -- */
 
 .coffee-card .inline-edit-input {
     background: transparent;
@@ -3046,12 +3040,12 @@ body.light-mode .coffee-card .inline-edit-input:focus {
     box-shadow: 0 0 0 2px rgba(139, 90, 43, 0.12);
 }
 
-/* ── Fix: Im Edit-Modus Textfelder unter die Buttons rücken ── */
+/* -- Fix: Im Edit-Modus Textfelder unter die Buttons r�cken -- */
 .coffee-card.editing .coffee-header > div:first-child {
     padding-top: 28px;
 }
 
-/* ── Edit-Button Hover-Glow im Editing-State ── */
+/* -- Edit-Button Hover-Glow im Editing-State -- */
 .edit-btn.editing:hover {
     background: rgba(76, 175, 80, 0.25);
 }
