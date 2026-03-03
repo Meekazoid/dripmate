@@ -1,4 +1,4 @@
-/* ==========================================
+﻿/* ==========================================
    DRIPMATE - STYLE.CSS
    Extracted & cleaned from index.html
    ========================================== */
@@ -31,15 +31,15 @@ html {
    ========================================== */
 
 :root {
-    --bg-primary: #000000;
-    --bg-secondary: #1a1a1a;
-    --bg-card: #0a0a0a;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
+    --bg-primary:   #100d08;          /* Espresso-Schwarz mit Waerme  (war: #000000) */
+    --bg-secondary: #1d1208;          /* Warmes Dunkelbraun           (war: #1a1a1a) */
+    --bg-card:      #150d06;          /* Tiefstes Braun-Schwarz       (war: #0a0a0a) */
+    --text-primary:   #e8d5c0;        /* Creme statt kalt-weiss       (war: #ffffff) */
+    --text-secondary: #7a6050;        /* Warmes Grau-Braun            (war: #a0a0a0) */
     --accent: #d4a574;
     --accent-hover: #c09563;
-    --border: #2a2a2a;
-    --shadow: rgba(0, 0, 0, 0.5);
+    --border: #3a2414;                /* Braun-Border                 (war: #2a2a2a) */
+    --shadow: rgba(0, 0, 0, 0.6);    /* Minimal dunkler              (war: 0.5) */
     --color-danger: #ff6b6b;
     --color-success: #4CAF50;
 }
