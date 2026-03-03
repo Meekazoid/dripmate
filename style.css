@@ -1,4 +1,4 @@
-﻿/* ==========================================
+/* ==========================================
    DRIPMATE - STYLE.CSS
    Extracted & cleaned from index.html
    ========================================== */
@@ -17,7 +17,7 @@
 }
 
 html {
-    font-size: 16px;                  /* Anchor rem units � Firefox & Safari use this */
+    font-size: 17px;                  /* Anchor rem units ? Firefox & Safari use this */
     -webkit-text-size-adjust: 100%;   /* Prevent iOS Safari auto-zoom on orientation change */
     text-size-adjust: 100%;           /* Standard equivalent */
     overflow-x: hidden;
@@ -202,7 +202,7 @@ h1 {
     margin-top: 0;
 }
 
-/* --- Coffee Shot Signature Button (B2 � Accent Stripe) --- */
+/* --- Coffee Shot Signature Button (B2 ? Accent Stripe) --- */
 .cs-btn {
     position: relative;
     display: flex;
@@ -288,7 +288,7 @@ body.light-mode .add-section {
     transform: scale(1.15);
 }
 
-/* Chevron arrows in the Coffee Shot icon � accent color */
+/* Chevron arrows in the Coffee Shot icon ? accent color */
 .cs-chevrons {
     color: var(--accent);
     opacity: 0.88;
@@ -478,7 +478,7 @@ button:hover {
 }
 
 /* ==========================================
-   7. GLOBAL BREW SETUP � CHIPS + PICKER MODALS
+   7. GLOBAL BREW SETUP ? CHIPS + PICKER MODALS
    ========================================== */
 
 .global-grinder-selector {
@@ -1066,7 +1066,7 @@ body.light-mode .delete-btn {
     opacity: 0.85;
 }
 
-/* Freshness badge color overrides � keep tint but match card icon style */
+/* Freshness badge color overrides ? keep tint but match card icon style */
 .freshness-badge-inline .freshness-badge.resting {
     background: rgba(33, 150, 243, 0.08);
     border-color: rgba(33, 150, 243, 0.2);
@@ -1182,7 +1182,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
     box-sizing: border-box;
 }
 
-/* No date set: hide text segments, keep icon visible � custom overlay handles this state. */
+/* No date set: hide text segments, keep icon visible ? custom overlay handles this state. */
 .roast-date-input:not(.has-date) {
     color: var(--bg-secondary);
     caret-color: transparent;
@@ -1213,7 +1213,7 @@ body.light-mode .freshness-badge-inline .freshness-badge.fading {
     height: 14px;
     margin-left: 2px;
 }
-/* Was: hide icon when no date - removed, icon always visible � custom placeholder handles this state */
+/* Was: hide icon when no date - removed, icon always visible ? custom placeholder handles this state */
 
 /* Firefox: suppress built-in inner focus ring */
 .roast-date-input::-moz-focus-inner {
@@ -1340,7 +1340,7 @@ body.light-mode .water-hardness-badge {
 }
 
 .param-value {
-    font-family: 'Sora', sans-serif; /* Schriftart hinzuf�gen */
+    font-family: 'Sora', sans-serif; /* Schriftart hinzuf?gen */
     font-size: 1.0rem;
     font-weight: 300;                /* Von 700 auf 200/300 reduziert */
     color: var(--accent);
@@ -2037,7 +2037,7 @@ body.light-mode .feedback-slider-labels {
     padding: 7px 10px;
 }
 
-/* Brew-start entries: subtler styling � no parameter diff, just a timestamp marker */
+/* Brew-start entries: subtler styling ? no parameter diff, just a timestamp marker */
 .history-item--brew-start {
     border-color: rgba(74, 222, 128, 0.45);
     background: rgba(74, 222, 128, 0.05);
@@ -2183,7 +2183,7 @@ body.light-mode .history-item-brew-badge {
     stroke: var(--accent);
 }
 
-/* waterControlBtn: no active state � identical to all other control buttons */
+/* waterControlBtn: no active state ? identical to all other control buttons */
 
 /* ==========================================
    19. MODALS
@@ -2874,7 +2874,7 @@ body.light-mode .onboarding-icon {
 }
 
 /* ==========================================
-   27. UI COMPONENTS � STANDARDIZED POPUPS
+   27. UI COMPONENTS ? STANDARDIZED POPUPS
    ========================================== */
 
 /* --- .popup-header-standard --- 
@@ -3105,7 +3105,7 @@ body.light-mode .coffee-card .inline-edit-input:focus {
     box-shadow: 0 0 0 2px rgba(139, 90, 43, 0.12);
 }
 
-/* -- Fix: Im Edit-Modus Textfelder unter die Buttons r�cken -- */
+/* -- Fix: Im Edit-Modus Textfelder unter die Buttons r?cken -- */
 .coffee-card.editing .coffee-header > div:first-child {
     padding-top: 28px;
 }
