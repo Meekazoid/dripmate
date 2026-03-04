@@ -1260,11 +1260,13 @@ body.light-mode .roast-date-section {
 }
 
 .extra-value {
-    color: var(--accent);
+    color: var(--text-secondary);
     font-weight: 300;
+    font-style: italic;
     padding-left: 6px;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    letter-spacing: 0.01em;
 }
 
 /* Roast date responsive -> moved to Section 23 */
