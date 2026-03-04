@@ -1,0 +1,36 @@
+name: Auto-bump SW cache version
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'sw.js'  # prevent infinite loop
+
+jobs:
+  bump-sw-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump SW cache version
+        run: |
+          # Extract current version number
+          CURRENT=$(grep -oP "CACHE_VERSION = 'v\K[0-9]+\.[0-9]+" sw.js)
+          echo "Current version: v$CURRENT"
+          
+          # Increment by 0.1
+          NEW=$(echo "$CURRENT + 0.1" | bc)
+          echo "New version: v$NEW"
+          
+          # Replace in sw.js
+          sed -i "s/CACHE_VERSION = 'v$CURRENT'/CACHE_VERSION = 'v$NEW'/" sw.js
+
+      - name: Commit bumped version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sw.js
+          git diff --staged --quiet || git commit -m "chore: auto-bump SW cache version"
+          git push
