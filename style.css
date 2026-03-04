@@ -1179,13 +1179,15 @@ body.light-mode .roast-date-section {
 }
 
 .extra-value {
-    color: var(--text-secondary);
-    font-weight: 300;
-    font-style: italic;
-    padding-left: 6px;
+    color: var(--accent);
+    font-weight: 400;
+    padding-left: 4px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    letter-spacing: 0.01em;
+}
+
+body.light-mode .extra-value {
+    color: var(--accent);
 }
 
 /* Roast date responsive -> moved to Section 23 */  /* ==========================================    12. WATER HARDNESS BADGE    ========================================== */  .water-hardness-badge {
