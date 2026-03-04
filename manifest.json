@@ -4,8 +4,8 @@
   "description": "Your personal specialty coffee brewing assistant",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#d4a574",
-  "background_color": "#000000",
+  "theme_color": "#100d08",
+  "background_color": "#100d08",
   "icons": [
     {
       "src": "logo-192.png",
