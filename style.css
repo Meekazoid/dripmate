@@ -3296,4 +3296,17 @@ body.light-mode .edit-btn.editing:hover {
     html {
         font-size: 14px;
     }
+
+    .header-logo {
+        height: 72px;
+    }
+
+    header {
+        padding: 28px 0 20px;
+        gap: 10px;
+    }
+
+    .coffee-card {
+        padding: 18px 16px;
+    }
 }
