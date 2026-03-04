@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v34.4';  // bumped for coffee-bag asset extraction
+const CACHE_VERSION = 'v34.5';  // bumped for coffee-bag asset extraction
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
