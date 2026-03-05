@@ -2582,7 +2582,7 @@ h1 {
 }
 
 .picker-option-detail {
-    display: none;
+    font-size: 0.58rem;
 }
 
 .brew-chip-group-label {
