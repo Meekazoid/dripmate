@@ -75,7 +75,13 @@ export function startBrewTimer(index) {
     const pauseBtn = document.getElementById(`pause-brew-${index}`);
     const resetBtn = document.getElementById(`reset-brew-${index}`);
 
-    if (startBtn) { startBtn.textContent = 'Brewing...'; startBtn.classList.add('brewing'); startBtn.disabled = true; }
+    if (startBtn) {
+        const iconSpan = startBtn.querySelector('.brew-btn-icon');
+        const iconHTML = iconSpan ? iconSpan.outerHTML : '';
+        startBtn.innerHTML = iconHTML + ' Brewing...';
+        startBtn.classList.add('brewing');
+        startBtn.disabled = true;
+    }
     if (pauseBtn) { pauseBtn.disabled = false; pauseBtn.classList.remove('resume-active'); }
     if (resetBtn) resetBtn.disabled = false;
 
@@ -140,7 +146,13 @@ export function resetBrewTimer(index) {
     const pauseBtn = document.getElementById(`pause-brew-${index}`);
     const resetBtn = document.getElementById(`reset-brew-${index}`);
 
-    if (startBtn) { startBtn.textContent = 'Start Brew'; startBtn.classList.remove('brewing'); startBtn.disabled = false; }
+    if (startBtn) {
+        const iconSpan = startBtn.querySelector('.brew-btn-icon');
+        const iconHTML = iconSpan ? iconSpan.outerHTML : '';
+        startBtn.innerHTML = iconHTML + ' Start Brew';
+        startBtn.classList.remove('brewing');
+        startBtn.disabled = false;
+    }
     if (pauseBtn) { pauseBtn.textContent = 'Pause'; pauseBtn.disabled = true; pauseBtn.classList.remove('resume-active'); }
     if (resetBtn) resetBtn.disabled = true;
 
