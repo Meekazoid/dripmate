@@ -1546,22 +1546,51 @@ body.light-mode .step-progress-bar {
 }
 
 .timer-btn.start-brew {
-    background: var(--color-success);
+    background: #c8945a;
     color: white;
-    border-color: var(--color-success);
+    border-color: #c8945a;
     min-width: 200px;
     padding: 12px 24px;
     font-size: 0.95rem;
 }
 
 .timer-btn.start-brew:hover {
-    background: color-mix(in srgb, var(--color-success) 90%, #000 10%);
+    background: #b8844a;
+    border-color: #b8844a;
 }
 
 .timer-btn.brewing {
-    background: var(--color-success);
-    border-color: var(--color-success);
+    background: #c8945a;
+    border-color: #c8945a;
     color: white;
+}
+
+/* Brew method icon inside Start Brew button */
+.brew-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.brew-btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Override SVG fill colors so icon shows white on gold button */
+.timer-btn.start-brew .brew-btn-icon svg path[fill="rgb(0,0,0)"],
+.timer-btn.start-brew .brew-btn-icon svg path[fill="rgb(78,78,78)"],
+.timer-btn.start-brew .brew-btn-icon svg path[fill="rgb(77,77,77)"],
+.timer-btn.start-brew .brew-btn-icon svg path[fill="rgb(176,176,176)"] {
+    fill: white;
+}
+
+/* Hide the white fill paths (background rectangles in the SVG) */
+.timer-btn.start-brew .brew-btn-icon svg path[fill="rgb(254,254,254)"] {
+    fill: transparent;
 }
 
 .timer-btn:hover {
