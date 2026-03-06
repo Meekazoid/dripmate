@@ -296,147 +296,65 @@ export async function requestMagicLink(email) {
     }
 }
 // ==========================================
-// MAGIC LINK & EMAIL RECOVERY — Event Listeners
+// MAGIC LINK & EMAIL RECOVERY - Event Listeners
 // ==========================================
+// Event Delegation - robust auch wenn Modal erst spaeter im DOM aktiv wird
 
-// Event Listeners - direkt ausgefuhrt (ES module = bereits defer, DOM ist bereit)
+document.addEventListener('click', async (e) => {
 
-    // Toggle magic link form visibility
-    const showMagicBtn = document.getElementById('showMagicLinkBtn');
-    if (showMagicBtn) {
-        showMagicBtn.addEventListener('click', () => {
-            const form = document.getElementById('magicLinkForm');
-            if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        });
-    }
-
-    // Send magic link
-    const sendMagicBtn = document.getElementById('sendMagicLinkBtn');
-    if (sendMagicBtn) {
-        sendMagicBtn.addEventListener('click', async () => {
-            const emailInput = document.getElementById('magicLinkEmailInput');
-            const statusDiv  = document.getElementById('magicLinkStatus');
-            const email      = emailInput?.value?.trim();
-
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                if (statusDiv) { statusDiv.style.display = 'block'; statusDiv.textContent = 'Bitte eine gültige E-Mail-Adresse eingeben.'; statusDiv.style.color = '#ff6b7a'; }
-                return;
-            }
-
-            sendMagicBtn.disabled = true;
-            sendMagicBtn.textContent = 'Wird gesendet…';
-
-            const result = await requestMagicLink(email);
-
-            sendMagicBtn.disabled = false;
-            sendMagicBtn.textContent = 'Login-Link senden';
-
-            if (statusDiv) {
-                statusDiv.style.display = 'block';
-                if (result.success) {
-                    statusDiv.textContent = '✓ E-Mail gesendet — prüfe deinen Posteingang.';
-                    statusDiv.style.color = '#5fda7d';
-                } else {
-                    statusDiv.textContent = result.error || 'Fehler beim Senden.';
-                    statusDiv.style.color = '#ff6b7a';
-                }
-            }
-        });
-    }
-
-    // Save email for recovery (shown when already activated)
-    const saveEmailBtn = document.getElementById('saveRecoveryEmailBtn');
-    if (saveEmailBtn) {
-        saveEmailBtn.addEventListener('click', async () => {
-            const emailInput = document.getElementById('recoveryEmailInput');
-            const statusDiv  = document.getElementById('recoveryEmailStatus');
-            const email      = emailInput?.value?.trim();
-
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                if (statusDiv) { statusDiv.style.display = 'block'; statusDiv.textContent = 'Bitte eine gültige E-Mail-Adresse eingeben.'; statusDiv.style.color = '#ff6b7a'; }
-                return;
-            }
-
-            saveEmailBtn.disabled = true;
-            saveEmailBtn.textContent = 'Wird gespeichert…';
-
-            const result = await saveEmailForRecovery(email);
-
-            saveEmailBtn.disabled = false;
-            saveEmailBtn.textContent = 'Speichern';
-
-            if (statusDiv) {
-                statusDiv.style.display = 'block';
-                if (result.success) {
-                    statusDiv.textContent = '✓ E-Mail gespeichert.';
-                    statusDiv.style.color = '#5fda7d';
-                } else {
-                    statusDiv.textContent = result.error || 'Fehler beim Speichern.';
-                    statusDiv.style.color = '#ff6b7a';
-                }
-            }
-        });
-    }
-    // Magic link button 2 (shown when activated, for convenience)
-    const showMagicBtn2 = document.getElementById('showMagicLinkBtn2');
-    if (showMagicBtn2) {
-        showMagicBtn2.addEventListener('click', () => {
-            const form = document.getElementById('magicLinkForm2');
-            if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        });
-    }
-    const sendMagicBtn2 = document.getElementById('sendMagicLinkBtn2');
-    if (sendMagicBtn2) {
-        sendMagicBtn2.addEventListener('click', async () => {
-            const emailInput = document.getElementById('magicLinkEmailInput2');
-            const statusDiv  = document.getElementById('magicLinkStatus2');
-            const email      = emailInput?.value?.trim();
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                if (statusDiv) { statusDiv.style.display = 'block'; statusDiv.textContent = 'Bitte E-Mail eingeben.'; statusDiv.style.color = '#ff6b7a'; }
-                return;
-            }
-            sendMagicBtn2.disabled = true;
-            sendMagicBtn2.textContent = 'Wird gesendet...';
-            const result = await requestMagicLink(email);
-            sendMagicBtn2.disabled = false;
-            sendMagicBtn2.textContent = 'Login-Link senden';
-            if (statusDiv) {
-                statusDiv.style.display = 'block';
-                statusDiv.textContent = result.success ? '✓ E-Mail gesendet!' : (result.error || 'Fehler.');
-                statusDiv.style.color = result.success ? '#5fda7d' : '#ff6b7a';
-            }
-        });
-    }
-
-// end settings listeners
-
-// Magic Link Button 2 (eingeloggt-Zustand)
-const showMagicBtn2 = document.getElementById('showMagicLinkBtn2');
-if (showMagicBtn2) {
-    showMagicBtn2.addEventListener('click', () => {
-        const form = document.getElementById('magicLinkForm2');
+    // --- Toggle: "Browserdaten geloscht?" Link ---
+    if (e.target.id === 'showMagicLinkBtn' || e.target.closest?.('#showMagicLinkBtn')) {
+        const form = document.getElementById('magicLinkForm');
         if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    });
-}
-const sendMagicBtn2 = document.getElementById('sendMagicLinkBtn2');
-if (sendMagicBtn2) {
-    sendMagicBtn2.addEventListener('click', async () => {
-        const emailInput = document.getElementById('magicLinkEmailInput2');
-        const statusDiv  = document.getElementById('magicLinkStatus2');
+        return;
+    }
+
+    // --- Send Magic Link (nicht eingeloggt) ---
+    if (e.target.id === 'sendMagicLinkBtn') {
+        const emailInput = document.getElementById('magicLinkEmailInput');
+        const statusDiv  = document.getElementById('magicLinkStatus');
+        const btn        = document.getElementById('sendMagicLinkBtn');
         const email      = emailInput?.value?.trim();
+
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            if (statusDiv) { statusDiv.style.display = 'block'; statusDiv.textContent = 'Bitte eine gultige E-Mail eingeben.'; statusDiv.style.color = '#ff6b7a'; }
+            if (statusDiv) { statusDiv.style.display = 'block'; statusDiv.textContent = 'Bitte eine gueltige E-Mail-Adresse eingeben.'; statusDiv.style.color = '#ff6b7a'; }
             return;
         }
-        sendMagicBtn2.disabled = true;
-        sendMagicBtn2.textContent = 'Wird gesendet...';
+        btn.disabled = true;
+        btn.textContent = 'Wird gesendet...';
         const result = await requestMagicLink(email);
-        sendMagicBtn2.disabled = false;
-        sendMagicBtn2.textContent = 'Login-Link senden';
+        btn.disabled = false;
+        btn.textContent = 'Login-Link senden';
         if (statusDiv) {
             statusDiv.style.display = 'block';
-            statusDiv.textContent = result.success ? 'E-Mail gesendet - prufe deinen Posteingang.' : (result.error || 'Fehler beim Senden.');
-            statusDiv.style.color = result.success ? '#5fda7d' : '#ff6b7a';
+            statusDiv.textContent = result.success ? '✓ E-Mail gesendet - pruefe deinen Posteingang.' : (result.error || 'Fehler beim Senden.');
+            statusDiv.style.color  = result.success ? '#5fda7d' : '#ff6b7a';
         }
-    });
-}
+        return;
+    }
+
+    // --- Save Recovery Email (eingeloggt) ---
+    if (e.target.id === 'saveRecoveryEmailBtn') {
+        const emailInput = document.getElementById('recoveryEmailInput');
+        const statusDiv  = document.getElementById('recoveryEmailStatus');
+        const btn        = document.getElementById('saveRecoveryEmailBtn');
+        const email      = emailInput?.value?.trim();
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            if (statusDiv) { statusDiv.style.display = 'block'; statusDiv.textContent = 'Bitte eine gueltige E-Mail-Adresse eingeben.'; statusDiv.style.color = '#ff6b7a'; }
+            return;
+        }
+        btn.disabled = true;
+        btn.textContent = 'Wird gespeichert...';
+        const result = await saveEmailForRecovery(email);
+        btn.disabled = false;
+        btn.textContent = 'Speichern';
+        if (statusDiv) {
+            statusDiv.style.display = 'block';
+            statusDiv.textContent = result.success ? '✓ E-Mail gespeichert.' : (result.error || 'Fehler beim Speichern.');
+            statusDiv.style.color  = result.success ? '#5fda7d' : '#ff6b7a';
+        }
+        return;
+    }
+
+});
