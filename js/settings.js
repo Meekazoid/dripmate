@@ -149,24 +149,35 @@ export function renderDecafList() {
 
 export async function handleMagicLink() {
     const params = new URLSearchParams(window.location.search);
-    const token  = params.get('token');
-    if (!token) return;
+    const magic  = params.get('magic');
+    if (!magic) return;
 
-    // Clean URL immediately so the token doesn't stay visible in the address bar
+    // Clean URL immediately
     window.history.replaceState({}, document.title, window.location.pathname);
 
-    // Already logged in with the same token — skip
-    if (getToken() === token) return;
-
     try {
+        // Step 1: Redeem the one-time magic token → get the permanent user token
+        const redeemRes  = await fetch(`${CONFIG.backendUrl}/api/auth/magic-link/redeem?magic=${magic}`);
+        const redeemData = await redeemRes.json();
+
+        if (!redeemData.success || !redeemData.token) {
+            console.warn('[settings] Magic link invalid or expired');
+            return;
+        }
+
+        const token    = redeemData.token;
         const deviceId = getOrCreateDeviceId();
 
+        // Already logged in with the same token - skip
+        if (getToken() === token) return;
+
+        // Step 2: Validate token and bind new device
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 10000);
         let response;
         try {
             response = await fetch(`${CONFIG.backendUrl}/api/auth/validate`, {
-                headers: { 'Authorization': `Bearer ${token}`, 'X-Device-ID': deviceId },
+                headers: { 'Authorization': Bearer , 'X-Device-ID': deviceId },
                 signal: controller.signal
             });
         } finally {
