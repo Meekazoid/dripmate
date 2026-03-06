@@ -305,7 +305,7 @@ document.addEventListener('click', async (e) => {
     // --- Toggle: "Browserdaten geloscht?" Link ---
     if (e.target.id === 'showMagicLinkBtn' || e.target.closest?.('#showMagicLinkBtn')) {
         const form = document.getElementById('magicLinkForm');
-        if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        if (form) form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
         return;
     }
 
