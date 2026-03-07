@@ -26,7 +26,6 @@ import {
     openDecafModal,
     closeDecafModal,
     handleMagicLink,
-    saveEmailForRecovery,
     requestMagicLink
 } from './settings.js';
 import { updateRoastDate } from './freshness.js';
@@ -111,7 +110,6 @@ function initEventListeners() {
             if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
         });
     }
-
     // Send Magic Link
     const sendMagicBtn = document.getElementById('sendMagicLinkBtn');
     if (sendMagicBtn) {
@@ -130,7 +128,6 @@ function initEventListeners() {
                 : (result.error || 'Fehler beim Senden.');
         });
     }
-
     // Impressum & Datenschutz
     document.getElementById('openImpressumBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openModal('impressumModal'); });
     document.getElementById('closeImpressumBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeModal('impressumModal'); });
