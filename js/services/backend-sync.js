@@ -216,7 +216,7 @@ export async function fetchWaterHardness() {
 // INITIALIZATION
 // ==========================================
 
-async function initBackendSync() {
+export async function initBackendSync() {
     try {
         console.log('[sync] Initializing backend sync...');
         const status = await checkUserStatus();
@@ -285,17 +285,6 @@ async function initBackendSync() {
         console.log('[sync] App continues in local mode.');
     }
 }
-
-// ==========================================
-// AUTO-INIT
-// ==========================================
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initBackendSync(); });
-} else {
-    initBackendSync();
-}
-
 // ==========================================
 // GLOBAL EXPORT (for non-module scripts)
 // ==========================================
@@ -308,5 +297,6 @@ window.backendSync = {
     fetchWaterHardness,
     checkUserStatus,
     getToken,
-    getOrCreateDeviceId
+    getOrCreateDeviceId,
+    initBackendSync
 };

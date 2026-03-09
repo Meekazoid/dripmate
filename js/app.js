@@ -40,6 +40,7 @@ import {
     setWaterHardness,
     setApiWaterHardness
 } from './state.js';
+import { initBackendSync } from './services/backend-sync.js';
 
 // Make updateRoastDate available globally for onclick handlers
 window.updateRoastDate = updateRoastDate;
@@ -153,9 +154,10 @@ function closeModal(id) {
 }
 
 // Main initialization function
-function initApp() {
+async function initApp() {
     // Handle magic link token from email
-    handleMagicLink();
+    await handleMagicLink();
+    await initBackendSync();
 
     // Initialize theme early
     initTheme();

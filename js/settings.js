@@ -87,7 +87,7 @@ export async function activateDevice() {
             statusDiv.style.color      = '#5fda7d';
             statusDiv.innerHTML = '&#x2713; Device linked. You can now use all features.';
 
-            if (typeof initBackendSync === 'function') await initBackendSync();
+            await maybeInitBackendSync();
             setTimeout(() => { closeSettings(); location.reload(); }, 2000);
         } else {
             showActivationError(data.error || 'Invalid access code');
@@ -150,50 +150,85 @@ export function renderDecafList() {
 export async function handleMagicLink() {
     const params = new URLSearchParams(window.location.search);
     const magic  = params.get('magic');
+
     if (!magic) return;
 
-    // Clean URL immediately
-    window.history.replaceState({}, document.title, window.location.pathname);
-
     try {
-        // Step 1: Redeem the one-time magic token → get the permanent user token
-        const redeemRes  = await fetch(`${CONFIG.backendUrl}/api/auth/magic-link/redeem?magic=${magic}`);
-        const redeemData = await redeemRes.json();
+        const redeemRes = await fetch(`${CONFIG.backendUrl}/api/auth/magic-link/redeem?magic=${encodeURIComponent(magic)}`);
+        const redeemData = await redeemRes.json().catch(() => ({}));
 
-        if (!redeemData.success || !redeemData.token) {
-            console.warn('[settings] Magic link invalid or expired');
+        if (redeemRes.status === 401) {
+            showAuthRecoveryMessage('Link invalid or expired');
             return;
         }
 
-        const token    = redeemData.token;
-        const deviceId = getOrCreateDeviceId();
-
-        // Already logged in with the same token - skip
-        if (getToken() === token) return;
-
-        // Step 2: Validate token and bind new device
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), 10000);
-        let response;
-        try {
-            response = await fetch(`${CONFIG.backendUrl}/api/auth/validate`, {
-                headers: { 'Authorization': `Bearer ${token}`, 'X-Device-ID': deviceId },
-                signal: controller.signal
-            });
-        } finally {
-            clearTimeout(timer);
+        if (!redeemRes.ok || !redeemData.success || !redeemData.token) {
+            showAuthRecoveryMessage(redeemData.error || 'Link invalid or expired');
+            return;
         }
 
-        const data = await response.json();
+        const validateResult = await validateAndPersistToken(redeemData.token);
 
-        if (data.valid) {
-            saveToken(token);
-            localStorage.setItem('deviceId', deviceId);
+        if (validateResult.valid) {
             showActivationPopup();
-            if (typeof initBackendSync === 'function') await initBackendSync();
+            await maybeInitBackendSync();
+            return;
         }
+
+        showAuthRecoveryMessage(validateResult.error || 'Link invalid or expired');
     } catch (err) {
         console.error('[settings] Magic link error:', err.message);
+        showAuthRecoveryMessage('Link invalid or expired');
+    } finally {
+        cleanAuthParamsFromUrl();
+    }
+}
+
+function cleanAuthParamsFromUrl() {
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+async function validateAndPersistToken(token) {
+    const deviceId = getOrCreateDeviceId();
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+
+    try {
+        const response = await fetch(`${CONFIG.backendUrl}/api/auth/validate`, {
+            headers: { 'Authorization': `Bearer ${token}`, 'X-Device-ID': deviceId },
+            signal: controller.signal
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || !data.valid) {
+            return { valid: false, error: data.error || 'Token validation failed' };
+        }
+
+        saveToken(token);
+        localStorage.setItem('deviceId', deviceId);
+        return { valid: true };
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+function showAuthRecoveryMessage(message) {
+    openSettings();
+
+    const status = document.getElementById('magicLinkStatus');
+    const form = document.getElementById('magicLinkForm');
+
+    if (form) form.style.display = 'block';
+    if (status) {
+        status.style.display = 'block';
+        status.textContent = message;
+    }
+}
+
+async function maybeInitBackendSync() {
+    if (window.backendSync && typeof window.backendSync.initBackendSync === 'function') {
+        await window.backendSync.initBackendSync();
     }
 }
 
@@ -289,6 +324,11 @@ export async function requestMagicLink(email) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
         });
+
+        if (response.status === 503) {
+            return { success: false, error: 'Email service temporarily unavailable' };
+        }
+
         return await response.json();
     } catch (err) {
         console.error('[settings] Magic link request error:', err.message);

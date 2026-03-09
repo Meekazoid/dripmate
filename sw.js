@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v36.8';  // bumped for coffee-bag asset extraction
+const CACHE_VERSION = 'v36.9';  // resilient precache + strict asset list
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
@@ -37,7 +37,6 @@ const STATIC_ASSETS = [
   '/logo-512.png',
   '/logo-maskable-192.png',
   '/logo-maskable-512.png',
-  '/compost-icon.png',
   '/compost.svg',
   '/v60-icon.png',
   '/assets/coffee-bag-shot.png'
@@ -57,21 +56,22 @@ const STATIC_EXTENSIONS = ['.html', '.css', '.js', '.json', '.png', '.svg', '.jp
  */
 self.addEventListener('install', (event) => {
   console.log('[Service Worker] Installing...');
-  
-  event.waitUntil(
-    caches.open(CACHE_VERSION)
-      .then((cache) => {
-        console.log('[Service Worker] Pre-caching static assets');
-        return cache.addAll(STATIC_ASSETS);
-      })
-      .then(() => {
-        console.log('[Service Worker] Pre-caching complete');
-        return self.skipWaiting();
-      })
-      .catch((error) => {
-        console.error('[Service Worker] Pre-caching failed:', error);
-      })
-  );
+
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_VERSION);
+    console.log('[Service Worker] Pre-caching static assets');
+
+    await Promise.all(STATIC_ASSETS.map(async (asset) => {
+      try {
+        await cache.add(asset);
+      } catch (error) {
+        console.warn('[Service Worker] Skipping missing precache asset:', asset, error && error.message ? error.message : error);
+      }
+    }));
+
+    console.log('[Service Worker] Pre-caching complete');
+    await self.skipWaiting();
+  })());
 });
 
 /**
