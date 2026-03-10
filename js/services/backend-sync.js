@@ -217,6 +217,8 @@ export async function fetchWaterHardness() {
 // ==========================================
 
 export async function initBackendSync() {
+    const initialLocalCoffeesSnapshot = localStorage.getItem('coffees') || '[]';
+
     try {
         console.log('[sync] Initializing backend sync...');
         const status = await checkUserStatus();
@@ -262,8 +264,12 @@ export async function initBackendSync() {
                 const normalized = dedupeCoffees(remoteCoffees, 'initBackendSync-remote');
                 const looksIncomplete = normalized.length > 0 && !hasFeedbackHistoryCoverage(remoteCoffees);
 
+                const localChangedDuringSync = (localStorage.getItem('coffees') || '[]') !== initialLocalCoffeesSnapshot;
+
                 if (looksIncomplete && localCoffees.length > 0) {
                     console.warn('[sync] Remote coffees missing feedbackHistory â€” keeping local data');
+                } else if (localChangedDuringSync) {
+                    console.warn('[sync] Local coffees changed during startup sync â€” skipping remote overwrite');
                 } else {
                     window.coffees = normalized;
                     localStorage.setItem('coffees', JSON.stringify(normalized));

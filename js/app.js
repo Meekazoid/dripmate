@@ -157,7 +157,6 @@ function closeModal(id) {
 async function initApp() {
     // Handle magic link token from email
     await handleMagicLink();
-    await initBackendSync();
 
     // Initialize theme early
     initTheme();
@@ -185,6 +184,12 @@ async function initApp() {
 
     // Render coffee list
     renderCoffees();
+
+    // Start backend sync in background so locally cached coffees
+    // are visible immediately on app startup.
+    initBackendSync().catch((error) => {
+        console.warn('[app] Deferred backend sync failed:', error && error.message ? error.message : error);
+    });
 
     // Init global grinder selector
     initGlobalGrinder();
