@@ -837,9 +837,9 @@ body.light-mode .coffee-card:hover .coffee-name {
 .coffee-origin {
     color: var(--text-secondary);
     font-family: 'Sora', sans-serif;
-    font-size: 0.84rem;
+    font-size: 0.80rem;
     font-weight: 300;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
