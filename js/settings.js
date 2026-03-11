@@ -174,7 +174,8 @@ export async function handleMagicLink() {
 
         if (validateResult.valid) {
             trackAuthBootstrap('auth_bootstrap_magic_success');
-            showActivationPopup();
+            const popupMode = validateResult.isFirstLogin ? 'firstLogin' : 'recovery';
+            showActivationPopup(popupMode);
             await maybeInitBackendSync();
             return;
         }
@@ -211,7 +212,7 @@ async function validateAndPersistToken(token) {
 
         saveToken(token);
         localStorage.setItem('deviceId', deviceId);
-        return { valid: true };
+        return { valid: true, isFirstLogin: Boolean(data.isFirstLogin) };
     } finally {
         clearTimeout(timer);
     }
@@ -240,7 +241,7 @@ async function maybeInitBackendSync() {
     }
 }
 
-function showActivationPopup() {
+function showActivationPopup(mode = 'firstLogin') {
     const existing = document.getElementById('activation-popup');
     if (existing) existing.remove();
 
@@ -264,15 +265,25 @@ function showActivationPopup() {
         font-family: 'Sora', sans-serif;
     `;
 
+    const popupCopy = mode === 'recovery'
+        ? {
+            title: 'Welcome back to dripmate!',
+            message: 'Your previous Coffee Cards and brew adjustments are already saved and will be available again.'
+        }
+        : {
+            title: 'dripmate activated!',
+            message: 'You can now add your first Coffee Card and start your experience with dripmate.'
+        };
+
     popup.innerHTML = `
         <div style="display:flex;align-items:flex-start;gap:14px;">
             <div style="font-size:1.6rem;flex-shrink:0;">&#x2615;</div>
             <div>
                 <p style="margin:0 0 6px;font-size:0.85rem;font-weight:600;color:#1a1a1a;letter-spacing:0.02em;">
-                    dripmate activated!
+                    ${popupCopy.title}
                 </p>
                 <p style="margin:0;font-size:0.78rem;color:#666666;line-height:1.6;font-weight:300;">
-                    You can now add your first Coffee Card and start your experience with dripmate.
+                    ${popupCopy.message}
                 </p>
             </div>
         </div>
