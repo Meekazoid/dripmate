@@ -464,7 +464,7 @@ button:hover {
     display: flex;
     gap: 14px;
     width: 100%;
-    max-width: 540px;
+    max-width: 620px;
     justify-content: center;
 }
 
@@ -478,7 +478,7 @@ button:hover {
 
 .brew-chip-group-label {
     font-family: 'Sora', sans-serif;
-    font-size: 0.56rem;
+    font-size: 0.5rem;
     font-weight: 300;
     letter-spacing: 0.07em;
     text-transform: uppercase;
@@ -498,21 +498,13 @@ button:hover {
     min-width: 0;
 }
 
-/* -- Smart Card Inner (integrated label) -- */ .brew-chip-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-    min-width: 0;
-    flex: 1;
-}
-
 /* -- Individual Chip (tappable smart card) -- */ .brew-chip {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 12px;
-    background: var(--bg-card);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    height: 46px;
+    background: rgba(200, 148, 90, 0.05);
     border: 1px solid var(--border);
     border-radius: 14px;
     cursor: pointer;
@@ -520,19 +512,37 @@ button:hover {
     min-width: 0;
     width: 100%;
     font-family: 'Sora', sans-serif;
+    overflow: hidden;
+}
+
+.brew-chip-top {
+    height: 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
     justify-content: center;
+    padding: 0 10px;
+}
+
+.brew-chip-bottom {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 6px;
+    padding: 0 10px;
+    min-width: 0;
 }
 
 .brew-chip:active {
     transform: scale(0.97);
-    background: var(--bg-card);
     border-color: var(--accent);
 }
 
 .brew-chip:focus, .brew-chip:focus-visible {
     outline: none;
     border-color: var(--border);
-    background: var(--bg-card);
 }
 
 body.light-mode .brew-chip:focus, body.light-mode .brew-chip:focus-visible {
@@ -542,7 +552,6 @@ body.light-mode .brew-chip:focus, body.light-mode .brew-chip:focus-visible {
 
 .brew-chip:focus, .brew-chip:focus-visible {
     outline: none;
-    background: var(--bg-card);
     border-color: var(--border);
 }
 
@@ -555,7 +564,8 @@ body.light-mode .brew-chip:focus, body.light-mode .brew-chip:focus-visible {
     font-weight: 300;
     color: var(--text-primary);
     white-space: nowrap;
-    overflow: visible;
+    overflow: hidden;
+    text-overflow: ellipsis;
     min-width: 0;
     text-align: center;
 }
@@ -579,8 +589,12 @@ body.light-mode .brew-chip:focus, body.light-mode .brew-chip:focus-visible {
 }
 
 body.light-mode .brew-chip {
-    background: #ffffff;
+    background: rgba(200, 148, 90, 0.05);
     border-color: var(--border);
+}
+
+body.light-mode .brew-chip-top {
+    background: var(--bg-secondary);
 }
 
 body.light-mode .brew-chip:hover {
@@ -2400,8 +2414,7 @@ h1 {
 }
 
 .brew-chip {
-    padding: 9px 10px;
-    gap: 5px;
+    height: 46px;
 }
 
 .brew-chip-label {
@@ -2416,14 +2429,10 @@ h1 {
     gap: 10px;
 }
 
-.brew-chip-group:first-child {
-    min-width: 0;
-    flex: 1.6;
-}
-
+.brew-chip-group:first-child,
 .brew-chip-group:last-child {
     min-width: 0;
-    flex: 1.08;
+    flex: 1;
 }
 
 #method-chip .brew-chip-group-label {
@@ -2572,7 +2581,7 @@ h1 {
 }
 
 .brew-chip {
-    padding: 8px 8px;
+    height: 46px;
 }
 
 .picker-option-detail {
@@ -2580,7 +2589,7 @@ h1 {
 }
 
 .brew-chip-group-label {
-    font-size: 0.52rem;
+    font-size: 0.5rem;
 }
 
 }
