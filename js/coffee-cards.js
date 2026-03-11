@@ -36,6 +36,23 @@ import { ensureInitialValues } from './feedback.js';
 import './brew-timer.js';
 import './card-editor.js';
 
+
+function formatCoffeeOrigin(origin = '') {
+    const originText = String(origin || '').trim();
+    if (!originText) return '';
+
+    const parts = originText
+        .split(/[•,]/)
+        .map(part => part.trim())
+        .filter(Boolean);
+
+    const normalized = parts.length > 1
+        ? `${parts[0]} • ${parts.slice(1).join(' ')}`
+        : parts[0];
+
+    return normalized.toLocaleUpperCase('de-DE');
+}
+
 let pressedStateBound = false;
 
 export function autoResetPressedState(el, delay = 150) {
@@ -90,7 +107,7 @@ export function renderCoffeeCard(coffee, index) {
                 <div>
                     ${roasteryHTML}
                     <div class="coffee-name" id="name-display-${index}">${sanitizeHTML(coffee.name)}</div>
-                    <div class="coffee-origin" id="origin-display-${index}">${sanitizeHTML(coffee.origin)}</div>
+                    <div class="coffee-origin" id="origin-display-${index}">${sanitizeHTML(formatCoffeeOrigin(coffee.origin))}</div>
                 </div>
                 <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${index});">
                     <svg class="star-icon" viewBox="0 0 24 24">
