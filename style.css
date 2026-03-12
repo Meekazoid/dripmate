@@ -164,10 +164,10 @@ h1 {
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
-    font-weight: 300;
+    font-weight: 400;
     margin-top: 2px;
     align-self: center;
-    opacity: 0.7;
+    opacity: 0.85;
 }
 
 
@@ -1573,6 +1573,41 @@ body.light-mode .step-progress-bar {
     color: white;
 }
 
+/* -- Pulsierender Effekt während des Brühens (Performance optimiert) -- */
+.timer-btn.start-brew.brewing {
+    position: relative;
+    z-index: 1;
+    /* Verhindert versehentliche Hover-Farbwechsel, während der Timer läuft */
+    background: #c8945a !important;
+    border-color: #c8945a !important;
+}
+
+/* Der äußere pulsierende Ring */
+.timer-btn.start-brew.brewing::after {
+    content: '';
+    position: absolute;
+    /* inset: 0 setzt das Element exakt auf die Größe des Buttons */
+    inset: 0; 
+    border-radius: inherit;
+    border: 2px solid #c8945a;
+    z-index: -1;
+    /* cubic-bezier sorgt für einen organischen "Herzschlag"-Rhythmus */
+    animation: ring-pulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    pointer-events: none;
+}
+
+/* Keyframes für die GPU-beschleunigte Animation */
+@keyframes ring-pulse {
+    0% { 
+        transform: scale(1); 
+        opacity: 0.8; 
+    }
+    100% { 
+        transform: scale(1.15); /* Ring wächst um 15% */
+        opacity: 0;             /* und verblasst dabei */
+    }
+}
+
 /* Brew method icon inside Start Brew button */
 .brew-btn-icon {
     display: inline-flex;
@@ -2593,7 +2628,7 @@ h1 {
 }
 
 .brew-chip-group-label {
-    font-size: 0.5rem;
+    font-size: 0.6rem;
 }
 
 }
