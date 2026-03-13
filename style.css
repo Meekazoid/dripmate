@@ -781,7 +781,8 @@ body.light-mode .picker-option.active {
 .coffee-card {
     --card-accent-color: transparent;
     background:
-        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 18%, transparent) 0%, transparent 65%),
+        /* Fester 150px Radius verhindert das Auslaufen nach unten! */
+        radial-gradient(150px circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 25%, transparent) 0%, transparent 100%),
         linear-gradient(135deg, rgba(212, 165, 116, 0.10) 0%, rgba(212, 165, 116, 0.04) 28%, var(--bg-secondary) 55%);
     border: 1px solid var(--border);
     border-left: 1px solid rgba(212, 165, 116, 0.38);
@@ -798,7 +799,7 @@ body.light-mode .picker-option.active {
 
 body.light-mode .coffee-card {
     background:
-        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 15%, transparent) 0%, transparent 65%),
+        radial-gradient(150px circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 20%, transparent) 0%, transparent 100%),
         linear-gradient(135deg, rgba(139, 90, 43, 0.07) 0%, rgba(139, 90, 43, 0.025) 28%, var(--bg-secondary) 55%);
     border-left: 1px solid rgba(139, 90, 43, 0.45);
 }
@@ -810,7 +811,7 @@ body.light-mode .coffee-card {
 
 .coffee-card.expanded {
     background:
-        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 18%, transparent) 0%, transparent 65%),
+        radial-gradient(150px circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 25%, transparent) 0%, transparent 100%),
         var(--bg-secondary);
     box-shadow: 0 12px 32px var(--shadow);
     overflow: visible !important;
@@ -820,7 +821,7 @@ body.light-mode .coffee-card {
 
 body.light-mode .coffee-card.expanded {
     background:
-        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 15%, transparent) 0%, transparent 65%),
+        radial-gradient(150px circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 20%, transparent) 0%, transparent 100%),
         var(--bg-secondary);
 }
 
@@ -833,7 +834,7 @@ body.light-mode .coffee-card.expanded {
     height: 28px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 50%;
+    border-radius: 6px; /* Gleiche eckige Form wie Stift und Mülleimer */
     cursor: pointer;
     z-index: 10;
     display: none;
@@ -841,18 +842,17 @@ body.light-mode .coffee-card.expanded {
     justify-content: center;
     transition: all 0.2s;
     color: var(--text-secondary);
+    opacity: 0.6;
 }
-
 .coffee-card.editing .color-picker-btn {
     display: flex;
 }
-
 .color-picker-btn:hover {
+    opacity: 1;
     border-color: var(--accent);
 }
-
 .color-picker-btn.has-color {
-    color: var(--card-accent-color);
+    opacity: 1;
 }
 
 .color-picker-popup {
@@ -893,21 +893,21 @@ body.light-mode .coffee-card.expanded {
 
 .clear-color-btn {
     grid-column: span 3;
-    text-align: center;
-    font-family: 'Sora', sans-serif;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--text-secondary);
     cursor: pointer;
     margin-top: 4px;
     padding-top: 8px;
     border-top: 1px solid var(--border);
     transition: color 0.2s;
+    opacity: 0.6;
 }
 
 .clear-color-btn:hover {
-    color: var(--text-primary);
+    opacity: 1;
+    color: var(--color-danger); /* Rötlich bei Hover, um "Entfernen" zu signalisieren */
 }
 
 .coffee-header {
