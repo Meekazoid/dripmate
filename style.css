@@ -769,14 +769,20 @@ body.light-mode .picker-option.active {
     font-size: 0.85rem;
 }
 
-/* ==========================================    8. COFFEE CARDS    ========================================== */  .coffee-list {
+/* ==========================================
+   8. COFFEE CARDS & ROASTER AURA
+   ========================================== */
+.coffee-list {
     display: grid;
     gap: 20px;
     overflow: visible;
 }
 
 .coffee-card {
-    background: linear-gradient(         135deg,         rgba(212, 165, 116, 0.10) 0%,         rgba(212, 165, 116, 0.04) 28%,         var(--bg-secondary) 55%     );
+    --card-accent-color: transparent;
+    background:
+        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 18%, transparent) 0%, transparent 65%),
+        linear-gradient(135deg, rgba(212, 165, 116, 0.10) 0%, rgba(212, 165, 116, 0.04) 28%, var(--bg-secondary) 55%);
     border: 1px solid var(--border);
     border-left: 1px solid rgba(212, 165, 116, 0.38);
     border-radius: 16px;
@@ -791,7 +797,9 @@ body.light-mode .picker-option.active {
 }
 
 body.light-mode .coffee-card {
-    background: linear-gradient(         135deg,         rgba(139, 90, 43, 0.07) 0%,         rgba(139, 90, 43, 0.025) 28%,         var(--bg-secondary) 55%     );
+    background:
+        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 15%, transparent) 0%, transparent 65%),
+        linear-gradient(135deg, rgba(139, 90, 43, 0.07) 0%, rgba(139, 90, 43, 0.025) 28%, var(--bg-secondary) 55%);
     border-left: 1px solid rgba(139, 90, 43, 0.45);
 }
 
@@ -801,7 +809,9 @@ body.light-mode .coffee-card {
 }
 
 .coffee-card.expanded {
-    background: var(--bg-secondary);
+    background:
+        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 18%, transparent) 0%, transparent 65%),
+        var(--bg-secondary);
     box-shadow: 0 12px 32px var(--shadow);
     overflow: visible !important;
     height: auto !important;
@@ -809,7 +819,95 @@ body.light-mode .coffee-card {
 }
 
 body.light-mode .coffee-card.expanded {
+    background:
+        radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 15%, transparent) 0%, transparent 65%),
+        var(--bg-secondary);
+}
+
+/* --- COLOR PICKER BUTTON & POPUP --- */
+.color-picker-btn {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 28px;
+    height: 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: var(--text-secondary);
+}
+
+.coffee-card.editing .color-picker-btn {
+    display: flex;
+}
+
+.color-picker-btn:hover {
+    border-color: var(--accent);
+}
+
+.color-picker-btn.has-color {
+    color: var(--card-accent-color);
+}
+
+.color-picker-popup {
+    display: none;
+    position: absolute;
+    top: 25px;
+    left: -10px;
     background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 8px 32px var(--shadow);
+    z-index: 20;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.color-picker-popup.active {
+    display: grid;
+}
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.color-swatch:hover {
+    transform: scale(1.15);
+}
+
+.color-swatch.active {
+    border-color: var(--text-primary);
+}
+
+.clear-color-btn {
+    grid-column: span 3;
+    text-align: center;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    transition: color 0.2s;
+}
+
+.clear-color-btn:hover {
+    color: var(--text-primary);
 }
 
 .coffee-header {

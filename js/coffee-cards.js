@@ -36,6 +36,18 @@ import { ensureInitialValues } from './feedback.js';
 import './brew-timer.js';
 import './card-editor.js';
 
+const PASTEL_COLORS = [
+    '#e0727f', // Berry
+    '#f2a673', // Peach
+    '#f5d073', // Yellow
+    '#94b897', // Sage
+    '#7dc8b8', // Mint
+    '#8dbbdb', // Ice Blue
+    '#b29ddb', // Lavender
+    '#db98af', // Rose
+    '#a39e99'  // Warm Grey
+];
+
 
 function formatCoffeeOrigin(origin = '') {
     const originText = String(origin || '').trim();
@@ -84,12 +96,20 @@ export function renderCoffeeCard(coffee, index) {
     const brewParams = getBrewRecommendations(coffee);
     const amount = coffee.customAmount || coffeeAmount;
 
+    // Farb-Aura Style generieren
+    const colorStyle = coffee.colorTag ? `--card-accent-color: ${sanitizeHTML(coffee.colorTag)};` : '';
+    const currentHex = coffee.colorTag || '';
+
+    // Color Swatches generieren
+    const swatchesHTML = PASTEL_COLORS.map(color =>
+        `<div class="color-swatch ${currentHex === color ? 'active' : ''}" style="background-color: ${color};" onclick="event.stopPropagation(); window.selectColor(${index}, '${color}');"></div>`
+    ).join('');
+
     // Roastery: nur anzeigen wenn Wert vorhanden
     const roasteryHTML = coffee.roastery
         ? `<div class="coffee-roastery" id="roastery-display-${index}">${sanitizeHTML(coffee.roastery)}</div>`
         : `<div class="coffee-roastery" id="roastery-display-${index}" style="display:none;"></div>`;
 
-    // Extra info lines: only render when value exists and isn't a default placeholder
     const hasVariety = coffee.cultivar && coffee.cultivar !== 'Unknown';
     const hasAltitude = coffee.altitude && coffee.altitude !== '1500';
     const hasTastingNotes = coffee.tastingNotes && coffee.tastingNotes !== 'No notes';
@@ -102,8 +122,19 @@ export function renderCoffeeCard(coffee, index) {
                 </div>` : '';
 
     return `
-        <div class="coffee-card" data-original-index="${index}">
+        <div class="coffee-card" data-original-index="${index}" style="${colorStyle}">
             <div class="coffee-header">
+
+                <button class="color-picker-btn ${currentHex ? 'has-color' : ''}" style="${currentHex ? `color: ${currentHex};` : ''}" id="color-picker-btn-${index}" onclick="event.stopPropagation(); window.toggleColorPicker(${index});">
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                    </svg>
+                </button>
+                <div class="color-picker-popup" id="color-popup-${index}" onclick="event.stopPropagation();">
+                    ${swatchesHTML}
+                    <div class="clear-color-btn" onclick="event.stopPropagation(); window.selectColor(${index}, '');">Keine Farbe</div>
+                </div>
+
                 <div>
                     ${roasteryHTML}
                     <div class="coffee-name" id="name-display-${index}">${sanitizeHTML(coffee.name)}</div>

@@ -125,10 +125,17 @@ async function saveEdits(index, card) {
         : formatCoffeeOrigin(coffee.origin);
     const newRoastery = roasteryInput?.value.trim() || '';
 
+    // Neue Farbe abrufen (wenn sie geändert wurde)
+    const tempColor = card.dataset.tempColor;
+    const newColor  = tempColor !== undefined ? (tempColor === '' ? null : tempColor) : coffee.colorTag;
+
     // Optimistic UI: update local state immediately
     coffee.name     = newName;
     coffee.origin   = newOrigin;
     coffee.roastery = newRoastery;
+    if (tempColor !== undefined) {
+        coffee.colorTag = newColor;
+    }
 
     // Reset card editing state
     card.classList.remove('editing');
@@ -145,11 +152,19 @@ async function saveEdits(index, card) {
     replaceInputWithDisplay(nameInput,     'coffee-name',     `name-display-${index}`,     sanitizeHTML(newName));
     replaceInputWithDisplay(originInput,   'coffee-origin',   `origin-display-${index}`,   sanitizeHTML(newOrigin));
 
+    // Temporären Farbspeicher leeren
+    delete card.dataset.tempColor;
+
     // Persist locally
     localStorage.setItem('coffees', JSON.stringify(coffees));
 
     // Backend PATCH with full-sync fallback on failure
-    await patchBrewToBackend(index, { coffee_name: newName, origin: newOrigin, roastery: newRoastery });
+    await patchBrewToBackend(index, {
+        coffee_name: newName,
+        origin: newOrigin,
+        roastery: newRoastery,
+        colorTag: newColor
+    });
 }
 
 /**
@@ -224,6 +239,58 @@ async function patchBrewToBackend(index, updates) {
         clearTimeout(timer);
     }
 }
+
+// Schließt Popups, wenn man irgendwo anders hinklickt
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.color-picker-popup') && !e.target.closest('.color-picker-btn')) {
+        document.querySelectorAll('.color-picker-popup').forEach(p => p.classList.remove('active'));
+    }
+});
+
+export function toggleColorPicker(index) {
+    const popup = document.getElementById(`color-popup-${index}`);
+    if (popup) {
+        document.querySelectorAll('.color-picker-popup').forEach(p => {
+            if (p !== popup) p.classList.remove('active');
+        });
+        popup.classList.toggle('active');
+    }
+}
+
+export function selectColor(index, color) {
+    const card = document.querySelector(`.coffee-card[data-original-index="${index}"]`);
+    if (!card) return;
+
+    // CSS-Variable direkt aktualisieren für Instant-Preview
+    if (color) {
+        card.style.setProperty('--card-accent-color', color);
+    } else {
+        card.style.removeProperty('--card-accent-color');
+    }
+
+    // Farbe temporär in Dataset speichern
+    card.dataset.tempColor = color;
+
+    // Popup schließen
+    const popup = document.getElementById(`color-popup-${index}`);
+    if (popup) popup.classList.remove('active');
+
+    // Button-Icon-Farbe anpassen
+    const btn = document.getElementById(`color-picker-btn-${index}`);
+    if (btn) {
+        if(color) {
+            btn.classList.add('has-color');
+            btn.style.color = color;
+        } else {
+            btn.classList.remove('has-color');
+            btn.style.color = 'var(--text-secondary)';
+        }
+    }
+}
+
+// Window-Zuweisung für Inline-HTML Aufrufe
+window.toggleColorPicker = toggleColorPicker;
+window.selectColor = selectColor;
 
 // Register on window for onclick handlers in card templates
 window.toggleEditMode = toggleEditMode;
