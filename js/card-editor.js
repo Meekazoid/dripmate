@@ -265,7 +265,8 @@ export function selectColor(index, color) {
     if (color) {
         card.style.setProperty('--card-accent-color', color);
     } else {
-        card.style.removeProperty('--card-accent-color');
+        // NEU: Zwingt die Farbe aktiv auf transparent, was den Cache-Bug beim Löschen behebt!
+        card.style.setProperty('--card-accent-color', 'transparent');
     }
 
     // Farbe temporär in Dataset speichern

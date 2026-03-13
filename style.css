@@ -780,16 +780,17 @@ body.light-mode .picker-option.active {
 
 .coffee-card {
     --card-accent-color: transparent;
-    background:
-        /* Fester 150px Radius verhindert das Auslaufen nach unten! */
-        radial-gradient(150px circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 25%, transparent) 0%, transparent 100%),
+    background: 
+        /* NEU: Ellipse (180px breit, 100px hoch) statt Kreis, damit es nicht zu tief geht! */
+        radial-gradient(ellipse 180px 100px at 0% 0%, color-mix(in srgb, var(--card-accent-color) 25%, transparent) 0%, transparent 100%),
         linear-gradient(135deg, rgba(212, 165, 116, 0.10) 0%, rgba(212, 165, 116, 0.04) 28%, var(--bg-secondary) 55%);
     border: 1px solid var(--border);
     border-left: 1px solid rgba(212, 165, 116, 0.38);
     border-radius: 16px;
     padding: 24px;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s, background 0.3s ease;
+    /* NEU: 'background' aus Transition entfernt -> kein Flimmern mehr beim Ausklappen */
+    transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
     overflow: visible !important;
     height: auto !important;
@@ -798,8 +799,9 @@ body.light-mode .picker-option.active {
 }
 
 body.light-mode .coffee-card {
-    background:
-        radial-gradient(150px circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 20%, transparent) 0%, transparent 100%),
+    background: 
+        /* NEU: Deckkraft von 20% auf 45% erhöht für den Light-Mode */
+        radial-gradient(ellipse 180px 100px at 0% 0%, color-mix(in srgb, var(--card-accent-color) 45%, transparent) 0%, transparent 100%),
         linear-gradient(135deg, rgba(139, 90, 43, 0.07) 0%, rgba(139, 90, 43, 0.025) 28%, var(--bg-secondary) 55%);
     border-left: 1px solid rgba(139, 90, 43, 0.45);
 }
@@ -810,8 +812,8 @@ body.light-mode .coffee-card {
 }
 
 .coffee-card.expanded {
-    background:
-        radial-gradient(150px circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 25%, transparent) 0%, transparent 100%),
+    background: 
+        radial-gradient(ellipse 180px 100px at 0% 0%, color-mix(in srgb, var(--card-accent-color) 25%, transparent) 0%, transparent 100%),
         var(--bg-secondary);
     box-shadow: 0 12px 32px var(--shadow);
     overflow: visible !important;
@@ -820,36 +822,33 @@ body.light-mode .coffee-card {
 }
 
 body.light-mode .coffee-card.expanded {
-    background:
-        radial-gradient(150px circle at 0% 0%, color-mix(in srgb, var(--card-accent-color) 20%, transparent) 0%, transparent 100%),
+    background: 
+        radial-gradient(ellipse 180px 100px at 0% 0%, color-mix(in srgb, var(--card-accent-color) 45%, transparent) 0%, transparent 100%),
         var(--bg-secondary);
 }
 
 /* --- COLOR PICKER BUTTON & POPUP --- */
 .color-picker-btn {
     position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 28px;
-    height: 28px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 6px; /* Gleiche eckige Form wie Stift und Mülleimer */
+    /* Positioniert innerhalb der Karte, exakt beim Text */
+    top: 24px;
+    left: 24px;
+    background: transparent; /* NEU: Komplett transparent wie Stift/Mülleimer */
+    border: none;            /* NEU: Kein Rand */
     cursor: pointer;
     z-index: 10;
     display: none;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
     color: var(--text-secondary);
-    opacity: 0.6;
+    transition: color 0.2s;
+    padding: 0;
 }
 .coffee-card.editing .color-picker-btn {
     display: flex;
 }
 .color-picker-btn:hover {
-    opacity: 1;
-    border-color: var(--accent);
+    color: var(--accent);
 }
 .color-picker-btn.has-color {
     opacity: 1;
@@ -859,7 +858,7 @@ body.light-mode .coffee-card.expanded {
     display: none;
     position: absolute;
     top: 25px;
-    left: -10px;
+    left: 0;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -869,7 +868,6 @@ body.light-mode .coffee-card.expanded {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
-
 .color-picker-popup.active {
     display: grid;
 }
@@ -882,32 +880,29 @@ body.light-mode .coffee-card.expanded {
     border: 2px solid transparent;
     transition: transform 0.2s, border-color 0.2s;
 }
-
 .color-swatch:hover {
     transform: scale(1.15);
 }
-
 .color-swatch.active {
     border-color: var(--text-primary);
 }
 
 .clear-color-btn {
     grid-column: span 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: var(--text-secondary);
     cursor: pointer;
     margin-top: 4px;
     padding-top: 8px;
     border-top: 1px solid var(--border);
     transition: color 0.2s;
-    opacity: 0.6;
 }
-
 .clear-color-btn:hover {
-    opacity: 1;
-    color: var(--color-danger); /* Rötlich bei Hover, um "Entfernen" zu signalisieren */
+    color: var(--text-primary);
 }
 
 .coffee-header {

@@ -130,9 +130,9 @@ export function renderCoffeeCard(coffee, index) {
                     <div class="coffee-origin" id="origin-display-${index}">${sanitizeHTML(formatCoffeeOrigin(coffee.origin))}</div>
                 </div>
 
-                <button class="color-picker-btn ${currentHex ? 'has-color' : ''}" style="${currentHex ? `color: ${currentHex}; border-color: ${currentHex};` : ''}" id="color-picker-btn-${index}" onclick="event.stopPropagation(); window.toggleColorPicker(${index});">
-                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 21a9 9 0 0 1-6.67-2.73 9 9 0 0 1-2.2-7 9 9 0 0 1 7.22-7.56 9 9 0 0 1 8.87 3.55c.34.52.4 1.15.15 1.73-.24.58-.77.96-1.39.96h-2.12c-.44 0-.82.26-1 .66a1.18 1.18 0 0 0 .15 1.25c.32.42.5.94.5 1.48a3.1 3.1 0 0 1-3.1 3.1z"></path>
+                <button class="color-picker-btn ${currentHex ? 'has-color' : ''}" style="${currentHex ? `color: ${currentHex};` : ''}" id="color-picker-btn-${index}" onclick="event.stopPropagation(); window.toggleColorPicker(${index});">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22a10 10 0 1 0-10-10c0 4.1 2 7.7 5 10a1.8 1.8 0 0 0 2-1.8V19a2 2 0 0 1 2-2h1.5a5.5 5.5 0 0 0 5.5-5.5V10c0-4.4-3.6-8-8-8z"></path>
                         <circle cx="7.5" cy="10.5" r=".5" fill="currentColor"></circle>
                         <circle cx="11.5" cy="7.5" r=".5" fill="currentColor"></circle>
                         <circle cx="15.5" cy="10.5" r=".5" fill="currentColor"></circle>
@@ -140,9 +140,7 @@ export function renderCoffeeCard(coffee, index) {
                 </button>
                 <div class="color-picker-popup" id="color-popup-${index}" onclick="event.stopPropagation();">
                     ${swatchesHTML}
-                    <div class="clear-color-btn" onclick="event.stopPropagation(); window.selectColor(${index}, '');" title="Farbe entfernen">
-                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </div>
+                    <div class="clear-color-btn" onclick="event.stopPropagation(); window.selectColor(${index}, '');">Keine Farbe</div>
                 </div>
 
                 <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${index});">
