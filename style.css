@@ -829,21 +829,29 @@ body.light-mode .coffee-card.expanded {
 
 /* --- COLOR PICKER BUTTON & POPUP --- */
 .color-picker-wrapper {
-    position: relative;
+    position: absolute;
+    top: -2px; /* Perfekte vertikale Ausrichtung mit den rechten Buttons */
+    left: 0;
     display: none; /* Nur im Edit-Modus sichtbar */
-    margin-bottom: 12px; /* Schiebt das Eingabefeld exakt eine Zeile nach unten! */
     z-index: 10;
 }
 .coffee-card.editing .color-picker-wrapper {
     display: block; 
 }
 
+/* Sanftes Nach-unten-Schieben des Textes im Edit-Modus, um Platz zu machen */
+.coffee-header-text {
+    transition: margin-top 0.2s ease;
+}
+.coffee-card.editing .coffee-header-text {
+    margin-top: 36px;
+}
+
 .color-picker-btn {
     width: 32px;
     height: 32px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    background: transparent; /* Komplett transparent */
+    border: none; /* Rand entfernt, wie beim Stift/Mülleimer */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -856,8 +864,8 @@ body.light-mode .coffee-card.expanded {
 .color-picker-popup {
     display: none;
     position: absolute;
-    top: 38px;
-    left: 0; /* Popup öffnet sich wieder bündig nach rechts */
+    top: 36px;
+    left: 0;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 12px;
