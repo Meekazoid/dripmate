@@ -150,7 +150,7 @@ export function renderCoffeeCard(coffee, index) {
                     <div class="coffee-origin" id="origin-display-${index}" data-origin-raw="${rawSanitizedOrigin}">${originDisplaySanitized}</div>
                 </div>
 
-                <div style="display: flex; gap: 8px; align-items: flex-start;">
+                <div class="coffee-header-actions">
                     <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${index});">
                     <svg class="star-icon" viewBox="0 0 24 24">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>

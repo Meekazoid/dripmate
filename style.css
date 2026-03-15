@@ -830,7 +830,7 @@ body.light-mode .coffee-card.expanded {
 /* --- COLOR PICKER BUTTON & POPUP --- */
 .color-picker-wrapper {
     position: absolute;
-    top: -2px; /* Perfekte vertikale Ausrichtung mit den rechten Buttons */
+    top: 0;
     left: 0;
     display: none; /* Nur im Edit-Modus sichtbar */
     z-index: 10;
@@ -844,27 +844,27 @@ body.light-mode .coffee-card.expanded {
     transition: margin-top 0.2s ease;
 }
 .coffee-card.editing .coffee-header-text {
-    margin-top: 36px;
+    margin-top: 44px;
 }
 
 .color-picker-btn {
     width: 32px;
     height: 32px;
-    background: transparent; /* Komplett transparent */
-    border: none; /* Rand entfernt, wie beim Stift/Mülleimer */
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-secondary);
     padding: 0;
-    /* KEINE Hover-Effekte oder dynamische Verfärbungen. Bleibt immer Standard. */
 }
 
 .color-picker-popup {
     display: none;
     position: absolute;
-    top: 36px;
+    top: 40px;
     left: 0;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
@@ -911,9 +911,16 @@ body.light-mode .coffee-card.expanded {
 .coffee-header {
     display: flex;
     justify-content: space-between;
-    align-items: start;
+    align-items: flex-start;
     margin-bottom: 10px;
     position: relative;
+}
+
+.coffee-header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin-left: 8px;
 }
 
 .coffee-name {
