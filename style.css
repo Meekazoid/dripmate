@@ -788,12 +788,9 @@ body.light-mode .picker-option.active {
 
 .coffee-card {
     --card-accent-color: transparent;
-    background:
-        /* NEU: Ellipse (180px breit, 100px hoch) statt Kreis, damit es nicht zu tief geht! */
-        radial-gradient(ellipse 180px 100px at 0% 0%, color-mix(in srgb, var(--card-accent-color) 25%, transparent) 0%, transparent 100%),
-        linear-gradient(135deg, rgba(212, 165, 116, 0.10) 0%, rgba(212, 165, 116, 0.04) 28%, var(--bg-secondary) 55%);
+    background: var(--bg-secondary);
     border: 1px solid var(--border);
-    border-left: 1px solid rgba(212, 165, 116, 0.38);
+    border-left: 4px solid var(--accent);
     border-radius: 16px;
     padding: 24px;
     cursor: pointer;
@@ -807,11 +804,27 @@ body.light-mode .picker-option.active {
 }
 
 body.light-mode .coffee-card {
-    background:
-        /* NEU: Deckkraft von 20% auf 45% erhöht für den Light-Mode */
-        radial-gradient(ellipse 180px 100px at 0% 0%, color-mix(in srgb, var(--card-accent-color) 45%, transparent) 0%, transparent 100%),
-        linear-gradient(135deg, rgba(139, 90, 43, 0.07) 0%, rgba(139, 90, 43, 0.025) 28%, var(--bg-secondary) 55%);
-    border-left: 1px solid rgba(139, 90, 43, 0.45);
+    background: var(--bg-secondary);
+    border-left: 4px solid var(--accent);
+}
+
+.coffee-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 70px;
+    background: linear-gradient(to right, color-mix(in srgb, var(--accent) 15%, transparent), transparent);
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.coffee-card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .coffee-card:hover {
@@ -820,9 +833,7 @@ body.light-mode .coffee-card {
 }
 
 .coffee-card.expanded {
-    background:
-        radial-gradient(ellipse 180px 100px at 0% 0%, color-mix(in srgb, var(--card-accent-color) 25%, transparent) 0%, transparent 100%),
-        var(--bg-secondary);
+    background: var(--bg-secondary);
     box-shadow: 0 12px 32px var(--shadow);
     overflow: visible !important;
     height: auto !important;
@@ -830,9 +841,7 @@ body.light-mode .coffee-card {
 }
 
 body.light-mode .coffee-card.expanded {
-    background:
-        radial-gradient(ellipse 180px 100px at 0% 0%, color-mix(in srgb, var(--card-accent-color) 45%, transparent) 0%, transparent 100%),
-        var(--bg-secondary);
+    background: var(--bg-secondary);
 }
 
 /* --- COLOR PICKER BUTTON & POPUP --- */
