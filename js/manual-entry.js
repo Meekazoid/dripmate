@@ -107,7 +107,7 @@ export async function saveCoffeeManual() {
         process: process || 'unknown',
         cultivar: cultivar || 'Unknown',
         altitude: altitude || '1500',
-        roaster: roaster || 'Unknown',
+        roastery: roaster || 'Unknown',
         tastingNotes: tastingNotes || 'No notes',
         addedDate: new Date().toISOString()
     });

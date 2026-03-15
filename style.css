@@ -719,13 +719,21 @@ body.light-mode .picker-option.active {
     border-color: rgba(139, 100, 60, 0.25);
 }
 
-/* -- Process chip in manual form -- */ .process-chip {
+/* -- Process chip in manual form -- */
+.process-chip {
     width: 100%;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    height: auto;
 }
 
 .process-chip .brew-chip-label {
-    font-size: 0.82rem;
+    font-size: 1rem;
     color: var(--text-secondary);
 }
 
