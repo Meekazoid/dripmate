@@ -10,7 +10,7 @@ import { showMessage } from './messages.js';
 // PROCESS PICKER
 // ==========================================
 
-const PROCESS_LABELS = {
+export const PROCESS_LABELS = {
     '': '– optional –',
     'washed': 'Washed',
     'natural': 'Natural',
@@ -35,17 +35,29 @@ function closeProcessPicker() {
 }
 
 function selectProcess(value) {
+    // Neu: Prüfen ob wir im Inline-Edit-Modus einer Karte sind
+    if (typeof window.currentProcessEditIndex === 'number') {
+        const btn = document.getElementById(`process-edit-${window.currentProcessEditIndex}`);
+        if (btn) {
+            btn.dataset.value = value;
+            btn.textContent = PROCESS_LABELS[value] || value || 'Unknown';
+        }
+        closeProcessPicker();
+        window.currentProcessEditIndex = null;
+        return;
+    }
+
+    // Originales Verhalten für "Manual Entry" Formular
     const hiddenInput = document.getElementById('process');
     const chipLabel = document.getElementById('process-chip-label');
     const chip = document.getElementById('process-chip');
 
-    hiddenInput.value = value;
-    chipLabel.textContent = PROCESS_LABELS[value] || PROCESS_LABELS[''];
+    if(hiddenInput) hiddenInput.value = value;
+    if(chipLabel) chipLabel.textContent = PROCESS_LABELS[value] || PROCESS_LABELS[''];
 
-    if (value) {
-        chip.classList.add('has-value');
-    } else {
-        chip.classList.remove('has-value');
+    if (chip) {
+        if (value) chip.classList.add('has-value');
+        else chip.classList.remove('has-value');
     }
 
     closeProcessPicker();
