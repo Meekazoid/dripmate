@@ -102,7 +102,7 @@ export function renderCoffeeCard(coffee, index) {
 
     // Color Swatches generieren
     const swatchesHTML = PASTEL_COLORS.map(color => 
-        `<div class="color-swatch ${currentHex === color ? 'active' : ''}" style="background-color: ${color};" onclick="event.stopPropagation(); window.selectColor(${index}, '${color}');"></div>`
+        `<div class="color-swatch ${currentHex === color ? 'active' : ''}" data-color="${color}" style="background-color: ${color};" onclick="event.stopPropagation(); window.selectColor(${index}, '${color}');"></div>`
     ).join('');
 
     // Roastery: nur anzeigen wenn Wert vorhanden und nicht 'Unknown'

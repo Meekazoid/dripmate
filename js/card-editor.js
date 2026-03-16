@@ -271,8 +271,21 @@ export function selectColor(index, color) {
     // Farbe temporär in Dataset speichern
     card.dataset.tempColor = color;
 
-    // Popup schließen
+    // Update der .active Klasse im Popup
     const popup = document.getElementById(`color-popup-${index}`);
+    if (popup) {
+        // 1. Klasse von allen entfernen
+        const swatches = popup.querySelectorAll('.color-swatch');
+        swatches.forEach(s => s.classList.remove('active'));
+        
+        // 2. Klasse zum neu gewählten hinzufügen (sofern nicht "No color" geklickt wurde)
+        if (color) {
+            const selectedSwatch = popup.querySelector(`.color-swatch[data-color="${color}"]`);
+            if (selectedSwatch) selectedSwatch.classList.add('active');
+        }
+    }
+
+    // Popup schließen
     if (popup) popup.classList.remove('active');
     
     // Keine Manipulation des Button-Styles mehr! Der Button bleibt immer strikt im Standard-Design.
