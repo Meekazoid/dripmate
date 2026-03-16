@@ -104,10 +104,10 @@ export async function saveCoffeeManual() {
 
     addCoffee({
         name, origin,
-        process: process || 'unknown',
+        process: process || '',
         cultivar: cultivar || 'Unknown',
         altitude: altitude || '1500',
-        roastery: roaster || 'Unknown',
+        roastery: roaster || '',
         tastingNotes: tastingNotes || 'No notes',
         addedDate: new Date().toISOString()
     });

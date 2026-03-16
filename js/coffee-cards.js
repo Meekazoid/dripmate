@@ -105,10 +105,15 @@ export function renderCoffeeCard(coffee, index) {
         `<div class="color-swatch ${currentHex === color ? 'active' : ''}" style="background-color: ${color};" onclick="event.stopPropagation(); window.selectColor(${index}, '${color}');"></div>`
     ).join('');
 
-    // Roastery: nur anzeigen wenn Wert vorhanden
-    const roasteryHTML = coffee.roastery
+    // Roastery: nur anzeigen wenn Wert vorhanden und nicht 'Unknown'
+    const roasteryHTML = (coffee.roastery && coffee.roastery !== 'Unknown')
         ? `<div class="coffee-roastery" id="roastery-display-${index}">${sanitizeHTML(coffee.roastery)}</div>`
         : `<div class="coffee-roastery" id="roastery-display-${index}" style="display:none;"></div>`;
+
+    // Process: nur das farbige Badge rendern, wenn etwas ausgewählt wurde
+    const processHTML = (coffee.process && coffee.process !== 'unknown')
+        ? `<div class="coffee-process-small">${sanitizeHTML(coffee.process)}</div>`
+        : ``; // Nichts rendern, wenn leer
 
     // NEU: Getrennte Logik für Sanitization (löst die Test-Assertions)
     const rawSanitizedOrigin = sanitizeHTML(coffee.origin);
@@ -173,7 +178,7 @@ export function renderCoffeeCard(coffee, index) {
             </div>
 
             <div class="process-freshness-row">
-                <div class="coffee-process-small">${sanitizeHTML(coffee.process)}</div>
+                ${processHTML}
                 <div class="freshness-badge-inline" id="freshness-badge-${index}">
                     ${getRoastFreshnessBadge(coffee.roastDate)}
                 </div>
