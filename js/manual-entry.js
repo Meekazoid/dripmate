@@ -35,12 +35,13 @@ function closeProcessPicker() {
 }
 
 function selectProcess(value) {
-    // Neu: Prüfen ob wir im Inline-Edit-Modus einer Karte sind
+    // 1. Fall: Wir sind im Inline-Edit-Modus auf einer Karte
     if (typeof window.currentProcessEditIndex === 'number') {
         const btn = document.getElementById(`process-edit-${window.currentProcessEditIndex}`);
         if (btn) {
             btn.dataset.value = value;
             const newText = PROCESS_LABELS[value] || value || 'Unknown';
+            // Unterstützt Input (alt) und Div (neu)
             if (btn.tagName === 'INPUT') {
                 btn.value = newText;
             } else {
@@ -52,19 +53,20 @@ function selectProcess(value) {
         return;
     }
 
-    // Originales Verhalten für "Manual Entry" Formular
-    const hiddenInput = document.getElementById('process');
-    const chipLabel = document.getElementById('process-chip-label');
-    const chip = document.getElementById('process-chip');
-
-    if(hiddenInput) hiddenInput.value = value;
-    if(chipLabel) chipLabel.textContent = PROCESS_LABELS[value] || PROCESS_LABELS[''];
-
-    if (chip) {
-        if (value) chip.classList.add('has-value');
-        else chip.classList.remove('has-value');
+    // 2. Fall: Wir sind im normalen "Add Coffee" Formular
+    const processInput = document.getElementById('process');
+    const toggleBtn = document.getElementById('manual-processing-toggle');
+    
+    if (processInput) processInput.value = value;
+    if (toggleBtn) {
+        if (value) {
+            toggleBtn.innerHTML = `${PROCESS_LABELS[value]} <span style="margin-left: auto;">▼</span>`;
+            toggleBtn.classList.add('has-value');
+        } else {
+            toggleBtn.innerHTML = `Processing Method <span style="margin-left: auto;">▼</span>`;
+            toggleBtn.classList.remove('has-value');
+        }
     }
-
     closeProcessPicker();
 }
 
