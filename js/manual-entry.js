@@ -5,23 +5,11 @@
 import { addCoffee, saveCoffeesAndSync } from './state.js';
 import { renderCoffees } from './coffee-list.js';
 import { showMessage } from './messages.js';
+import { PROCESS_LABELS } from './coffee-schema.js';
 
 // ==========================================
 // PROCESS PICKER
 // ==========================================
-
-export const PROCESS_LABELS = {
-    '': '– optional –',
-    'washed': 'Washed',
-    'natural': 'Natural',
-    'honey': 'Honey',
-    'anaerobic natural': 'Anaerobic Natural',
-    'anaerobic washed': 'Anaerobic Washed',
-    'carbonic maceration': 'Carbonic Maceration',
-    'yeast inoculated natural': 'Yeast Inoculated Natural',
-    'nitro washed': 'Nitro Washed',
-    'extended fermentation': 'Extended Fermentation'
-};
 
 function openProcessPicker() {
     const modal = document.getElementById('processModal');

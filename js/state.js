@@ -1,3 +1,5 @@
+import { enforceCanonicalSchema } from './coffee-schema.js';
+
 // ==========================================
 // CENTRALIZED SHARED STATE V5.2
 // ES module · Expose legacy window.* values
@@ -17,7 +19,7 @@ export function createStableCoffeeId(coffee = {}, fallbackIndex = 0) {
   if (coffee.id) return String(coffee.id);
 
   const normalizedName = String(coffee.name || '').trim().toLowerCase();
-  const normalizedRoaster = String(coffee.roaster || '').trim().toLowerCase();
+  const normalizedRoaster = String(coffee.roastery || coffee.roaster || '').trim().toLowerCase();
   const normalizedOrigin = String(coffee.origin || '').trim().toLowerCase();
   const stableDate = String(coffee.addedDate || coffee.savedAt || coffee.createdAt || '').trim();
   const fallbackDate = stableDate || new Date().toISOString();
@@ -28,7 +30,8 @@ export function createStableCoffeeId(coffee = {}, fallbackIndex = 0) {
 }
 
 export function normalizeCoffeeRecord(inputCoffee = {}, fallbackIndex = 0) {
-  const coffee = { ...(inputCoffee || {}) };
+  const canonicalCoffee = enforceCanonicalSchema(inputCoffee);
+  const coffee = { ...canonicalCoffee };
   coffee.id = createStableCoffeeId(coffee, fallbackIndex);
   coffee.feedback = coffee.feedback && typeof coffee.feedback === 'object' ? coffee.feedback : {};
   coffee.feedbackHistory = Array.isArray(coffee.feedbackHistory) ? coffee.feedbackHistory : [];
