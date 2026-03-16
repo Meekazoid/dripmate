@@ -30,9 +30,8 @@ export function startBrewTimer(index) {
     const coffee = coffees[index];
     const brewParams = getBrewRecommendations(coffee);
 
-    // Record brew start timestamp for 30s history entry
     if (!brewTimers[index]) brewTimers[index] = {};
-    brewTimers[index].brewStartedAt = Date.now();
+    const brewStartedAt = Date.now();
 
     const steps = brewParams.steps.map((step, i) => ({
         ...step,
@@ -47,29 +46,24 @@ export function startBrewTimer(index) {
         step.duration = step.endSeconds - step.startSeconds;
     });
 
-    const brewStartedAt = Date.now();
-    brewTimers[index] = { startTime: performance.now(), steps, isRunning: true, isPaused: false, brewStartedAt };
-
-    // Snapshot brew parameters at start time (values may change after 30s)
+    // Snapshot brew parameters at start time
     const methodLabels = { v60: 'V60', chemex: 'Chemex', aeropress: 'AeroPress' };
     const methodLabel = methodLabels[brewParams.method] || brewParams.method || 'V60';
     const brewAmount = coffee.customAmount || coffeeAmount;
     const brewGrind = brewParams.grindSetting || '-';
     const brewTemp = coffee.customTemp || brewParams.temperature || '-';
-    const brewSnapshot = `Brewed ${brewAmount}g on ${methodLabel}  \u203a  Grind ${brewGrind}  \u203a  ${brewTemp}`;
+    const brewSnapshot = `Brewed ${brewAmount}g on ${methodLabel}  ›  Grind ${brewGrind}  ›  ${brewTemp}`;
 
-    // Automatically log history entry after 30 seconds
-    brewTimers[index].historyTimeout = setTimeout(() => {
-        const timer = brewTimers[index];
-        if (!timer || timer.historyLogged) return;
-        timer.historyLogged = true;
-        addBrewHistoryEntry(coffee, {
-            timestamp: new Date().toISOString(),
-            brewStart: true,
-            brewLabel: brewSnapshot
-        });
-        try { localStorage.setItem('coffees', JSON.stringify(coffees)); } catch(e) {}
-    }, 30000);
+    // WICHTIG: Wir nutzen jetzt Date.now() für absolute, echte Zeitsynchronisation
+    brewTimers[index] = { 
+        startTime: Date.now(), // <-- Background-Proof
+        steps, 
+        isRunning: true, 
+        isPaused: false, 
+        brewStartedAt,
+        historyLogged: false,
+        brewSnapshot: brewSnapshot // Für den Auto-Log gespeichert
+    };
 
     const startBtn = document.getElementById(`start-brew-${index}`);
     const pauseBtn = document.getElementById(`pause-brew-${index}`);
@@ -105,14 +99,16 @@ export function pauseBrewTimer(index) {
     if (!timer) return;
 
     if (timer.isPaused) {
-        timer.startTime = performance.now() - (timer.pausedAt || 0);
+        // Resume: Verschiebe die Startzeit um die Zeit, die wir pausiert haben
+        timer.startTime = Date.now() - (timer.pausedAt || 0);
         timer.isPaused = false;
         timer.isRunning = true;
         updateBrewProgress(index);
         const pauseBtn = document.getElementById(`pause-brew-${index}`);
         if (pauseBtn) { pauseBtn.textContent = 'Pause'; pauseBtn.classList.remove('resume-active'); }
     } else {
-        timer.pausedAt = performance.now() - timer.startTime;
+        // Pause: Speichere, wie viele Millisekunden vergangen waren, bevor wir pausiert haben
+        timer.pausedAt = Date.now() - timer.startTime;
         timer.isPaused = true;
         timer.isRunning = false;
         if (animationFrames[index]) cancelAnimationFrame(animationFrames[index]);
@@ -124,12 +120,6 @@ export function pauseBrewTimer(index) {
 export function resetBrewTimer(index) {
     const timer = brewTimers[index];
     if (!timer) return;
-
-    // Cancel the 30s auto-log timeout if reset fires before it triggers
-    if (timer.historyTimeout) {
-        clearTimeout(timer.historyTimeout);
-        timer.historyTimeout = null;
-    }
 
     timer.isRunning = false;
     if (animationFrames[index]) cancelAnimationFrame(animationFrames[index]);
@@ -164,7 +154,8 @@ function updateBrewProgress(index) {
     const timer = brewTimers[index];
     if (!timer || !timer.isRunning) return;
 
-    const elapsedMs = performance.now() - timer.startTime;
+    // Echte Zeitdifferenz berechnen (ignoriert Standby/Background-Throttling)
+    const elapsedMs = Date.now() - timer.startTime;
     const elapsedSeconds = elapsedMs / 1000;
 
     const display = document.getElementById(`brew-timer-display-${index}`);
@@ -183,10 +174,34 @@ function updateBrewProgress(index) {
         bar.style.width = `${pct.toFixed(2)}%`;
     });
 
+    // NEU: Der 30s-Logger, der auch funktioniert, wenn das Handy schläft!
+    if (elapsedMs >= 30000 && !timer.historyLogged) {
+        timer.historyLogged = true;
+        addBrewHistoryEntry(coffees[index], {
+            timestamp: new Date().toISOString(),
+            brewStart: true,
+            brewLabel: timer.brewSnapshot
+        });
+        try { localStorage.setItem('coffees', JSON.stringify(coffees)); } catch(e) {}
+    }
+
     animationFrames[index] = requestAnimationFrame(() => updateBrewProgress(index));
 }
 
-// Register real functions â€” stubs in index.html delegate to these
+// Globaler "Wake-Up"-Trigger: Wenn man aus einer anderen App / dem Standby zurückkehrt
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        Object.keys(brewTimers).forEach(index => {
+            const timer = brewTimers[index];
+            if (timer && timer.isRunning && !timer.isPaused) {
+                // Einmal manuell triggern, um die Anzeige sofort zu korrigieren
+                updateBrewProgress(index);
+            }
+        });
+    }
+});
+
+// Register real functions — stubs in index.html delegate to these
 window._startBrewTimer = startBrewTimer;
 window._pauseBrewTimer = pauseBrewTimer;
 window._resetBrewTimer = resetBrewTimer;
