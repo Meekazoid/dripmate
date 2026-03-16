@@ -104,11 +104,27 @@ function enterEditMode(index, card) {
         }
     }
 
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    // Process — Readonly-Input, öffnet beim Klick das Modal
+=======
     // Process — Button der das Modal öffnet
+>>>>>>> main
     const processDisplay = document.getElementById(`process-display-${index}`);
     if (processDisplay) {
         const displayLabel = PROCESS_LABELS[coffee.process] || coffee.process || 'Unknown';
         processDisplay.outerHTML = `
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+            <input type="text"
+                   readonly
+                   class="inline-edit-input edit-process"
+                   id="process-edit-${index}"
+                   data-value="${escapeAttr(coffee.process || '')}"
+                   value="${escapeAttr(displayLabel)}"
+                   placeholder="Processing Method"
+                   style="cursor: pointer; text-align: left; width: 100%;"
+                   onclick="event.stopPropagation(); window.openCardProcessPicker(${index});"
+            />`;
+=======
             <button type="button"
                    class="inline-edit-input edit-process"
                    id="process-edit-${index}"
@@ -116,6 +132,7 @@ function enterEditMode(index, card) {
                    style="cursor: pointer; text-align: left; background: transparent; border: 1px dashed var(--accent); border-radius: 4px; padding: 2px 6px; font-family: inherit; font-size: inherit; color: inherit; width: fit-content;"
                    onclick="event.stopPropagation(); window.openCardProcessPicker(${index});"
             >${escapeAttr(displayLabel)}</button>`;
+>>>>>>> main
     }
 
     // Container sichtbar machen, falls er versteckt war
@@ -125,7 +142,15 @@ function enterEditMode(index, card) {
     // Variety / Cultivar — Input
     const cultivarLine = document.getElementById(`cultivar-line-${index}`);
     const cultivarDisplay = document.getElementById(`cultivar-display-${index}`);
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    if (cultivarLine) {
+        cultivarLine.style.display = 'flex';
+        const cultivarLabel = cultivarLine.querySelector('.extra-label');
+        if (cultivarLabel) cultivarLabel.style.display = 'none';
+    }
+=======
     if (cultivarLine) cultivarLine.style.display = 'flex';
+>>>>>>> main
     if (cultivarDisplay) {
         const currentVal = coffee.cultivar === 'Unknown' ? '' : coffee.cultivar;
         cultivarDisplay.outerHTML = `
@@ -133,8 +158,13 @@ function enterEditMode(index, card) {
                    class="inline-edit-input edit-cultivar"
                    id="cultivar-edit-${index}"
                    value="${escapeAttr(currentVal)}"
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+                   placeholder="Variety"
+                   style="text-align: left; width: 100%;"
+=======
                    placeholder="Variety..."
                    style="text-align: right; width: 60%; background: transparent; border: 1px dashed var(--text-muted); color: var(--text-primary); border-radius: 4px; padding: 2px 4px;"
+>>>>>>> main
                    onclick="event.stopPropagation();"
                    onkeydown="if(event.key==='Enter'){event.preventDefault(); toggleEditMode(${index});}"
             />`;
@@ -143,7 +173,15 @@ function enterEditMode(index, card) {
     // Tasting Notes — Input
     const tastingLine = document.getElementById(`tasting-line-${index}`);
     const tastingDisplay = document.getElementById(`tasting-display-${index}`);
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    if (tastingLine) {
+        tastingLine.style.display = 'flex';
+        const tastingLabel = tastingLine.querySelector('.extra-label');
+        if (tastingLabel) tastingLabel.style.display = 'none';
+    }
+=======
     if (tastingLine) tastingLine.style.display = 'flex';
+>>>>>>> main
     if (tastingDisplay) {
         const currentVal = coffee.tastingNotes === 'No notes' ? '' : coffee.tastingNotes;
         tastingDisplay.outerHTML = `
@@ -151,8 +189,13 @@ function enterEditMode(index, card) {
                    class="inline-edit-input edit-tasting"
                    id="tasting-edit-${index}"
                    value="${escapeAttr(currentVal)}"
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+                   placeholder="Tasting Notes"
+                   style="text-align: left; width: 100%;"
+=======
                    placeholder="Tasting Notes..."
                    style="text-align: right; width: 60%; background: transparent; border: 1px dashed var(--text-muted); color: var(--text-primary); border-radius: 4px; padding: 2px 4px;"
+>>>>>>> main
                    onclick="event.stopPropagation();"
                    onkeydown="if(event.key==='Enter'){event.preventDefault(); toggleEditMode(${index});}"
             />`;
@@ -172,7 +215,11 @@ async function saveEdits(index, card) {
     const nameInput     = document.getElementById(`name-edit-${index}`);
     const originInput   = document.getElementById(`origin-edit-${index}`);
     const roasteryInput = document.getElementById(`roastery-edit-${index}`);
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    const processInput  = document.getElementById(`process-edit-${index}`);
+=======
     const processBtn    = document.getElementById(`process-edit-${index}`);
+>>>>>>> main
     const cultivarInput = document.getElementById(`cultivar-edit-${index}`);
     const tastingInput  = document.getElementById(`tasting-edit-${index}`);
 
@@ -182,7 +229,11 @@ async function saveEdits(index, card) {
         ? formatCoffeeOrigin(originInputValue)
         : formatCoffeeOrigin(coffee.origin);
     const newRoastery = roasteryInput?.value.trim() || '';
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    const newProcess  = processInput ? processInput.dataset.value : coffee.process;
+=======
     const newProcess  = processBtn ? processBtn.dataset.value : coffee.process;
+>>>>>>> main
     const newCultivar = cultivarInput?.value.trim() || 'Unknown';
     const newTasting  = tastingInput?.value.trim() || 'No notes';
 
@@ -217,16 +268,35 @@ async function saveEdits(index, card) {
     replaceInputWithDisplay(originInput,   'coffee-origin',   `origin-display-${index}`,   sanitizeHTML(newOrigin));
 
     const displayLabel = PROCESS_LABELS[newProcess] || newProcess || 'unknown';
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    replaceInputWithDisplay(processInput, 'coffee-process-small', `process-display-${index}`, sanitizeHTML(displayLabel));
+=======
     replaceInputWithDisplay(processBtn, 'coffee-process-small', `process-display-${index}`, sanitizeHTML(displayLabel));
+>>>>>>> main
 
     replaceInputWithDisplay(cultivarInput, 'extra-value', `cultivar-display-${index}`, sanitizeHTML(newCultivar === 'Unknown' ? '' : newCultivar));
     replaceInputWithDisplay(tastingInput, 'extra-value', `tasting-display-${index}`, sanitizeHTML(newTasting === 'No notes' ? '' : newTasting));
 
     const cultivarLine = document.getElementById(`cultivar-line-${index}`);
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    if (cultivarLine) {
+        const cultivarLabel = cultivarLine.querySelector('.extra-label');
+        if (cultivarLabel) cultivarLabel.style.display = '';
+        cultivarLine.style.display = (newCultivar === 'Unknown' || newCultivar === '') ? 'none' : 'flex';
+    }
+
+    const tastingLine = document.getElementById(`tasting-line-${index}`);
+    if (tastingLine) {
+        const tastingLabel = tastingLine.querySelector('.extra-label');
+        if (tastingLabel) tastingLabel.style.display = '';
+        tastingLine.style.display = (newTasting === 'No notes' || newTasting === '') ? 'none' : 'flex';
+    }
+=======
     if (cultivarLine) cultivarLine.style.display = (newCultivar === 'Unknown' || newCultivar === '') ? 'none' : 'flex';
 
     const tastingLine = document.getElementById(`tasting-line-${index}`);
     if (tastingLine) tastingLine.style.display = (newTasting === 'No notes' || newTasting === '') ? 'none' : 'flex';
+>>>>>>> main
 
     const extraInfo = document.getElementById(`extra-info-${index}`);
     const hasAltitude = coffee.altitude && coffee.altitude !== '1500';

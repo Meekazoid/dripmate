@@ -105,12 +105,26 @@ export function renderCoffeeCard(coffee, index) {
         `<div class="color-swatch ${currentHex === color ? 'active' : ''}" data-color="${color}" style="background-color: ${color};" onclick="event.stopPropagation(); window.selectColor(${index}, '${color}');"></div>`
     ).join('');
 
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    // Roastery: bei leerem/unbekanntem Wert unsichtbaren Platzhalter rendern (konstante Kartenhöhe)
+    const hasRoastery = coffee.roastery && coffee.roastery !== 'Unknown' && coffee.roastery.trim() !== '';
+    const roasteryHTML = hasRoastery
+=======
     // Roastery: nur anzeigen wenn Wert vorhanden
     const roasteryHTML = coffee.roastery
+>>>>>>> main
         ? `<div class="coffee-roastery" id="roastery-display-${index}">${sanitizeHTML(coffee.roastery)}</div>`
         : `<div class="coffee-roastery" id="roastery-display-${index}" style="display:none;"></div>`;
 
+<<<<<<< codex/implement-updates-to-coffee-card-functionalities-duyzw1
+    // Process: bei leerem/unbekanntem Wert unsichtbaren Platzhalter rendern (konstante Kartenhöhe)
+    const hasProcess = coffee.process && coffee.process.toLowerCase() !== 'unknown' && coffee.process.trim() !== '';
+    const processHTML = hasProcess
+        ? `<div class="coffee-process-small" id="process-display-${index}">${sanitizeHTML(coffee.process)}</div>`
+        : `<div class="coffee-process-small" id="process-display-${index}" style="visibility: hidden;">&nbsp;</div>`;
+=======
     const processHTML = `<div class="coffee-process-small" id="process-display-${index}">${sanitizeHTML(coffee.process)}</div>`;
+>>>>>>> main
 
     // NEU: Getrennte Logik für Sanitization (löst die Test-Assertions)
     const rawSanitizedOrigin = sanitizeHTML(coffee.origin);
