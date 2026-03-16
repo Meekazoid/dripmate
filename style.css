@@ -941,6 +941,7 @@ body.light-mode .coffee-card.expanded {
     align-items: flex-start;
     margin-bottom: 10px;
     position: relative;
+    z-index: 10;
 }
 
 .coffee-header-actions {
