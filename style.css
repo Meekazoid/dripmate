@@ -3583,7 +3583,7 @@ header {
 }
 
 /* ============================================================
-   PERMANENT FIREFOX ANDROID UI FIX - FINAL VERSION
+   FIREFOX ANDROID FIX - RADIKAL VEREINFACHT
    ============================================================ */
 
 button::-moz-focus-inner {
@@ -3593,90 +3593,62 @@ button::-moz-focus-inner {
 
 @supports (-moz-appearance: none) {
     
-    /* 1. SETTINGS BUTTONS UNTEN (Wieder groß machen) */
-    .settings-btn, 
-    .theme-toggle, 
-    .water-btn,
-    .control-btn {
+    /* 1. SETTINGS BUTTONS UNTEN (Bleiben so, da sie jetzt funktionieren) */
+    .settings-btn, .theme-toggle, .water-btn, .control-btn {
         width: 48px !important;
         height: 48px !important;
         min-width: 48px !important;
-        min-height: 48px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
     }
-
-    .settings-btn svg, 
-    .theme-toggle svg, 
-    .water-btn svg,
-    .control-icon {
+    .settings-btn svg, .theme-toggle svg, .water-btn svg, .control-icon {
         width: 24px !important;
         height: 24px !important;
     }
 
-    /* 2. CARD-BUTTONS (Favorite, Edit, Delete) */
-    /* Wir schalten die absolute Positionierung in Firefox aus, 
-       damit sie nichts mehr überlappen können */
-    .favorite-btn, 
-    .edit-btn, 
-    .delete-btn {
-        position: relative !important; /* WICHTIG: Kein Überlappen mehr */
-        top: 0 !important;
-        right: 0 !important;
-        width: 40px !important;
-        height: 40px !important;
-        margin-left: 5px !important;
+    /* 2. DIE 3 CARD-BUTTONS (Wieder wie im Original, nur größer) */
+    .favorite-btn, .edit-btn, .delete-btn {
+        position: absolute !important; /* Zurück zum Original-Verhalten */
+        width: 36px !important;
+        height: 36px !important;
+        margin: 0 !important;
     }
+    
+    /* Die exakten Positionen (angepasst an die 36px Breite) */
+    .delete-btn { right: -10px !important; top: -10px !important; }
+    .edit-btn   { right: 32px !important; top: -10px !important; }
+    .favorite-btn { right: 74px !important; top: -10px !important; }
 
-    /* Container für die Card-Buttons oben rechts */
-    .card-actions {
-        display: flex !important;
-        gap: 8px !important;
-        position: absolute;
-        top: 5px;
-        right: 10px;
-    }
-
-    /* 3. EDITOR / ROASTERY FELD FIX */
-    /* Wir geben dem Roastery-Feld volle Priorität */
+    /* 3. EDITOR-FELDER (Volle Breite erzwingen) */
+    input.inline-edit-input,
     .edit-roastery, 
     .edit-name, 
-    .edit-origin,
-    input.inline-edit-input {
-        flex: 1 1 auto !important;
-        min-width: 150px !important; /* Mindestbreite gesichert */
+    .edit-origin {
+        display: block !important;
+        width: 100% !important; /* Holt die 100% Breite zurück! */
+        max-width: 100% !important;
         height: 44px !important;
         font-size: 16px !important;
-        padding: 8px !important;
-        width: 100% !important;
+        box-sizing: border-box !important;
+        flex: none !important; /* Ignoriert Firefox-Flex-Bugs komplett */
     }
 
-    /* Der Bereich Roastery-Input + Colorpicker */
-    /* Wir erzwingen, dass sie nebeneinander stehen, aber der Pinsel nicht überlappt */
-    .coffee-card-header, 
-    .card-editor-header {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        gap: 10px !important;
-        width: 100% !important;
+    /* 4. DER ÜBERLAPPUNGS-FIX (Padding-Trick) */
+    .edit-roastery {
+        padding-right: 52px !important; /* Schafft rechts im Feld einen leeren Raum für den Pinsel */
     }
 
     .color-picker-btn {
+        position: absolute !important; /* Löst den Button aus dem Chaos-Layout */
+        right: 15px !important;        /* Pinnt ihn starr nach rechts */
         width: 44px !important;
         height: 44px !important;
-        flex-shrink: 0 !important;
-        margin-left: auto !important;
+        z-index: 20 !important;        /* Stellt sicher, dass er immer anklickbar bleibt */
     }
 
-    /* 4. HITBOX (Bleibt für die Bedienbarkeit) */
-    .color-picker-btn::after,
-    .favorite-btn::after,
-    .edit-btn::after,
-    .delete-btn::after,
-    .settings-btn::after,
-    .theme-toggle::after {
+    /* Hitbox für große Finger beibehalten */
+    .color-picker-btn::after, .favorite-btn::after, .edit-btn::after, .delete-btn::after, .settings-btn::after, .theme-toggle::after {
         content: '';
         position: absolute;
         top: 50%;
