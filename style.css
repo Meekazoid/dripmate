@@ -255,7 +255,7 @@ body.light-mode .add-section {
 }
 
 .cs-bag {
-    transform: scale(0.85);
+    transform: scale(0.697);
     -webkit-filter: brightness(0) saturate(100%) invert(67%) sepia(29%) saturate(657%) hue-rotate(344deg) brightness(90%) contrast(89%);
     filter: brightness(0) saturate(100%) invert(67%) sepia(29%) saturate(657%) hue-rotate(344deg) brightness(90%) contrast(89%);
 }
