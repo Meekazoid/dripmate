@@ -3581,3 +3581,76 @@ header {
 .roast-date-input-shell:focus-within .roast-date-display {
     border-color: var(--accent);
 }
+
+/* ==========================================
+   FIREFOX ANDROID BUTTON SIZE FIX
+   Keep Chrome baseline untouched via Firefox-only supports block.
+   ========================================== */
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+@supports (-moz-appearance: none) {
+    .color-picker-btn,
+    .favorite-btn,
+    .edit-btn,
+    .delete-btn {
+        -moz-appearance: none;
+        appearance: none;
+        box-sizing: border-box;
+        padding: 0;
+        flex: 0 0 auto;
+    }
+
+    .color-picker-btn {
+        width: auto;
+        height: auto;
+        min-width: 32px;
+        min-height: 32px;
+    }
+
+    .favorite-btn,
+    .edit-btn,
+    .delete-btn {
+        width: auto;
+        height: auto;
+        min-width: 28px;
+        min-height: 28px;
+    }
+
+    .control-btn {
+        width: auto;
+        height: auto;
+        min-width: 36px;
+        min-height: 36px;
+        box-sizing: border-box;
+        flex: 0 0 auto;
+    }
+
+    .color-picker-btn svg,
+    .star-icon,
+    .edit-icon,
+    .delete-icon,
+    .control-icon {
+        display: block;
+    }
+
+    .star-icon,
+    .edit-icon,
+    .delete-icon {
+        min-width: 16px;
+        min-height: 16px;
+    }
+
+    .color-picker-btn svg {
+        min-width: 22px;
+        min-height: 22px;
+    }
+
+    .control-icon {
+        min-width: 18px;
+        min-height: 18px;
+    }
+}
+
