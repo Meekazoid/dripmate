@@ -104,24 +104,21 @@ function enterEditMode(index, card) {
         }
     }
 
-    // Process — Div (sieht aus wie ein Input, aber fängt Klicks zuverlässig ab!)
+    // Process — kompakter Badge-Look, öffnet weiterhin den bestehenden Picker
     const processDisplay = document.getElementById(`process-display-${index}`);
     if (processDisplay) {
-        const displayLabel = PROCESS_LABELS[coffee.process] || coffee.process || 'Unknown';
-        const safeDisplay = displayLabel === 'unknown' ? 'Processing Method' : displayLabel;
-        
+        const currentVal = coffee.process && coffee.process.toLowerCase() !== 'unknown' ? coffee.process : '';
+        const displayLabel = PROCESS_LABELS[currentVal] || currentVal || 'Process';
+
         processDisplay.outerHTML = `
-            <div class="coffee-process-small inline-edit-input edit-process"
+            <div class="coffee-process-small inline-edit-input edit-process-compact"
                  id="process-edit-${index}"
-                 data-value="${escapeAttr(coffee.process || '')}"
+                 data-value="${escapeAttr(currentVal)}"
                  tabindex="0"
                  role="button"
                  aria-label="Choose processing method"
-                 style="cursor: pointer; text-align: left; width: 100%; min-height: 42px; display: flex; align-items: center; pointer-events: auto;"
                  onclick="event.stopPropagation(); window.openCardProcessPicker(${index});"
-                 onkeydown="if(event.key==='Enter' || event.key===' '){event.preventDefault(); event.stopPropagation(); window.openCardProcessPicker(${index});}">
-                 ${escapeAttr(safeDisplay)}
-            </div>`;
+                 onkeydown="if(event.key==='Enter' || event.key===' '){event.preventDefault(); event.stopPropagation(); window.openCardProcessPicker(${index});}">${escapeAttr(displayLabel)}</div>`;
     }
 
     // Container sichtbar machen, falls er versteckt war
@@ -133,8 +130,6 @@ function enterEditMode(index, card) {
     const cultivarDisplay = document.getElementById(`cultivar-display-${index}`);
     if (cultivarLine) {
         cultivarLine.style.display = 'flex';
-        const cultivarLabel = cultivarLine.querySelector('.extra-label');
-        if (cultivarLabel) cultivarLabel.style.display = 'none';
     }
     if (cultivarDisplay) {
         const currentVal = coffee.cultivar === 'Unknown' ? '' : coffee.cultivar;
@@ -144,7 +139,6 @@ function enterEditMode(index, card) {
                    id="cultivar-edit-${index}"
                    value="${escapeAttr(currentVal)}"
                    placeholder="Variety"
-                   style="text-align: left; width: 100%;"
                    onclick="event.stopPropagation();"
                    onkeydown="if(event.key==='Enter'){event.preventDefault(); toggleEditMode(${index});}"
             />`;
@@ -156,8 +150,6 @@ function enterEditMode(index, card) {
     const altitudeUnit = document.getElementById(`altitude-unit-${index}`);
     if (altitudeLine) {
         altitudeLine.style.display = 'flex';
-        const altitudeLabel = altitudeLine.querySelector('.extra-label');
-        if (altitudeLabel) altitudeLabel.style.display = 'none';
         if (altitudeUnit) altitudeUnit.style.display = 'none';
     }
     if (altitudeDisplay) {
@@ -168,7 +160,6 @@ function enterEditMode(index, card) {
                    id="altitude-edit-${index}"
                    value="${escapeAttr(currentVal)}"
                    placeholder="Altitude (masl)"
-                   style="text-align: left; width: 100%;"
                    onclick="event.stopPropagation();"
                    onkeydown="if(event.key==='Enter'){event.preventDefault(); toggleEditMode(${index});}"
             />`;
@@ -179,8 +170,6 @@ function enterEditMode(index, card) {
     const tastingDisplay = document.getElementById(`tasting-display-${index}`);
     if (tastingLine) {
         tastingLine.style.display = 'flex';
-        const tastingLabel = tastingLine.querySelector('.extra-label');
-        if (tastingLabel) tastingLabel.style.display = 'none';
     }
     if (tastingDisplay) {
         const currentVal = coffee.tastingNotes === 'No notes' ? '' : coffee.tastingNotes;
@@ -190,7 +179,6 @@ function enterEditMode(index, card) {
                    id="tasting-edit-${index}"
                    value="${escapeAttr(currentVal)}"
                    placeholder="Tasting Notes"
-                   style="text-align: left; width: 100%;"
                    onclick="event.stopPropagation();"
                    onkeydown="if(event.key==='Enter'){event.preventDefault(); toggleEditMode(${index});}"
             />`;
@@ -217,7 +205,7 @@ async function saveEdits(index, card) {
         ? formatCoffeeOrigin(originInputValue)
         : formatCoffeeOrigin(coffee.origin);
     const newRoastery = roasteryInput?.value.trim() || '';
-    const newProcess  = processInput ? processInput.dataset.value : coffee.process;
+    const newProcess  = processInput ? (processInput.dataset.value || 'Unknown') : coffee.process;
     const newCultivar = cultivarInput?.value.trim() || 'Unknown';
     const newAltitude = altitudeInput?.value.trim() || '1500'; // NEU
     const newTasting  = tastingInput?.value.trim() || 'No notes';
@@ -263,16 +251,12 @@ async function saveEdits(index, card) {
 
     const cultivarLine = document.getElementById(`cultivar-line-${index}`);
     if (cultivarLine) {
-        const cultivarLabel = cultivarLine.querySelector('.extra-label');
-        if (cultivarLabel) cultivarLabel.style.display = '';
         cultivarLine.style.display = (newCultivar === 'Unknown' || newCultivar === '') ? 'none' : 'flex';
     }
 
     // NEU: Altitude UI wiederherstellen
     const altitudeLine = document.getElementById(`altitude-line-${index}`);
     if (altitudeLine) {
-        const altitudeLabel = altitudeLine.querySelector('.extra-label');
-        if (altitudeLabel) altitudeLabel.style.display = '';
         const altitudeUnit = document.getElementById(`altitude-unit-${index}`);
         if (altitudeUnit) altitudeUnit.style.display = (newAltitude === '1500' || newAltitude === '') ? 'none' : 'inline';
         altitudeLine.style.display = (newAltitude === '1500' || newAltitude === '') ? 'none' : 'flex';
@@ -280,8 +264,6 @@ async function saveEdits(index, card) {
 
     const tastingLine = document.getElementById(`tasting-line-${index}`);
     if (tastingLine) {
-        const tastingLabel = tastingLine.querySelector('.extra-label');
-        if (tastingLabel) tastingLabel.style.display = '';
         tastingLine.style.display = (newTasting === 'No notes' || newTasting === '') ? 'none' : 'flex';
     }
     

@@ -868,15 +868,15 @@ body.light-mode .coffee-card.expanded {
     width: 32px;
     height: 32px;
     background: transparent;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(212, 165, 116, 0.2);
     border-radius: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
+    color: var(--accent);
     padding: 0;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    box-shadow: none;
 }
 
 .color-picker-btn:hover,
@@ -884,9 +884,18 @@ body.light-mode .coffee-card.expanded {
 .color-picker-btn:focus,
 .color-picker-btn:focus-visible {
     background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
+    border: 1px solid rgba(212, 165, 116, 0.2);
+    color: var(--accent);
     outline: none;
+}
+
+body.light-mode .color-picker-btn,
+body.light-mode .color-picker-btn:hover,
+body.light-mode .color-picker-btn:active,
+body.light-mode .color-picker-btn:focus,
+body.light-mode .color-picker-btn:focus-visible {
+    border-color: rgba(139, 90, 43, 0.2);
+    color: var(--accent);
 }
 
 .color-picker-popup {
@@ -3183,6 +3192,67 @@ body.light-mode .edit-btn.editing {
     color: var(--text-secondary);
 }
 
+/* Native inline edit look for extra info values */
+.coffee-card .inline-edit-input.edit-cultivar,
+.coffee-card .inline-edit-input.edit-tasting,
+.coffee-card .inline-edit-input.edit-altitude {
+    display: inline-block;
+    width: auto;
+    min-width: 140px;
+    max-width: 100%;
+    padding: 2px 6px;
+    margin: 0;
+    background: transparent;
+    border: 1px solid rgba(212, 165, 116, 0.2);
+    border-radius: 6px;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 400;
+    font-family: inherit;
+    line-height: 1.4;
+}
+
+.coffee-card .inline-edit-input.edit-cultivar:focus,
+.coffee-card .inline-edit-input.edit-tasting:focus,
+.coffee-card .inline-edit-input.edit-altitude:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(212, 165, 116, 0.15);
+}
+
+/* Compact process trigger matching inline input style */
+.coffee-card .inline-edit-input.edit-process-compact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: 100px;
+    min-height: 27px;
+    padding: 2px 8px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid rgba(212, 165, 116, 0.2);
+    border-radius: 6px;
+    color: var(--accent);
+    text-transform: none;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.coffee-card.editing .coffee-process-small.inline-edit-input.edit-process-compact {
+    background: transparent !important;
+    border: 1px solid rgba(212, 165, 116, 0.2);
+    color: var(--accent);
+}
+
+body.light-mode .coffee-card .inline-edit-input.edit-cultivar,
+body.light-mode .coffee-card .inline-edit-input.edit-tasting,
+body.light-mode .coffee-card .inline-edit-input.edit-altitude,
+body.light-mode .coffee-card .inline-edit-input.edit-process-compact {
+    border-color: rgba(139, 90, 43, 0.2);
+}
+
 /* Light mode adjustments */
 body.light-mode .coffee-card .inline-edit-input {
     border-color: rgba(139, 90, 43, 0.2);
@@ -3191,6 +3261,18 @@ body.light-mode .coffee-card .inline-edit-input {
 body.light-mode .coffee-card .inline-edit-input:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 2px rgba(139, 90, 43, 0.12);
+}
+
+body.light-mode .coffee-card .inline-edit-input.edit-cultivar:focus,
+body.light-mode .coffee-card .inline-edit-input.edit-tasting:focus,
+body.light-mode .coffee-card .inline-edit-input.edit-altitude:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(139, 90, 43, 0.12);
+}
+
+body.light-mode .coffee-card.editing .coffee-process-small.inline-edit-input.edit-process-compact {
+    border-color: rgba(139, 90, 43, 0.2);
+    color: var(--accent);
 }
 
 /* -- Edit-Button Hover-Glow im Editing-State -- */
