@@ -49,13 +49,16 @@ export function initFeedbackSliderInteractions() {
         if (slider) event.stopPropagation();
     });
 
+    // --- Unified input handler (works for both drag and tap-to-position) ---
     document.addEventListener('input', (event) => {
         const slider = event.target.closest('.feedback-slider');
         if (!slider) return;
 
         event.stopPropagation();
+
+        // If a vertical scroll was detected, block updates
         const state = feedbackTouchState.get(slider);
-        if (state?.touchActive && !state.horizontalCommitted) return;
+        if (state?.cancelled) return;
 
         const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
         if (index === undefined || !category) return;
@@ -68,8 +71,9 @@ export function initFeedbackSliderInteractions() {
         if (!slider) return;
 
         event.stopPropagation();
+
         const state = feedbackTouchState.get(slider);
-        if (state?.touchActive && !state.horizontalCommitted) return;
+        if (state?.cancelled) return;
 
         const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
         if (index === undefined || !category) return;
@@ -77,27 +81,19 @@ export function initFeedbackSliderInteractions() {
         updateFeedbackSlider(Number(index), category, slider.value);
     });
 
+    // --- Touch handling: only detect vertical scroll to cancel ---
+    // The browser handles horizontal slider movement natively.
+    // We only intervene to revert if the user is clearly scrolling vertically.
     document.addEventListener('touchstart', (event) => {
         const slider = event.target.closest('.feedback-slider');
         if (!slider) return;
 
-        const touch = event.touches[0];
-        const rect = slider.getBoundingClientRect();
-        const thumbHitSize = 64;
-        const min = Number(slider.min || 0);
-        const max = Number(slider.max || 100);
-        const ratio = (Number(slider.value) - min) / (max - min || 1);
-        const thumbCenterX = rect.left + (ratio * rect.width);
-        const startsOnThumb = Math.abs(touch.clientX - thumbCenterX) <= thumbHitSize / 2;
-
         feedbackTouchState.set(slider, {
-            touchActive: true,
-            startX: touch.clientX,
-            startY: touch.clientY,
+            startX: event.touches[0].clientX,
+            startY: event.touches[0].clientY,
             startValue: slider.value,
-            startsOnThumb,
-            horizontalCommitted: false,
-            cancelled: !startsOnThumb
+            cancelled: false,
+            decided: false
         });
     }, { passive: true });
 
@@ -106,54 +102,31 @@ export function initFeedbackSliderInteractions() {
         if (!slider) return;
 
         const state = feedbackTouchState.get(slider);
-        if (!state?.touchActive) return;
+        if (!state || state.decided) return;
 
-        const touch = event.touches[0];
-        const deltaX = touch.clientX - state.startX;
-        const deltaY = touch.clientY - state.startY;
-        const movement = Math.hypot(deltaX, deltaY);
+        const deltaY = Math.abs(event.touches[0].clientY - state.startY);
+        const deltaX = Math.abs(event.touches[0].clientX - state.startX);
 
-        if (state.cancelled) {
-            slider.value = state.startValue;
-            event.preventDefault();
-            return;
-        }
-
-        if (Math.abs(deltaY) > Math.abs(deltaX) && movement > 6) {
+        // First significant movement decides: vertical = cancel slider, horizontal = let it through
+        if (deltaY > 12 && deltaY > deltaX) {
             state.cancelled = true;
+            state.decided = true;
             slider.value = state.startValue;
-            event.preventDefault();
-            return;
+            updateSliderVisual(slider);
+        } else if (deltaX > 8) {
+            state.decided = true; // horizontal — let browser handle the slider natively
         }
-
-        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 8) {
-            state.horizontalCommitted = true;
-            const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
-            if (index !== undefined && category) {
-                updateSliderVisual(slider);
-                updateFeedbackSlider(Number(index), category, slider.value);
-            }
-        }
-    }, { passive: false });
+    }, { passive: true });
 
     document.addEventListener('touchend', (event) => {
         const slider = event.target.closest('.feedback-slider');
         if (!slider) return;
 
         const state = feedbackTouchState.get(slider);
-        if (!state) return;
-
-        if (state.horizontalCommitted && !state.cancelled) {
-            const [index, category] = String(slider.dataset.feedbackSlider || '').split('-');
-            if (index !== undefined && category) {
-                updateSliderVisual(slider);
-                updateFeedbackSlider(Number(index), category, slider.value);
-            }
-        } else {
+        if (state?.cancelled) {
             slider.value = state.startValue;
             updateSliderVisual(slider);
         }
-
         feedbackTouchState.delete(slider);
     });
 
