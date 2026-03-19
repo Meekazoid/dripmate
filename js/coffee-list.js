@@ -225,6 +225,7 @@ function buildRoasteryStack(items) {
         slot.appendChild(makeCard(items[current], current, items.length));
         renderGhostPreview();
         renderDots();
+        syncGhostHeight();
         requestAnimationFrame(syncGhostHeight);
     }
 
