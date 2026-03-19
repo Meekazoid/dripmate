@@ -3642,8 +3642,6 @@ button::-moz-focus-inner {
 
 .roastery-stack-wrapper {
     position: relative;
-    margin-bottom: 14px;
-    padding-top: 12px;
     overflow: visible;
     perspective: 900px;
 }
@@ -3745,7 +3743,7 @@ button::-moz-focus-inner {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     z-index: 5;
     border-radius: 999px;
     padding: 3px 10px;
@@ -3768,9 +3766,9 @@ button::-moz-focus-inner {
 }
 
 @keyframes roastery-counter-pop {
-    0% { transform: translateX(-50%) scale(1); box-shadow: 0 2px 8px var(--shadow); }
-    45% { transform: translateX(-50%) scale(1.08); box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 35%, transparent 65%); }
-    100% { transform: translateX(-50%) scale(1); box-shadow: 0 2px 8px var(--shadow); }
+    0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 2px 8px var(--shadow); }
+    45% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 35%, transparent 65%); }
+    100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 2px 8px var(--shadow); }
 }
 
 .roastery-stack-preview-card {
@@ -3794,11 +3792,16 @@ button::-moz-focus-inner {
 }
 
 .roastery-stack-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 50%);
+    z-index: 5;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 6px;
-    margin-top: 10px;
+    pointer-events: none;
 }
 
 .roastery-stack-dot {
