@@ -3644,6 +3644,7 @@ button::-moz-focus-inner {
     position: relative;
     margin-bottom: 14px;
     overflow: visible;
+    perspective: 900px;
 }
 
 .roastery-stack-ghost-layer {
@@ -3690,6 +3691,8 @@ button::-moz-focus-inner {
     overflow: visible;
     touch-action: pan-y;
     will-change: transform;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
     transition: transform .18s ease, opacity .18s ease;
 }
 
@@ -3703,7 +3706,11 @@ button::-moz-focus-inner {
 }
 
 .roastery-stack-slot.roastery-push-out {
+<<<<<<< codex/implement-new-swipe-effect-for-coffee-cards-vd1tcq
+    transform: scale(0.82) translateZ(-60px);
+=======
     transform: scale(0.82);
+>>>>>>> main
     opacity: 0;
     transition: transform 0.2s ease-in, opacity 0.2s ease-in !important;
 }
