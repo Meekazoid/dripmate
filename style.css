@@ -783,7 +783,7 @@ body.light-mode .picker-option.active {
    ========================================== */
 .coffee-list {
     display: grid;
-    gap: 20px;
+    gap: 22px;
     overflow: visible;
 }
 
