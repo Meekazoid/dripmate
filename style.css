@@ -3702,14 +3702,28 @@ button::-moz-focus-inner {
     transition: transform .18s ease;
 }
 
-.roastery-stack-slot.roastery-fly-left {
-    transform: translateX(-110%);
-    opacity: .35;
+.roastery-stack-slot.roastery-push-out {
+    transform: scale(0.82);
+    opacity: 0;
+    transition: transform 0.2s ease-in, opacity 0.2s ease-in !important;
 }
 
-.roastery-stack-slot.roastery-fly-right {
-    transform: translateX(110%);
-    opacity: .35;
+.roastery-stack-slot.roastery-slide-in-left {
+    animation: roastery-slide-from-right 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.roastery-stack-slot.roastery-slide-in-right {
+    animation: roastery-slide-from-left 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes roastery-slide-from-right {
+    from { transform: translateX(55px); opacity: 0.4; }
+    to   { transform: none; opacity: 1; }
+}
+
+@keyframes roastery-slide-from-left {
+    from { transform: translateX(-55px); opacity: 0.4; }
+    to   { transform: none; opacity: 1; }
 }
 
 /* Hover-Lift im Stack deaktivieren (Drag-Konflikt vermeiden) */

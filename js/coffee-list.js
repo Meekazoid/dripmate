@@ -220,13 +220,21 @@ function buildRoasteryStack(items) {
         ghosts[0].appendChild(previewCard);
     }
 
-    function renderCurrent() {
+    function renderCurrent(inDirection) {
         slot.innerHTML = '';
         slot.appendChild(makeCard(items[current], current, items.length));
         renderGhostPreview();
         renderDots();
         syncGhostHeight();
         requestAnimationFrame(syncGhostHeight);
+
+        if (inDirection) {
+            const slideClass = inDirection === 'left' ? 'roastery-slide-in-left' : 'roastery-slide-in-right';
+            slot.classList.add(slideClass);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => slot.classList.remove(slideClass));
+            });
+        }
     }
 
     function cleanupPointerState() {
@@ -249,7 +257,7 @@ function buildRoasteryStack(items) {
 
     function go(direction /* 'left' | 'right' */) {
         slot.classList.remove('roastery-fly-left', 'roastery-fly-right', 'roastery-snap-back');
-        slot.classList.add(direction === 'left' ? 'roastery-fly-left' : 'roastery-fly-right');
+        slot.classList.add('roastery-push-out');
 
         const activeCard = slot.querySelector('.coffee-card');
         if (activeCard) activeCard.dataset.suppressClick = '1';
@@ -259,10 +267,10 @@ function buildRoasteryStack(items) {
                 ? (current + 1) % items.length
                 : (current - 1 + items.length) % items.length;
 
-            slot.classList.remove('roastery-fly-left', 'roastery-fly-right');
+            slot.classList.remove('roastery-push-out');
             slot.style.transform = '';
-            renderCurrent();
-        }, 180);
+            renderCurrent(direction);
+        }, 200);
     }
 
     function onPointerDown(e) {
@@ -302,7 +310,8 @@ function buildRoasteryStack(items) {
             slot.classList.add('roastery-stack-dragging');
         }
 
-        slot.style.transform = `translateX(${deltaX}px)`;
+        const scale = Math.max(0.93, 1 - Math.abs(deltaX) / 900);
+        slot.style.transform = `translateX(${deltaX}px) scale(${scale})`;
         e.preventDefault();
     }
 
