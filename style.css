@@ -3643,6 +3643,7 @@ button::-moz-focus-inner {
 .roastery-stack-wrapper {
     position: relative;
     margin-bottom: 14px;
+    padding-top: 12px;
     overflow: visible;
     perspective: 900px;
 }
@@ -3705,36 +3706,49 @@ button::-moz-focus-inner {
     transition: transform .18s ease;
 }
 
-.roastery-stack-slot.roastery-push-out {
-    transform: translate3d(0, 0, -60px) scale(0.82);
-    opacity: 0;
-    transition: transform 0.2s ease-in, opacity 0.2s ease-in !important;
+.roastery-stack-slot.roastery-card-exit-next {
+    animation: roastery-card-exit-next 0.19s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
-.roastery-stack-slot.roastery-slide-in-left {
-    animation: roastery-slide-from-right 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.roastery-stack-slot.roastery-card-exit-prev {
+    animation: roastery-card-exit-prev 0.19s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
-.roastery-stack-slot.roastery-slide-in-right {
-    animation: roastery-slide-from-left 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.roastery-stack-slot.roastery-card-enter-next {
+    animation: roastery-card-enter-next 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes roastery-slide-from-right {
-    from { transform: translate3d(55px, 0, 0); opacity: 0.4; }
-    to   { transform: none; opacity: 1; }
+.roastery-stack-slot.roastery-card-enter-prev {
+    animation: roastery-card-enter-prev 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes roastery-slide-from-left {
-    from { transform: translate3d(-55px, 0, 0); opacity: 0.4; }
-    to   { transform: none; opacity: 1; }
+@keyframes roastery-card-exit-next {
+    from { transform: none; opacity: 1; filter: blur(0); }
+    to   { transform: translate3d(-14px, 0, -50px) scale(0.96) rotate(-1.1deg); opacity: 0; filter: blur(1.2px); }
+}
+
+@keyframes roastery-card-exit-prev {
+    from { transform: none; opacity: 1; filter: blur(0); }
+    to   { transform: translate3d(14px, 0, -50px) scale(0.96) rotate(1.1deg); opacity: 0; filter: blur(1.2px); }
+}
+
+@keyframes roastery-card-enter-next {
+    from { transform: translate3d(8px, 10px, -55px) scale(0.965); opacity: 0.05; filter: blur(1.1px); }
+    to   { transform: none; opacity: 1; filter: blur(0); }
+}
+
+@keyframes roastery-card-enter-prev {
+    from { transform: translate3d(-8px, 10px, -55px) scale(0.965); opacity: 0.05; filter: blur(1.1px); }
+    to   { transform: none; opacity: 1; filter: blur(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .roastery-stack-slot,
     .roastery-stack-slot.roastery-snap-back,
-    .roastery-stack-slot.roastery-push-out,
-    .roastery-stack-slot.roastery-slide-in-left,
-    .roastery-stack-slot.roastery-slide-in-right,
+    .roastery-stack-slot.roastery-card-exit-next,
+    .roastery-stack-slot.roastery-card-exit-prev,
+    .roastery-stack-slot.roastery-card-enter-next,
+    .roastery-stack-slot.roastery-card-enter-prev,
     .roastery-stack-ghost {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
@@ -3749,10 +3763,10 @@ button::-moz-focus-inner {
 /* Badge: zentriert auf der Oberkante der Karte */
 .roastery-stack-counter {
     position: absolute;
-    top: -11px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 4;
+    z-index: 5;
     border-radius: 999px;
     padding: 3px 10px;
     font-size: .6rem;
@@ -3766,6 +3780,17 @@ button::-moz-focus-inner {
     border: 1px solid var(--border);
     box-shadow: 0 2px 8px var(--shadow);
     backdrop-filter: blur(2px);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.roastery-stack-counter.roastery-counter-pop {
+    animation: roastery-counter-pop .28s ease;
+}
+
+@keyframes roastery-counter-pop {
+    0% { transform: translateX(-50%) scale(1); box-shadow: 0 2px 8px var(--shadow); }
+    45% { transform: translateX(-50%) scale(1.08); box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 35%, transparent 65%); }
+    100% { transform: translateX(-50%) scale(1); box-shadow: 0 2px 8px var(--shadow); }
 }
 
 .roastery-stack-preview-card {

@@ -144,6 +144,9 @@ function buildRoasteryStack(items) {
     const dots = document.createElement('div');
     dots.className = 'roastery-stack-dots';
 
+    const counter = document.createElement('div');
+    counter.className = 'roastery-stack-counter';
+
     const ghostLayer = document.createElement('div');
     ghostLayer.className = 'roastery-stack-ghost-layer';
     const ghostCount = Math.min(3, Math.max(0, items.length - 1));
@@ -173,16 +176,10 @@ function buildRoasteryStack(items) {
     const SWIPE_THRESHOLD = 64;
     const SWIPE_IGNORE_SELECTOR = '.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input, select, textarea, button, .color-picker-btn, .color-picker-popup';
 
-    function makeCard(item, idx, total) {
+    function makeCard(item) {
         const tpl = document.createElement('template');
         tpl.innerHTML = renderCoffeeCard(item.coffee, item.originalIndex).trim();
         const card = tpl.content.firstElementChild;
-
-        // Badge zentriert auf der Oberkante (wie im vereinbarten Design)
-        const badge = document.createElement('div');
-        badge.className = 'roastery-stack-counter';
-        badge.textContent = `${idx + 1}/${total}`;
-        card.appendChild(badge);
 
         attachCardClickListener(card);
         return card;
@@ -206,6 +203,16 @@ function buildRoasteryStack(items) {
         });
     }
 
+    function renderCounter(animate = false) {
+        counter.textContent = `${current + 1}/${items.length}`;
+        if (!animate) {
+            counter.classList.remove('roastery-counter-pop');
+            return;
+        }
+        counter.classList.remove('roastery-counter-pop');
+        requestAnimationFrame(() => counter.classList.add('roastery-counter-pop'));
+    }
+
     function syncGhostHeight() {
         const active = slot.querySelector('.coffee-card');
         if (!active) return;
@@ -224,17 +231,18 @@ function buildRoasteryStack(items) {
 
     function renderCurrent(inDirection) {
         slot.innerHTML = '';
-        slot.appendChild(makeCard(items[current], current, items.length));
+        slot.appendChild(makeCard(items[current]));
         renderGhostPreview();
         renderDots();
+        renderCounter(Boolean(inDirection));
         syncGhostHeight();
         requestAnimationFrame(syncGhostHeight);
 
         if (inDirection) {
-            const slideClass = inDirection === 'left' ? 'roastery-slide-in-left' : 'roastery-slide-in-right';
-            slot.classList.add(slideClass);
+            const appearClass = inDirection === 'left' ? 'roastery-card-enter-next' : 'roastery-card-enter-prev';
+            slot.classList.add(appearClass);
             requestAnimationFrame(() => {
-                requestAnimationFrame(() => slot.classList.remove(slideClass));
+                requestAnimationFrame(() => slot.classList.remove(appearClass));
             });
         }
     }
@@ -268,8 +276,14 @@ function buildRoasteryStack(items) {
     }
 
     function go(direction /* 'left' | 'right' */) {
-        slot.classList.remove('roastery-fly-left', 'roastery-fly-right', 'roastery-snap-back');
-        slot.classList.add('roastery-push-out');
+        slot.classList.remove(
+            'roastery-card-exit-next',
+            'roastery-card-exit-prev',
+            'roastery-card-enter-next',
+            'roastery-card-enter-prev',
+            'roastery-snap-back'
+        );
+        slot.classList.add(direction === 'left' ? 'roastery-card-exit-next' : 'roastery-card-exit-prev');
 
         const activeCard = slot.querySelector('.coffee-card');
         if (activeCard) activeCard.dataset.suppressClick = '1';
@@ -279,10 +293,10 @@ function buildRoasteryStack(items) {
                 ? (current + 1) % items.length
                 : (current - 1 + items.length) % items.length;
 
-            slot.classList.remove('roastery-push-out');
+            slot.classList.remove('roastery-card-exit-next', 'roastery-card-exit-prev');
             slot.style.transform = '';
             renderCurrent(direction);
-        }, 200);
+        }, 190);
     }
 
     function onPointerDown(e) {
@@ -374,6 +388,7 @@ function buildRoasteryStack(items) {
     mo.observe(document.body, { childList: true, subtree: true });
 
     wrapper.appendChild(ghostLayer);
+    wrapper.appendChild(counter);
     wrapper.appendChild(slot);
     wrapper.appendChild(dots);
 
