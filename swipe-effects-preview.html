@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DripMate – Swipe Effekte Preview</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #1b2028;
+      --text: #e7ecf3;
+      --muted: #99a3b2;
+      --accent: #5ca4ff;
+      --radius: 16px;
+    }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 24px; }
+    h1 { margin: 0 0 18px; font-size: 1.2rem; }
+    .grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); }
+    .demo { background: #131821; border: 1px solid #2a3444; border-radius: 14px; padding: 16px; }
+    .demo h2 { margin: 0 0 10px; font-size: .9rem; color: var(--muted); }
+    .stack { position: relative; height: 220px; }
+    .ghost { position: absolute; left: 0; right: 0; border-radius: var(--radius); background: var(--card); border: 1px solid #2f3a4b; }
+    .ghost.g1 { top: 10px; transform: scale(.985); opacity: .75; }
+    .ghost.g2 { top: 20px; transform: scale(.97); opacity: .55; }
+    .card {
+      position: absolute; inset: 0 auto auto 0; width: 100%; height: 180px;
+      border-radius: var(--radius); border: 1px solid #334053; background: var(--card);
+      display: grid; gap: 8px; padding: 14px; box-sizing: border-box;
+      transition: transform .2s ease, opacity .2s ease, filter .2s ease;
+      cursor: grab;
+    }
+    .card:active { cursor: grabbing; }
+    .name { font-weight: 700; }
+    .meta { color: var(--muted); font-size: .85rem; }
+    .dots { margin-top: 10px; display: flex; gap: 6px; justify-content: center; }
+    .dot { width: 6px; height: 6px; border-radius: 999px; background: #60718b; }
+    .dot.active { background: var(--accent); transform: scale(1.2); }
+  </style>
+</head>
+<body>
+  <h1>Swipe-Effekt Alternativen (nur Vorschau)</h1>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const cards = [
+      { name: 'Ethiopia Guji', roastery: 'Morgon' },
+      { name: 'Kenya AA', roastery: 'Morgon' },
+      { name: 'Colombia Pink Bourbon', roastery: 'Morgon' },
+    ];
+
+    const effects = [
+      {
+        id: 'fly',
+        title: 'Effekt A – Classic Fly (wie aktuell)',
+        applyOut(el, dir) { el.style.transform = `translateX(${dir * 115}%)`; el.style.opacity = '.3'; },
+        reset(el) { el.style.transform = ''; el.style.opacity = '1'; el.style.filter = ''; }
+      },
+      {
+        id: 'tilt',
+        title: 'Effekt B – Tilt + Fly',
+        applyOut(el, dir) { el.style.transform = `translateX(${dir * 105}%) rotate(${dir * 8}deg)`; el.style.opacity = '.25'; el.style.filter = 'blur(1px)'; },
+        reset(el) { el.style.transform = ''; el.style.opacity = '1'; el.style.filter = ''; }
+      },
+      {
+        id: 'parallax',
+        title: 'Effekt C – Parallax Reveal',
+        applyOut(el, dir) { el.style.transform = `translateX(${dir * 85}%) scale(.94)`; el.style.opacity = '.1'; },
+        reset(el) { el.style.transform = ''; el.style.opacity = '1'; el.style.filter = ''; }
+      }
+    ];
+
+    function buildDemo(effect) {
+      const demo = document.createElement('section');
+      demo.className = 'demo';
+      demo.innerHTML = `<h2>${effect.title}</h2>
+        <div class="stack">
+          <div class="ghost g2"></div>
+          <div class="ghost g1"></div>
+          <article class="card"></article>
+        </div>
+        <div class="dots"></div>`;
+
+      const cardEl = demo.querySelector('.card');
+      const dotsEl = demo.querySelector('.dots');
+      let idx = 0;
+
+      function render() {
+        const c = cards[idx];
+        cardEl.innerHTML = `<div class="name">${c.name}</div><div class="meta">${c.roastery}</div><div class="meta">Swipe links/rechts</div>`;
+        dotsEl.innerHTML = cards.map((_, i) => `<span class="dot ${i === idx ? 'active' : ''}"></span>`).join('');
+        effect.reset(cardEl);
+      }
+
+      let sx = 0, dx = 0, down = false;
+      cardEl.addEventListener('pointerdown', e => { down = true; sx = e.clientX; cardEl.setPointerCapture?.(e.pointerId); });
+      cardEl.addEventListener('pointermove', e => {
+        if (!down) return;
+        dx = e.clientX - sx;
+        cardEl.style.transform = `translateX(${dx}px)`;
+      });
+      function end(e) {
+        if (!down) return;
+        down = false;
+        cardEl.releasePointerCapture?.(e.pointerId);
+        if (Math.abs(dx) > 60) {
+          const dir = dx < 0 ? -1 : 1;
+          effect.applyOut(cardEl, dir);
+          setTimeout(() => {
+            idx = dx < 0 ? (idx + 1) % cards.length : (idx - 1 + cards.length) % cards.length;
+            render();
+          }, 180);
+        } else {
+          effect.reset(cardEl);
+        }
+        dx = 0;
+      }
+      cardEl.addEventListener('pointerup', end);
+      cardEl.addEventListener('pointercancel', end);
+
+      render();
+      return demo;
+    }
+
+    const grid = document.getElementById('grid');
+    effects.forEach(e => grid.appendChild(buildDemo(e)));
+  </script>
+</body>
+</html>

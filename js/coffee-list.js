@@ -138,17 +138,21 @@ function buildRoasteryStack(items) {
     const wrapper = document.createElement('div');
     wrapper.className = 'roastery-stack-wrapper';
 
-    const ghost2 = document.createElement('div');
-    ghost2.className = 'roastery-stack-ghost roastery-stack-ghost-2';
-
-    const ghost1 = document.createElement('div');
-    ghost1.className = 'roastery-stack-ghost roastery-stack-ghost-1';
-
     const slot = document.createElement('div');
     slot.className = 'roastery-stack-slot';
 
     const dots = document.createElement('div');
     dots.className = 'roastery-stack-dots';
+
+    const ghostLayer = document.createElement('div');
+    ghostLayer.className = 'roastery-stack-ghost-layer';
+    const ghostCount = Math.min(3, Math.max(0, items.length - 1));
+    const ghosts = Array.from({ length: ghostCount }, (_, i) => {
+        const ghost = document.createElement('div');
+        ghost.className = `roastery-stack-ghost roastery-stack-ghost-${i + 1}`;
+        ghostLayer.appendChild(ghost);
+        return ghost;
+    });
 
     let current = 0;
 
@@ -165,6 +169,7 @@ function buildRoasteryStack(items) {
     const ACTIVATE_X = 12;
     const LOCK_Y = 10;
     const SWIPE_THRESHOLD = 64;
+    const SWIPE_IGNORE_SELECTOR = '.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input, select, textarea, button, .color-picker-btn, .color-picker-popup';
 
     function makeCard(item, idx, total) {
         const tpl = document.createElement('template');
@@ -181,6 +186,15 @@ function buildRoasteryStack(items) {
         return card;
     }
 
+    function makePreviewCard(item) {
+        const tpl = document.createElement('template');
+        tpl.innerHTML = renderCoffeeCard(item.coffee, item.originalIndex).trim();
+        const card = tpl.content.firstElementChild;
+        card.classList.remove('expanded');
+        card.classList.add('roastery-stack-preview-card');
+        return card;
+    }
+
     function renderDots() {
         dots.innerHTML = '';
         items.forEach((_, i) => {
@@ -194,14 +208,24 @@ function buildRoasteryStack(items) {
         const active = slot.querySelector('.coffee-card');
         if (!active) return;
         const h = active.offsetHeight || 0;
-        ghost1.style.height = `${h}px`;
-        ghost2.style.height = `${h}px`;
+        ghosts.forEach(g => { g.style.height = `${h}px`; });
+    }
+
+    function renderGhostPreview() {
+        ghosts.forEach(g => { g.innerHTML = ''; });
+        if (ghosts.length === 0 || items.length < 2) return;
+
+        const nextItem = items[(current + 1) % items.length];
+        const previewCard = makePreviewCard(nextItem);
+        ghosts[0].appendChild(previewCard);
     }
 
     function renderCurrent() {
         slot.innerHTML = '';
         slot.appendChild(makeCard(items[current], current, items.length));
+        renderGhostPreview();
         renderDots();
+        syncGhostHeight();
         requestAnimationFrame(syncGhostHeight);
     }
 
@@ -243,6 +267,9 @@ function buildRoasteryStack(items) {
 
     function onPointerDown(e) {
         if (e.button !== undefined && e.button !== 0) return;
+        const activeCard = slot.querySelector('.coffee-card');
+        if (activeCard?.classList.contains('expanded')) return;
+        if (e.target.closest(SWIPE_IGNORE_SELECTOR)) return;
 
         pointerId = e.pointerId;
         isPointerDown = true;
@@ -325,8 +352,7 @@ function buildRoasteryStack(items) {
     });
     mo.observe(document.body, { childList: true, subtree: true });
 
-    wrapper.appendChild(ghost2);
-    wrapper.appendChild(ghost1);
+    wrapper.appendChild(ghostLayer);
     wrapper.appendChild(slot);
     wrapper.appendChild(dots);
 
