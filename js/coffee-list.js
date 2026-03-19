@@ -164,7 +164,6 @@ function buildRoasteryStack(items) {
     let deltaY = 0;
     let isPointerDown = false;
     let dragActive = false;
-    let animating = false;
 
     // Schwellwerte
     const ACTIVATE_X = 12;
@@ -257,13 +256,7 @@ function buildRoasteryStack(items) {
     }
 
     function go(direction /* 'left' | 'right' */) {
-        if (animating) return;
-        animating = true;
         slot.classList.remove('roastery-fly-left', 'roastery-fly-right', 'roastery-snap-back');
-<<<<<<< codex/implement-new-swipe-effect-for-coffee-cards-vd1tcq
-        slot.classList.remove('roastery-slide-in-left', 'roastery-slide-in-right');
-=======
->>>>>>> main
         slot.classList.add('roastery-push-out');
 
         const activeCard = slot.querySelector('.coffee-card');
@@ -277,15 +270,10 @@ function buildRoasteryStack(items) {
             slot.classList.remove('roastery-push-out');
             slot.style.transform = '';
             renderCurrent(direction);
-<<<<<<< codex/implement-new-swipe-effect-for-coffee-cards-vd1tcq
-            animating = false;
-=======
->>>>>>> main
         }, 200);
     }
 
     function onPointerDown(e) {
-        if (animating) return;
         if (e.button !== undefined && e.button !== 0) return;
         const activeCard = slot.querySelector('.coffee-card');
         if (activeCard?.classList.contains('expanded')) return;
@@ -303,7 +291,7 @@ function buildRoasteryStack(items) {
     }
 
     function onPointerMove(e) {
-        if (animating || !isPointerDown || e.pointerId !== pointerId) return;
+        if (!isPointerDown || e.pointerId !== pointerId) return;
 
         deltaX = e.clientX - startX;
         deltaY = e.clientY - startY;
@@ -328,7 +316,7 @@ function buildRoasteryStack(items) {
     }
 
     function onPointerEndLike(e) {
-        if (animating || !isPointerDown || e.pointerId !== pointerId) return;
+        if (!isPointerDown || e.pointerId !== pointerId) return;
 
         slot.releasePointerCapture?.(pointerId);
 
