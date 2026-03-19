@@ -164,6 +164,8 @@ function buildRoasteryStack(items) {
     let deltaY = 0;
     let isPointerDown = false;
     let dragActive = false;
+    let pendingDeltaX = 0;
+    let dragRaf = 0;
 
     // Schwellwerte
     const ACTIVATE_X = 12;
@@ -238,6 +240,10 @@ function buildRoasteryStack(items) {
     }
 
     function cleanupPointerState() {
+        if (dragRaf) {
+            cancelAnimationFrame(dragRaf);
+            dragRaf = 0;
+        }
         if (pointerId !== null) {
             slot.releasePointerCapture?.(pointerId);
         }
@@ -247,6 +253,12 @@ function buildRoasteryStack(items) {
         deltaX = 0;
         deltaY = 0;
         slot.classList.remove('roastery-stack-dragging');
+    }
+
+    function applyDragTransform() {
+        dragRaf = 0;
+        const scale = Math.max(0.93, 1 - Math.abs(pendingDeltaX) / 900);
+        slot.style.transform = `translate3d(${pendingDeltaX}px, 0, 0) scale(${scale})`;
     }
 
     function animateSnapBack() {
@@ -310,8 +322,8 @@ function buildRoasteryStack(items) {
             slot.classList.add('roastery-stack-dragging');
         }
 
-        const scale = Math.max(0.93, 1 - Math.abs(deltaX) / 900);
-        slot.style.transform = `translateX(${deltaX}px) scale(${scale})`;
+        pendingDeltaX = deltaX;
+        if (!dragRaf) dragRaf = requestAnimationFrame(applyDragTransform);
         e.preventDefault();
     }
 

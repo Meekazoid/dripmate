@@ -3644,6 +3644,7 @@ button::-moz-focus-inner {
     position: relative;
     margin-bottom: 14px;
     overflow: visible;
+    perspective: 900px;
 }
 
 .roastery-stack-ghost-layer {
@@ -3690,6 +3691,8 @@ button::-moz-focus-inner {
     overflow: visible;
     touch-action: pan-y;
     will-change: transform;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
     transition: transform .18s ease, opacity .18s ease;
 }
 
@@ -3703,7 +3706,7 @@ button::-moz-focus-inner {
 }
 
 .roastery-stack-slot.roastery-push-out {
-    transform: scale(0.82);
+    transform: translate3d(0, 0, -60px) scale(0.82);
     opacity: 0;
     transition: transform 0.2s ease-in, opacity 0.2s ease-in !important;
 }
@@ -3717,13 +3720,25 @@ button::-moz-focus-inner {
 }
 
 @keyframes roastery-slide-from-right {
-    from { transform: translateX(55px); opacity: 0.4; }
+    from { transform: translate3d(55px, 0, 0); opacity: 0.4; }
     to   { transform: none; opacity: 1; }
 }
 
 @keyframes roastery-slide-from-left {
-    from { transform: translateX(-55px); opacity: 0.4; }
+    from { transform: translate3d(-55px, 0, 0); opacity: 0.4; }
     to   { transform: none; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .roastery-stack-slot,
+    .roastery-stack-slot.roastery-snap-back,
+    .roastery-stack-slot.roastery-push-out,
+    .roastery-stack-slot.roastery-slide-in-left,
+    .roastery-stack-slot.roastery-slide-in-right,
+    .roastery-stack-ghost {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }
 
 /* Hover-Lift im Stack deaktivieren (Drag-Konflikt vermeiden) */
