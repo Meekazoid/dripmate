@@ -171,7 +171,10 @@ function buildRoasteryStack(items) {
     let dragRaf = 0;
     let isTransitioning = false;
     let transitionAnim = null;
+<<<<<<< codex/improve-card-transition-and-animation-effects-f8lhtb
     let previewDirection = 'next'; // 'next' | 'prev'
+=======
+>>>>>>> main
 
     // Schwellwerte
     const ACTIVATE_X = 12;
@@ -306,7 +309,10 @@ function buildRoasteryStack(items) {
                 ? (current + 1) % items.length
                 : (current - 1 + items.length) % items.length;
 
+<<<<<<< codex/improve-card-transition-and-animation-effects-f8lhtb
             previewDirection = 'next';
+=======
+>>>>>>> main
             slot.style.transform = '';
             slot.style.opacity = '';
             slot.style.filter = '';
