@@ -164,6 +164,7 @@ function buildRoasteryStack(items) {
     let deltaY = 0;
     let isPointerDown = false;
     let dragActive = false;
+    let animating = false;
 
     // Schwellwerte
     const ACTIVATE_X = 12;
@@ -220,13 +221,21 @@ function buildRoasteryStack(items) {
         ghosts[0].appendChild(previewCard);
     }
 
-    function renderCurrent() {
+    function renderCurrent(inDirection) {
         slot.innerHTML = '';
         slot.appendChild(makeCard(items[current], current, items.length));
         renderGhostPreview();
         renderDots();
         syncGhostHeight();
         requestAnimationFrame(syncGhostHeight);
+
+        if (inDirection) {
+            const slideClass = inDirection === 'left' ? 'roastery-slide-in-left' : 'roastery-slide-in-right';
+            slot.classList.add(slideClass);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => slot.classList.remove(slideClass));
+            });
+        }
     }
 
     function cleanupPointerState() {
@@ -248,8 +257,11 @@ function buildRoasteryStack(items) {
     }
 
     function go(direction /* 'left' | 'right' */) {
+        if (animating) return;
+        animating = true;
         slot.classList.remove('roastery-fly-left', 'roastery-fly-right', 'roastery-snap-back');
-        slot.classList.add(direction === 'left' ? 'roastery-fly-left' : 'roastery-fly-right');
+        slot.classList.remove('roastery-slide-in-left', 'roastery-slide-in-right');
+        slot.classList.add('roastery-push-out');
 
         const activeCard = slot.querySelector('.coffee-card');
         if (activeCard) activeCard.dataset.suppressClick = '1';
@@ -259,13 +271,15 @@ function buildRoasteryStack(items) {
                 ? (current + 1) % items.length
                 : (current - 1 + items.length) % items.length;
 
-            slot.classList.remove('roastery-fly-left', 'roastery-fly-right');
+            slot.classList.remove('roastery-push-out');
             slot.style.transform = '';
-            renderCurrent();
-        }, 180);
+            renderCurrent(direction);
+            animating = false;
+        }, 200);
     }
 
     function onPointerDown(e) {
+        if (animating) return;
         if (e.button !== undefined && e.button !== 0) return;
         const activeCard = slot.querySelector('.coffee-card');
         if (activeCard?.classList.contains('expanded')) return;
@@ -283,7 +297,7 @@ function buildRoasteryStack(items) {
     }
 
     function onPointerMove(e) {
-        if (!isPointerDown || e.pointerId !== pointerId) return;
+        if (animating || !isPointerDown || e.pointerId !== pointerId) return;
 
         deltaX = e.clientX - startX;
         deltaY = e.clientY - startY;
@@ -302,12 +316,13 @@ function buildRoasteryStack(items) {
             slot.classList.add('roastery-stack-dragging');
         }
 
-        slot.style.transform = `translateX(${deltaX}px)`;
+        const scale = Math.max(0.93, 1 - Math.abs(deltaX) / 900);
+        slot.style.transform = `translateX(${deltaX}px) scale(${scale})`;
         e.preventDefault();
     }
 
     function onPointerEndLike(e) {
-        if (!isPointerDown || e.pointerId !== pointerId) return;
+        if (animating || !isPointerDown || e.pointerId !== pointerId) return;
 
         slot.releasePointerCapture?.(pointerId);
 
