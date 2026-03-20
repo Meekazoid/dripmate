@@ -1008,7 +1008,7 @@ body.light-mode .coffee-card:hover .coffee-name {
 /* ==========================================    9. CARD ACTION BUTTONS (Delete, Favorite)    ========================================== */  .delete-btn {
     position: absolute;
     top: -10px;
-    right: -10px;
+    right: -4px;
     background: var(--bg-card);
     color: var(--text-secondary);
     border: 1px solid var(--border);
@@ -1048,7 +1048,7 @@ body.light-mode .delete-btn {
 .favorite-btn {
     position: absolute;
     top: -10px;
-    right: 58px;
+    right: 64px;
     background: var(--bg-card);
     color: var(--text-secondary);
     border: 1px solid var(--border);
@@ -1118,10 +1118,10 @@ body.light-mode .delete-btn {
 
 .coffee-process-small {
     display: inline-block;
-    background: var(--accent);
-    color: white;
+    background: rgba(200, 169, 126, 0.1);
+    color: var(--text-secondary);
     padding: 4px 10px;
-    border: none;
+    border: 1px solid var(--border);
     border-radius: 6px;
     font-size: 0.68rem;
     font-weight: 500;
@@ -3138,7 +3138,7 @@ body.light-mode .coffee-roastery {
 .edit-btn {
     position: absolute;
     top: -10px;
-    right: 24px;
+    right: 30px;
     background: var(--bg-card);
     color: var(--text-secondary);
     border: 1px solid var(--border);
@@ -3619,9 +3619,9 @@ button::-moz-focus-inner {
     }
 
     /* Positionen der Card-Buttons leicht korrigieren, damit sie nicht überlappen */
-    .delete-btn   { right: -10px !important; top: -10px !important; }
-    .edit-btn     { right: 32px !important;  top: -10px !important; }
-    .favorite-btn { right: 74px !important;  top: -10px !important; }
+    .delete-btn   { right: -4px !important; top: -10px !important; }
+    .edit-btn     { right: 38px !important;  top: -10px !important; }
+    .favorite-btn { right: 80px !important;  top: -10px !important; }
 
     /* Icons auf der Card etwas größer für bessere Sichtbarkeit */
     .favorite-btn svg, 
