@@ -56,7 +56,7 @@ body.light-mode {
     min-height: 100dvh; /* dvh statt vh - ignoriert einklappende Adressleisten */
 
     /* iOS Safe Areas einbinden, damit Buttons nicht im Home-Balken hängen */
-    padding: env(safe-area-inset-top, 40px)
+    padding: env(safe-area-inset-top, 20px)
              env(safe-area-inset-right, 20px)
              calc(100px + env(safe-area-inset-bottom, 0px))
              env(safe-area-inset-left, 20px);
@@ -101,7 +101,7 @@ body.light-mode {
 }
 
 .header-logo {
-    height: 68px;
+    height: 82px;
     width: auto;
     display: block;
     flex-shrink: 0;
@@ -133,13 +133,14 @@ body.light-mode .logo-light {
 
 h1 {
     font-family: 'Sora', sans-serif;
-    font-size: 1.8rem;
+    font-size: 2.1rem;
     font-weight: 200;
     letter-spacing: 0.32em;
     text-transform: lowercase;
     text-align: center;
     margin: 0;
     padding: 0;
+    white-space: nowrap;
 }
 
 .brand-dot {
@@ -158,6 +159,8 @@ h1 {
     align-items: center;
     justify-content: center;
     gap: 0 !important;
+    white-space: nowrap;
+    flex-wrap: nowrap;
 }
 
 .brand-word {
@@ -167,7 +170,7 @@ h1 {
 
 .header-subtitle {
     font-family: 'Sora', sans-serif;
-    font-size: 0.62rem;
+    font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -179,10 +182,10 @@ h1 {
 
 
 /* ==========================================    5. ADD COFFEE SECTION & BUTTONS    ========================================== */  .add-section {
-    background: color-mix(in srgb, var(--bg-secondary) 88%, #000 12%);
+    background: transparent;
     border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 40px;
+    padding: 8px 0 0;
+    margin-bottom: 30px;
 }
 
 .button-group {
@@ -195,25 +198,28 @@ h1 {
 /* --- Coffee Shot Signature Button (Golden Outline) --- */ .cs-btn {
     position: relative;
     display: flex;
-    width: 80%;
-    max-width: 320px;
+    width: 188px;
+    height: 188px;
     margin: 0 auto;
     padding: 0;
-    background: rgba(200, 148, 90, 0.05);
-    border: 1.5px solid #C8945A;
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--border) 78%, transparent 22%);
     cursor: pointer;
-    border-radius: 16px;
+    border-radius: 999px;
     overflow: hidden;
-    transition: transform 0.18s ease, border-color 0.22s ease, background-color 0.22s ease;
+    transition: none;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(212, 165, 116, 0.05);
 }
 
 .cs-btn:hover {
-    transform: translateY(-1px);
-    background: rgba(200, 148, 90, 0.08);
+    transform: none;
+    background: transparent;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(212, 165, 116, 0.05);
 }
 
 .cs-btn:active {
-    transform: scale(0.985);
+    transform: none;
+    background: transparent;
 }
 
 .cs-btn:disabled {
@@ -222,25 +228,28 @@ h1 {
 }
 
 .cs-content {
+    position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 12px;
-    padding: 10px 16px; /* Vorher: 14px 20px -> Nimmt die Höhe raus */
+    padding: 16px;
     width: 100%;
-    background: transparent;
+    height: 100%;
+    background: rgba(17, 12, 8, 0.48);
     border: none;
-    border-radius: 16px;
+    border-radius: 999px;
 }
 
 body.light-mode .add-section {
-    background: var(--bg-secondary);
+    background: transparent;
 }
 
 .cs-icon-wrap {
     flex-shrink: 0;
-    width: 42px;
-    height: 42px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -248,65 +257,113 @@ body.light-mode .add-section {
 }
 
 .cs-viewfinder {
-    width: 42px;
-    height: 42px;
+    width: 52px;
+    height: 52px;
     overflow: visible;
     object-fit: contain;
+    fill: none;
+    stroke: #C8945A;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.95;
 }
 
-.cs-bag {
-    transform: scale(0.697);
-    -webkit-filter: brightness(0) saturate(100%) invert(67%) sepia(29%) saturate(657%) hue-rotate(344deg) brightness(90%) contrast(89%);
-    filter: brightness(0) saturate(100%) invert(67%) sepia(29%) saturate(657%) hue-rotate(344deg) brightness(90%) contrast(89%);
+.cs-ring {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 165, 116, 0.08);
+    pointer-events: none;
+}
+
+.cs-ring--outer {
+    width: 84%;
+    height: 84%;
+    top: 8%;
+    left: 8%;
+}
+
+.cs-ring--inner {
+    width: 67%;
+    height: 67%;
+    top: 16.5%;
+    left: 16.5%;
+}
+
+.cs-scanline {
+    position: absolute;
+    left: 13%;
+    right: 13%;
+    top: 48%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(212, 165, 116, 0.28) 50%, transparent 100%);
+    pointer-events: none;
 }
 
 .cs-text {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
 }
 
 .cs-label {
-    font-size: 1.0rem;
-    font-weight: 600;
+    font-size: 1.45rem;
+    font-weight: 300;
+    font-family: 'Sora', sans-serif;
     color: #C8945A;
-    letter-spacing: 0.04em;
+    letter-spacing: -0.02em;
     line-height: 1.1;
 }
 
 .cs-sub {
-    font-size: 0.62rem;
+    font-size: 0.5rem;
     color: var(--text-secondary);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.46em;
     line-height: 1;
     font-weight: 300;
+    text-transform: uppercase;
+    margin-left: 0.4em;
 }
 
 body.light-mode .cs-btn {
-    border-color: #8B6F47;
+    background: transparent;
+    border-color: #e7e1d7;
+    box-shadow: 0 10px 28px rgba(26, 16, 8, 0.08), inset 0 0 0 1px rgba(26, 16, 8, 0.03);
 }
 
 body.light-mode .cs-label {
     color: #8B6F47;
 }
 
-body.light-mode .cs-bag {
-    -webkit-filter: brightness(0) saturate(100%) invert(45%) sepia(23%) saturate(543%) hue-rotate(353deg) brightness(92%) contrast(89%);
-    filter: brightness(0) saturate(100%) invert(45%) sepia(23%) saturate(543%) hue-rotate(353deg) brightness(92%) contrast(89%);
+body.light-mode .cs-content {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+body.light-mode .cs-viewfinder {
+    stroke: #8B6F47;
+}
+
+body.light-mode .cs-ring {
+    border-color: rgba(139, 111, 71, 0.07);
+}
+
+body.light-mode .cs-scanline {
+    background: linear-gradient(90deg, transparent 0%, rgba(139, 111, 71, 0.22) 50%, transparent 100%);
 }
 
 .upload-button, .manual-button {
     width: auto;
-    padding: 12px 14px;
-    background: transparent;
+    padding: 12px 18px;
+    background: color-mix(in srgb, var(--bg-secondary) 86%, transparent 14%);
     color: var(--text-primary);
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in srgb, var(--border) 80%, transparent 20%);
     border-radius: 14px;
     font-family: 'Sora', sans-serif;
-    font-size: 0.663rem;
-    font-weight: 300;
-    letter-spacing: 0.03em;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -314,17 +371,17 @@ body.light-mode .cs-bag {
     gap: 6px;
     transition: border-color 0.2s ease, background-color 0.2s ease;
     white-space: nowrap;
-    box-shadow: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 body.light-mode .upload-button, body.light-mode .manual-button {
-    background: transparent;
-    border: 1px solid var(--border);
-    box-shadow: none;
+    background: #ffffff;
+    border: 1px solid #d9d0c3;
+    box-shadow: 0 4px 12px rgba(34, 24, 14, 0.08);
 }
 
 .upload-button:hover, .manual-button:hover {
-    background: transparent;
+    background: color-mix(in srgb, var(--bg-secondary) 92%, transparent 8%);
     border-color: rgba(212, 165, 116, 0.3);
     color: var(--text-primary);
     transform: none;
@@ -332,9 +389,9 @@ body.light-mode .upload-button, body.light-mode .manual-button {
 }
 
 body.light-mode .upload-button:hover, body.light-mode .manual-button:hover {
-    background: transparent;
+    background: #ffffff;
     border-color: rgba(139, 111, 71, 0.3);
-    box-shadow: none;
+    box-shadow: 0 5px 14px rgba(34, 24, 14, 0.11);
 }
 
 .upload-button:disabled, .manual-button:disabled {
@@ -343,21 +400,21 @@ body.light-mode .upload-button:hover, body.light-mode .manual-button:hover {
 }
 
 .button-icon {
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
     stroke: var(--accent);
     stroke-width: 1.4;
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
     flex-shrink: 0;
-    opacity: 0.6;
+    opacity: 0.95;
 }
 
 /* -- Action buttons row matches CoffeeShot button width -- */ .action-buttons {
-    width: 80%;
-    max-width: 320px;
-    margin: 10px auto 0;
+    width: 188px;
+    max-width: 100%;
+    margin: 14px auto 0;
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -376,7 +433,7 @@ body.light-mode .upload-button:hover, body.light-mode .manual-button:hover {
     stroke: var(--accent) !important;
     stroke-width: 1.4 !important;
     fill: none !important;
-    opacity: 0.6;
+    opacity: 0.95;
     margin: 0 !important;
     display: inline-block;
     vertical-align: middle;
