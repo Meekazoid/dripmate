@@ -2796,12 +2796,16 @@ h1 {
 
 .brew-chip-group:last-child {
     min-width: 0;
-    flex: 1.08;
+    flex: 1.28;
 }
 
 #method-chip .brew-chip-group-label {
     white-space: nowrap;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
+}
+
+#method-chip .brew-chip-top {
+    padding-right: 16px;
 }
 
 #grinder-chip .brew-chip-label {
