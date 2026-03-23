@@ -101,7 +101,7 @@ body.light-mode {
 }
 
 .header-logo {
-    height: 82px;
+    height: 90px;
     width: auto;
     display: block;
     flex-shrink: 0;
@@ -133,7 +133,7 @@ body.light-mode .logo-light {
 
 h1 {
     font-family: 'Sora', sans-serif;
-    font-size: 2.2rem;
+    font-size: 2.53rem;
     font-weight: 200;
     letter-spacing: 0.32em;
     text-transform: lowercase;
@@ -2725,12 +2725,12 @@ body.light-mode .onboarding-icon {
 }
 
 h1 {
-    font-size: 1.68rem;
+    font-size: 1.93rem;
     letter-spacing: 0.24em;
 }
 
 .header-logo {
-    height: 60px;
+    height: 66px;
 }
 
 .empty-state {
