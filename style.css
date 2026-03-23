@@ -257,16 +257,13 @@ body.light-mode .add-section {
     transform: translateY(-6px);
 }
 
-.cs-viewfinder {
+.cs-coffeebag {
     width: 52px;
     height: 52px;
     overflow: visible;
     object-fit: contain;
-    fill: none;
-    stroke: #C8945A;
-    stroke-width: 1.4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    fill: #C8945A;
+    stroke: none;
     opacity: 0.95;
 }
 
@@ -342,8 +339,8 @@ body.light-mode .cs-content {
     background: rgba(255, 255, 255, 0.9);
 }
 
-body.light-mode .cs-viewfinder {
-    stroke: #8B6F47;
+body.light-mode .cs-coffeebag {
+    fill: #8B6F47;
 }
 
 body.light-mode .cs-ring {
