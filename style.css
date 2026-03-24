@@ -622,15 +622,15 @@ button:hover {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    background: #9B7245;
-    border: 1px solid rgba(155, 114, 69, 0.35);
+    background: rgba(26, 16, 8, 0.6);
+    border: 1px solid var(--border);
     flex-shrink: 0;
 }
 
 .brew-chip-icon svg {
     width: 16px;
     height: 16px;
-    stroke: #fdf8f2;
+    stroke: #C8945A;
     stroke-width: 1.5;
     fill: none;
     stroke-linecap: round;
@@ -715,8 +715,12 @@ body.light-mode .brew-chip-top {
 }
 
 body.light-mode .brew-chip-icon {
-    background: #D4AD7B;
-    border-color: rgba(200, 160, 110, 0.3);
+    background: #fdf8f2;
+    border-color: #d5c8b7;
+}
+
+body.light-mode .brew-chip-icon svg {
+    stroke: #B8864F;
 }
 
 body.light-mode .brew-chip:hover {
