@@ -622,8 +622,8 @@ button:hover {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    background: #C8945A;
-    border: 1px solid rgba(200, 148, 90, 0.3);
+    background: #9B7245;
+    border: 1px solid rgba(155, 114, 69, 0.35);
     flex-shrink: 0;
 }
 
@@ -715,8 +715,8 @@ body.light-mode .brew-chip-top {
 }
 
 body.light-mode .brew-chip-icon {
-    background: #C8945A;
-    border-color: rgba(200, 148, 90, 0.3);
+    background: #D4AD7B;
+    border-color: rgba(200, 160, 110, 0.3);
 }
 
 body.light-mode .brew-chip:hover {
