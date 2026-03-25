@@ -186,7 +186,7 @@ export function renderCoffeeCard(coffee, index) {
                     </svg>
                 </button>
                 <button class="delete-btn" onclick="event.stopPropagation(); deleteCoffee(${index});">
-                    <svg class="delete-icon" viewBox="0 0 200 200">
+                    <svg class="delete-icon" viewBox="0 0 24 24">
                         <use href="#icon-compost"/>
                     </svg>
                 </button>
