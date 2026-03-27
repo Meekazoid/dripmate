@@ -185,7 +185,7 @@ h1 {
     background: transparent;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
-    padding: 8px 0 0;
+    padding: 8px 0 10px;
     margin-bottom: 30px;
 }
 
@@ -660,6 +660,7 @@ button:hover {
     gap: 6px;
     padding: 0 12px;
     min-width: 0;
+    background: var(--bg-card);
 }
 
 .brew-chip:focus, .brew-chip:focus-visible {
@@ -919,7 +920,7 @@ body.light-mode .picker-option.active {
 }
 
 .coffee-card {
-    background: var(--bg-secondary);
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-left: 3px solid var(--card-accent-color, var(--accent));
     border-radius: 16px;
@@ -964,7 +965,7 @@ body.light-mode .coffee-card {
 }
 
 .coffee-card.expanded {
-    background: var(--bg-secondary);
+    background: var(--bg-card);
     box-shadow: 0 12px 32px var(--shadow);
     overflow: visible !important;
     height: auto !important;
