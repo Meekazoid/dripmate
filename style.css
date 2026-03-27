@@ -20,7 +20,7 @@ html {
 
 /* ==========================================    2. CSS VARIABLES (THEMES)    ========================================== */  :root {
     --bg-primary:   #100d08;
-    /* Espresso-Schwarz mit Waerme  (war: #000000) */     --bg-secondary: #1d1208;
+    /* Espresso-Schwarz mit Waerme  (war: #000000) */     --bg-secondary: #2A1F1B;
     /* Warmes Dunkelbraun           (war: #1a1a1a) */     --bg-card:      #150d06;
     /* Tiefstes Braun-Schwarz       (war: #0a0a0a) */     --text-primary:   #e8d5c0;
     /* Creme statt kalt-weiss       (war: #ffffff) */     --text-secondary: #7a6050;
@@ -183,6 +183,7 @@ h1 {
 
 /* ==========================================    5. ADD COFFEE SECTION & BUTTONS    ========================================== */  .add-section {
     background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
     padding: 8px 0 0;
     margin-bottom: 30px;
@@ -244,6 +245,7 @@ h1 {
 
 body.light-mode .add-section {
     background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .cs-icon-wrap {
