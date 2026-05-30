@@ -2,7 +2,9 @@
   "name": "drip·mate",
   "short_name": "drip·mate",
   "description": "Your personal specialty coffee brewing assistant",
+  "id": "/",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "theme_color": "#100d08",
   "background_color": "#100d08",
@@ -33,5 +35,14 @@
     }
   ],
   "categories": ["food", "lifestyle", "utilities"],
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "screenshots": [
+    {
+      "src": "assets/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "dripmate – brew assistant"
+    }
+  ]
 }
