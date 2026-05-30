@@ -1,4 +1,12 @@
-﻿/* ==========================================    DRIPMATE - STYLE.CSS    Extracted & cleaned from index.html    ========================================== */  /* ==========================================    1. RESET & BASE    ========================================== */  * {
+﻿@font-face {
+  font-family: 'Sora';
+  src: url('assets/sora-v17-latin-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================    DRIPMATE - STYLE.CSS    Extracted & cleaned from index.html    ========================================== */  /* ==========================================    1. RESET & BASE    ========================================== */  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
