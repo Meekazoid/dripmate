@@ -650,19 +650,25 @@
 // CONFIG
 // ══════════════════════════════════════════════════
 const BACKEND_URL = 'https://dripmate-backend-production.up.railway.app';
-const ADMIN_PASSWORD = 'dripmate-admin-2026'; // ← hier dein Passwort setzen
 
 // ══════════════════════════════════════════════════
 // LOGIN
 // ══════════════════════════════════════════════════
-function doLogin() {
+async function doLogin() {
     const pw = document.getElementById('pw-input').value;
-    if (pw === ADMIN_PASSWORD) {
-        sessionStorage.setItem('admin_auth', '1');
+    try {
+        const res = await fetch(`${BACKEND_URL}/api/admin/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: pw })
+        });
+        if (!res.ok) throw new Error('Unauthorized');
+        const data = await res.json();
+        sessionStorage.setItem('admin_token', data.token);
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('admin-screen').style.display = 'block';
         loadData();
-    } else {
+    } catch {
         document.getElementById('login-error').style.display = 'block';
         document.getElementById('pw-input').value = '';
         document.getElementById('pw-input').focus();
@@ -670,7 +676,7 @@ function doLogin() {
 }
 
 function doLogout() {
-    sessionStorage.removeItem('admin_auth');
+    sessionStorage.removeItem('admin_token');
     location.reload();
 }
 
@@ -679,7 +685,7 @@ document.getElementById('pw-input').addEventListener('keydown', e => {
 });
 
 // Auto-login wenn Session aktiv
-if (sessionStorage.getItem('admin_auth') === '1') {
+if (sessionStorage.getItem('admin_token')) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-screen').style.display = 'block';
     loadData();
@@ -693,7 +699,7 @@ let entries = [];
 async function loadData() {
     try {
         const res = await fetch(`${BACKEND_URL}/api/admin/whitelist`, {
-            headers: { 'X-Admin-Password': ADMIN_PASSWORD }
+            headers: { 'X-Admin-Token': sessionStorage.getItem('admin_token') }
         });
         if (!res.ok) throw new Error('Fehler beim Laden');
         const data = await res.json();
@@ -729,7 +735,7 @@ async function addEntry() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Admin-Password': ADMIN_PASSWORD
+                'X-Admin-Token': sessionStorage.getItem('admin_token')
             },
             body: JSON.stringify({ email, name, website, note })
         });
@@ -763,7 +769,7 @@ async function deleteEntry(id) {
     try {
         await fetch(`${BACKEND_URL}/api/admin/whitelist/${id}`, {
             method: 'DELETE',
-            headers: { 'X-Admin-Password': ADMIN_PASSWORD }
+            headers: { 'X-Admin-Token': sessionStorage.getItem('admin_token') }
         });
         entries = entries.filter(e => e.id !== id);
         renderTable();
@@ -780,7 +786,7 @@ async function updateField(id, field, value) {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Admin-Password': ADMIN_PASSWORD
+                'X-Admin-Token': sessionStorage.getItem('admin_token')
             },
             body: JSON.stringify({ [field]: value })
         });
