@@ -247,35 +247,35 @@
         submitBtn.textContent = 'Sending…';
 
         try {
-            const response = await fetch(‘https://dripmate-backend-production.up.railway.app/api/auth/signup’, {
-                method: ‘POST’,
-                headers: { ‘Content-Type’: ‘application/json’ },
+            const response = await fetch('https://dripmate-backend-production.up.railway.app/api/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
 
             const data = await response.json().catch(() => ({}));
 
             if (response.ok) {
-                if (data.status === ‘invited’) {
+                if (data.status === 'invited') {
                     if (data.resent === true) {
-                        setStatus(‘Your existing token was re-sent. Please check your inbox.’, ‘success’);
+                        setStatus('Your existing token was re-sent. Please check your inbox.', 'success');
                     } else {
-                        setStatus(‘Your token is on the way. Please check your inbox in a moment.’, ‘success’);
+                        setStatus('Your token is on the way. Please check your inbox in a moment.', 'success');
                     }
                     form.reset();
                     return;
                 }
 
-                if (data.status === ‘waitlisted’ || data.status === ‘already_waitlisted’) {
-                    setStatus(‘The beta is currently full — you\’re on the waitlist. We\’ll email you the moment a spot opens up.’, ‘warning’);
+                if (data.status === 'waitlisted' || data.status === 'already_waitlisted') {
+                    setStatus('The beta is currently full — you are on the waitlist. We will email you the moment a spot opens up.', 'warning');
                     form.reset();
                     return;
                 }
             }
 
-            setStatus(‘Something went wrong. Please try again in a moment.’, ‘error’);
+            setStatus('Something went wrong. Please try again in a moment.', 'error');
         } catch (error) {
-            setStatus(‘We could not reach the server. Please try again in a moment.’, ‘error’);
+            setStatus('We could not reach the server. Please try again in a moment.', 'error');
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = 'Send me my token';
