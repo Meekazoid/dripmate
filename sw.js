@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.2';  // resilient precache + strict asset list
+const CACHE_VERSION = 'v51.3';  // + app-feedback module
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
@@ -28,6 +28,7 @@ const STATIC_ASSETS = [
   '/js/water-hardness.js',
   '/js/settings.js',
   '/js/services/backend-sync.js',
+  '/js/app-feedback.js',
   '/js/brew-timer-stubs.js',
   '/js/sw-register.js',
   '/js/data/water-hardness-db.js',

@@ -14,6 +14,8 @@
     <link rel="shortcut icon" href="logo-192.png">
     <link rel="stylesheet" href="style.css">
     <title>drip·mate</title>
+    <!-- Capture referrer before any navigation (used for TWA/android-app:// detection) -->
+    <script>window.__entryReferrer = document.referrer;</script>
 </head>
 <body>
     <!-- ====== SVG SYMBOL DEFINITIONS ====== -->
@@ -49,6 +51,10 @@
             <line x1="6" y1="2" x2="6" y2="4"></line>
             <line x1="10" y1="2" x2="10" y2="4"></line>
             <line x1="14" y1="2" x2="14" y2="4"></line>
+        </symbol>
+        <!-- app feedback speech bubble -->
+        <symbol id="icon-feedback" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </symbol>
     </svg>
 
@@ -221,6 +227,18 @@
                     Welcome to dripmate!<br><span class="onboarding-em">Photograph</span> your <span class="onboarding-em">coffee bag</span>,<br> pick your <span class="onboarding-em">brew method &amp; grinder</span>,<br>and open your first <span class="onboarding-em">coffee card</span> to <span class="onboarding-em">start brewing</span>.<br>Use <span class="onboarding-em">feedback</span> to dial in your <span class="onboarding-em">perfect parameters</span>.<br><br><span class="onboarding-enjoy">Enjoy!</span>
                 </p>
             </div>
+        </div>
+    </div>
+
+    <!-- ====== FIXED CONTROLS (LEFT) — App Feedback ====== -->
+    <div class="fixed-controls-left">
+        <div id="appFeedbackNudge" class="app-feedback-nudge" style="display:none" role="status">
+            Wie läuft's mit dripmate? Kurzes Feedback?
+            <button id="appFeedbackNudgeClose" class="app-feedback-nudge-close" aria-label="Schließen">✕</button>
+            <span class="app-feedback-nudge-arrow" aria-hidden="true"></span>
+        </div>
+        <div class="control-btn" id="appFeedbackBtn" aria-label="App-Feedback senden">
+            <svg class="control-icon"><use href="#icon-feedback"/></svg>
         </div>
     </div>
 
@@ -764,6 +782,64 @@
             <div id="feedbackHistoryEmpty" class="decaf-empty" style="display: none;">
                 No adjustments applied yet.
             </div>
+        </div>
+    </div>
+
+    <!-- ====== APP FEEDBACK MODAL ====== -->
+    <div id="appFeedbackModal" class="modal">
+        <div class="modal-content modal-content--narrow">
+            <div class="popup-header-standard">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24"><use href="#icon-feedback"/></svg>
+                    <h2>App Feedback</h2>
+                </div>
+                <button class="close-btn" id="closeAppFeedbackBtn">✕</button>
+            </div>
+
+            <div class="info-box-standard">
+                <strong>Beta-Feedback</strong>
+                <p>Bugs, Wünsche, Lob — alles willkommen. Hilf dabei, dripmate besser zu machen.</p>
+            </div>
+
+            <!-- Category chips -->
+            <div class="form-group">
+                <div class="app-feedback-chip-row">
+                    <button type="button" class="app-feedback-chip" data-category="bug">🐛 Bug</button>
+                    <button type="button" class="app-feedback-chip" data-category="wish">✨ Wunsch</button>
+                    <button type="button" class="app-feedback-chip" data-category="praise">👍 Lob</button>
+                </div>
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+                <label for="appFeedbackMessage">Nachricht *</label>
+                <textarea id="appFeedbackMessage" placeholder="Was liegt dir auf dem Herzen?" rows="4"></textarea>
+            </div>
+
+            <!-- Equipment block -->
+            <div class="form-group">
+                <label class="app-feedback-check-label">
+                    <input type="checkbox" id="appFeedbackGrinderUnsupported">
+                    Meine Mühle wird noch nicht unterstützt
+                </label>
+                <div id="appFeedbackGrinderGroup" style="display:none; margin-top:8px;">
+                    <input type="text" id="appFeedbackGrinderText" placeholder="Welche Mühle? (z.B. Niche Zero)">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="app-feedback-check-label">
+                    <input type="checkbox" id="appFeedbackMethodUnsupported">
+                    Meine Zubereitungsart wird noch nicht unterstützt
+                </label>
+                <div id="appFeedbackMethodGroup" style="display:none; margin-top:8px;">
+                    <input type="text" id="appFeedbackMethodText" placeholder="Welche Methode? (z.B. Kalita Wave)">
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <button id="appFeedbackSubmitBtn">Feedback senden</button>
+            <div id="appFeedbackStatus" class="app-feedback-status" style="display:none;"></div>
         </div>
     </div>
 

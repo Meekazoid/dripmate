@@ -3990,3 +3990,143 @@ body.light-mode .roastery-stack-counter {
     border-color: var(--border);
     color: var(--accent);
 }
+
+/* ==========================================
+   APP FEEDBACK — left button container + nudge
+   ========================================== */
+
+.fixed-controls-left {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    gap: 12px;
+    z-index: 1000;
+}
+
+/* Nudge bubble — position: absolute takes it out of the flex flow;
+   bottom: 56px sits above the 36-48px button with a small gap */
+.app-feedback-nudge {
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    background: var(--accent);
+    color: #000;
+    font-size: 0.72rem;
+    font-weight: 400;
+    line-height: 1.4;
+    padding: 10px 32px 10px 12px;
+    border-radius: 12px;
+    max-width: 190px;
+    white-space: normal;
+    box-shadow: 0 4px 16px var(--shadow);
+    animation: af-nudge-in 0.25s ease both;
+}
+
+.app-feedback-nudge-arrow {
+    position: absolute;
+    top: 100%;
+    left: 13px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: var(--accent);
+}
+
+.app-feedback-nudge-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: none;
+    border: none;
+    color: rgba(0,0,0,0.55);
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+}
+
+.app-feedback-nudge-close:hover {
+    color: #000;
+}
+
+@keyframes af-nudge-in {
+    from { opacity: 0; transform: translateY(6px) scale(0.95); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-feedback-nudge {
+        animation: none;
+    }
+}
+
+/* App-Feedback modal: category chips */
+.app-feedback-chip-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.app-feedback-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-light, rgba(255,255,255,0.1));
+    background: transparent;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.app-feedback-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.app-feedback-chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 600;
+}
+
+/* Checkbox labels */
+.app-feedback-check-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text-secondary, var(--text-muted));
+    cursor: pointer;
+    line-height: 1.4;
+}
+
+.app-feedback-check-label input[type="checkbox"] {
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+}
+
+/* Status messages */
+.app-feedback-status {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.app-feedback-status--success {
+    background: rgba(74,222,128,0.12);
+    color: #4ade80;
+    border: 1px solid rgba(74,222,128,0.25);
+}
+
+.app-feedback-status--error {
+    background: rgba(248,113,113,0.12);
+    color: #f87171;
+    border: 1px solid rgba(248,113,113,0.25);
+}

@@ -41,6 +41,7 @@ import {
     setApiWaterHardness
 } from './state.js';
 import { initBackendSync } from './services/backend-sync.js';
+import { initAppFeedback, openAppFeedback, closeAppFeedback, checkNudge } from './app-feedback.js';
 
 // Make updateRoastDate available globally for onclick handlers
 window.updateRoastDate = updateRoastDate;
@@ -143,6 +144,11 @@ function initEventListeners() {
     document.getElementById('waterModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeWaterModal(); });
     document.getElementById('impressumModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal('impressumModal'); });
     document.getElementById('datenschutzModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal('datenschutzModal'); });
+
+    // App Feedback
+    document.getElementById('appFeedbackBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openAppFeedback(); });
+    document.getElementById('closeAppFeedbackBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeAppFeedback(); });
+    document.getElementById('appFeedbackModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeAppFeedback(); });
 }
 
 // Generic modal helpers for legal pages
@@ -184,6 +190,12 @@ async function initApp() {
 
     // Render coffee list
     renderCoffees();
+
+    // App Feedback init (must run after DOM is ready)
+    initAppFeedback();
+
+    // Check nudge after first render — triggers once user has ≥7 coffees
+    checkNudge();
 
     // Start backend sync in background so locally cached coffees
     // are visible immediately on app startup.
