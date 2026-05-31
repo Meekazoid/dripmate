@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.5';  // app-feedback: light-mode polish (chips, checkboxes, button)
+const CACHE_VERSION = 'v51.6';  // app-feedback: fix checkbox size (override global input padding)
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [

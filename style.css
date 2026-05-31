@@ -4112,8 +4112,9 @@ body.light-mode .roastery-stack-counter {
     appearance: none;
     -webkit-appearance: none;
     flex: 0 0 auto;
-    width: 18px;
-    height: 18px;
+    width: 18px !important;   /* override global input:not([type="range"]) { width: 100% } */
+    height: 18px !important;
+    padding: 0 !important;    /* override global 14px 16px padding */
     margin: 0;
     border: 1.5px solid var(--accent);
     border-radius: 4px;
