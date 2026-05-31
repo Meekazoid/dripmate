@@ -445,7 +445,7 @@
             min-width: 120px;
         }
 
-        /* Delete button */
+        /* Delete button (whitelist-only, subtle) */
         .btn-delete {
             background: transparent;
             border: none;
@@ -463,6 +463,28 @@
         .btn-delete:hover {
             color: var(--danger);
             background: rgba(248, 113, 113, 0.08);
+        }
+
+        /* Purge button (full account removal — visually distinct danger red) */
+        .btn-purge {
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.75;
+        }
+
+        .btn-purge:hover {
+            background: rgba(248, 113, 113, 0.15);
+            opacity: 1;
         }
 
         /* Website link */
@@ -855,6 +877,39 @@ async function deleteEntry(id) {
     }
 }
 
+async function purgeEntry(email) {
+    const first = confirm(
+        `Komplett entfernen löscht den Account, alle Kaffees, den Zugangscode UND den Whitelist-Eintrag von ${email} unwiderruflich.\n\nDer normale "Entfernen"-Button löscht nur die Einladung.\n\nFortfahren?`
+    );
+    if (!first) return;
+
+    const second = confirm('Wirklich unwiderruflich löschen?');
+    if (!second) return;
+
+    try {
+        const res = await fetch(`${BACKEND_URL}/api/admin/purge`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Admin-Token': sessionStorage.getItem('admin_token')
+            },
+            body: JSON.stringify({ email })
+        });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+
+        entries = entries.filter(e => e.email !== email);
+        renderTable();
+        renderStats();
+        renderCounter();
+
+        const scope = data.hadAccount ? 'Account + alle Daten' : 'Einladung (kein Account vorhanden)';
+        showToast(`✓ ${email} komplett entfernt (${scope})`, 'success');
+    } catch {
+        showToast('Fehler beim Komplett-Entfernen', 'error');
+    }
+}
+
 async function updateField(id, field, value) {
     try {
         await fetch(`${BACKEND_URL}/api/admin/whitelist/${id}`, {
@@ -911,10 +966,16 @@ function renderTable() {
             <td>${statusBadge}</td>
             <td class="td-muted" style="font-size:0.75rem">${date}</td>
             <td>
-                <button class="btn-delete" onclick="deleteEntry(${e.id})">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-                    Entfernen
-                </button>
+                <div style="display:flex;flex-direction:column;gap:2px;align-items:flex-start;">
+                    <button class="btn-delete" onclick="deleteEntry(${e.id})">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                        Entfernen
+                    </button>
+                    <button class="btn-purge" onclick="purgeEntry(${JSON.stringify(e.email)})">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Komplett entfernen
+                    </button>
+                </div>
             </td>
         </tr>`;
     }).join('');
