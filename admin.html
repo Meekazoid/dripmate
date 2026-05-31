@@ -781,32 +781,33 @@ let entries         = [];
 let waitlistEntries = [];
 
 async function loadData() {
+    const token = sessionStorage.getItem('admin_token');
+
+    // Whitelist is critical — propagate its error.
+    // Waitlist is additive — a 404 (backend not yet deployed) just leaves it empty.
     try {
-        const token = sessionStorage.getItem('admin_token');
-        const [wlRes, waitRes] = await Promise.all([
-            fetch(`${BACKEND_URL}/api/admin/whitelist`, { headers: { 'X-Admin-Token': token } }),
-            fetch(`${BACKEND_URL}/api/admin/waitlist`,  { headers: { 'X-Admin-Token': token } })
-        ]);
-        if (!wlRes.ok || !waitRes.ok) throw new Error('Fehler beim Laden');
-
-        const wlData   = await wlRes.json();
-        const waitData = await waitRes.json();
-
-        entries         = wlData.entries   || [];
-        waitlistEntries = waitData.entries || [];
-
-        renderTable();
-        renderStats();
-        renderWaitlist();
-        renderCounter();
+        const wlRes = await fetch(`${BACKEND_URL}/api/admin/whitelist`, { headers: { 'X-Admin-Token': token } });
+        if (!wlRes.ok) throw new Error('Fehler beim Laden der Whitelist');
+        const wlData = await wlRes.json();
+        entries = wlData.entries || [];
     } catch (e) {
-        entries         = [];
-        waitlistEntries = [];
-        renderTable();
-        renderStats();
-        renderWaitlist();
-        renderCounter();
+        entries = [];
     }
+
+    try {
+        const waitRes = await fetch(`${BACKEND_URL}/api/admin/waitlist`, { headers: { 'X-Admin-Token': token } });
+        if (waitRes.ok) {
+            const waitData = await waitRes.json();
+            waitlistEntries = waitData.entries || [];
+        }
+    } catch (_) {
+        // Waitlist endpoint not yet available — silently use empty list
+    }
+
+    renderTable();
+    renderStats();
+    renderWaitlist();
+    renderCounter();
 }
 
 async function addEntry() {
