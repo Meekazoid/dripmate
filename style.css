@@ -4071,7 +4071,7 @@ body.light-mode .roastery-stack-counter {
 .app-feedback-chip {
     padding: 6px 14px;
     border-radius: 20px;
-    border: 1px solid var(--border-light, rgba(255,255,255,0.1));
+    border: 1.5px solid var(--accent);
     background: transparent;
     color: var(--text-primary);
     font-family: inherit;
@@ -4082,14 +4082,13 @@ body.light-mode .roastery-stack-counter {
 }
 
 .app-feedback-chip:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    background: rgba(212, 165, 116, 0.12);
 }
 
 .app-feedback-chip.active {
     background: var(--accent);
     border-color: var(--accent);
-    color: #000;
+    color: var(--bg-secondary);
     font-weight: 600;
 }
 
@@ -4110,11 +4109,35 @@ body.light-mode .roastery-stack-counter {
 }
 
 .app-feedback-check-label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
     flex: 0 0 auto;
     width: 18px;
     height: 18px;
     margin: 0;
-    accent-color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    background: var(--bg-card);
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.app-feedback-check-label input[type="checkbox"]:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.app-feedback-check-label input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid var(--bg-secondary);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }
 
 .app-feedback-check-label span {
@@ -4127,6 +4150,13 @@ body.light-mode .roastery-stack-counter {
 .app-feedback-equip-group {
     margin-top: 6px;
     margin-left: 28px;
+}
+
+/* Submit button — compact, not full-width */
+#appFeedbackSubmitBtn {
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    width: auto;
 }
 
 /* Status messages */
