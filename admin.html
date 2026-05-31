@@ -537,6 +537,39 @@
             max-width: 1100px;
             margin: 0 auto;
         }
+
+        /* Beta capacity counter */
+        .beta-counter {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+
+        /* Promote button */
+        .btn-promote {
+            background: transparent;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            padding: 5px 12px;
+            color: var(--accent);
+            font-family: 'Sora', sans-serif;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-promote:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-promote:disabled {
+            opacity: 0.4;
+            cursor: default;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -569,6 +602,9 @@
             </div>
             <button class="btn-logout" onclick="doLogout()">Ausloggen</button>
         </div>
+
+        <!-- Beta capacity counter -->
+        <p class="beta-counter" id="beta-counter">– / 200 invited · – on waitlist</p>
 
         <!-- Stats -->
         <div class="stats-row" id="stats-row">
@@ -639,6 +675,31 @@
             </table>
         </div>
 
+        <!-- Waitlist -->
+        <div class="section-label" style="margin-top:48px">Waitlist</div>
+        <div class="table-wrap">
+            <table style="min-width:520px">
+                <thead>
+                    <tr>
+                        <th>E-Mail</th>
+                        <th>Eingetragen</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="waitlist-body">
+                    <tr>
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <span class="spinner"></span>
+                                <p>Lade Daten…</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
 
@@ -694,23 +755,35 @@ if (sessionStorage.getItem('admin_token')) {
 // ══════════════════════════════════════════════════
 // DATA
 // ══════════════════════════════════════════════════
-let entries = [];
+let entries         = [];
+let waitlistEntries = [];
 
 async function loadData() {
     try {
-        const res = await fetch(`${BACKEND_URL}/api/admin/whitelist`, {
-            headers: { 'X-Admin-Token': sessionStorage.getItem('admin_token') }
-        });
-        if (!res.ok) throw new Error('Fehler beim Laden');
-        const data = await res.json();
-        entries = data.entries || [];
+        const token = sessionStorage.getItem('admin_token');
+        const [wlRes, waitRes] = await Promise.all([
+            fetch(`${BACKEND_URL}/api/admin/whitelist`, { headers: { 'X-Admin-Token': token } }),
+            fetch(`${BACKEND_URL}/api/admin/waitlist`,  { headers: { 'X-Admin-Token': token } })
+        ]);
+        if (!wlRes.ok || !waitRes.ok) throw new Error('Fehler beim Laden');
+
+        const wlData   = await wlRes.json();
+        const waitData = await waitRes.json();
+
+        entries         = wlData.entries   || [];
+        waitlistEntries = waitData.entries || [];
+
         renderTable();
         renderStats();
+        renderWaitlist();
+        renderCounter();
     } catch (e) {
-        // Fallback: Demo-Daten für UI-Test ohne Backend
-        entries = [];
+        entries         = [];
+        waitlistEntries = [];
         renderTable();
         renderStats();
+        renderWaitlist();
+        renderCounter();
     }
 }
 
@@ -756,6 +829,7 @@ async function addEntry() {
 
         renderTable();
         renderStats();
+        renderCounter();
         clearForm();
         showToast('✓ Roaster hinzugefügt', 'success');
     } catch {
@@ -774,6 +848,7 @@ async function deleteEntry(id) {
         entries = entries.filter(e => e.id !== id);
         renderTable();
         renderStats();
+        renderCounter();
         showToast('Eintrag entfernt', 'success');
     } catch {
         showToast('Fehler beim Löschen', 'error');
@@ -893,6 +968,80 @@ function makeEditable(span, id, field) {
         if (e.key === 'Enter') { e.preventDefault(); save(); }
         if (e.key === 'Escape') { input.value = current; save(); }
     });
+}
+
+// ══════════════════════════════════════════════════
+// WAITLIST
+// ══════════════════════════════════════════════════
+function renderWaitlist() {
+    const tbody = document.getElementById('waitlist-body');
+
+    if (waitlistEntries.length === 0) {
+        tbody.innerHTML = `
+            <tr><td colspan="4">
+                <div class="empty-state">
+                    <div style="font-size:1.5rem;margin-bottom:8px">☕</div>
+                    <p>Warteliste ist leer.</p>
+                </div>
+            </td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = waitlistEntries.map(e => {
+        const isPromoted = e.promoted === true || e.promoted === 1;
+        const date = e.created_at
+            ? new Date(e.created_at).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' })
+            : '–';
+        const badge = isPromoted
+            ? `<span class="status-badge status-registered">✓ Eingeladen</span>`
+            : `<span class="status-badge status-invited">⏳ Wartet</span>`;
+        const action = isPromoted
+            ? `<button class="btn-promote" disabled>Eingeladen</button>`
+            : `<button class="btn-promote" onclick="promoteEntry(${JSON.stringify(e.email)})">Einladen</button>`;
+
+        return `
+        <tr>
+            <td class="td-email">${e.email}</td>
+            <td class="td-muted" style="font-size:0.75rem">${date}</td>
+            <td>${badge}</td>
+            <td>${action}</td>
+        </tr>`;
+    }).join('');
+}
+
+async function promoteEntry(email) {
+    try {
+        const res = await fetch(`${BACKEND_URL}/api/admin/waitlist/promote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Admin-Token': sessionStorage.getItem('admin_token')
+            },
+            body: JSON.stringify({ email })
+        });
+        if (!res.ok) throw new Error();
+
+        const entry = waitlistEntries.find(e => e.email === email);
+        if (entry) { entry.promoted = true; entry.promoted_at = new Date().toISOString(); }
+
+        // Reflect the newly invited user in the whitelist counter
+        if (!entries.find(e => e.email === email)) {
+            entries.unshift({ email, name: '', website: '', note: '', token: null, status: 'sent', added_at: new Date().toISOString() });
+        }
+
+        renderTable();
+        renderStats();
+        renderWaitlist();
+        renderCounter();
+        showToast('✓ Eingeladen & Token gesendet', 'success');
+    } catch {
+        showToast('Fehler beim Einladen', 'error');
+    }
+}
+
+function renderCounter() {
+    document.getElementById('beta-counter').textContent =
+        `${entries.length} / 200 invited · ${waitlistEntries.length} on waitlist`;
 }
 
 // ══════════════════════════════════════════════════
