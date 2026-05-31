@@ -61,7 +61,7 @@ async function _submitAppFeedback() {
     const message   = document.getElementById('appFeedbackMessage').value.trim();
 
     if (!message) {
-        statusEl.textContent  = 'Bitte eine Nachricht eingeben.';
+        statusEl.textContent  = 'Please enter a message.';
         statusEl.className    = 'app-feedback-status app-feedback-status--error';
         statusEl.style.display = 'block';
         return;
@@ -104,7 +104,7 @@ async function _submitAppFeedback() {
 
         if (res.ok && data.success) {
             _resetForm();
-            statusEl.textContent   = 'Feedback gesendet — danke!';
+            statusEl.textContent   = 'Feedback sent — thanks!';
             statusEl.className     = 'app-feedback-status app-feedback-status--success';
             statusEl.style.display = 'block';
             setTimeout(() => {
@@ -112,13 +112,13 @@ async function _submitAppFeedback() {
                 statusEl.style.display = 'none';
             }, 1800);
         } else {
-            statusEl.textContent   = data.error || 'Fehler beim Senden.';
+            statusEl.textContent   = data.error || "Couldn't send. Please try again.";
             statusEl.className     = 'app-feedback-status app-feedback-status--error';
             statusEl.style.display = 'block';
             submitBtn.disabled     = false;
         }
     } catch (_) {
-        statusEl.textContent   = 'Netzwerkfehler – bitte nochmal versuchen.';
+        statusEl.textContent   = 'Network error — please try again.';
         statusEl.className     = 'app-feedback-status app-feedback-status--error';
         statusEl.style.display = 'block';
         submitBtn.disabled     = false;

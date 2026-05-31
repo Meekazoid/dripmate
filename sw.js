@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.3';  // + app-feedback module
+const CACHE_VERSION = 'v51.4';  // app-feedback: English strings + checkbox layout fix
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
