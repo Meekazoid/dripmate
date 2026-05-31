@@ -108,7 +108,8 @@
             color: #e8d5c1;
         }
 
-        input[type="email"] {
+        input[type="email"],
+        input[type="text"] {
             width: 100%;
             border: 1px solid rgba(212, 165, 116, 0.35);
             border-radius: 12px;
@@ -120,9 +121,11 @@
             margin-bottom: 13px;
         }
 
-        input[type="email"]::placeholder { color: #8f7763; }
+        input[type="email"]::placeholder,
+        input[type="text"]::placeholder { color: #8f7763; }
 
         input[type="email"]:focus-visible,
+        input[type="text"]:focus-visible,
         button:focus-visible {
             outline: 3px solid rgba(230, 185, 134, 0.25);
             outline-offset: 2px;
