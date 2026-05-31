@@ -203,6 +203,15 @@
                 placeholder="you@roastery.com"
             >
 
+            <label for="name-input">Name oder Rösterei/Shop <span style="font-weight:300;opacity:0.55;">(optional)</span></label>
+            <input
+                id="name-input"
+                name="name"
+                type="text"
+                autocomplete="name"
+                placeholder="z. B. Jonas, Five Elephant, oder dein Shop"
+            >
+
             <button id="submit-btn" class="btn" type="submit">Send me my token</button>
             <p id="status-message" class="status" role="status" aria-live="polite"></p>
         </form>
@@ -214,8 +223,9 @@
 <script>
     const form = document.getElementById('register-form');
     const emailInput = document.getElementById('email-input');
-    const submitBtn = document.getElementById('submit-btn');
-    const statusEl = document.getElementById('status-message');
+    const nameInput  = document.getElementById('name-input');
+    const submitBtn  = document.getElementById('submit-btn');
+    const statusEl   = document.getElementById('status-message');
 
     function setStatus(message, type) {
         statusEl.textContent = message;
@@ -236,6 +246,7 @@
         clearStatus();
 
         const email = emailInput.value.trim();
+        const name  = nameInput.value.trim();
 
         if (!isValidEmail(email)) {
             setStatus('Please enter a valid email address.', 'error');
@@ -250,7 +261,7 @@
             const response = await fetch('https://dripmate-backend-production.up.railway.app/api/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({ email, name })
             });
 
             const data = await response.json().catch(() => ({}));
