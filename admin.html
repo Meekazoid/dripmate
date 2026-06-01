@@ -764,21 +764,22 @@
         <div class="stats-row" id="stats-row">
             <div class="stat-chip accent">
                 <span class="stat-num" id="stat-total">–</span>
-                <span class="stat-lbl">Eingeladen</span>
-            </div>
-            <div class="stat-chip warning">
-                <span class="stat-num" id="stat-sent">–</span>
-                <span class="stat-lbl">Token gesendet</span>
+                <span class="stat-lbl">Plätze belegt</span>
             </div>
             <div class="stat-chip success">
+                <span class="stat-num" id="stat-sent">–</span>
+                <span class="stat-lbl">Frei</span>
+            </div>
+            <div class="stat-chip warning">
                 <span class="stat-num" id="stat-registered">–</span>
-                <span class="stat-lbl">Registriert</span>
+                <span class="stat-lbl">Selbst registriert</span>
             </div>
         </div>
 
         <!-- Add Form -->
         <div class="add-form">
-            <div class="section-label">Roaster einladen</div>
+            <div class="section-label">Manuell hinzufügen / Platz reservieren</div>
+            <p style="margin:0 0 14px;font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Trägt eine E-Mail direkt als belegten Platz ein und sendet den Token &mdash; z.&nbsp;B. um jemandem gezielt einen Platz zu sichern.</p>
             <div class="form-grid">
                 <div class="form-field">
                     <label>E-Mail *</label>
@@ -801,7 +802,7 @@
         </div>
 
         <!-- Table -->
-        <div class="section-label">Whitelist</div>
+        <div class="section-label">Registrierungen &amp; Einladungen</div>
         <div class="table-wrap">
             <table>
                 <thead>
@@ -812,13 +813,14 @@
                         <th>Notiz</th>
                         <th>Token</th>
                         <th>Status</th>
+                        <th>Quelle</th>
                         <th>Hinzugefügt</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody id="table-body">
                     <tr>
-                        <td colspan="8">
+                        <td colspan="9">
                             <div class="empty-state">
                                 <span class="spinner"></span>
                                 <p>Lade Daten…</p>
@@ -923,6 +925,8 @@
 // CONFIG
 // ══════════════════════════════════════════════════
 const BACKEND_URL = 'https://dripmate-backend-production.up.railway.app';
+// Muss zu BETA_INVITE_CAP im Backend passen (ENV-Var, Default 200)
+const BETA_INVITE_CAP = 200;
 
 // ══════════════════════════════════════════════════
 // LOGIN
@@ -1128,10 +1132,10 @@ function renderTable() {
 
     if (entries.length === 0) {
         tbody.innerHTML = `
-            <tr><td colspan="8">
+            <tr><td colspan="9">
                 <div class="empty-state">
                     <div style="font-size:1.5rem;margin-bottom:8px">☕</div>
-                    <p>Noch keine Roaster eingeladen.</p>
+                    <p>Noch keine Einträge.</p>
                 </div>
             </td></tr>`;
         return;
@@ -1143,6 +1147,12 @@ function renderTable() {
             ? `<a class="website-link" href="${formatUrl(e.website)}" target="_blank">${e.website}</a>`
             : `<span class="td-muted editable" onclick="makeEditable(this, ${e.id}, 'website')">–</span>`;
         const date = e.added_at ? new Date(e.added_at).toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'2-digit' }) : '–';
+        // invite_source kommt noch nicht vom Endpoint → zeigt '—' bis GET /api/admin/whitelist es liefert
+        const quelleBadge = e.invite_source === 'self_signup'
+            ? `<span class="status-badge status-sent" style="font-size:0.65rem;padding:2px 7px;">Selbst</span>`
+            : e.invite_source === 'admin'
+                ? `<span class="status-badge status-invited" style="font-size:0.65rem;padding:2px 7px;">Eingeladen</span>`
+                : `<span class="td-muted">—</span>`;
 
         return `
         <tr>
@@ -1156,6 +1166,7 @@ function renderTable() {
             </td>
             <td class="td-token">${e.token || '–'}</td>
             <td>${statusBadge}</td>
+            <td>${quelleBadge}</td>
             <td class="td-muted" style="font-size:0.75rem">${date}</td>
             <td>
                 <div style="display:flex;flex-direction:column;gap:2px;align-items:flex-start;">
@@ -1184,13 +1195,14 @@ function getStatusBadge(status, token) {
 }
 
 function renderStats() {
-    const total      = entries.length;
-    const registered = entries.filter(e => e.status === 'registered' || e.status === 'active').length;
-    const sent       = entries.filter(e => e.token && e.status !== 'registered' && e.status !== 'active').length;
+    const belegt = entries.length;
+    const frei   = BETA_INVITE_CAP - belegt;
+    // invite_source ist noch nicht im GET /api/admin/whitelist enthalten → zeigt '–' bis der Endpoint es liefert
+    const selfSignups = entries.filter(e => e.invite_source === 'self_signup').length;
 
-    document.getElementById('stat-total').textContent      = total;
-    document.getElementById('stat-registered').textContent = registered;
-    document.getElementById('stat-sent').textContent       = sent;
+    document.getElementById('stat-total').textContent      = `${belegt} / ${BETA_INVITE_CAP}`;
+    document.getElementById('stat-sent').textContent       = frei;
+    document.getElementById('stat-registered').textContent = selfSignups > 0 ? selfSignups : '–';
 }
 
 // ══════════════════════════════════════════════════
@@ -1294,8 +1306,10 @@ async function promoteEntry(email) {
 }
 
 function renderCounter() {
+    const belegt = entries.length;
+    const frei   = BETA_INVITE_CAP - belegt;
     document.getElementById('beta-counter').textContent =
-        `${entries.length} / 200 invited · ${waitlistEntries.length} on waitlist`;
+        `${belegt} / ${BETA_INVITE_CAP} Plätze belegt · ${frei} frei · ${waitlistEntries.length} auf Waitlist`;
 }
 
 // ══════════════════════════════════════════════════
