@@ -5,6 +5,35 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [2.5.0] – 2026-06-01 · SSOT Registry + Docs-from-Code
+
+### Added
+- **SSOT Grinder Registry** (`js/data/grinders.js`): all grinder profiles, labels, picker texts,
+  start bands, offset sensitivity, confidence hints and per-brew caps declared in one place.
+  Adding a grinder now requires exactly one registry entry.
+- **SSOT Method Registry** (`js/data/methods.js`): all method parameters, step builders and
+  labels centralised; `adjustForMethod`, `generateBrewSteps` and picker items are registry-driven.
+- **`scripts/gen-grinder-docs.mjs`**: auto-generates conversion and calibration matrices in
+  `GRINDER_CALIBRATION_OVERVIEW.md` between `<!-- AUTOGEN:START -->` / `<!-- AUTOGEN:END -->`.
+- **`scripts/verify-registry.mjs`**: validates band consistency, offsetFactor invariants and
+  orphan detection — 139 checks across 8 grinders and 3 methods.
+- **`scripts/snapshot-brews.mjs`**: Golden Master snapshot of all grinder × method × processing
+  combinations (165 entries); `--after` flag for regression comparison against baseline.
+- **Dynamic picker rendering**: `#grinder-picker-list` and `#method-picker-list` in `index.html`
+  are populated at runtime from the registries; no static picker HTML lists required.
+
+### Changed
+- `GRINDER_CALIBRATION_OVERVIEW.md` content between `<!-- AUTOGEN:START -->` and
+  `<!-- AUTOGEN:END -->` is now auto-generated — do not edit by hand.
+- Documentation corrected to match actual code values (code is truth): Timemore S3 `2.5×`,
+  Baratza Encore `0.9×`, 1Zpresso JX `3.5/30` with realistic start band `2.3–3.0 rot`.
+
+### Removed
+- Inline `profiles` object from `js/brew-engine.js`.
+- Hardcoded `GRINDER_INFO`, `METHOD_INFO`, `methodLabels` constants and static picker HTML lists.
+
+---
+
 ## [2.4.4] – 2026-02-18 · Docs Refresh & Documentation Folder
 
 ### Changed

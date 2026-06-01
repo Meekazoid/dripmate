@@ -33,11 +33,13 @@ Rules map these ratings into controlled grind/temperature adjustments with confl
 Each applied suggestion and reset is stored in a per-coffee timeline. Users can open **View Adjustment History** to review previous changes and reproduce successful cups.
 
 ### Grinder Calibration Matrix v1.1
-Grinder conversion now uses a centralized profile map in code and a documentation matrix with:
+Grinder conversion uses a centralized SSOT registry (`js/data/grinders.js`) with:
 - start bands
 - offset sensitivity
 - confidence hints
 - suggested per-brew caps
+
+Documentation is auto-generated via `scripts/gen-grinder-docs.mjs`.
 
 ### Water Hardness + Roast Freshness
 Water hardness adjusts extraction behavior automatically. Roast age contributes a small temperature micro-adjustment (`<7d: -1°C`, `>30d: +1°C`).
@@ -74,9 +76,9 @@ The frontend operates offline-first via localStorage and syncs to the Railway ba
 - `CHANGELOG.md` — version history
 - `RULESET_CALCULATION_FLOW.md` — end-to-end rules flowchart
 - `AI_FEEDBACK_FLOW.md` — AI request and feedback flow explanation
-- `GRINDER_CALIBRATION_OVERVIEW.md` — conversion + calibration matrix (v1.1)
-- `GRINDER_CALIBRATION_OVERVIEW.pdf` — shareable PDF copy
+- `GRINDER_CALIBRATION_OVERVIEW.md` — conversion + calibration matrix (v1.1, auto-generated)
 - `ADD_GRINDER_OR_METHOD_PROMPTS.md` — Anleitung + Prompts zum Hinzufügen von Grindern/Methoden
+- `APP_FEEDBACK.md` — developer manual for the app feedback / tester system
 
 ---
 
