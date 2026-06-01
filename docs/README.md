@@ -76,6 +76,7 @@ The frontend operates offline-first via localStorage and syncs to the Railway ba
 - `AI_FEEDBACK_FLOW.md` — AI request and feedback flow explanation
 - `GRINDER_CALIBRATION_OVERVIEW.md` — conversion + calibration matrix (v1.1)
 - `GRINDER_CALIBRATION_OVERVIEW.pdf` — shareable PDF copy
+- `ADD_GRINDER_OR_METHOD_PROMPTS.md` — Anleitung + Prompts zum Hinzufügen von Grindern/Methoden
 
 ---
 
