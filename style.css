@@ -4172,3 +4172,285 @@ body.light-mode .roastery-stack-counter {
     color: #f87171;
     border: 1px solid rgba(248,113,113,0.25);
 }
+
+/* ==========================================
+   ONBOARDING — All new styles (v51.8)
+   ========================================== */
+
+/* ── Placeholder chip label (Select grinder / method) ── */
+.brew-chip-label[data-placeholder] {
+    opacity: 0.55;
+    font-style: italic;
+}
+
+/* ── Other-grinder hint bar ── */
+#other-grinder-hint {
+    display: none;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+.other-grinder-hint-link {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font-family: inherit;
+}
+
+/* ── Qualitative grind display (grinder = "other") ── */
+.grind-qualitative {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.3;
+}
+
+.grind-qual-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.grind-qual-haptik {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+.grind-qual-equiv {
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    opacity: 0.72;
+}
+
+/* ── Empty-state action buttons ── */
+.empty-state-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.empty-state-scan-btn {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: opacity 0.15s;
+}
+
+.empty-state-scan-btn:active {
+    opacity: 0.8;
+}
+
+.empty-state-alt-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.empty-state-alt-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.72rem;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.empty-state-alt-btn:active {
+    opacity: 0.7;
+}
+
+/* ── Onboarding Activation Overlay ── */
+.ob-overlay .modal-content,
+.ob-overlay-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    max-width: 360px;
+    width: calc(100% - 48px);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    box-shadow: 0 12px 40px var(--shadow);
+    font-family: 'Sora', sans-serif;
+}
+
+.ob-overlay-icon {
+    color: var(--accent);
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+.ob-overlay-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+.ob-overlay-body {
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.ob-overlay-note {
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.ob-overlay-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.ob-btn-primary {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.15s;
+}
+
+.ob-btn-primary:active { opacity: 0.8; }
+
+.ob-btn-secondary {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.15s;
+}
+
+.ob-btn-secondary:active { opacity: 0.7; }
+
+/* ── Coachmark Spotlight ── */
+.ob-spotlight {
+    position: fixed;
+    border-radius: 12px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.68);
+    pointer-events: none;
+    z-index: 9998;
+}
+
+/* ── Coachmark Tooltip ── */
+.ob-tooltip {
+    position: fixed;
+    z-index: 9999;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    max-width: 300px;
+    min-width: 220px;
+    box-shadow: 0 8px 28px var(--shadow);
+    font-family: 'Sora', sans-serif;
+    pointer-events: auto;
+}
+
+@keyframes ob-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.ob-tooltip-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+}
+
+.ob-tooltip-body {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+}
+
+.ob-tooltip-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.ob-step-counter {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    flex: 1;
+    text-align: center;
+}
+
+.ob-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    padding: 5px 11px;
+    font-size: 0.72rem;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+}
+
+.ob-btn:active { opacity: 0.7; }
+
+.ob-btn-next {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border-color: var(--accent);
+    font-weight: 600;
+}
+
+.ob-btn-back { order: -1; }
+
+/* Reduced motion: disable animations */
+@media (prefers-reduced-motion: reduce) {
+    .ob-tooltip { animation: none !important; }
+    .ob-spotlight { transition: none !important; }
+}

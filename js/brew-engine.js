@@ -9,6 +9,21 @@ import { getGrinderLabel } from './grinder.js';
 import { GRINDERS } from './data/grinders.js';
 import { METHODS } from './data/methods.js';
 
+// Qualitative grind bands anchored to Comandante-equivalent clicks (baseFactor 1.0)
+// Boundary rule: when equiv is exactly on a boundary, the coarser band applies.
+const GRIND_BANDS = [
+    { max: 14, label: 'Fine',          haptik: 'like fine table salt' },
+    { max: 18, label: 'Medium-fine',   haptik: 'like fine sand' },
+    { max: 24, label: 'Medium',        haptik: 'like sand / granulated sugar' },
+    { max: 28, label: 'Medium-coarse', haptik: 'like coarse sand' },
+    { max: Infinity, label: 'Coarse',  haptik: 'like sea salt' },
+];
+
+export function getQualitativeGrind(equiv) {
+    const band = GRIND_BANDS.find(b => equiv <= b.max) || GRIND_BANDS[GRIND_BANDS.length - 1];
+    return { label: band.label, haptik: band.haptik, equiv };
+}
+
 export function getBrewRecommendations(coffee) {
     const amount = coffee.customAmount || coffeeAmount;
     const grinder = preferredGrinder;
@@ -23,12 +38,14 @@ export function getBrewRecommendations(coffee) {
     const finalParams = adjustForMethod(roastAdjusted, method);
 
     const grindSetting = getGrinderValue(finalParams.grindBase, grinder, coffee.grindOffset);
+    const grindEquiv = Math.round(finalParams.grindBase.comandante + (coffee.grindOffset || 0));
     const temperature = coffee.customTemp || formatTemp(finalParams.tempBase);
     const steps = generateBrewSteps(amount, finalParams.ratio, finalParams.brewStyle, method);
     const waterAmountMl = Math.round(amount * finalParams.ratio);
 
     return {
         grindSetting,
+        grindEquiv,
         grinderLabel: getGrinderLabel(grinder),
         temperature,
         ratio: `1:${finalParams.ratio} (${amount}g)`,
@@ -245,6 +262,12 @@ function adjustForWaterHardness(params) {
 function getGrinderValue(grindBase, grinder, offset) {
     const o = offset || 0;
     const base = grindBase.comandante;
+
+    // "Other / not listed yet": return Comandante-equivalent; display handled by coffee-cards.js
+    if (grinder === 'other') {
+        return String(Math.round(base + o));
+    }
+
     const profile = (GRINDERS[grinder] || GRINDERS.fellow_gen2).profile;
 
     if (profile.type === 'ode') {

@@ -29,8 +29,8 @@ const BREW_ICONS = {
 };
 // ────────────────────────────────────────────────────────────────────────
 
-import { coffeeAmount, sanitizeHTML } from './state.js';
-import { getBrewRecommendations, boldWeights } from './brew-engine.js';
+import { coffeeAmount, sanitizeHTML, preferredGrinder } from './state.js';
+import { getBrewRecommendations, boldWeights, getQualitativeGrind } from './brew-engine.js';
 import { getRoastFreshnessBadge } from './freshness.js';
 import { ensureInitialValues } from './feedback.js';
 import { PROCESS_LABELS } from './coffee-schema.js';
@@ -91,6 +91,38 @@ export function initPressedStateInteractions() {
 
         autoResetPressedState(btn);
     });
+}
+
+function renderGrindParamBox(index, brewParams) {
+    if (preferredGrinder === 'other') {
+        const { label, haptik, equiv } = getQualitativeGrind(brewParams.grindEquiv ?? 22);
+        return `
+            <div class="param-box">
+                <div class="param-label">Grind Setting</div>
+                <div class="param-value-row">
+                    <div class="param-value grind-qualitative" id="grind-value-${index}">
+                        <span class="grind-qual-label">${label}</span>
+                        <span class="grind-qual-haptik">${haptik}</span>
+                        <span class="grind-qual-equiv">≈ ${equiv} (Comandante-equiv.)</span>
+                    </div>
+                    <div class="param-adjust">
+                        <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1);">−</button>
+                        <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, 1);">+</button>
+                    </div>
+                </div>
+            </div>`;
+    }
+    return `
+        <div class="param-box">
+            <div class="param-label">Grind Setting</div>
+            <div class="param-value-row">
+                <div class="param-value" id="grind-value-${index}">${brewParams.grindSetting}</div>
+                <div class="param-adjust">
+                    <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1);">−</button>
+                    <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, 1);">+</button>
+                </div>
+            </div>
+        </div>`;
 }
 
 export function renderCoffeeCard(coffee, index) {
@@ -238,16 +270,7 @@ export function renderCoffeeCard(coffee, index) {
                 </div>
 
                 <div class="param-grid">
-                    <div class="param-box">
-                        <div class="param-label">Grind Setting</div>
-                        <div class="param-value-row">
-                            <div class="param-value" id="grind-value-${index}">${brewParams.grindSetting}</div>
-                            <div class="param-adjust">
-                                <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1);">−</button>
-                                <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, 1);">+</button>
-                            </div>
-                        </div>
-                    </div>
+                    ${renderGrindParamBox(index, brewParams)}
                     <div class="param-box">
                         <div class="param-label">Temperature</div>
                         <div class="param-value-row">

@@ -46,9 +46,15 @@ function _resetForm() {
     if (submitBtn) submitBtn.disabled = false;
 }
 
-export function openAppFeedback() {
+export function openAppFeedback(opts) {
     document.getElementById('appFeedbackModal').classList.add('active');
     _dismissNudge();
+    if (opts && opts.grinderUnsupported) {
+        const chk = document.getElementById('appFeedbackGrinderUnsupported');
+        const grp = document.getElementById('appFeedbackGrinderGroup');
+        if (chk) chk.checked = true;
+        if (grp) grp.style.display = 'block';
+    }
 }
 
 export function closeAppFeedback() {

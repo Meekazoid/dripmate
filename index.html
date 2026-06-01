@@ -18,6 +18,8 @@
     <script>window.__entryReferrer = document.referrer;</script>
 </head>
 <body>
+    <!-- Anti-flash: synchronously apply light-mode before first paint (body exists here) -->
+    <script>(function(){var t=localStorage.getItem('theme');if(!t)t='light';if(t==='light')document.body.classList.add('light-mode');})();</script>
     <!-- ====== SVG SYMBOL DEFINITIONS ====== -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
         <!-- settings gear -->
@@ -213,6 +215,10 @@
                     </button>
                 </div>
             </div>
+            <div id="other-grinder-hint" class="other-grinder-hint">
+                Your grinder isn't supported yet?
+                <button type="button" class="other-grinder-hint-link" onclick="openAppFeedback({grinderUnsupported:true})">Tell us via feedback.</button>
+            </div>
         </div>
         <!-- ====== COFFEE LIST ====== -->
         <div class="setup-heading" style="margin-bottom: 10px;">YOUR COFFEES</div>
@@ -226,6 +232,13 @@
                 <p class="onboarding-text">
                     Welcome to dripmate!<br><span class="onboarding-em">Photograph</span> your <span class="onboarding-em">coffee bag</span>,<br> pick your <span class="onboarding-em">brew method &amp; grinder</span>,<br>and open your first <span class="onboarding-em">coffee card</span> to <span class="onboarding-em">start brewing</span>.<br>Use <span class="onboarding-em">feedback</span> to dial in your <span class="onboarding-em">perfect parameters</span>.<br><br><span class="onboarding-enjoy">Enjoy!</span>
                 </p>
+                <div class="empty-state-actions">
+                    <button type="button" class="btn empty-state-scan-btn" id="emptyStateScanBtn">Scan your first coffee</button>
+                    <div class="empty-state-alt-actions">
+                        <button type="button" class="btn empty-state-alt-btn" id="emptyStateUploadBtn">or upload a photo</button>
+                        <button type="button" class="btn empty-state-alt-btn" id="emptyStateManualBtn">or enter manually</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -308,6 +321,18 @@
                 <button class="settings-legal-btn" id="openDatenschutzBtn">
                     <svg viewBox="0 0 24 24"><use href="#icon-datenschutz"/></svg>
                     Datenschutz
+                </button>
+            </div>
+
+            <!-- Tutorial Replay -->
+            <hr class="settings-divider">
+            <div class="settings-legal">
+                <button type="button" class="settings-legal-btn" id="replayTutorialBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+                        <polyline points="21 3 21 9 15 9"></polyline>
+                    </svg>
+                    Replay Tutorial
                 </button>
             </div>
         </div>

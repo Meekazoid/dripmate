@@ -3,8 +3,8 @@
 // Cupping-inspired proportional adjustment logic
 // ==========================================
 
-import { coffees, saveCoffeesAndSync, sanitizeHTML } from './state.js';
-import { getBrewRecommendations } from './brew-engine.js';
+import { coffees, saveCoffeesAndSync, sanitizeHTML, preferredGrinder } from './state.js';
+import { getBrewRecommendations, getQualitativeGrind } from './brew-engine.js';
 
 const suggestionHideTimers = new Map();
 const feedbackTouchState = new WeakMap();
@@ -571,7 +571,14 @@ export function adjustGrindManual(index, direction) {
     });
 
     const el = document.getElementById(`grind-value-${index}`);
-    if (el) el.textContent = after.grindSetting;
+    if (el) {
+        if (preferredGrinder === 'other') {
+            const { label, haptik, equiv } = getQualitativeGrind(after.grindEquiv ?? 22);
+            el.innerHTML = `<span class="grind-qual-label">${label}</span><span class="grind-qual-haptik">${haptik}</span><span class="grind-qual-equiv">≈ ${equiv} (Comandante-equiv.)</span>`;
+        } else {
+            el.textContent = after.grindSetting;
+        }
+    }
     saveCoffeesAndSync();
 }
 

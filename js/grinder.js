@@ -7,6 +7,10 @@ import { GRINDERS, GRINDER_MIGRATION } from './data/grinders.js';
 import { METHODS } from './data/methods.js';
 import { preferredGrinder, setPreferredGrinder, preferredMethod, setPreferredMethod } from './state.js';
 
+// "Other" is not a registry grinder — it suppresses numeric conversion and
+// shows a qualitative band label derived from the Comandante-equivalent.
+const OTHER_GRINDER_KEY = 'other';
+
 function migrateGrinderPreference() {
     if (GRINDER_MIGRATION[preferredGrinder]) {
         setPreferredGrinder(GRINDER_MIGRATION[preferredGrinder]);
@@ -67,7 +71,13 @@ function _renderGrinderPickerList() {
             <span class="picker-option-detail">${g.pickerDetail}</span>
             <span class="picker-check">✓</span>
         </button>
-    `).join('');
+    `).join('') + `
+        <button class="picker-option picker-option--other" data-value="${OTHER_GRINDER_KEY}">
+            <span class="picker-option-name">Other / not listed yet</span>
+            <span class="picker-option-detail">Let us know via feedback</span>
+            <span class="picker-check">✓</span>
+        </button>
+    `;
 }
 
 function _renderMethodPickerList() {
@@ -84,13 +94,45 @@ function _renderMethodPickerList() {
 
 // ==========================================
 // CHIP LABELS
+// Shows "Select grinder/method" placeholder until setupChosen flag is set.
 // ==========================================
 
-function updateChipLabels() {
+export function updateChipLabels() {
     const gLabel = document.getElementById('grinder-chip-label');
     const mLabel = document.getElementById('method-chip-label');
-    if (gLabel) gLabel.textContent = (GRINDERS[preferredGrinder] || GRINDERS.fellow_gen2).chipLabel;
-    if (mLabel) mLabel.textContent = (METHODS[preferredMethod] || METHODS.v60).timerLabel;
+    const setupChosen = localStorage.getItem('setupChosen');
+
+    if (gLabel) {
+        if (!setupChosen) {
+            gLabel.textContent = 'Select grinder';
+            gLabel.dataset.placeholder = '1';
+        } else {
+            delete gLabel.dataset.placeholder;
+            if (preferredGrinder === OTHER_GRINDER_KEY) {
+                gLabel.textContent = 'Other';
+            } else {
+                gLabel.textContent = (GRINDERS[preferredGrinder] || GRINDERS.fellow_gen2).chipLabel;
+            }
+        }
+    }
+
+    if (mLabel) {
+        if (!setupChosen) {
+            mLabel.textContent = 'Select method';
+            mLabel.dataset.placeholder = '1';
+        } else {
+            delete mLabel.dataset.placeholder;
+            mLabel.textContent = (METHODS[preferredMethod] || METHODS.v60).timerLabel;
+        }
+    }
+
+    _updateOtherHint();
+}
+
+function _updateOtherHint() {
+    const hint = document.getElementById('other-grinder-hint');
+    if (!hint) return;
+    hint.style.display = (preferredGrinder === OTHER_GRINDER_KEY && localStorage.getItem('setupChosen')) ? 'block' : 'none';
 }
 
 // ==========================================
@@ -108,6 +150,7 @@ function closeGrinderPicker() {
 
 async function selectGrinder(value) {
     setPreferredGrinder(value);
+    localStorage.setItem('setupChosen', '1');
     updateChipLabels();
     closeGrinderPicker();
 
@@ -140,6 +183,7 @@ function closeMethodPicker() {
 
 async function selectMethod(value) {
     setPreferredMethod(value);
+    localStorage.setItem('setupChosen', '1');
     updateChipLabels();
     closeMethodPicker();
 
@@ -170,5 +214,6 @@ function markActiveOption(listId, activeValue) {
 }
 
 export function getGrinderLabel(grinder) {
+    if (grinder === OTHER_GRINDER_KEY) return 'Other';
     return (GRINDERS[grinder] || GRINDERS.fellow_gen2).label;
 }

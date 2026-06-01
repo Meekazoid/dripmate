@@ -4,7 +4,10 @@
 // ==========================================
 
 export function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const stored = localStorage.getItem('theme');
+    // First run: default to light; never overwrite an existing choice
+    const savedTheme = stored !== null ? stored : 'light';
+    if (stored === null) localStorage.setItem('theme', 'light');
     if (savedTheme === 'light') {
         document.body.classList.add('light-mode');
     }

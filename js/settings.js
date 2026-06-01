@@ -87,6 +87,8 @@ export async function activateDevice() {
             statusDiv.style.color      = '#5fda7d';
             statusDiv.innerHTML = '&#x2713; Device linked. You can now use all features.';
 
+            // Signal onboarding overlay on next load (if first run)
+            localStorage.setItem('justActivated', '1');
             await maybeInitBackendSync();
             setTimeout(() => { closeSettings(); location.reload(); }, 2000);
         } else {
@@ -174,8 +176,13 @@ export async function handleMagicLink() {
 
         if (validateResult.valid) {
             trackAuthBootstrap('auth_bootstrap_magic_success');
-            const popupMode = validateResult.isFirstLogin ? 'firstLogin' : 'recovery';
-            showActivationPopup(popupMode);
+            if (validateResult.isFirstLogin) {
+                // Onboarding overlay shown by initOnboarding() in app.js after full init
+                localStorage.setItem('justActivated', '1');
+            } else {
+                // Recovery login: show the existing toast
+                showActivationPopup('recovery');
+            }
             await maybeInitBackendSync();
             return;
         }

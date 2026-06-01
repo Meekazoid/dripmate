@@ -42,9 +42,12 @@ import {
 } from './state.js';
 import { initBackendSync } from './services/backend-sync.js';
 import { initAppFeedback, openAppFeedback, closeAppFeedback, checkNudge } from './app-feedback.js';
+import { initOnboarding, maybeStartOnboardingPhase2, replayOnboarding } from './onboarding.js';
 
 // Make updateRoastDate available globally for onclick handlers
 window.updateRoastDate = updateRoastDate;
+// Expose openAppFeedback globally for inline onclick handlers (e.g. other-grinder hint)
+window.openAppFeedback = openAppFeedback;
 // Expose renderCoffees globally so backend-sync can trigger re-render after load
 window.renderCoffees = renderCoffees;
 // Make brew timer functions available globally for onclick handlers
@@ -59,9 +62,17 @@ console.log('âœ… Brew timer functions attached to window:', {
 
 // Initialize event listeners
 function initEventListeners() {
-    // Camera & Upload â€” collapse manual entry when switching to image-based flows
+    // Camera & Upload — collapse manual entry when switching to image-based flows
     document.getElementById('cameraBtn').addEventListener('click', () => { collapseManual(); document.getElementById('imageInput').click(); });
     document.getElementById('uploadBtn').addEventListener('click', () => { collapseManual(); document.getElementById('uploadInput').click(); });
+
+    // Empty-state action buttons (mirror camera / upload / manual)
+    const emptyStateScanBtn   = document.getElementById('emptyStateScanBtn');
+    const emptyStateUploadBtn = document.getElementById('emptyStateUploadBtn');
+    const emptyStateManualBtn = document.getElementById('emptyStateManualBtn');
+    if (emptyStateScanBtn)   emptyStateScanBtn.addEventListener('click',   () => { collapseManual(); document.getElementById('imageInput').click(); });
+    if (emptyStateUploadBtn) emptyStateUploadBtn.addEventListener('click', () => { collapseManual(); document.getElementById('uploadInput').click(); });
+    if (emptyStateManualBtn) emptyStateManualBtn.addEventListener('click', toggleManual);
 
     document.getElementById('imageInput').addEventListener('change', async (e) => {
         const file = e.target.files[0];
@@ -149,6 +160,10 @@ function initEventListeners() {
     document.getElementById('appFeedbackBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openAppFeedback(); });
     document.getElementById('closeAppFeedbackBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeAppFeedback(); });
     document.getElementById('appFeedbackModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeAppFeedback(); });
+
+    // Replay Tutorial (Settings modal)
+    const replayBtn = document.getElementById('replayTutorialBtn');
+    if (replayBtn) replayBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeSettings(); replayOnboarding(); });
 }
 
 // Generic modal helpers for legal pages
@@ -191,6 +206,9 @@ async function initApp() {
     // Render coffee list
     renderCoffees();
 
+    // Phase 2 tour: triggered once first card exists and Phase 1 is already done
+    maybeStartOnboardingPhase2();
+
     // App Feedback init (must run after DOM is ready)
     initAppFeedback();
 
@@ -210,6 +228,9 @@ async function initApp() {
     initEventListeners();
     initFeedbackSliderInteractions();
     initPressedStateInteractions();
+
+    // Onboarding: show activation overlay if justActivated flag is set
+    initOnboarding();
 }
 
 // Run on DOM ready

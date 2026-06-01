@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.7';  // remove dead precache assets (compost.svg, v60-icon.png, coffee-bag-shot.png)
+const CACHE_VERSION = 'v51.8';  // onboarding module + first-run features
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
@@ -29,6 +29,7 @@ const STATIC_ASSETS = [
   '/js/settings.js',
   '/js/services/backend-sync.js',
   '/js/app-feedback.js',
+  '/js/onboarding.js',
   '/js/brew-timer-stubs.js',
   '/js/sw-register.js',
   '/js/data/water-hardness-db.js',
