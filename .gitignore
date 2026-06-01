@@ -10,3 +10,6 @@ node_modules/
 
 # Transient verify output
 tests/golden/*.after.json
+
+# Local dev helpers (not deployed)
+dev/
