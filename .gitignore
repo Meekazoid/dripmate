@@ -7,3 +7,6 @@ node_modules/
 # Temporary files
 *.tmp
 .DS_Store
+
+# Transient verify output
+tests/golden/*.after.json
