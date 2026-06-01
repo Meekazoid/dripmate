@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.6';  // app-feedback: fix checkbox size (override global input padding)
+const CACHE_VERSION = 'v51.7';  // remove dead precache assets (compost.svg, v60-icon.png, coffee-bag-shot.png)
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
@@ -37,10 +37,7 @@ const STATIC_ASSETS = [
   '/logo-192.png',
   '/logo-512.png',
   '/logo-maskable-192.png',
-  '/logo-maskable-512.png',
-  '/compost.svg',
-  '/v60-icon.png',
-  '/assets/coffee-bag-shot.png'
+  '/logo-maskable-512.png'
 ];
 
 // API domain for network-first strategy

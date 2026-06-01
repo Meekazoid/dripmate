@@ -1950,14 +1950,6 @@ body.light-mode .step-progress-bar {
     border-color: var(--accent);
 }
 
-.v60-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    flex-shrink: 0;
-    filter: brightness(0) invert(1);
-}
-
 /* ==========================================    17. FEEDBACK SECTION    ========================================== */  .feedback-section {
     background: var(--bg-card);
     padding: 20px;
