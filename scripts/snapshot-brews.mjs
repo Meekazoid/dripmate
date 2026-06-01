@@ -280,7 +280,6 @@ for (const grinder of GRINDER_KEYS) {
 
 const output = {
     meta: {
-        generatedAt: new Date().toISOString(),
         inputs: FIXED,
         grinders: GRINDER_KEYS,
         methods: METHOD_KEYS,
