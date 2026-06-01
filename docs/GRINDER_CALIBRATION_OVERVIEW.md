@@ -1,5 +1,7 @@
 # Grinder Conversion & Calibration Matrix v1.1 (dripmate)
 
+> **Hinweis:** Die Tabellen in diesem Dokument werden aus `js/data/grinders.js` generiert — nicht von Hand editieren.
+
 ## Purpose
 This overview documents how dripmate converts the internal grind reference to each supported grinder scale and how user feedback offsets are applied.
 
@@ -15,10 +17,10 @@ This overview documents how dripmate converts the internal grind reference to ea
 | Comandante MK3/MK4 | clicks | `round(base * 1.0)` | `+ offset * 1.0` | min 1 |
 | Fellow Ode Gen 2 | dial value | `grindBase.fellow` | `+ offset * 0.1` | min 0.1 |
 | Fellow Ode Gen 1 | dial value | `(grindBase.fellow - 1.5)` | `+ offset * 0.1` | min 0.1 |
-| Timemore S3 | clicks | `round(base * 2.0)` | `+ offset * 2.0` | min 1 |
+| Timemore S3 | clicks | `round(base * 2.5)` | `+ offset * 2.5` | min 1 |
 | Timemore C2 | clicks | `round(base * 0.82)` | `+ offset * 0.82` | min 1 |
-| 1Zpresso JX | rotations | `base * (1.1/30)` | `+ offset * (1.1/30)` | min 0.1 rot |
-| Baratza Encore | stepped number | `round(base * 0.8)` | `+ offset * 0.8` | 1..40 |
+| 1Zpresso JX | rotations | `base * (3.5/30)` | `+ offset * (3.5/30)` | min 0.1 rot |
+| Baratza Encore | stepped number | `round(base * 0.9)` | `+ offset * 0.9` | 1..40 |
 
 ## Calibration matrix (v1.1)
 
@@ -29,10 +31,10 @@ The v1.1 layer adds a practical calibration overview for operations and QA.
 | Comandante MK3/MK4 | 21–25 clicks | 1 offset = 1 click | High | ±3 clicks |
 | Fellow Ode Gen 2 | 3.0–5.0 | 1 offset = 0.1 dial | Medium-High | ±0.3 |
 | Fellow Ode Gen 1 | 2.0–4.0 (Gen2-equivalent shifted) | 1 offset = 0.1 dial | Medium | ±0.3 |
-| Timemore S3 | 45–70 clicks | 1 offset ≈ 2 clicks | Medium | ±6 clicks |
+| Timemore S3 | 45–70 clicks | 1 offset ≈ 2.5 clicks | Medium | ±6 clicks |
 | Timemore C2 | 14–22 clicks | 1 offset ≈ 0.82 clicks | Medium-Low | ±4 clicks |
-| 1Zpresso JX | 0.7–1.2 rotations | 1 offset ≈ 0.04 rot | Medium | ±0.15 rot |
-| Baratza Encore | 12–20 | 1 offset ≈ 0.8 steps | Medium-Low | ±4 steps |
+| 1Zpresso JX | 2.3–3.0 rot | 1 offset ≈ 0.12 rot | Medium | ±0.15 rot |
+| Baratza Encore | 12–20 | 1 offset ≈ 0.9 steps | Medium-Low | ±4 steps |
 
 \*Start band means first recommendation window for filter/pour-over style brews and should be interpreted alongside processing/method/water adjustments.
 
