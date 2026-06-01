@@ -3,32 +3,9 @@
 // Chip + Bottom-Sheet Picker
 // ==========================================
 
+import { GRINDERS, GRINDER_MIGRATION } from './data/grinders.js';
+import { METHODS } from './data/methods.js';
 import { preferredGrinder, setPreferredGrinder, preferredMethod, setPreferredMethod } from './state.js';
-
-// ── Grinder metadata (alphabetical) ──
-const GRINDER_INFO = {
-    '1zpresso':     { label: '1Zpresso JX' },
-    baratza:        { label: 'Baratza Encore' },
-    comandante_mk3: { label: 'Comandante C40 MK3' },
-    comandante_mk4: { label: 'Comandante C40 MK4' },
-    fellow_gen1:    { label: 'Fellow Ode Gen 1' },
-    fellow_gen2:    { label: 'Fellow Ode Gen 2' },
-    timemore_c2:    { label: 'Timemore Chestnut C2' },
-    timemore_s3:    { label: 'Timemore Chestnut S3' },
-};
-
-const METHOD_INFO = {
-    aeropress: { label: 'AeroPress' },
-    chemex:    { label: 'Chemex' },
-    v60:       { label: 'V60' },
-};
-
-// ── Migration: old keys → new ──
-const GRINDER_MIGRATION = {
-    'fellow':     'fellow_gen2',
-    'comandante': 'comandante_mk3',
-    'timemore':   'timemore_s3',
-};
 
 function migrateGrinderPreference() {
     if (GRINDER_MIGRATION[preferredGrinder]) {
@@ -42,6 +19,10 @@ function migrateGrinderPreference() {
 
 export function initGlobalGrinder() {
     migrateGrinderPreference();
+
+    // Build picker lists from registry BEFORE attaching listeners
+    _renderGrinderPickerList();
+    _renderMethodPickerList();
 
     updateChipLabels();
 
@@ -60,35 +41,56 @@ export function initGlobalGrinder() {
     if (grinderModal) grinderModal.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeGrinderPicker(); });
     if (methodModal) methodModal.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeMethodPicker(); });
 
-    document.querySelectorAll('#grinder-picker-list .picker-option').forEach(btn => {
-        btn.addEventListener('click', () => selectGrinder(btn.dataset.value));
+    // Event delegation on the rendered lists
+    const grinderList = document.getElementById('grinder-picker-list');
+    const methodList = document.getElementById('method-picker-list');
+    if (grinderList) grinderList.addEventListener('click', (e) => {
+        const btn = e.target.closest('.picker-option');
+        if (btn) selectGrinder(btn.dataset.value);
     });
-    document.querySelectorAll('#method-picker-list .picker-option').forEach(btn => {
-        btn.addEventListener('click', () => selectMethod(btn.dataset.value));
+    if (methodList) methodList.addEventListener('click', (e) => {
+        const btn = e.target.closest('.picker-option');
+        if (btn) selectMethod(btn.dataset.value);
     });
+}
+
+// ==========================================
+// PICKER LIST RENDERING
+// ==========================================
+
+function _renderGrinderPickerList() {
+    const list = document.getElementById('grinder-picker-list');
+    if (!list) return;
+    list.innerHTML = Object.values(GRINDERS).map(g => `
+        <button class="picker-option" data-value="${g.key}">
+            <span class="picker-option-name">${g.label}</span>
+            <span class="picker-option-detail">${g.pickerDetail}</span>
+            <span class="picker-check">✓</span>
+        </button>
+    `).join('');
+}
+
+function _renderMethodPickerList() {
+    const list = document.getElementById('method-picker-list');
+    if (!list) return;
+    list.innerHTML = Object.values(METHODS).map(m => `
+        <button class="picker-option" data-value="${m.key}">
+            <span class="picker-option-name">${m.label}</span>
+            <span class="picker-option-detail">${m.pickerDetail}</span>
+            <span class="picker-check">✓</span>
+        </button>
+    `).join('');
 }
 
 // ==========================================
 // CHIP LABELS
 // ==========================================
 
-// Chip-only abbreviations (full names stay in picker popup)
-function abbreviateGrinderName(name) {
-    return name
-        .replace('Fellow Ode Gen 1', 'Fellow Gen 1')
-        .replace('Fellow Ode Gen 2', 'Fellow Gen 2')
-        .replace('Baratza Encore', 'Baratza')
-        .replace('Comandante C40 MK3', 'Comandante MK3')
-        .replace('Comandante C40 MK4', 'Comandante MK4')
-        .replace('Timemore Chestnut C2', 'Timemore C2')
-        .replace('Timemore Chestnut S3', 'Timemore S3');
-}
-
 function updateChipLabels() {
     const gLabel = document.getElementById('grinder-chip-label');
     const mLabel = document.getElementById('method-chip-label');
-    if (gLabel) gLabel.textContent = abbreviateGrinderName(getGrinderLabel(preferredGrinder));
-    if (mLabel) mLabel.textContent = getMethodLabel(preferredMethod || 'v60');
+    if (gLabel) gLabel.textContent = (GRINDERS[preferredGrinder] || GRINDERS.fellow_gen2).chipLabel;
+    if (mLabel) mLabel.textContent = (METHODS[preferredMethod] || METHODS.v60).timerLabel;
 }
 
 // ==========================================
@@ -168,9 +170,5 @@ function markActiveOption(listId, activeValue) {
 }
 
 export function getGrinderLabel(grinder) {
-    return GRINDER_INFO[grinder]?.label || GRINDER_INFO.fellow_gen2.label;
-}
-
-function getMethodLabel(method) {
-    return METHOD_INFO[method]?.label || 'V60';
+    return (GRINDERS[grinder] || GRINDERS.fellow_gen2).label;
 }

@@ -1,0 +1,4254 @@
+{
+  "meta": {
+    "generatedAt": "2026-06-01T08:12:50.364Z",
+    "inputs": {
+      "amount": 18,
+      "altitude": 1500,
+      "waterHardness": null,
+      "roastDate": null,
+      "cultivar": "",
+      "origin": "",
+      "grindOffset": 0
+    },
+    "grinders": [
+      "comandante_mk4",
+      "comandante_mk3",
+      "comandante",
+      "fellow_gen2",
+      "fellow_gen1",
+      "fellow",
+      "timemore_s3",
+      "timemore_c2",
+      "timemore",
+      "1zpresso",
+      "baratza"
+    ],
+    "methods": [
+      "v60",
+      "chemex",
+      "aeropress"
+    ],
+    "processings": [
+      "washed",
+      "natural",
+      "honey",
+      "anaerobic-natural",
+      "unknown"
+    ]
+  },
+  "results": {
+    "comandante_mk4": {
+      "v60": {
+        "washed": {
+          "grindSetting": "22 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "24 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "20 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "28 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "27 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "19 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "22 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "21 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "17 clicks",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "20 clicks",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "comandante_mk3": {
+      "v60": {
+        "washed": {
+          "grindSetting": "22 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "24 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "20 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "28 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "27 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "19 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "22 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "21 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "17 clicks",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "20 clicks",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "comandante": {
+      "v60": {
+        "washed": {
+          "grindSetting": "22 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "24 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "20 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "28 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "27 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "19 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "22 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "21 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "17 clicks",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "20 clicks",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "fellow_gen2": {
+      "v60": {
+        "washed": {
+          "grindSetting": "3.5",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.1",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "3.9",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "3.2",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.7",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "4.3",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.8",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.7",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "4.0",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.5",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "2.8",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "3.3",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "3.1",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.5",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.0",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "fellow_gen1": {
+      "v60": {
+        "washed": {
+          "grindSetting": "2.0",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "2.6",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "2.4",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "1.7",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "2.2",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "2.8",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "3.3",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "3.2",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.5",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.0",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "1.3",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "1.8",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "1.6",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "1.0",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "1.5",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "fellow": {
+      "v60": {
+        "washed": {
+          "grindSetting": "3.5",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.1",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "3.9",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "3.2",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.7",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "4.3",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.8",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.7",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "4.0",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.5",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "2.8",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "3.3",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "3.1",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.5",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.0",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "timemore_s3": {
+      "v60": {
+        "washed": {
+          "grindSetting": "55 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "63 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "60 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "50 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "58 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "63 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "70 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "68 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "58 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "65 clicks",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "48 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "55 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "53 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "43 clicks",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "50 clicks",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "timemore_c2": {
+      "v60": {
+        "washed": {
+          "grindSetting": "18 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "20 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "16 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "19 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "21 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "23 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "22 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "19 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "21 clicks",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "16 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "18 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "17 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "14 clicks",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "16 clicks",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "timemore": {
+      "v60": {
+        "washed": {
+          "grindSetting": "55 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "63 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "60 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "50 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "58 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "63 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "70 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "68 clicks",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "58 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "65 clicks",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "48 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "55 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "53 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "43 clicks",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "50 clicks",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "1zpresso": {
+      "v60": {
+        "washed": {
+          "grindSetting": "2.6 rot",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "2.9 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "2.8 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.3 rot",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "2.7 rot",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "2.9 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "3.3 rot",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "3.1 rot",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.7 rot",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.0 rot",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "2.2 rot",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "2.6 rot",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "2.5 rot",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.0 rot",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "2.3 rot",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    },
+    "baratza": {
+      "v60": {
+        "washed": {
+          "grindSetting": "20",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "23",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "22",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g, create crater, 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "To 157g: Pour slowly"
+            },
+            {
+              "time": "1:20",
+              "action": "To 253g: Concentric circles"
+            },
+            {
+              "time": "1:50",
+              "action": "To 301g: Final pour"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "18",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:30-3:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 149g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 247g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 297g: Final pour"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "21",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:30-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, 30-40 sec"
+            },
+            {
+              "time": "0:40",
+              "action": "To 144g: Pour evenly"
+            },
+            {
+              "time": "1:15",
+              "action": "To 239g: Concentric circles"
+            },
+            {
+              "time": "1:45",
+              "action": "To 288g: Final pour"
+            }
+          ]
+        }
+      },
+      "chemex": {
+        "washed": {
+          "grindSetting": "23",
+          "temperature": "93-94°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "25",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "24",
+          "temperature": "94-95°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 120g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 211g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 301g. Let drain completely"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "21",
+          "temperature": "92-93°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "23",
+          "temperature": "93-95°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:30-4:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, gentle stir, wait 45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour slowly to 119g. Center pour"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 208g. Wide circles"
+            },
+            {
+              "time": "2:30",
+              "action": "Pour to 297g. Let drain completely"
+            }
+          ]
+        }
+      },
+      "aeropress": {
+        "washed": {
+          "grindSetting": "17",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "20",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "19",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "15",
+          "temperature": "90-91°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "18",
+          "temperature": "91-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "1:30-2:30",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
+            },
+            {
+              "time": "0:15",
+              "action": "Pour to 270g total. Place cap + filter"
+            },
+            {
+              "time": "0:30",
+              "action": "Let steep. Don't disturb"
+            },
+            {
+              "time": "1:15",
+              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

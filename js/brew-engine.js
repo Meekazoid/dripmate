@@ -6,6 +6,8 @@
 
 import { coffeeAmount, preferredGrinder, preferredMethod, manualWaterHardness, apiWaterHardness } from './state.js';
 import { getGrinderLabel } from './grinder.js';
+import { GRINDERS } from './data/grinders.js';
+import { METHODS } from './data/methods.js';
 
 export function getBrewRecommendations(coffee) {
     const amount = coffee.customAmount || coffeeAmount;
@@ -80,33 +82,21 @@ function adjustForRoastAge(params, roastDate) {
 // ==========================================
 
 function adjustForMethod(params, method) {
-    if (method === 'chemex') {
-        return {
-            ...params,
-            grindBase: {
-                comandante: params.grindBase.comandante + 3,
-                fellow: params.grindBase.fellow + 0.75
-            },
-            ratio: Math.max(params.ratio, 16.5),
-            tempBase: { min: params.tempBase.min + 1, max: params.tempBase.max + 1 },
-            targetTime: '3:30-4:30',
-            brewStyle: params.brewStyle
-        };
-    }
-    if (method === 'aeropress') {
-        return {
-            ...params,
-            grindBase: {
-                comandante: params.grindBase.comandante - 3,
-                fellow: params.grindBase.fellow - 0.75
-            },
-            ratio: Math.min(params.ratio, 15),
-            tempBase: { min: params.tempBase.min - 1, max: params.tempBase.max - 1 },
-            targetTime: '1:30-2:30',
-            brewStyle: params.brewStyle
-        };
-    }
-    return params;
+    const adj = (METHODS[method] || METHODS.v60).adjust;
+    let ratio = params.ratio;
+    if (adj.ratioClamp.op === 'max') ratio = Math.max(ratio, adj.ratioClamp.value);
+    else if (adj.ratioClamp.op === 'min') ratio = Math.min(ratio, adj.ratioClamp.value);
+    return {
+        ...params,
+        grindBase: {
+            comandante: params.grindBase.comandante + adj.grindComandante,
+            fellow: params.grindBase.fellow + adj.grindFellow,
+        },
+        ratio,
+        tempBase: { min: params.tempBase.min + adj.tempDelta, max: params.tempBase.max + adj.tempDelta },
+        targetTime: adj.targetTime || params.targetTime,
+        brewStyle: params.brewStyle,
+    };
 }
 
 // ==========================================
@@ -248,36 +238,14 @@ function adjustForWaterHardness(params) {
 
 // ==========================================
 // GRINDER VALUE
-// Conversion factors based on µm/click:
-//   Comandante C40: ~30µm/click, V60 range 21-25 clicks
-//   Fellow Ode Gen 2: ~25µm/step (SSP MP 64mm flat)
-//   Fellow Ode Gen 1: ~50µm/step (original 64mm flat)
-//   Timemore S3: 15µm/click, 42mm S2C890, V60 range 50-80
-//   Timemore C2: ~80µm/click, 38mm conical, V60 range 15-20
-//   1Zpresso JX: 48mm conical, 30 clicks/rotation, V60 range ~2.5-3.0 rot (baseFactor 3.5/30)
-//   Baratza Encore: 40mm conical, 40 stepped settings, V60 range 18-22 (baseFactor 0.9)
+// Profile data lives in js/data/grinders.js (GRINDERS registry).
+// Fallback for unknown/legacy keys = fellow_gen2.
 // ==========================================
 
 function getGrinderValue(grindBase, grinder, offset) {
     const o = offset || 0;
     const base = grindBase.comandante;
-
-    // Calibration matrix v1: centralizes scaling and offset sensitivity per grinder.
-    const profiles = {
-        comandante_mk4: { type: 'clicks', baseFactor: 1.0, offsetFactor: 1.0, min: 1 },
-        comandante_mk3: { type: 'clicks', baseFactor: 1.0, offsetFactor: 1.0, min: 1 },
-        comandante: { type: 'clicks', baseFactor: 1.0, offsetFactor: 1.0, min: 1 },
-        fellow_gen2: { type: 'ode', baseRef: 'fellow2', offsetFactor: 0.1, min: 0.1 },
-        fellow_gen1: { type: 'ode', baseRef: 'fellow1', offsetFactor: 0.1, min: 0.1 },
-        fellow: { type: 'ode', baseRef: 'fellow2', offsetFactor: 0.1, min: 0.1 },
-        timemore_s3: { type: 'clicks', baseFactor: 2.5, offsetFactor: 2.5, min: 1 },
-        timemore_c2: { type: 'clicks', baseFactor: 0.82, offsetFactor: 0.82, min: 1 },
-        timemore: { type: 'clicks', baseFactor: 2.5, offsetFactor: 2.5, min: 1 },
-        '1zpresso': { type: 'rot', baseFactor: 3.5 / 30, offsetFactor: 3.5 / 30, min: 0.1 },
-        baratza: { type: 'encore', baseFactor: 0.9, offsetFactor: 0.9, min: 1, max: 40 }
-    };
-
-    const profile = profiles[grinder] || profiles.fellow;
+    const profile = (GRINDERS[grinder] || GRINDERS.fellow_gen2).profile;
 
     if (profile.type === 'ode') {
         const baseValue = profile.baseRef === 'fellow1' ? (grindBase.fellow - 1.5) : grindBase.fellow;
@@ -305,52 +273,7 @@ function getGrinderValue(grindBase, grinder, offset) {
 
 function generateBrewSteps(amount, ratio, brewStyle, method) {
     const waterAmount = Math.round(amount * ratio);
-
-    if (method === 'aeropress') {
-        const bloom = Math.round(amount * 2);
-        return [
-            { time: '0:00', action: `Invert AeroPress. Add ${amount}g coffee, pour ${bloom}g water. Stir 3×` },
-            { time: '0:15', action: `Pour to ${waterAmount}g total. Place cap + filter` },
-            { time: '0:30', action: `Let steep. Don't disturb` },
-            { time: '1:15', action: `Flip onto cup. Press slowly (30 sec). Stop before hiss` }
-        ];
-    }
-
-    if (method === 'chemex') {
-        const bloom = Math.round(amount * 3);
-        return [
-            { time: '0:00', action: `Bloom: ${bloom}g water, gentle stir, wait 45 sec` },
-            { time: '0:45', action: `Pour slowly to ${Math.round(waterAmount * 0.4)}g. Center pour` },
-            { time: '1:30', action: `Pour to ${Math.round(waterAmount * 0.7)}g. Wide circles` },
-            { time: '2:30', action: `Pour to ${waterAmount}g. Let drain completely` }
-        ];
-    }
-
-    // V60 (default — style-dependent)
-    const bloom = Math.round(amount * (brewStyle === 'slow' ? 3.5 : 3));
-
-    if (brewStyle === 'slow') {
-        return [
-            { time: '0:00', action: `Bloom: ${bloom}g water, wait 45 sec` },
-            { time: '0:45', action: `To ${Math.round(waterAmount * 0.45)}g: Very slow circular pour` },
-            { time: '1:30', action: `To ${Math.round(waterAmount * 0.75)}g: Continue slowly` },
-            { time: '2:15', action: `To ${waterAmount}g: Final pour` }
-        ];
-    }
-    if (brewStyle === 'fruity') {
-        return [
-            { time: '0:00', action: `Bloom: ${bloom}g, create crater, 45 sec` },
-            { time: '0:45', action: `To ${Math.round(waterAmount * 0.52)}g: Pour slowly` },
-            { time: '1:20', action: `To ${Math.round(waterAmount * 0.84)}g: Concentric circles` },
-            { time: '1:50', action: `To ${waterAmount}g: Final pour` }
-        ];
-    }
-    return [
-        { time: '0:00', action: `Bloom: ${bloom}g water, 30-40 sec` },
-        { time: '0:40', action: `To ${Math.round(waterAmount * 0.5)}g: Pour evenly` },
-        { time: '1:15', action: `To ${Math.round(waterAmount * 0.83)}g: Concentric circles` },
-        { time: '1:45', action: `To ${waterAmount}g: Final pour` }
-    ];
+    return (METHODS[method] || METHODS.v60).buildSteps(amount, ratio, brewStyle, waterAmount);
 }
 
 // ==========================================
@@ -363,11 +286,10 @@ function formatTemp(tempBase) {
 
 function generateBrewNotes(coffee, params, method) {
     const notes = [];
+    const methodNote = (METHODS[method] || METHODS.v60).note;
 
-    if (method === 'chemex') {
-        notes.push('Chemex - thick paper filter, clean cup, coarser grind');
-    } else if (method === 'aeropress') {
-        notes.push('AeroPress inverted - full immersion, concentrated, finer grind');
+    if (methodNote) {
+        notes.push(methodNote);
     } else {
         const categoryNotes = {
             'experimental-nitro': 'Nitro process - very delicate, preserve volatile compounds',

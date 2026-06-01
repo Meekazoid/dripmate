@@ -34,6 +34,7 @@ import { getBrewRecommendations, boldWeights } from './brew-engine.js';
 import { getRoastFreshnessBadge } from './freshness.js';
 import { ensureInitialValues } from './feedback.js';
 import { PROCESS_LABELS } from './coffee-schema.js';
+import { METHODS } from './data/methods.js';
 import './brew-timer.js';
 import './card-editor.js';
 
@@ -282,7 +283,7 @@ export function renderCoffeeCard(coffee, index) {
                 </div>
 
                 <div class="brew-steps">
-                    <h4>${brewParams.method === 'aeropress' ? 'AeroPress Brew Steps' : brewParams.method === 'chemex' ? 'Chemex Pour-Over Steps' : 'V60 Pour-Over Steps'}</h4>
+                    <h4>${(METHODS[brewParams.method] || METHODS.v60).stepHeaderLabel}</h4>
                     ${brewParams.steps.map((step, stepIndex) => `
                         <div class="step">
                             <div class="step-time">${step.time}</div>

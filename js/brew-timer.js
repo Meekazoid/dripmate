@@ -5,6 +5,7 @@
 
 import { coffees, brewTimers, animationFrames, coffeeAmount } from './state.js';
 import { getBrewRecommendations } from './brew-engine.js';
+import { METHODS } from './data/methods.js';
 
 // Local implementation to avoid circular dependency with feedback.js
 function addBrewHistoryEntry(coffee, entry) {
@@ -47,8 +48,7 @@ export function startBrewTimer(index) {
     });
 
     // Snapshot brew parameters at start time
-    const methodLabels = { v60: 'V60', chemex: 'Chemex', aeropress: 'AeroPress' };
-    const methodLabel = methodLabels[brewParams.method] || brewParams.method || 'V60';
+    const methodLabel = (METHODS[brewParams.method] || METHODS.v60).timerLabel;
     const brewAmount = coffee.customAmount || coffeeAmount;
     const brewGrind = brewParams.grindSetting || '-';
     const brewTemp = coffee.customTemp || brewParams.temperature || '-';
