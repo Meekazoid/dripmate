@@ -7,12 +7,19 @@
  * Fixed inputs: amount=18g, altitude=1500, no waterHardness, no roastDate,
  *               cultivar='', origin='', grindOffset=0
  *
- * Logic is inlined from js/brew-engine.js — NO browser dependencies.
+ * Processing pipeline (getProcessingBaseParams, adjustForAltitude, …) is inlined —
+ * those functions live solely in js/brew-engine.js and have no browser deps here.
+ *
+ * Profile lookup  → js/data/grinders.js  (GRINDERS registry, real source)
+ * Method adjust   → js/data/methods.js   (METHODS registry, real source)
+ * This makes the --after snapshot a genuine test of the refactored registry data.
  */
 
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { GRINDERS, GRINDER_MIGRATION } from '../js/data/grinders.js';
+import { METHODS }  from '../js/data/methods.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'tests', 'golden');
@@ -31,11 +38,11 @@ const FIXED = {
     grindOffset: 0,
 };
 
-// ── Grinders to iterate (all profile keys from brew-engine.js profiles{}) ────
-const GRINDERS = [
+// ── Grinders to iterate (all profile keys, including legacy aliases) ───────────
+const GRINDER_KEYS = [
     'comandante_mk4',
     'comandante_mk3',
-    'comandante',      // legacy alias
+    'comandante',      // legacy alias → falls back to fellow_gen2 profile (same as old profiles.fellow)
     'fellow_gen2',
     'fellow_gen1',
     'fellow',          // legacy alias
@@ -47,20 +54,19 @@ const GRINDERS = [
 ];
 
 // ── Methods ───────────────────────────────────────────────────────────────────
-const METHODS = ['v60', 'chemex', 'aeropress'];
+const METHOD_KEYS = ['v60', 'chemex', 'aeropress'];
 
 // ── Processings ───────────────────────────────────────────────────────────────
-// These strings are chosen to trigger each branch in getProcessingBaseParams().
 const PROCESSINGS = [
     'washed',            // → default fallback
     'natural',           // → natural branch
     'honey',             // → honey (general)
-    'anaerobic-natural', // → anaerobic+natural branch (includes both substrings)
+    'anaerobic-natural', // → anaerobic+natural branch
     'unknown',           // → unknown branch
 ];
 
 // ═════════════════════════════════════════════════════════════════════════════
-// INLINE ENGINE LOGIC (copied from js/brew-engine.js, no DOM/state imports)
+// PROCESSING PIPELINE — inlined from js/brew-engine.js (no browser deps)
 // ═════════════════════════════════════════════════════════════════════════════
 
 function getProcessingBaseParams(process) {
@@ -87,14 +93,11 @@ function getProcessingBaseParams(process) {
     if (p.includes('honey')) {
         let grindBase, tempBase;
         if (p.includes('yellow')) {
-            grindBase = { comandante: 23, fellow: 3.6 };
-            tempBase = { min: 92, max: 93 };
+            grindBase = { comandante: 23, fellow: 3.6 }; tempBase = { min: 92, max: 93 };
         } else if (p.includes('black')) {
-            grindBase = { comandante: 26, fellow: 4.2 };
-            tempBase = { min: 93, max: 94 };
+            grindBase = { comandante: 26, fellow: 4.2 }; tempBase = { min: 93, max: 94 };
         } else {
-            grindBase = { comandante: 24, fellow: 3.9 };
-            tempBase = { min: 93, max: 94 };
+            grindBase = { comandante: 24, fellow: 3.9 }; tempBase = { min: 93, max: 94 };
         }
         return { grindBase, tempBase, ratio: 16.7, brewStyle: 'fruity', targetTime: '2:45-3:15', category: 'honey' };
     }
@@ -104,31 +107,27 @@ function getProcessingBaseParams(process) {
     if (p === 'unknown') {
         return { grindBase: { comandante: 23, fellow: 3.7 }, tempBase: { min: 92, max: 94 }, ratio: 16, brewStyle: 'standard', targetTime: '2:30-3:15', category: 'unknown' };
     }
-    // Default fallback (washed)
     return { grindBase: { comandante: 22, fellow: 3.5 }, tempBase: { min: 92, max: 93 }, ratio: 16, brewStyle: 'standard', targetTime: '2:30-3:00', category: 'washed' };
 }
 
 function adjustForAltitude(params, altitudeStr) {
     const altitude = parseInt(altitudeStr) || 1500;
     let grindAdjust = 0, tempAdjust = 0;
-
     if (altitude < 1200)       { grindAdjust = +2; tempAdjust = -1; }
     else if (altitude < 1400)  { grindAdjust = +1; }
     else if (altitude >= 1800) { grindAdjust = -2; tempAdjust = +1; }
     else if (altitude >= 1600) { grindAdjust = -1; }
-
     return {
         ...params,
         grindBase: { comandante: params.grindBase.comandante + grindAdjust, fellow: params.grindBase.fellow + (grindAdjust * 0.25) },
         tempBase: { min: params.tempBase.min + tempAdjust, max: params.tempBase.max + tempAdjust },
-        altitudeAdjustment: { grindAdjust, tempAdjust, altitude }
+        altitudeAdjustment: { grindAdjust, tempAdjust, altitude },
     };
 }
 
 function adjustForCultivar(params, cultivarStr) {
     const cultivar = (cultivarStr || '').toLowerCase();
     let grindAdjust = 0, tempAdjust = 0, category = 'balanced';
-
     if (cultivar.includes('gesha') || cultivar.includes('geisha') ||
         cultivar.includes('sl28') || cultivar.includes('sl34') ||
         cultivar.includes('bourbon') || cultivar.includes('typica')) {
@@ -138,19 +137,17 @@ function adjustForCultivar(params, cultivarStr) {
                cultivar.includes('robusta')) {
         grindAdjust = +1; tempAdjust = +1; category = 'robust';
     }
-
     return {
         ...params,
         grindBase: { comandante: params.grindBase.comandante + grindAdjust, fellow: params.grindBase.fellow + (grindAdjust * 0.25) },
         tempBase: { min: params.tempBase.min + tempAdjust, max: params.tempBase.max + tempAdjust },
-        cultivarAdjustment: { grindAdjust, tempAdjust, category }
+        cultivarAdjustment: { grindAdjust, tempAdjust, category },
     };
 }
 
 function adjustForOrigin(params, originStr) {
     const origin = (originStr || '').toLowerCase();
     let grindAdjust = 0, tempAdjust = 0, region = 'latin-america';
-
     if (origin.includes('ethiopia') || origin.includes('kenya') ||
         origin.includes('rwanda') || origin.includes('burundi') ||
         origin.includes('tanzania')) {
@@ -160,17 +157,15 @@ function adjustForOrigin(params, originStr) {
                origin.includes('vietnam') || origin.includes('papua')) {
         grindAdjust = +1; tempAdjust = +1; region = 'asia';
     }
-
     return {
         ...params,
         grindBase: { comandante: params.grindBase.comandante + grindAdjust, fellow: params.grindBase.fellow + (grindAdjust * 0.25) },
         tempBase: { min: params.tempBase.min + tempAdjust, max: params.tempBase.max + tempAdjust },
-        originAdjustment: { grindAdjust, tempAdjust, region }
+        originAdjustment: { grindAdjust, tempAdjust, region },
     };
 }
 
 function adjustForRoastAge(params, roastDate) {
-    // roastDate = null → no adjustment
     if (!roastDate) {
         return { ...params, roastAdjustment: { tempAdjust: 0, roastAgeDays: null, stage: 'unknown' } };
     }
@@ -180,134 +175,63 @@ function adjustForRoastAge(params, roastDate) {
     }
     const roastAgeDays = Math.floor((Date.now() - roastTime) / (1000 * 60 * 60 * 24));
     let tempAdjust = 0, stage = 'sweet-spot';
-    if (roastAgeDays < 7)    { tempAdjust = -1; stage = 'resting'; }
+    if (roastAgeDays < 7)        { tempAdjust = -1; stage = 'resting'; }
     else if (roastAgeDays >= 30) { tempAdjust = +1; stage = 'fading'; }
     return {
         ...params,
         tempBase: { min: params.tempBase.min + tempAdjust, max: params.tempBase.max + tempAdjust },
-        roastAdjustment: { tempAdjust, roastAgeDays, stage }
+        roastAdjustment: { tempAdjust, roastAgeDays, stage },
     };
 }
 
+// ── Registry-driven functions (use real GRINDERS / METHODS data) ───────────────
+
 function adjustForMethod(params, method) {
-    if (method === 'chemex') {
-        return {
-            ...params,
-            grindBase: {
-                comandante: params.grindBase.comandante + 3,
-                fellow: params.grindBase.fellow + 0.75
-            },
-            ratio: Math.max(params.ratio, 16.5),
-            tempBase: { min: params.tempBase.min + 1, max: params.tempBase.max + 1 },
-            targetTime: '3:30-4:30',
-            brewStyle: params.brewStyle
-        };
-    }
-    if (method === 'aeropress') {
-        return {
-            ...params,
-            grindBase: {
-                comandante: params.grindBase.comandante - 3,
-                fellow: params.grindBase.fellow - 0.75
-            },
-            ratio: Math.min(params.ratio, 15),
-            tempBase: { min: params.tempBase.min - 1, max: params.tempBase.max - 1 },
-            targetTime: '1:30-2:30',
-            brewStyle: params.brewStyle
-        };
-    }
-    return params;
+    const adj = (METHODS[method] || METHODS.v60).adjust;
+    let ratio = params.ratio;
+    if (adj.ratioClamp.op === 'max') ratio = Math.max(ratio, adj.ratioClamp.value);
+    else if (adj.ratioClamp.op === 'min') ratio = Math.min(ratio, adj.ratioClamp.value);
+    return {
+        ...params,
+        grindBase: {
+            comandante: params.grindBase.comandante + adj.grindComandante,
+            fellow: params.grindBase.fellow + adj.grindFellow,
+        },
+        ratio,
+        tempBase: { min: params.tempBase.min + adj.tempDelta, max: params.tempBase.max + adj.tempDelta },
+        targetTime: adj.targetTime || params.targetTime,
+        brewStyle: params.brewStyle,
+    };
 }
 
 function getGrinderValue(grindBase, grinder, offset) {
     const o = offset || 0;
     const base = grindBase.comandante;
-
-    const profiles = {
-        comandante_mk4: { type: 'clicks', baseFactor: 1.0, offsetFactor: 1.0, min: 1 },
-        comandante_mk3: { type: 'clicks', baseFactor: 1.0, offsetFactor: 1.0, min: 1 },
-        comandante:     { type: 'clicks', baseFactor: 1.0, offsetFactor: 1.0, min: 1 },
-        fellow_gen2:    { type: 'ode', baseRef: 'fellow2', offsetFactor: 0.1, min: 0.1 },
-        fellow_gen1:    { type: 'ode', baseRef: 'fellow1', offsetFactor: 0.1, min: 0.1 },
-        fellow:         { type: 'ode', baseRef: 'fellow2', offsetFactor: 0.1, min: 0.1 },
-        timemore_s3:    { type: 'clicks', baseFactor: 2.5, offsetFactor: 2.5, min: 1 },
-        timemore_c2:    { type: 'clicks', baseFactor: 0.82, offsetFactor: 0.82, min: 1 },
-        timemore:       { type: 'clicks', baseFactor: 2.5, offsetFactor: 2.5, min: 1 },
-        '1zpresso':     { type: 'rot', baseFactor: 3.5 / 30, offsetFactor: 3.5 / 30, min: 0.1 },
-        baratza:        { type: 'encore', baseFactor: 0.9, offsetFactor: 0.9, min: 1, max: 40 }
-    };
-
-    const profile = profiles[grinder] || profiles.fellow_gen2;
+    // Apply the same migration the real app runs via migrateGrinderPreference(),
+    // so legacy keys resolve to their canonical profiles instead of the fellow_gen2 fallback.
+    const canonicalKey = GRINDER_MIGRATION[grinder] || grinder;
+    const profile = (GRINDERS[canonicalKey] || GRINDERS.fellow_gen2).profile;
 
     if (profile.type === 'ode') {
         const baseValue = profile.baseRef === 'fellow1' ? (grindBase.fellow - 1.5) : grindBase.fellow;
         const val = baseValue + o * profile.offsetFactor;
         return Math.max(profile.min, val).toFixed(1);
     }
-
     if (profile.type === 'rot') {
         const rotations = base * profile.baseFactor + o * profile.offsetFactor;
         return `${Math.max(profile.min, rotations).toFixed(1)} rot`;
     }
-
     if (profile.type === 'encore') {
         const val = Math.round(base * profile.baseFactor + o * profile.offsetFactor);
         return `${Math.max(profile.min, Math.min(profile.max, val))}`;
     }
-
-    // clicks
     const val = Math.round(base * profile.baseFactor + o * profile.offsetFactor);
     return `${Math.max(profile.min, val)} clicks`;
 }
 
 function generateBrewSteps(amount, ratio, brewStyle, method) {
     const waterAmount = Math.round(amount * ratio);
-
-    if (method === 'aeropress') {
-        const bloom = Math.round(amount * 2);
-        return [
-            { time: '0:00', action: `Invert AeroPress. Add ${amount}g coffee, pour ${bloom}g water. Stir 3×` },
-            { time: '0:15', action: `Pour to ${waterAmount}g total. Place cap + filter` },
-            { time: '0:30', action: `Let steep. Don't disturb` },
-            { time: '1:15', action: `Flip onto cup. Press slowly (30 sec). Stop before hiss` }
-        ];
-    }
-
-    if (method === 'chemex') {
-        const bloom = Math.round(amount * 3);
-        return [
-            { time: '0:00', action: `Bloom: ${bloom}g water, gentle stir, wait 45 sec` },
-            { time: '0:45', action: `Pour slowly to ${Math.round(waterAmount * 0.4)}g. Center pour` },
-            { time: '1:30', action: `Pour to ${Math.round(waterAmount * 0.7)}g. Wide circles` },
-            { time: '2:30', action: `Pour to ${waterAmount}g. Let drain completely` }
-        ];
-    }
-
-    // V60 (default — style-dependent)
-    const bloom = Math.round(amount * (brewStyle === 'slow' ? 3.5 : 3));
-
-    if (brewStyle === 'slow') {
-        return [
-            { time: '0:00', action: `Bloom: ${bloom}g water, wait 45 sec` },
-            { time: '0:45', action: `To ${Math.round(waterAmount * 0.45)}g: Very slow circular pour` },
-            { time: '1:30', action: `To ${Math.round(waterAmount * 0.75)}g: Continue slowly` },
-            { time: '2:15', action: `To ${waterAmount}g: Final pour` }
-        ];
-    }
-    if (brewStyle === 'fruity') {
-        return [
-            { time: '0:00', action: `Bloom: ${bloom}g, create crater, 45 sec` },
-            { time: '0:45', action: `To ${Math.round(waterAmount * 0.52)}g: Pour slowly` },
-            { time: '1:20', action: `To ${Math.round(waterAmount * 0.84)}g: Concentric circles` },
-            { time: '1:50', action: `To ${waterAmount}g: Final pour` }
-        ];
-    }
-    return [
-        { time: '0:00', action: `Bloom: ${bloom}g water, 30-40 sec` },
-        { time: '0:40', action: `To ${Math.round(waterAmount * 0.5)}g: Pour evenly` },
-        { time: '1:15', action: `To ${Math.round(waterAmount * 0.83)}g: Concentric circles` },
-        { time: '1:45', action: `To ${waterAmount}g: Final pour` }
-    ];
+    return (METHODS[method] || METHODS.v60).buildSteps(amount, ratio, brewStyle, waterAmount);
 }
 
 function formatTemp(tempBase) {
@@ -316,15 +240,14 @@ function formatTemp(tempBase) {
 
 // ── Compute a single brew result ──────────────────────────────────────────────
 function computeBrew(grinder, method, processing) {
-    const { amount, altitude, waterHardness, roastDate, cultivar, origin, grindOffset } = FIXED;
+    const { amount, altitude, roastDate, cultivar, origin, grindOffset } = FIXED;
 
-    const base     = getProcessingBaseParams(processing);
-    const alt      = adjustForAltitude(base, altitude);
-    const cult     = adjustForCultivar(alt, cultivar);
-    const orig     = adjustForOrigin(cult, origin);
-    // water hardness: null → no adjustment (skip adjustForWaterHardness)
-    const roast    = adjustForRoastAge(orig, roastDate);
-    const final    = adjustForMethod(roast, method);
+    const base  = getProcessingBaseParams(processing);
+    const alt   = adjustForAltitude(base, altitude);
+    const cult  = adjustForCultivar(alt, cultivar);
+    const orig  = adjustForOrigin(cult, origin);
+    const roast = adjustForRoastAge(orig, roastDate);
+    const final = adjustForMethod(roast, method);
 
     const grindSetting = getGrinderValue(final.grindBase, grinder, grindOffset);
     const temperature  = formatTemp(final.tempBase);
@@ -345,10 +268,9 @@ function computeBrew(grinder, method, processing) {
 mkdirSync(OUT_DIR, { recursive: true });
 
 const results = {};
-
-for (const grinder of GRINDERS) {
+for (const grinder of GRINDER_KEYS) {
     results[grinder] = {};
-    for (const method of METHODS) {
+    for (const method of METHOD_KEYS) {
         results[grinder][method] = {};
         for (const processing of PROCESSINGS) {
             results[grinder][method][processing] = computeBrew(grinder, method, processing);
@@ -360,8 +282,8 @@ const output = {
     meta: {
         generatedAt: new Date().toISOString(),
         inputs: FIXED,
-        grinders: GRINDERS,
-        methods: METHODS,
+        grinders: GRINDER_KEYS,
+        methods: METHOD_KEYS,
         processings: PROCESSINGS,
     },
     results,
@@ -369,4 +291,4 @@ const output = {
 
 writeFileSync(OUT_FILE, JSON.stringify(output, null, 2), 'utf8');
 console.log(`✓ Snapshot written to ${OUT_FILE}`);
-console.log(`  ${GRINDERS.length} grinders × ${METHODS.length} methods × ${PROCESSINGS.length} processings = ${GRINDERS.length * METHODS.length * PROCESSINGS.length} combinations`);
+console.log(`  ${GRINDER_KEYS.length} grinders × ${METHOD_KEYS.length} methods × ${PROCESSINGS.length} processings = ${GRINDER_KEYS.length * METHOD_KEYS.length * PROCESSINGS.length} combinations`);
