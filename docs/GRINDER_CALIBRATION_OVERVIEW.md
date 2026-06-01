@@ -10,6 +10,7 @@ This overview documents how dripmate converts the internal grind reference to ea
 - For Fellow, an additional `grindBase.fellow` base is used where available.
 - User feedback changes are applied via a grinder-neutral `grindOffset` and mapped with grinder-specific sensitivity.
 
+<!-- AUTOGEN:START -->
 ## Conversion matrix (v1)
 
 | Grinder | Output Unit | Base Mapping | Offset Mapping | Clamp |
@@ -37,6 +38,7 @@ The v1.1 layer adds a practical calibration overview for operations and QA.
 | Baratza Encore | 12–20 | 1 offset ≈ 0.9 steps | Medium-Low | ±4 steps |
 
 \*Start band means first recommendation window for filter/pour-over style brews and should be interpreted alongside processing/method/water adjustments.
+<!-- AUTOGEN:END -->
 
 ### v1.1 interpretation rules
 1. Keep the existing conversion formula as the primary output.
