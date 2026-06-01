@@ -1,3 +1,10 @@
+> ⚠️ **ARCHIVIERT / VERALTET.** Dieses Dokument beschreibt das frühere Feedback-System
+> (3 Dimensionen: extraction / taste clarity / body). Das aktuelle System nutzt 4
+> cupping-orientierte Slider (bitterness, sweetness, acidity, body). Aktuelle Beschreibung
+> siehe docs/RULESET_CALCULATION_FLOW.md. Nur zu historischen Zwecken aufbewahrt.
+
+---
+
 # AI-Anfragen, Feedback-Loop und UX-Verbesserungen (Code-Analyse)
 
 ## 1) Wann werden AI-Anfragen gestellt?

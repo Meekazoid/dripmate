@@ -66,7 +66,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [2.4.1] – 2026-02-18 · Ruleset Transparency & Stability
 
 ### Added
-- `RULESET_CALCULATION_FLOW.md` and `AI_FEEDBACK_FLOW.md` with Mermaid flowcharts and rule explanations.
+- `RULESET_CALCULATION_FLOW.md` and `AI_FEEDBACK_FLOW_v1_ARCHIVED.md` with Mermaid flowcharts and rule explanations.
 
 ### Changed
 - Brew engine now includes roast-age micro temperature adjustment.

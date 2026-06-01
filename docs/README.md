@@ -75,7 +75,7 @@ The frontend operates offline-first via localStorage and syncs to the Railway ba
 
 - `CHANGELOG.md` — version history
 - `RULESET_CALCULATION_FLOW.md` — end-to-end rules flowchart
-- `AI_FEEDBACK_FLOW.md` — AI request and feedback flow explanation
+- `AI_FEEDBACK_FLOW_v1_ARCHIVED.md` — AI request and feedback flow explanation (archived, superseded by RULESET_CALCULATION_FLOW.md)
 - `GRINDER_CALIBRATION_OVERVIEW.md` — conversion + calibration matrix (v1.1, auto-generated)
 - `ADD_GRINDER_OR_METHOD_PROMPTS.md` — Anleitung + Prompts zum Hinzufügen von Grindern/Methoden
 - `APP_FEEDBACK.md` — developer manual for the app feedback / tester system
