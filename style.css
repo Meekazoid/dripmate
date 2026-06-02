@@ -4538,6 +4538,13 @@ body.light-mode .roastery-stack-counter {
     margin: 0;
 }
 
+/* Inline badge names inside the Roast Date entry — override block display */
+.quick-tips-text strong {
+    display: inline;
+    font-weight: 600;
+    white-space: nowrap; /* keeps "Sweet Spot" on one word, allows break between badges */
+}
+
 /* ==========================================
    ONBOARDING v3 + Firefox fix (v51.10)
    ========================================== */

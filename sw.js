@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.11'; // onboarding round3: 6-step Phase2 no redundant step, centered finale, QT scroll
+const CACHE_VERSION = 'v51.12'; // Quick Tips Roast Date inline fix
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
