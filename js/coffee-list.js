@@ -461,6 +461,9 @@ export function renderCoffees(expandAfterIndex) {
             if (wrapper) wrapper.dispatchEvent(new CustomEvent('roastery-stack:sync-height', { bubbles: true }));
         }
     }
+
+    // Signal onboarding that cards are in the DOM (idempotent listener in onboarding.js)
+    document.dispatchEvent(new CustomEvent('coffees:rendered'));
 }
 
 export async function deleteCoffee(originalIndex) {

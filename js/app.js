@@ -42,7 +42,7 @@ import {
 } from './state.js';
 import { initBackendSync } from './services/backend-sync.js';
 import { initAppFeedback, openAppFeedback, closeAppFeedback, checkNudge } from './app-feedback.js';
-import { initOnboarding, maybeStartOnboardingPhase2, replayOnboarding } from './onboarding.js';
+import { initOnboarding, replayOnboarding, openQuickTips, closeQuickTips } from './onboarding.js';
 
 // Make updateRoastDate available globally for onclick handlers
 window.updateRoastDate = updateRoastDate;
@@ -164,6 +164,14 @@ function initEventListeners() {
     // Replay Tutorial (Settings modal)
     const replayBtn = document.getElementById('replayTutorialBtn');
     if (replayBtn) replayBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeSettings(); replayOnboarding(); });
+
+    // Quick Tips (Settings modal)
+    const quickTipsBtn = document.getElementById('quickTipsBtn');
+    if (quickTipsBtn) quickTipsBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeSettings(); openQuickTips(); });
+    const closeQuickTipsBtn = document.getElementById('closeQuickTipsBtn');
+    if (closeQuickTipsBtn) closeQuickTipsBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeQuickTips(); });
+    const quickTipsModal = document.getElementById('quickTipsModal');
+    if (quickTipsModal) quickTipsModal.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeQuickTips(); });
 }
 
 // Generic modal helpers for legal pages
@@ -203,11 +211,11 @@ async function initApp() {
         }).catch(err => console.log('Could not load water hardness:', err));
     }
 
-    // Render coffee list
-    renderCoffees();
+    // Onboarding: attach event listener BEFORE renderCoffees() so coffees:rendered is caught
+    initOnboarding();
 
-    // Phase 2 tour: triggered once first card exists and Phase 1 is already done
-    maybeStartOnboardingPhase2();
+    // Render coffee list (fires coffees:rendered → maybeStartOnboardingPhase2 via event)
+    renderCoffees();
 
     // App Feedback init (must run after DOM is ready)
     initAppFeedback();
@@ -228,9 +236,6 @@ async function initApp() {
     initEventListeners();
     initFeedbackSliderInteractions();
     initPressedStateInteractions();
-
-    // Onboarding: show activation overlay if justActivated flag is set
-    initOnboarding();
 }
 
 // Run on DOM ready

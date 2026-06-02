@@ -4454,3 +4454,86 @@ body.light-mode .roastery-stack-counter {
     .ob-tooltip { animation: none !important; }
     .ob-spotlight { transition: none !important; }
 }
+
+/* ==========================================
+   ONBOARDING v2 — additional styles (v51.9)
+   ========================================== */
+
+/* ── Interaction blocker during tour ── */
+.ob-blocker {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    touch-action: none;
+    /* Transparent — blocks clicks but invisible */
+}
+
+/* ── Finish / completion hint toast ── */
+.ob-finish-hint {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 0.78rem;
+    color: var(--text-primary);
+    font-family: 'Sora', sans-serif;
+    line-height: 1.4;
+    text-align: center;
+    max-width: calc(100vw - 48px);
+    box-shadow: 0 6px 24px var(--shadow);
+    z-index: 10001;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+/* ── Quick Tips modal list ── */
+.quick-tips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.quick-tips-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.quick-tips-item:last-child {
+    border-bottom: none;
+}
+
+.quick-tips-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--accent);
+    stroke: var(--accent);
+}
+
+.quick-tips-item strong {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+    letter-spacing: 0.01em;
+}
+
+.quick-tips-item p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}

@@ -1,114 +1,151 @@
 // ==========================================
-// ONBOARDING — Activation Overlay + Coachmark Tour
+// ONBOARDING — Activation Overlay + Coachmark Tour v2
 // Dependency-free spotlight tour (no external libs)
 // ==========================================
 
-const KEY_PHASE1 = 'onboardingV1Done';
-const KEY_PHASE2 = 'onboardingV2Done';
-const KEY_JUST_ACTIVATED = 'justActivated';
+const KEY_PHASE1    = 'onboardingV1Done';
+const KEY_PHASE2    = 'onboardingV2Done';
+const KEY_ACTIVATED = 'justActivated';
+const KEY_TIPS_HINT = 'quickTipsHintShown';
 
 // ==========================================
-// PHASE 1 STEPS (post-activation, empty screen)
+// PHASE 1 — 2 steps, empty screen, no interaction needed
+// Archive step removed (covered in Quick Tips instead)
 // ==========================================
 
 const PHASE1_STEPS = [
     {
         targetSelector: '.global-grinder-selector',
         title: 'Your Setup',
-        body: 'Set your grinder & brew method first — every recommendation adapts to your gear.',
+        body: "Set your grinder & brew method here — every recommendation adapts to your gear. You'll pick these in a moment.",
         placement: 'bottom',
     },
     {
         targetSelector: '#cameraBtn',
         title: 'Add a Coffee',
-        body: 'Tap to scan your coffee bag — or upload a photo or enter it manually. Scans don\'t always nail it, so the alternatives are right there.',
+        body: "Scan your coffee bag — or upload a photo or enter it manually. Scans don't always nail it, so the alternatives are right there.",
         placement: 'bottom',
-    },
-    {
-        targetSelector: '#trashBinBtn',
-        title: 'Archive',
-        body: 'Archive coffees you\'re not brewing now — they keep all their tuning, and you can restore or permanently delete them anytime.',
-        placement: 'left',
     },
 ];
 
 // ==========================================
-// PHASE 2 STEPS (first coffee card exists)
+// PHASE 2 — 5 steps, follows natural brew workflow
+// Card is expanded for steps 2–5
 // ==========================================
 
 const PHASE2_STEPS = [
     {
         targetSelector: '.coffee-card',
         title: 'Open Your Card',
-        body: 'Tap to open your card — this is where the brewing happens. Inside you get grind setting, temperature, ratio, water amount, brew steps and a timer, all tuned to your setup (or sensible defaults).',
+        body: "Tap a card to open it — this is where you brew.",
         placement: 'bottom',
+        expandCard: true,
     },
     {
-        targetSelector: '.coffee-card .feedback-section',
+        targetSelector: '.roast-date-section',
+        title: 'Roast Date',
+        body: "Set the roast date if it's on the bag — freshness shapes the recommendation.",
+        placement: 'bottom',
+        needsExpandedCard: true,
+    },
+    {
+        targetSelector: '.ratio-control',
+        title: 'Coffee Amount',
+        body: "Set your dose in grams — stick close to the suggested ratio.",
+        placement: 'bottom',
+        needsExpandedCard: true,
+    },
+    {
+        targetSelector: '.param-grid',
+        title: 'Brew It',
+        body: "Grind, temperature and the timer guide your pour, tuned to your setup (or sensible defaults).",
+        placement: 'bottom',
+        needsExpandedCard: true,
+    },
+    {
+        targetSelector: '.feedback-section',
         title: 'Rate Your Cup',
-        body: 'After brewing, rate the cup — dripmate fine-tunes grind & temperature for next time.',
+        body: "After brewing, rate the cup — dripmate fine-tunes grind & temperature for next time.",
         placement: 'top',
-    },
-    {
-        targetSelector: '.coffee-card .edit-btn',
-        title: 'Edit Details',
-        body: 'Tap the pencil to add or fix any missing details on a coffee.',
-        placement: 'bottom',
+        needsExpandedCard: true,
     },
 ];
 
 // ==========================================
-// SPOTLIGHT STATE
+// MODULE STATE
 // ==========================================
 
-let _spotlightEl = null;
-let _tooltipEl = null;
-let _resizeObserver = null;
-let _scrollHandler = null;
-let _currentTarget = null;
-let _currentPlacement = null;
+let _spotlightEl  = null;
+let _tooltipEl    = null;
+let _blockerEl    = null;
+let _resizeObs    = null;
+let _scrollFn     = null;
+let _tourActive   = false;  // prevents double-start
 
 // ==========================================
 // PUBLIC API
 // ==========================================
 
 export function initOnboarding() {
-    const justActivated = localStorage.getItem(KEY_JUST_ACTIVATED);
+    // Check for first-activation flag set by settings.js
+    const justActivated = localStorage.getItem(KEY_ACTIVATED);
     if (justActivated && !localStorage.getItem(KEY_PHASE1)) {
-        localStorage.removeItem(KEY_JUST_ACTIVATED);
-        // Small delay to let the page settle after reload/magic-link init
+        localStorage.removeItem(KEY_ACTIVATED);
         setTimeout(showOnboardingOverlay, 700);
     }
+
+    // Event-based Phase 2 trigger: fires whenever renderCoffees() runs
+    document.addEventListener('coffees:rendered', () => {
+        maybeStartOnboardingPhase2();
+    });
 }
 
 export function startOnboardingPhase1() {
     _startTour(PHASE1_STEPS, () => {
         localStorage.setItem(KEY_PHASE1, '1');
+        _showFinishHint('Now add your first coffee to continue.');
     });
 }
 
 export function maybeStartOnboardingPhase2() {
+    if (_tourActive) return;
     if (!localStorage.getItem(KEY_PHASE1)) return;
     if (localStorage.getItem(KEY_PHASE2)) return;
-    const firstCard = document.querySelector('.coffee-card');
-    if (!firstCard) return;
+    if (!document.querySelector('.coffee-card')) return;
+
+    _tourActive = true;
     setTimeout(() => {
+        // If tour was already destroyed in the meantime (e.g. replayOnboarding), abort
+        if (localStorage.getItem(KEY_PHASE2)) { _tourActive = false; return; }
         _startTour(PHASE2_STEPS, () => {
+            _tourActive = false;
             localStorage.setItem(KEY_PHASE2, '1');
+            _showPhase2CompletionHint();
         });
-    }, 400);
+    }, 600);
 }
 
 export function replayOnboarding() {
+    _destroySpotlight();
+    _tourActive = false;
     localStorage.removeItem(KEY_PHASE1);
     localStorage.removeItem(KEY_PHASE2);
     localStorage.removeItem('setupChosen');
     showOnboardingOverlay();
 }
 
+export function openQuickTips() {
+    const modal = document.getElementById('quickTipsModal');
+    if (modal) modal.classList.add('active');
+}
+
+export function closeQuickTips() {
+    const modal = document.getElementById('quickTipsModal');
+    if (modal) modal.classList.remove('active');
+}
+
 // ==========================================
-// ACTIVATION OVERLAY MODAL
-// Sand-look toast-inspired modal, theme-adaptive
+// ACTIVATION OVERLAY MODAL (theme-adaptive)
 // ==========================================
 
 function showOnboardingOverlay() {
@@ -128,20 +165,19 @@ function showOnboardingOverlay() {
             <p class="ob-overlay-body">Photograph your coffee, get brew parameters tuned to your gear.</p>
             <p class="ob-overlay-note">Your device is now linked. To use dripmate on another device, request a login link in Settings.</p>
             <div class="ob-overlay-actions">
-                <button class="btn ob-btn-primary" id="obShowAroundBtn">Show me around</button>
-                <button class="btn ob-btn-secondary" id="obSkipBtn">Skip</button>
+                <button type="button" class="ob-btn-primary" id="obShowAroundBtn">Show me around</button>
+                <button type="button" class="ob-btn-secondary" id="obSkipBtn">Skip</button>
             </div>
         </div>
     `;
 
     document.body.appendChild(overlay);
 
-    document.getElementById('obShowAroundBtn').addEventListener('click', () => {
+    overlay.querySelector('#obShowAroundBtn').addEventListener('click', () => {
         overlay.remove();
         startOnboardingPhase1();
     });
-
-    document.getElementById('obSkipBtn').addEventListener('click', () => {
+    overlay.querySelector('#obSkipBtn').addEventListener('click', () => {
         overlay.remove();
         localStorage.setItem(KEY_PHASE1, '1');
     });
@@ -152,6 +188,8 @@ function showOnboardingOverlay() {
 // ==========================================
 
 function _startTour(steps, onComplete) {
+    _tourActive = true;
+    _addBlocker();
     _showStep(steps, 0, onComplete);
 }
 
@@ -159,38 +197,60 @@ function _showStep(steps, index, onComplete) {
     _destroySpotlight();
 
     if (index >= steps.length) {
+        _removeBlocker();
+        _tourActive = false;
         onComplete();
         return;
     }
 
     const step = steps[index];
-    const target = document.querySelector(step.targetSelector);
 
+    // Expand first coffee card if this step needs it
+    if (step.needsExpandedCard || step.expandCard) {
+        const card = document.querySelector('.coffee-card');
+        if (!card) {
+            _showStep(steps, index + 1, onComplete);
+            return;
+        }
+        if (!card.classList.contains('expanded')) {
+            card.classList.add('expanded');
+            const wrapper = card.closest('.roastery-stack-wrapper');
+            if (wrapper) wrapper.dispatchEvent(new CustomEvent('roastery-stack:sync-height', { bubbles: true }));
+        }
+    }
+
+    const target = document.querySelector(step.targetSelector);
     if (!target) {
         _showStep(steps, index + 1, onComplete);
         return;
     }
 
-    _currentTarget = target;
-    _currentPlacement = step.placement;
+    // Scroll target to center, then measure in next frame after layout settles
+    target.scrollIntoView({ block: 'center', behavior: 'instant' });
 
-    _buildSpotlight(target, step, index, steps, onComplete);
+    // Double-rAF: ensures CSS transitions (card expand) + scroll have settled
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        const fresh = document.querySelector(step.targetSelector);
+        if (!fresh) { _showStep(steps, index + 1, onComplete); return; }
+        _buildSpotlight(fresh, step, index, steps, onComplete);
+    }));
 }
 
 function _buildSpotlight(target, step, index, steps, onComplete) {
-    const rect = target.getBoundingClientRect();
-    const pad = 8;
+    const pad     = 8;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isLast  = index === steps.length - 1;
 
-    // Spotlight ring — box-shadow creates dark veil around it
+    // Spotlight ring — box-shadow creates the dark veil
     _spotlightEl = document.createElement('div');
     _spotlightEl.className = 'ob-spotlight';
-    _applySpotlightRect(rect, pad);
-    if (!reduced) _spotlightEl.style.transition = 'top 0.2s, left 0.2s, width 0.2s, height 0.2s';
+    _applySpotlightRect(target.getBoundingClientRect(), pad);
+    if (!reduced) {
+        _spotlightEl.style.transition = 'top 0.18s, left 0.18s, width 0.18s, height 0.18s';
+    }
     document.body.appendChild(_spotlightEl);
 
     // Tooltip
-    const isLast = index === steps.length - 1;
     _tooltipEl = document.createElement('div');
     _tooltipEl.className = 'ob-tooltip';
     _tooltipEl.setAttribute('role', 'dialog');
@@ -199,36 +259,40 @@ function _buildSpotlight(target, step, index, steps, onComplete) {
         <div class="ob-tooltip-title">${_esc(step.title)}</div>
         <div class="ob-tooltip-body">${_esc(step.body)}</div>
         <div class="ob-tooltip-actions">
-            ${index > 0 ? '<button class="ob-btn ob-btn-back">← Back</button>' : ''}
+            ${index > 0 ? '<button type="button" class="ob-btn ob-btn-back">← Back</button>' : ''}
             <span class="ob-step-counter">${index + 1} / ${steps.length}</span>
-            <button class="ob-btn ob-btn-skip">Skip</button>
-            <button class="ob-btn ob-btn-next">${isLast ? 'Done ✓' : 'Next →'}</button>
+            <button type="button" class="ob-btn ob-btn-skip">Skip</button>
+            <button type="button" class="ob-btn ob-btn-next">${isLast ? 'Done ✓' : 'Next →'}</button>
         </div>
     `;
     document.body.appendChild(_tooltipEl);
 
-    _positionTooltip(rect, step.placement);
-    if (!reduced) _tooltipEl.style.animation = 'ob-fade-in 0.18s ease';
+    _positionTooltip(target.getBoundingClientRect(), step.placement);
+    if (!reduced) _tooltipEl.style.animation = 'ob-fade-in 0.15s ease';
 
-    _tooltipEl.querySelector('.ob-btn-next').addEventListener('click', () => {
-        _showStep(steps, index + 1, onComplete);
-    });
+    // Button handlers
+    _tooltipEl.querySelector('.ob-btn-next').addEventListener('click', () => _showStep(steps, index + 1, onComplete));
     _tooltipEl.querySelector('.ob-btn-skip')?.addEventListener('click', () => {
         _destroySpotlight();
+        _removeBlocker();
+        _tourActive = false;
         onComplete();
     });
-    _tooltipEl.querySelector('.ob-btn-back')?.addEventListener('click', () => {
-        _showStep(steps, index - 1, onComplete);
-    });
+    _tooltipEl.querySelector('.ob-btn-back')?.addEventListener('click', () => _showStep(steps, index - 1, onComplete));
 
-    // Reposition on resize / scroll
-    _scrollHandler = () => _reposition(target, step.placement);
-    window.addEventListener('scroll', _scrollHandler, { passive: true });
-    window.addEventListener('resize', _scrollHandler, { passive: true });
+    // Recompute on scroll / resize
+    _scrollFn = () => {
+        if (!_spotlightEl || !_tooltipEl) return;
+        const r = target.getBoundingClientRect();
+        _applySpotlightRect(r, pad);
+        _positionTooltip(r, step.placement);
+    };
+    window.addEventListener('scroll', _scrollFn, { passive: true });
+    window.addEventListener('resize', _scrollFn, { passive: true });
 
-    if (typeof ResizeObserver !== 'undefined' && !_resizeObserver) {
-        _resizeObserver = new ResizeObserver(_scrollHandler);
-        _resizeObserver.observe(document.documentElement);
+    if (typeof ResizeObserver !== 'undefined' && !_resizeObs) {
+        _resizeObs = new ResizeObserver(_scrollFn);
+        _resizeObs.observe(document.documentElement);
     }
 }
 
@@ -240,72 +304,110 @@ function _applySpotlightRect(rect, pad) {
     _spotlightEl.style.height = `${rect.height + pad * 2}px`;
 }
 
-function _reposition(target, placement) {
-    if (!_spotlightEl || !_tooltipEl) return;
-    const rect = target.getBoundingClientRect();
-    _applySpotlightRect(rect, 8);
-    _positionTooltip(rect, placement);
-}
-
 function _positionTooltip(rect, placement) {
     if (!_tooltipEl) return;
-    const tt = _tooltipEl;
-    const margin = 14;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+    const tt  = _tooltipEl;
+    const gap = 14;
+    const vw  = window.innerWidth;
+    const vh  = window.innerHeight;
 
-    // First pass: measure (approximate)
     tt.style.visibility = 'hidden';
-    tt.style.top = '0px';
+    tt.style.top  = '0px';
     tt.style.left = '0px';
-    tt.style.maxWidth = `${Math.min(320, vw - 32)}px`;
+    tt.style.maxWidth = `${Math.min(300, vw - 32)}px`;
 
-    // Force layout to get tooltip size
-    const ttW = tt.offsetWidth || 280;
+    const ttW = tt.offsetWidth  || 260;
     const ttH = tt.offsetHeight || 120;
 
     let top, left;
 
     if (placement === 'bottom') {
-        top  = rect.bottom + margin;
+        top  = rect.bottom + gap;
         left = rect.left + rect.width / 2 - ttW / 2;
-        // Fallback to top if no room
-        if (top + ttH > vh - 16) { top = rect.top - ttH - margin; }
+        if (top + ttH > vh - 16) top = rect.top - ttH - gap;
     } else if (placement === 'top') {
-        top  = rect.top - ttH - margin;
+        top  = rect.top - ttH - gap;
         left = rect.left + rect.width / 2 - ttW / 2;
-        if (top < 16) { top = rect.bottom + margin; }
+        if (top < 16) top = rect.bottom + gap;
     } else if (placement === 'left') {
         top  = rect.top + rect.height / 2 - ttH / 2;
-        left = rect.left - ttW - margin;
-        if (left < 16) { left = rect.right + margin; }
-    } else { // right
+        left = rect.left - ttW - gap;
+        if (left < 16) left = rect.right + gap;
+    } else {
         top  = rect.top + rect.height / 2 - ttH / 2;
-        left = rect.right + margin;
-        if (left + ttW > vw - 16) { left = rect.left - ttW - margin; }
+        left = rect.right + gap;
+        if (left + ttW > vw - 16) left = rect.left - ttW - gap;
     }
 
-    // Clamp to viewport
     left = Math.max(16, Math.min(left, vw - ttW - 16));
     top  = Math.max(16, Math.min(top,  vh - ttH - 16));
 
-    tt.style.top  = `${top}px`;
-    tt.style.left = `${left}px`;
+    tt.style.top        = `${top}px`;
+    tt.style.left       = `${left}px`;
     tt.style.visibility = 'visible';
 }
 
-function _destroySpotlight() {
-    if (_spotlightEl)   { _spotlightEl.remove();  _spotlightEl = null; }
-    if (_tooltipEl)     { _tooltipEl.remove();     _tooltipEl = null; }
-    if (_resizeObserver){ _resizeObserver.disconnect(); _resizeObserver = null; }
-    if (_scrollHandler) {
-        window.removeEventListener('scroll', _scrollHandler);
-        window.removeEventListener('resize', _scrollHandler);
-        _scrollHandler = null;
-    }
-    _currentTarget = null;
-    _currentPlacement = null;
+// ==========================================
+// BLOCKER (prevents app interaction during tour)
+// ==========================================
+
+function _addBlocker() {
+    if (_blockerEl) return;
+    _blockerEl = document.createElement('div');
+    _blockerEl.className = 'ob-blocker';
+    document.body.appendChild(_blockerEl);
 }
+
+function _removeBlocker() {
+    if (_blockerEl) { _blockerEl.remove(); _blockerEl = null; }
+}
+
+// ==========================================
+// CLEANUP
+// ==========================================
+
+function _destroySpotlight() {
+    if (_spotlightEl) { _spotlightEl.remove(); _spotlightEl = null; }
+    if (_tooltipEl)   { _tooltipEl.remove();   _tooltipEl   = null; }
+    if (_resizeObs)   { _resizeObs.disconnect(); _resizeObs = null; }
+    if (_scrollFn) {
+        window.removeEventListener('scroll', _scrollFn);
+        window.removeEventListener('resize', _scrollFn);
+        _scrollFn = null;
+    }
+}
+
+// ==========================================
+// FINISH / COMPLETION HINTS
+// ==========================================
+
+function _showFinishHint(text) {
+    const el = document.createElement('div');
+    el.className = 'ob-finish-hint';
+    el.textContent = text;
+    document.body.appendChild(el);
+    setTimeout(() => {
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 400);
+    }, 3200);
+}
+
+function _showPhase2CompletionHint() {
+    if (localStorage.getItem(KEY_TIPS_HINT)) return;
+    localStorage.setItem(KEY_TIPS_HINT, '1');
+    const el = document.createElement('div');
+    el.className = 'ob-finish-hint';
+    el.innerHTML = 'Want a quick icon guide? Open <strong>Quick Tips</strong> in Settings.';
+    document.body.appendChild(el);
+    setTimeout(() => {
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 400);
+    }, 5000);
+}
+
+// ==========================================
+// HELPERS
+// ==========================================
 
 function _esc(str) {
     return String(str ?? '')

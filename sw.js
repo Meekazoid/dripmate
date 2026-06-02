@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.8';  // onboarding module + first-run features
+const CACHE_VERSION = 'v51.9';  // onboarding v2: 2-step Phase1, 5-step Phase2, Quick Tips, blocker
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [

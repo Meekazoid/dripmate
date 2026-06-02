@@ -324,7 +324,7 @@
                 </button>
             </div>
 
-            <!-- Tutorial Replay -->
+            <!-- Tutorial Replay + Quick Tips -->
             <hr class="settings-divider">
             <div class="settings-legal">
                 <button type="button" class="settings-legal-btn" id="replayTutorialBtn">
@@ -333,6 +333,14 @@
                         <polyline points="21 3 21 9 15 9"></polyline>
                     </svg>
                     Replay Tutorial
+                </button>
+                <button type="button" class="settings-legal-btn" id="quickTipsBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    Quick Tips
                 </button>
             </div>
         </div>
@@ -812,6 +820,72 @@
             <!-- Submit -->
             <button id="appFeedbackSubmitBtn">Send Feedback</button>
             <div id="appFeedbackStatus" class="app-feedback-status" style="display:none;"></div>
+        </div>
+    </div>
+
+    <!-- ====== QUICK TIPS MODAL ====== -->
+    <div id="quickTipsModal" class="modal">
+        <div class="modal-content modal-content--narrow">
+            <div class="popup-header-standard">
+                <div class="popup-title-group">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <h2>Quick Tips</h2>
+                </div>
+                <button type="button" class="close-btn" id="closeQuickTipsBtn">✕</button>
+            </div>
+            <ul class="quick-tips-list">
+                <li class="quick-tips-item">
+                    <svg class="quick-tips-icon" viewBox="0 0 301 323" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="17" aria-hidden="true">
+                        <path d="M20 232V85L148 9l129 75v62m0 33v56l-128 74-129-77m32-128 97 55m0 0 99-55m-99 55v113M102 61l44-25"/>
+                    </svg>
+                    <div>
+                        <strong>Archive</strong>
+                        <p>Archive coffees you're not brewing now — they keep all tuning; restore or delete anytime.</p>
+                    </div>
+                </li>
+                <li class="quick-tips-item">
+                    <svg class="quick-tips-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 2.6c0 0-6.4 7.2-6.4 11.9a6.4 6.4 0 0 0 12.8 0C18.4 9.8 12 2.6 12 2.6z"/>
+                        <path d="M9.1 14.3c0 1.7 1.2 3 2.9 3.4" opacity="0.45"/>
+                    </svg>
+                    <div>
+                        <strong>Water Hardness</strong>
+                        <p>Set your water hardness — it nudges grind & extraction for a better cup.</p>
+                    </div>
+                </li>
+                <li class="quick-tips-item">
+                    <svg class="quick-tips-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                    </svg>
+                    <div>
+                        <strong>Edit Details</strong>
+                        <p>Tap the pencil icon on a card to add or fix any missing detail — origin, variety, altitude, tasting notes.</p>
+                    </div>
+                </li>
+                <li class="quick-tips-item">
+                    <svg class="quick-tips-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    <div>
+                        <strong>Favorites</strong>
+                        <p>Tap the star to favorite a coffee — it pins to the top of your list.</p>
+                    </div>
+                </li>
+                <li class="quick-tips-item">
+                    <svg class="quick-tips-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="3" width="20" height="18" rx="2"/>
+                        <line x1="8" y1="3" x2="8" y2="21"/>
+                    </svg>
+                    <div>
+                        <strong>Stacking</strong>
+                        <p>Coffees from the same roastery stack automatically — swipe left/right to browse the stack.</p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 
