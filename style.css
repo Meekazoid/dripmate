@@ -4602,3 +4602,54 @@ body.light-mode .roastery-stack-counter {
 .ob-hint-dismiss:hover {
     opacity: 1;
 }
+
+/* ==========================================
+   ONBOARDING v3 feinschliff (v51.11)
+   ========================================== */
+
+/* ── Quick Tips: scrollable list with bottom-fade indicator ── */
+.quick-tips-scroll-wrap {
+    position: relative;
+}
+
+.quick-tips-list {
+    max-height: 52vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Keep existing list styling */
+}
+
+.quick-tips-scroll-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 36px;
+    background: linear-gradient(to bottom, transparent, var(--bg-card));
+    pointer-events: none;
+}
+
+/* ── Centered tooltip (no spotlight ring, full-screen dim) ── */
+.ob-tooltip--centered {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    /* Override the inline top/left set by _positionTooltip — centered steps
+       never call _positionTooltip so this is safe */
+}
+
+/* Full-screen dim overlay for centered steps (replaces spotlight ring) */
+.ob-spotlight--full {
+    position: fixed;
+    inset: 0;
+    box-shadow: none !important;
+    background: rgba(0, 0, 0, 0.62);
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    border-radius: 0 !important;
+    pointer-events: none;
+    z-index: 9998;
+}

@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.10'; // onboarding v3: 6-step Phase2, open-card hint, 0x0-rect fix, Firefox user-select
+const CACHE_VERSION = 'v51.11'; // onboarding round3: 6-step Phase2 no redundant step, centered finale, QT scroll
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [

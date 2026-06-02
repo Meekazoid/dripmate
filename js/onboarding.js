@@ -28,19 +28,14 @@ const PHASE1_STEPS = [
 ];
 
 // ==========================================
-// PHASE 2 — 6 steps, follows card top→bottom layout
-// Card is expanded at step 1; all following steps target
-// elements inside the expanded card.
+// PHASE 2 — 6 steps, follows card top→bottom layout.
+// Phase 2 starts only after the user has already opened the card
+// (MutationObserver fires on expanded class), so there is no
+// "Open Your Card" orientation step — the card is already open.
+// Step 6 is a centered closing step with no spotlight target.
 // ==========================================
 
 const PHASE2_STEPS = [
-    {
-        targetSelector: '.coffee-card',
-        title: 'Open Your Card',
-        body: "Tap a card to open it — this is where you brew.",
-        placement: 'bottom',
-        expandCard: true,
-    },
     {
         targetSelector: '.roast-date-section',
         title: 'Roast Date',
@@ -75,6 +70,13 @@ const PHASE2_STEPS = [
         body: "After your first cup, give feedback to adjust your settings.",
         placement: 'top',
         needsExpandedCard: true,
+    },
+    {
+        // Centered closing step — no spotlight ring, full-screen dim only
+        targetSelector: null,
+        title: "You're set",
+        body: "You can add more coffee cards anytime, and tap the card again to close it. For more help, check Quick Tips in Settings.",
+        centered: true,
     },
 ];
 
@@ -252,7 +254,7 @@ function _watchForCardExpansion() {
                 _startTour(PHASE2_STEPS, () => {
                     _tourActive = false;
                     localStorage.setItem(KEY_PHASE2, '1');
-                    _showPhase2CompletionHint();
+                    // Quick Tips mention is in step 6 "You're set" — no separate hint needed
                 });
             }
             return;
@@ -295,6 +297,12 @@ function _showStep(steps, index, onComplete) {
 
     const step = steps[index];
 
+    // Centered step: full-screen dim + tooltip, no element highlight
+    if (step.centered) {
+        _buildCenteredTooltip(step, index, steps, onComplete);
+        return;
+    }
+
     // Expand first coffee card if this step requires it
     if (step.needsExpandedCard || step.expandCard) {
         const card = document.querySelector('.coffee-card');
@@ -317,6 +325,43 @@ function _showStep(steps, index, onComplete) {
         if (!fresh) { _showStep(steps, index + 1, onComplete); return; }
         _buildSpotlight(fresh, step, index, steps, onComplete, 0);
     }));
+}
+
+// Builds a centered tooltip with no spotlight ring (full-screen dim only).
+function _buildCenteredTooltip(step, index, steps, onComplete) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isLast  = index === steps.length - 1;
+
+    // Full-screen dim overlay (no ring)
+    _spotlightEl = document.createElement('div');
+    _spotlightEl.className = 'ob-spotlight ob-spotlight--full';
+    document.body.appendChild(_spotlightEl);
+
+    _tooltipEl = document.createElement('div');
+    _tooltipEl.className = 'ob-tooltip ob-tooltip--centered';
+    _tooltipEl.setAttribute('role', 'dialog');
+    _tooltipEl.setAttribute('aria-modal', 'true');
+    _tooltipEl.innerHTML = `
+        <div class="ob-tooltip-title">${_esc(step.title)}</div>
+        <div class="ob-tooltip-body">${_esc(step.body)}</div>
+        <div class="ob-tooltip-actions">
+            ${index > 0 ? '<button type="button" class="ob-btn ob-btn-back">← Back</button>' : ''}
+            <span class="ob-step-counter">${index + 1} / ${steps.length}</span>
+            <button type="button" class="ob-btn ob-btn-skip">Skip</button>
+            <button type="button" class="ob-btn ob-btn-next">${isLast ? 'Done ✓' : 'Next →'}</button>
+        </div>
+    `;
+    document.body.appendChild(_tooltipEl);
+    if (!reduced) _tooltipEl.style.animation = 'ob-fade-in 0.15s ease';
+
+    _tooltipEl.querySelector('.ob-btn-next').addEventListener('click', () => _showStep(steps, index + 1, onComplete));
+    _tooltipEl.querySelector('.ob-btn-skip')?.addEventListener('click', () => {
+        _destroySpotlight();
+        _removeBlocker();
+        _tourActive = false;
+        onComplete();
+    });
+    _tooltipEl.querySelector('.ob-btn-back')?.addEventListener('click', () => _showStep(steps, index - 1, onComplete));
 }
 
 // Builds the spotlight; retries up to 10 frames if element has no layout yet (0×0 rect).
