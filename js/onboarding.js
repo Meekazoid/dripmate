@@ -1,5 +1,5 @@
 // ==========================================
-// ONBOARDING — Activation Overlay + Coachmark Tour v2
+// ONBOARDING — Activation Overlay + Coachmark Tour v3
 // Dependency-free spotlight tour (no external libs)
 // ==========================================
 
@@ -9,8 +9,7 @@ const KEY_ACTIVATED = 'justActivated';
 const KEY_TIPS_HINT = 'quickTipsHintShown';
 
 // ==========================================
-// PHASE 1 — 2 steps, empty screen, no interaction needed
-// Archive step removed (covered in Quick Tips instead)
+// PHASE 1 — 2 steps, empty screen, no interaction
 // ==========================================
 
 const PHASE1_STEPS = [
@@ -29,8 +28,9 @@ const PHASE1_STEPS = [
 ];
 
 // ==========================================
-// PHASE 2 — 5 steps, follows natural brew workflow
-// Card is expanded for steps 2–5
+// PHASE 2 — 6 steps, follows card top→bottom layout
+// Card is expanded at step 1; all following steps target
+// elements inside the expanded card.
 // ==========================================
 
 const PHASE2_STEPS = [
@@ -44,28 +44,35 @@ const PHASE2_STEPS = [
     {
         targetSelector: '.roast-date-section',
         title: 'Roast Date',
-        body: "Set the roast date if it's on the bag — freshness shapes the recommendation.",
+        body: "Set the roast date if it's on the bag — the card then shows the freshness state.",
         placement: 'bottom',
         needsExpandedCard: true,
     },
     {
         targetSelector: '.ratio-control',
         title: 'Coffee Amount',
-        body: "Set your dose in grams — stick close to the suggested ratio.",
+        body: "Set the amount of coffee you want to use for each individual brew.",
         placement: 'bottom',
         needsExpandedCard: true,
     },
     {
         targetSelector: '.param-grid',
-        title: 'Brew It',
-        body: "Grind, temperature and the timer guide your pour, tuned to your setup (or sensible defaults).",
+        title: 'Grind & Temperature',
+        body: "Grind, temperature and steps are tuned to your setup (or sensible defaults).",
         placement: 'bottom',
         needsExpandedCard: true,
     },
     {
+        targetSelector: '.brew-timer-section',
+        title: 'Brew Timer',
+        body: "Start the brew timer when you're ready — it guides you through the brew.",
+        placement: 'top',
+        needsExpandedCard: true,
+    },
+    {
         targetSelector: '.feedback-section',
-        title: 'Rate Your Cup',
-        body: "After brewing, rate the cup — dripmate fine-tunes grind & temperature for next time.",
+        title: 'Brew Feedback',
+        body: "After your first cup, give feedback to adjust your settings.",
         placement: 'top',
         needsExpandedCard: true,
     },
@@ -75,28 +82,29 @@ const PHASE2_STEPS = [
 // MODULE STATE
 // ==========================================
 
-let _spotlightEl  = null;
-let _tooltipEl    = null;
-let _blockerEl    = null;
-let _resizeObs    = null;
-let _scrollFn     = null;
-let _tourActive   = false;  // prevents double-start
+let _spotlightEl         = null;
+let _tooltipEl           = null;
+let _blockerEl           = null;
+let _resizeObs           = null;
+let _scrollFn            = null;
+let _tourActive          = false;  // prevents double-start
+let _openCardHintEl      = null;   // "Open your card" prompt
+let _cardExpansionObs    = null;   // watches for card expand after Phase 1
 
 // ==========================================
 // PUBLIC API
 // ==========================================
 
 export function initOnboarding() {
-    // Check for first-activation flag set by settings.js
     const justActivated = localStorage.getItem(KEY_ACTIVATED);
     if (justActivated && !localStorage.getItem(KEY_PHASE1)) {
         localStorage.removeItem(KEY_ACTIVATED);
         setTimeout(showOnboardingOverlay, 700);
     }
 
-    // Event-based Phase 2 trigger: fires whenever renderCoffees() runs
+    // coffees:rendered fires after every renderCoffees() call
     document.addEventListener('coffees:rendered', () => {
-        maybeStartOnboardingPhase2();
+        _maybePreparePhase2();
     });
 }
 
@@ -107,26 +115,25 @@ export function startOnboardingPhase1() {
     });
 }
 
+// Show "Open your card" prompt + arm observer; don't auto-start Phase 2.
 export function maybeStartOnboardingPhase2() {
+    _maybePreparePhase2();
+}
+
+function _maybePreparePhase2() {
     if (_tourActive) return;
     if (!localStorage.getItem(KEY_PHASE1)) return;
     if (localStorage.getItem(KEY_PHASE2)) return;
     if (!document.querySelector('.coffee-card')) return;
+    if (_cardExpansionObs) return; // already watching
 
-    _tourActive = true;
-    setTimeout(() => {
-        // If tour was already destroyed in the meantime (e.g. replayOnboarding), abort
-        if (localStorage.getItem(KEY_PHASE2)) { _tourActive = false; return; }
-        _startTour(PHASE2_STEPS, () => {
-            _tourActive = false;
-            localStorage.setItem(KEY_PHASE2, '1');
-            _showPhase2CompletionHint();
-        });
-    }, 600);
+    // Show brief hint and arm the card-expansion observer
+    _showOpenCardHint();
+    _watchForCardExpansion();
 }
 
 export function replayOnboarding() {
-    _destroySpotlight();
+    _destroyAll();
     _tourActive = false;
     localStorage.removeItem(KEY_PHASE1);
     localStorage.removeItem(KEY_PHASE2);
@@ -184,6 +191,89 @@ function showOnboardingOverlay() {
 }
 
 // ==========================================
+// "OPEN YOUR CARD" HANDOFF HINT
+// Shown after Phase 1; Phase 2 starts on card expand.
+// ==========================================
+
+function _showOpenCardHint() {
+    _dismissOpenCardHint();
+
+    const el = document.createElement('div');
+    el.className = 'ob-open-card-hint';
+    el.setAttribute('role', 'status');
+    el.innerHTML = `Open your card to continue the tutorial.
+        <button type="button" class="ob-hint-dismiss" aria-label="Dismiss">✕</button>`;
+
+    const dismiss = () => {
+        el.classList.add('ob-hint-hiding');
+        setTimeout(() => { if (el.parentNode) el.remove(); }, 350);
+        _openCardHintEl = null;
+    };
+
+    el.querySelector('.ob-hint-dismiss').addEventListener('click', (e) => { e.stopPropagation(); dismiss(); });
+
+    document.body.appendChild(el);
+    _openCardHintEl = el;
+
+    // Auto-dismiss after 25 s (observer stays active)
+    setTimeout(() => { if (_openCardHintEl === el) dismiss(); }, 25000);
+}
+
+function _dismissOpenCardHint() {
+    if (_openCardHintEl) {
+        _openCardHintEl.classList.add('ob-hint-hiding');
+        const el = _openCardHintEl;
+        setTimeout(() => { if (el.parentNode) el.remove(); }, 350);
+        _openCardHintEl = null;
+    }
+}
+
+// ==========================================
+// CARD-EXPANSION OBSERVER
+// Arms after Phase 1; starts Phase 2 when user opens a card.
+// ==========================================
+
+function _watchForCardExpansion() {
+    const list = document.getElementById('coffeeList');
+    if (!list) return;
+
+    _cardExpansionObs = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+            if (m.type !== 'attributes' || m.attributeName !== 'class') continue;
+            const el = m.target;
+            if (!el.classList.contains('coffee-card')) continue;
+            if (!el.classList.contains('expanded')) continue;
+
+            // Card just expanded — start Phase 2
+            _stopWatchingCardExpansion();
+            _dismissOpenCardHint();
+
+            if (!localStorage.getItem(KEY_PHASE2)) {
+                _startTour(PHASE2_STEPS, () => {
+                    _tourActive = false;
+                    localStorage.setItem(KEY_PHASE2, '1');
+                    _showPhase2CompletionHint();
+                });
+            }
+            return;
+        }
+    });
+
+    _cardExpansionObs.observe(list, {
+        attributes: true,
+        subtree: true,
+        attributeFilter: ['class'],
+    });
+}
+
+function _stopWatchingCardExpansion() {
+    if (_cardExpansionObs) {
+        _cardExpansionObs.disconnect();
+        _cardExpansionObs = null;
+    }
+}
+
+// ==========================================
 // COACHMARK TOUR ENGINE
 // ==========================================
 
@@ -205,13 +295,10 @@ function _showStep(steps, index, onComplete) {
 
     const step = steps[index];
 
-    // Expand first coffee card if this step needs it
+    // Expand first coffee card if this step requires it
     if (step.needsExpandedCard || step.expandCard) {
         const card = document.querySelector('.coffee-card');
-        if (!card) {
-            _showStep(steps, index + 1, onComplete);
-            return;
-        }
+        if (!card) { _showStep(steps, index + 1, onComplete); return; }
         if (!card.classList.contains('expanded')) {
             card.classList.add('expanded');
             const wrapper = card.closest('.roastery-stack-wrapper');
@@ -220,37 +307,42 @@ function _showStep(steps, index, onComplete) {
     }
 
     const target = document.querySelector(step.targetSelector);
-    if (!target) {
+    if (!target) { _showStep(steps, index + 1, onComplete); return; }
+
+    // Scroll target into view, then measure after layout settles (double-rAF)
+    target.scrollIntoView({ block: 'center', behavior: 'instant' });
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        const fresh = document.querySelector(step.targetSelector);
+        if (!fresh) { _showStep(steps, index + 1, onComplete); return; }
+        _buildSpotlight(fresh, step, index, steps, onComplete, 0);
+    }));
+}
+
+// Builds the spotlight; retries up to 10 frames if element has no layout yet (0×0 rect).
+function _buildSpotlight(target, step, index, steps, onComplete, attempt) {
+    const rect = target.getBoundingClientRect();
+
+    if ((rect.width === 0 || rect.height === 0) && attempt < 10) {
+        requestAnimationFrame(() => _buildSpotlight(target, step, index, steps, onComplete, attempt + 1));
+        return;
+    }
+    if (rect.width === 0 || rect.height === 0) {
+        // Exhausted retries — skip this step rather than rendering in the corner
         _showStep(steps, index + 1, onComplete);
         return;
     }
 
-    // Scroll target to center, then measure in next frame after layout settles
-    target.scrollIntoView({ block: 'center', behavior: 'instant' });
-
-    // Double-rAF: ensures CSS transitions (card expand) + scroll have settled
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        const fresh = document.querySelector(step.targetSelector);
-        if (!fresh) { _showStep(steps, index + 1, onComplete); return; }
-        _buildSpotlight(fresh, step, index, steps, onComplete);
-    }));
-}
-
-function _buildSpotlight(target, step, index, steps, onComplete) {
     const pad     = 8;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isLast  = index === steps.length - 1;
 
-    // Spotlight ring — box-shadow creates the dark veil
     _spotlightEl = document.createElement('div');
     _spotlightEl.className = 'ob-spotlight';
-    _applySpotlightRect(target.getBoundingClientRect(), pad);
-    if (!reduced) {
-        _spotlightEl.style.transition = 'top 0.18s, left 0.18s, width 0.18s, height 0.18s';
-    }
+    _applySpotlightRect(rect, pad);
+    if (!reduced) _spotlightEl.style.transition = 'top 0.18s, left 0.18s, width 0.18s, height 0.18s';
     document.body.appendChild(_spotlightEl);
 
-    // Tooltip
     _tooltipEl = document.createElement('div');
     _tooltipEl.className = 'ob-tooltip';
     _tooltipEl.setAttribute('role', 'dialog');
@@ -267,10 +359,9 @@ function _buildSpotlight(target, step, index, steps, onComplete) {
     `;
     document.body.appendChild(_tooltipEl);
 
-    _positionTooltip(target.getBoundingClientRect(), step.placement);
+    _positionTooltip(rect, step.placement);
     if (!reduced) _tooltipEl.style.animation = 'ob-fade-in 0.15s ease';
 
-    // Button handlers
     _tooltipEl.querySelector('.ob-btn-next').addEventListener('click', () => _showStep(steps, index + 1, onComplete));
     _tooltipEl.querySelector('.ob-btn-skip')?.addEventListener('click', () => {
         _destroySpotlight();
@@ -280,7 +371,6 @@ function _buildSpotlight(target, step, index, steps, onComplete) {
     });
     _tooltipEl.querySelector('.ob-btn-back')?.addEventListener('click', () => _showStep(steps, index - 1, onComplete));
 
-    // Recompute on scroll / resize
     _scrollFn = () => {
         if (!_spotlightEl || !_tooltipEl) return;
         const r = target.getBoundingClientRect();
@@ -348,7 +438,7 @@ function _positionTooltip(rect, placement) {
 }
 
 // ==========================================
-// BLOCKER (prevents app interaction during tour)
+// BLOCKER (prevents app interaction during active tour)
 // ==========================================
 
 function _addBlocker() {
@@ -377,6 +467,13 @@ function _destroySpotlight() {
     }
 }
 
+function _destroyAll() {
+    _destroySpotlight();
+    _removeBlocker();
+    _stopWatchingCardExpansion();
+    _dismissOpenCardHint();
+}
+
 // ==========================================
 // FINISH / COMPLETION HINTS
 // ==========================================
@@ -388,7 +485,7 @@ function _showFinishHint(text) {
     document.body.appendChild(el);
     setTimeout(() => {
         el.style.opacity = '0';
-        setTimeout(() => el.remove(), 400);
+        setTimeout(() => { if (el.parentNode) el.remove(); }, 400);
     }, 3200);
 }
 
@@ -397,11 +494,11 @@ function _showPhase2CompletionHint() {
     localStorage.setItem(KEY_TIPS_HINT, '1');
     const el = document.createElement('div');
     el.className = 'ob-finish-hint';
-    el.innerHTML = 'Want a quick icon guide? Open <strong>Quick Tips</strong> in Settings.';
+    el.innerHTML = 'Want a guide to the icons & card states? Find <strong>Quick Tips</strong> in Settings.';
     document.body.appendChild(el);
     setTimeout(() => {
         el.style.opacity = '0';
-        setTimeout(() => el.remove(), 400);
+        setTimeout(() => { if (el.parentNode) el.remove(); }, 400);
     }, 5000);
 }
 

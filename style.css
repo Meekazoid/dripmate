@@ -4537,3 +4537,68 @@ body.light-mode .roastery-stack-counter {
     line-height: 1.5;
     margin: 0;
 }
+
+/* ==========================================
+   ONBOARDING v3 + Firefox fix (v51.10)
+   ========================================== */
+
+/* ── Firefox: prevent accidental text selection on fixed controls ── */
+.fixed-controls,
+.fixed-controls-left,
+.control-btn,
+.cs-btn,
+.cs-text,
+.cs-label,
+.cs-sub {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/* ── "Open your card" handoff hint ──
+   Differs from ob-finish-hint: pointer-events on, has dismiss button,
+   stays visible longer. ── */
+.ob-open-card-hint {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 36px 12px 18px;
+    font-size: 0.78rem;
+    color: var(--text-primary);
+    font-family: 'Sora', sans-serif;
+    line-height: 1.4;
+    text-align: center;
+    max-width: calc(100vw - 48px);
+    box-shadow: 0 6px 24px var(--shadow);
+    z-index: 10001;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+    pointer-events: auto;
+    cursor: default;
+}
+
+.ob-open-card-hint.ob-hint-hiding {
+    opacity: 0;
+}
+
+.ob-hint-dismiss {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+    opacity: 0.65;
+}
+
+.ob-hint-dismiss:hover {
+    opacity: 1;
+}
