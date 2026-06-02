@@ -4,7 +4,7 @@
 // ==========================================
 
 import { CONFIG } from '../config.js';
-import { dedupeCoffees } from '../state.js';
+import { dedupeCoffees, setCoffees } from '../state.js';
 
 // ==========================================
 // DEVICE ID
@@ -281,8 +281,7 @@ export async function initBackendSync() {
                         );
                     }
                 } else {
-                    window.coffees = normalized;
-                    localStorage.setItem('coffees', JSON.stringify(normalized));
+                    setCoffees(normalized); // updates ES-module binding, localStorage, and window.coffees
                     // renderCoffees is an ES module export - call via window if exposed
                     if (typeof window.renderCoffees === 'function') {
                         window.renderCoffees();
