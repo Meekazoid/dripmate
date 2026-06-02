@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v51.14'; // empty-state: calm text, remove alt buttons
+const CACHE_VERSION = 'v51.15'; // Quick Tips: freshness names colored to match card badges
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [

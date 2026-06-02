@@ -4538,12 +4538,14 @@ body.light-mode .roastery-stack-counter {
     margin: 0;
 }
 
-/* Inline badge names inside the Roast Date entry — override block display */
-.quick-tips-text strong {
-    display: inline;
-    font-weight: 600;
-    white-space: nowrap; /* keeps "Sweet Spot" on one word, allows break between badges */
-}
+/* Inline badge names inside the Roast Date entry — color only, inherit all else */
+.qt-fresh-resting { color: #2196F3; white-space: nowrap; font-weight: inherit; }
+.qt-fresh-sweet   { color: #FF9800; white-space: nowrap; font-weight: inherit; }
+.qt-fresh-fading  { color: #9E9E9E; white-space: nowrap; font-weight: inherit; }
+
+body.light-mode .qt-fresh-resting { color: #1976D2; }
+body.light-mode .qt-fresh-sweet   { color: #F57C00; }
+body.light-mode .qt-fresh-fading  { color: #616161; }
 
 /* ==========================================
    ONBOARDING v3 + Firefox fix (v51.10)
