@@ -2668,9 +2668,9 @@ body.light-mode .permanent-delete-btn:hover {
 .onboarding-text {
     font-family: 'Sora', sans-serif;
     font-size: 0.8rem;
-    font-weight: 200;
+    font-weight: 300;
     line-height: 1.65;
-    color: var(--accent);
+    color: var(--text-secondary);
     letter-spacing: 0.01em;
     margin: 0;
 }
