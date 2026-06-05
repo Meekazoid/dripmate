@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.dripmate.twa",
+      "sha256_cert_fingerprints":
+        ["07:93:AE:07:72:98:A0:BC:7C:55:32:41:CE:58:A2:8D:4D:92:96:12:50:9E:36:0E:D8:11:11:3F:18:1E:14:3F"]
+    }
+  }
+]
