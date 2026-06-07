@@ -37,7 +37,7 @@ export function openWaterModal() {
     // Display current active hardness
     const activeHardness = getActiveWaterHardness();
     if (activeHardness) {
-        displayWaterHardness(activeHardness, manualWaterHardness ? 'manual' : 'api');
+        displayWaterHardness(activeHardness);
     }
 }
 
@@ -45,7 +45,7 @@ export function closeWaterModal() {
     document.getElementById('waterModal').classList.remove('active');
 }
 
-function displayWaterHardness(hardness, source = 'api') {
+function displayWaterHardness(hardness) {
     const categoryMap = {
         'very_soft': 'VERY SOFT',
         'soft': 'SOFT',
@@ -53,27 +53,12 @@ function displayWaterHardness(hardness, source = 'api') {
         'hard': 'HARD',
         'very_hard': 'VERY HARD'
     };
-    
+
     const category = hardness.category || getWaterHardnessCategory(hardness.value);
     const categoryText = hardness.category_de ? hardness.category_de.toUpperCase() : categoryMap[category];
-    
+
     document.getElementById('hardnessValueDisplay').textContent = `${hardness.value} °dH`;
     document.getElementById('hardnessCategoryDisplay').textContent = categoryText;
-    
-    // Display source badge
-    const sourceDisplay = document.getElementById('hardnessSourceDisplay');
-    if (source === 'manual') {
-        sourceDisplay.textContent = 'MANUAL OVERRIDE';
-        sourceDisplay.style.background = 'rgba(76, 175, 80, 0.15)';
-        sourceDisplay.style.color = '#4CAF50';
-    } else {
-        // Show city/region name from ZIP lookup
-        const regionName = hardness.region ? hardness.region.toUpperCase() : 'ZIP LOOKUP';
-        sourceDisplay.textContent = regionName;
-        sourceDisplay.style.background = 'rgba(212, 165, 116, 0.15)';
-        sourceDisplay.style.color = 'var(--accent)';
-    }
-    
     document.getElementById('waterHardnessDisplay').style.display = 'block';
     
     // Update Brew Impact box
@@ -118,7 +103,7 @@ export async function saveManualWaterHardness() {
     setWaterHardness(manualHardness);
     
     // Display updated value
-    displayWaterHardness(manualHardness, 'manual');
+    displayWaterHardness(manualHardness);
     
     // Sync to backend
     if (typeof window.backendSync !== 'undefined' && window.backendSync.syncWaterHardness) {
@@ -141,7 +126,7 @@ export function clearManualWaterHardness() {
     setWaterHardness(apiWaterHardness);
     
     if (apiWaterHardness) {
-        displayWaterHardness(apiWaterHardness, 'api');
+        displayWaterHardness(apiWaterHardness);
     }
     
     renderCoffees();
