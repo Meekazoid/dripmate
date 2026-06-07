@@ -4892,7 +4892,7 @@ body.light-mode .qt-fresh-fading  { color: #616161; }
    KIT — SHARED BUTTON CLASSES
    ========================================== */
 
-.btn {
+.dm-btn {
     display: block;
     width: 100%;
     padding: 12px 20px;
@@ -4907,38 +4907,38 @@ body.light-mode .qt-fresh-fading  { color: #616161; }
     text-align: center;
 }
 
-.btn:disabled {
+.dm-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.btn-auto { width: auto; display: inline-block; }
+.dm-btn-auto { width: auto; display: inline-block; }
 
-.btn-primary {
+.dm-btn-primary {
     background: linear-gradient(135deg, #d4a574, #c89558);
     color: #1a1209;
     border: none;
 }
 
-.btn-primary:hover:not(:disabled) { opacity: 0.9; }
+.dm-btn-primary:hover:not(:disabled) { opacity: 0.9; }
 
-.btn-secondary {
+.dm-btn-secondary {
     background: transparent;
     border: 1px solid rgba(212, 165, 116, 0.5);
     color: #e8d5c0;
 }
 
-.btn-secondary:hover:not(:disabled) {
+.dm-btn-secondary:hover:not(:disabled) {
     background: rgba(212, 165, 116, 0.08);
 }
 
-.btn-danger {
+.dm-btn-danger {
     background: transparent;
     border: 1px solid rgba(232, 133, 124, 0.5);
     color: #e8857c;
 }
 
-.btn-danger:hover:not(:disabled) {
+.dm-btn-danger:hover:not(:disabled) {
     background: rgba(232, 133, 124, 0.08);
 }
 
@@ -4946,7 +4946,7 @@ body.light-mode .qt-fresh-fading  { color: #616161; }
    KIT — SHARED STATUS CLASSES
    ========================================== */
 
-.status {
+.dm-status {
     display: none;
     margin-top: 10px;
     padding: 10px 14px;
@@ -4955,13 +4955,13 @@ body.light-mode .qt-fresh-fading  { color: #616161; }
     line-height: 1.5;
 }
 
-.status-success {
+.dm-status-success {
     background: rgba(95, 218, 125, 0.1);
     border: 1px solid rgba(95, 218, 125, 0.3);
     color: #5fda7d;
 }
 
-.status-error {
+.dm-status-error {
     background: rgba(232, 133, 124, 0.1);
     border: 1px solid rgba(232, 133, 124, 0.3);
     color: #e8857c;

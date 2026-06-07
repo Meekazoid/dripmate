@@ -120,7 +120,7 @@ function initEventListeners() {
             const email  = document.getElementById('magicLinkEmailInput').value.trim();
             const status = document.getElementById('magicLinkStatus');
             if (!email) {
-                status.className = 'status status-error';
+                status.className = 'dm-status dm-status-error';
                 status.style.display = 'block';
                 status.textContent = 'Please enter your email address.';
                 return;
@@ -130,7 +130,7 @@ function initEventListeners() {
             const result = await requestMagicLink(email);
             sendMagicBtn.disabled = false;
             sendMagicBtn.textContent = 'Send login link';
-            status.className = 'status ' + (result.success ? 'status-success' : 'status-error');
+            status.className = 'dm-status ' + (result.success ? 'dm-status-success' : 'dm-status-error');
             status.style.display = 'block';
             status.textContent = result.success
                 ? 'Link sent — check your inbox.'
