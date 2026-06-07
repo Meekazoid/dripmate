@@ -153,6 +153,26 @@ export async function syncGrinderPreference(grinder) {
     }
 }
 
+export async function syncMethodPreference(method) {
+    const token    = getToken();
+    const deviceId = getOrCreateDeviceId();
+    if (!token) { console.log('[sync] No token -- method sync skipped'); return false; }
+    try {
+        const response = await fetchWithTimeout(`${CONFIG.backendUrl}/api/user/method`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, 'X-Device-ID': deviceId },
+            body: JSON.stringify({ method })
+        });
+        const data = await response.json();
+        if (response.ok && data.success) { console.log('[sync] Method synced:', method); return true; }
+        console.error('[sync] Method sync failed:', data.error);
+        return false;
+    } catch (error) {
+        console.error('[sync] Method sync error:', error.message);
+        return false;
+    }
+}
+
 export async function fetchGrinderPreference() {
     const token    = getToken();
     const deviceId = getOrCreateDeviceId();
@@ -307,6 +327,7 @@ export async function initBackendSync() {
 window.backendSync = {
     syncCoffeesToBackend,
     syncGrinderPreference,
+    syncMethodPreference,
     fetchGrinderPreference,
     syncWaterHardness,
     fetchWaterHardness,
