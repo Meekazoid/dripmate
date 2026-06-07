@@ -2530,19 +2530,19 @@ body.light-mode .history-item-brew-badge {
 
 .restore-btn {
     padding: 8px 16px;
-    background: var(--accent);
-    color: white;
-    border: none;
+    background: transparent;
+    color: #e8d5c0;
+    border: 1px solid rgba(212, 165, 116, 0.5);
     border-radius: 8px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: opacity 0.2s;
     white-space: nowrap;
 }
 
 .restore-btn:hover {
-    background: var(--accent-hover);
+    background: rgba(212, 165, 116, 0.08);
 }
 
 .decaf-card-actions {
@@ -2555,18 +2555,18 @@ body.light-mode .history-item-brew-badge {
 .permanent-delete-btn {
     padding: 8px 16px;
     background: transparent;
-    color: var(--color-danger);
-    border: 1px solid var(--color-danger);
+    color: #e8857c;
+    border: 1px solid rgba(232, 133, 124, 0.5);
     border-radius: 8px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: opacity 0.2s;
     white-space: nowrap;
 }
 
 .permanent-delete-btn:hover {
-    background: rgba(255, 107, 107, 0.15);
+    background: rgba(232, 133, 124, 0.08);
 }
 
 .decaf-empty {
@@ -2625,14 +2625,6 @@ body.light-mode .reset-adjustments-btn:hover {
     background: rgba(198, 40, 40, 0.08);
 }
 
-body.light-mode .permanent-delete-btn {
-    color: var(--color-danger);
-    border-color: var(--color-danger);
-}
-
-body.light-mode .permanent-delete-btn:hover {
-    background: rgba(198, 40, 40, 0.08);
-}
 
 .empty-state {
     padding: 20px 16px 48px;
