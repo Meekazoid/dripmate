@@ -4828,6 +4828,67 @@ body.light-mode .qt-fresh-fading  { color: #616161; }
 }
 
 /* ==========================================
+   SETTINGS SECTIONS
+   ========================================== */
+
+.settings-section {
+    margin-bottom: 24px;
+}
+
+.settings-section:last-child {
+    margin-bottom: 0;
+}
+
+.settings-section-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--accent, #d4a574);
+    text-transform: uppercase;
+    margin: 0 0 14px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+.settings-account-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #5fda7d;
+    flex-shrink: 0;
+}
+
+.settings-status-title {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-primary, #e8d5c0);
+}
+
+.settings-status-sub {
+    margin: 2px 0 0;
+    font-size: 0.72rem;
+    color: var(--text-secondary, #a08060);
+}
+
+.settings-section-btn {
+    margin-top: 14px;
+}
+
+.settings-recovery-hint {
+    margin: 0 0 14px 0;
+    font-size: 0.78rem;
+    color: var(--text-secondary, #a08060);
+    line-height: 1.55;
+}
+
+/* ==========================================
    KIT — SHARED BUTTON CLASSES
    ========================================== */
 

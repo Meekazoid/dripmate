@@ -22,7 +22,6 @@ import {
 import {
     openSettings,
     closeSettings,
-    activateDevice,
     openDecafModal,
     closeDecafModal,
     handleMagicLink,
@@ -112,37 +111,30 @@ function initEventListeners() {
     // Settings
     document.getElementById('settingsBtnControl').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openSettings(); });
     document.getElementById('closeSettingsBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeSettings(); });
-    document.getElementById('activateDeviceBtn').addEventListener('click', () => {
-        activateDevice().catch(err => {
-            console.error('Activation error:', err);
-        });
-    });
     document.getElementById('logoutDeviceBtn').addEventListener('click', () => logoutDevice());
 
-    // Magic Link Toggle (not activated state)
-    const showMagicBtn = document.getElementById('showMagicLinkBtn');
-    if (showMagicBtn) {
-        showMagicBtn.addEventListener('click', () => {
-            const form = document.getElementById('magicLinkForm');
-            if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        });
-    }
     // Send Magic Link
     const sendMagicBtn = document.getElementById('sendMagicLinkBtn');
     if (sendMagicBtn) {
         sendMagicBtn.addEventListener('click', async () => {
             const email  = document.getElementById('magicLinkEmailInput').value.trim();
             const status = document.getElementById('magicLinkStatus');
-            if (!email) { status.textContent = 'Please enter your email address.'; status.style.display = 'block'; return; }
+            if (!email) {
+                status.className = 'status status-error';
+                status.style.display = 'block';
+                status.textContent = 'Please enter your email address.';
+                return;
+            }
             sendMagicBtn.disabled = true;
             sendMagicBtn.textContent = 'Sending…';
             const result = await requestMagicLink(email);
             sendMagicBtn.disabled = false;
-            sendMagicBtn.textContent = 'Send Login-Link';
+            sendMagicBtn.textContent = 'Send login link';
+            status.className = 'status ' + (result.success ? 'status-success' : 'status-error');
             status.style.display = 'block';
             status.textContent = result.success
-                ? '✓ Link send — check your Mail!'
-                : (result.error || 'Fehler beim Senden.');
+                ? 'Link sent — check your inbox.'
+                : (result.error || 'Couldn\'t send. Please try again.');
         });
     }
     // Impressum & Datenschutz

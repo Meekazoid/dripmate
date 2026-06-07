@@ -9,74 +9,12 @@ import { getOrCreateDeviceId, getToken, saveToken, clearToken } from './services
 
 export function openSettings() {
     document.getElementById('settingsModal').classList.add('active');
-    const token       = getToken();
-    const statusDiv   = document.getElementById('activationStatus');
-    const subtitle    = document.getElementById('activationSubtitle');
-    const inputWrap   = document.getElementById('activationInputWrap');
-    const activateBtn = document.getElementById('activateDeviceBtn');
-
-    const magicSection   = document.getElementById('magicLinkSection');
-    const emailSection   = document.getElementById('emailRecoverySection');
-    const logoutSection  = document.getElementById('logoutSection');
-
-    if (token) {
-        if (subtitle)      { subtitle.textContent = 'Device already activated'; subtitle.style.color = '#5fda7d'; }
-        if (inputWrap)     inputWrap.style.display = 'none';
-        if (activateBtn)   activateBtn.style.display = 'none';
-        if (magicSection)  magicSection.style.display = 'block';
-        if (emailSection)  emailSection.style.display = 'block';
-        if (logoutSection) logoutSection.style.display = 'block';
-        statusDiv.style.display = 'none';
-    } else {
-        if (subtitle)      { subtitle.textContent = 'Enter the code you received to activate this device.'; subtitle.style.color = ''; }
-        if (inputWrap)     inputWrap.style.display = 'block';
-        if (activateBtn)   activateBtn.style.display = 'block';
-        if (magicSection)  magicSection.style.display = 'block';
-        if (emailSection)  emailSection.style.display = 'none';
-        if (logoutSection) logoutSection.style.display = 'none';
-        statusDiv.style.display = 'none';
-    }
 }
 
 export function closeSettings() {
     document.getElementById('settingsModal').classList.remove('active');
 }
 
-function showActivationError(message) {
-    const statusDiv = document.getElementById('activationStatus');
-    statusDiv.style.display  = 'block';
-    statusDiv.style.background = 'rgba(220, 53, 69, 0.1)';
-    statusDiv.style.border   = '1px solid rgba(220, 53, 69, 0.3)';
-    statusDiv.style.color    = '#ff6b7a';
-    statusDiv.innerHTML = '&#x2715; ' + sanitizeHTML(message);
-}
-
-export async function activateDevice() {
-    const accessCode = document.getElementById('accessCodeInput').value.trim();
-    const statusDiv  = document.getElementById('activationStatus');
-
-    if (!accessCode) { showActivationError('Please enter an access code'); return; }
-
-    try {
-        const result = await validateAndPersistToken(accessCode);
-
-        if (result.valid) {
-            statusDiv.style.display    = 'block';
-            statusDiv.style.background = 'rgba(40, 167, 69, 0.1)';
-            statusDiv.style.border     = '1px solid rgba(40, 167, 69, 0.3)';
-            statusDiv.style.color      = '#5fda7d';
-            statusDiv.innerHTML = '&#x2713; Device linked. You can now use all features.';
-
-            localStorage.setItem('justActivated', '1');
-            await maybeInitBackendSync();
-            setTimeout(() => { closeSettings(); location.reload(); }, 2000);
-        } else {
-            showActivationError(result.error || 'Invalid access code');
-        }
-    } catch (error) {
-        showActivationError(error.message || 'Activation failed');
-    }
-}
 
 export function openDecafModal() {
     renderDecafList();
