@@ -4912,8 +4912,9 @@ body:not(.light-mode) .quick-tips-scroll-fade {
 
 .dm-btn-primary {
     background: linear-gradient(135deg, #d4a574, #c89558);
-    color: #1a1209;
+    color: #20130b;
     border: none;
+    font-weight: 600;
 }
 
 .dm-btn-primary:hover:not(:disabled) { opacity: 0.9; }
@@ -4929,14 +4930,13 @@ body:not(.light-mode) .quick-tips-scroll-fade {
 }
 
 .dm-btn-danger {
-    background: transparent;
-    border: 1px solid rgba(232, 133, 124, 0.5);
-    color: #e8857c;
+    background: linear-gradient(135deg, #e8857c, #c96b63);
+    color: #20130b;
+    border: none;
+    font-weight: 600;
 }
 
-.dm-btn-danger:hover:not(:disabled) {
-    background: rgba(232, 133, 124, 0.08);
-}
+.dm-btn-danger:hover:not(:disabled) { opacity: 0.9; }
 
 /* ==========================================
    KIT — SHARED STATUS CLASSES
