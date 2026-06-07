@@ -68,7 +68,7 @@ async function _submitAppFeedback() {
 
     if (!message) {
         statusEl.textContent  = 'Please enter a message.';
-        statusEl.className    = 'app-feedback-status app-feedback-status--error';
+        statusEl.className    = 'dm-status dm-status-error';
         statusEl.style.display = 'block';
         return;
     }
@@ -111,7 +111,7 @@ async function _submitAppFeedback() {
         if (res.ok && data.success) {
             _resetForm();
             statusEl.textContent   = 'Feedback sent — thanks!';
-            statusEl.className     = 'app-feedback-status app-feedback-status--success';
+            statusEl.className     = 'dm-status dm-status-success';
             statusEl.style.display = 'block';
             setTimeout(() => {
                 closeAppFeedback();
@@ -119,13 +119,13 @@ async function _submitAppFeedback() {
             }, 1800);
         } else {
             statusEl.textContent   = data.error || "Couldn't send. Please try again.";
-            statusEl.className     = 'app-feedback-status app-feedback-status--error';
+            statusEl.className     = 'dm-status dm-status-error';
             statusEl.style.display = 'block';
             submitBtn.disabled     = false;
         }
     } catch (_) {
         statusEl.textContent   = 'Network error — please try again.';
-        statusEl.className     = 'app-feedback-status app-feedback-status--error';
+        statusEl.className     = 'dm-status dm-status-error';
         statusEl.style.display = 'block';
         submitBtn.disabled     = false;
     }
