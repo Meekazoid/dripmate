@@ -5,7 +5,7 @@
 
 import { CONFIG } from './config.js';
 import { coffees, sanitizeHTML } from './state.js';
-import { getOrCreateDeviceId, getToken, saveToken } from './services/backend-sync.js';
+import { getOrCreateDeviceId, getToken, saveToken, clearToken } from './services/backend-sync.js';
 
 export function openSettings() {
     document.getElementById('settingsModal').classList.add('active');
@@ -15,8 +15,9 @@ export function openSettings() {
     const inputWrap   = document.getElementById('activationInputWrap');
     const activateBtn = document.getElementById('activateDeviceBtn');
 
-    const magicSection  = document.getElementById('magicLinkSection');
+    const magicSection   = document.getElementById('magicLinkSection');
     const emailSection   = document.getElementById('emailRecoverySection');
+    const logoutSection  = document.getElementById('logoutSection');
 
     if (token) {
         if (subtitle)      { subtitle.textContent = 'Device already activated'; subtitle.style.color = '#5fda7d'; }
@@ -24,6 +25,7 @@ export function openSettings() {
         if (activateBtn)   activateBtn.style.display = 'none';
         if (magicSection)  magicSection.style.display = 'block';
         if (emailSection)  emailSection.style.display = 'block';
+        if (logoutSection) logoutSection.style.display = 'block';
         statusDiv.style.display = 'none';
     } else {
         if (subtitle)      { subtitle.textContent = 'Enter the code you received to activate this device.'; subtitle.style.color = ''; }
@@ -31,6 +33,7 @@ export function openSettings() {
         if (activateBtn)   activateBtn.style.display = 'block';
         if (magicSection)  magicSection.style.display = 'block';
         if (emailSection)  emailSection.style.display = 'none';
+        if (logoutSection) logoutSection.style.display = 'none';
         statusDiv.style.display = 'none';
     }
 }
@@ -353,4 +356,11 @@ export async function signupForAccess(email) {
         console.error('[settings] Signup error:', err.message);
         return { ok: false, error: 'Netzwerkfehler. Bitte erneut versuchen.' };
     }
+}
+
+export function logoutDevice() {
+    if (!confirm('Abmelden? Du musst den Zugangscode danach erneut eingeben. Lokale Kaffees und Einstellungen bleiben erhalten.')) return;
+    clearToken();
+    localStorage.removeItem('deviceId');
+    window.location.reload();
 }

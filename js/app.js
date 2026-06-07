@@ -28,7 +28,8 @@ import {
     handleMagicLink,
     requestMagicLink,
     validateAndPersistToken,
-    signupForAccess
+    signupForAccess,
+    logoutDevice
 } from './settings.js';
 import { updateRoastDate } from './freshness.js';
 import { 
@@ -111,11 +112,12 @@ function initEventListeners() {
     // Settings
     document.getElementById('settingsBtnControl').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openSettings(); });
     document.getElementById('closeSettingsBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeSettings(); });
-    document.getElementById('activateDeviceBtn').addEventListener('click', () => { 
-        activateDevice().catch(err => { 
-            console.error('Activation error:', err); 
-        }); 
+    document.getElementById('activateDeviceBtn').addEventListener('click', () => {
+        activateDevice().catch(err => {
+            console.error('Activation error:', err);
+        });
     });
+    document.getElementById('logoutDeviceBtn').addEventListener('click', () => logoutDevice());
 
     // Magic Link Toggle (not activated state)
     const showMagicBtn = document.getElementById('showMagicLinkBtn');
