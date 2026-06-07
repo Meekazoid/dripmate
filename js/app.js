@@ -40,7 +40,7 @@ import {
     setWaterHardness,
     setApiWaterHardness
 } from './state.js';
-import { initBackendSync } from './services/backend-sync.js';
+import { initBackendSync, getToken } from './services/backend-sync.js';
 import { initAppFeedback, openAppFeedback, closeAppFeedback, checkNudge } from './app-feedback.js';
 import { initOnboarding, replayOnboarding, openQuickTips, closeQuickTips } from './onboarding.js';
 
@@ -182,27 +182,19 @@ function closeModal(id) {
     document.getElementById(id).classList.remove('active');
 }
 
-// Main initialization function
-async function initApp() {
-    // Handle magic link token from email
-    await handleMagicLink();
-
-    // Initialize theme early
+// Renders and initializes the full app UI. Called once a valid token is confirmed.
+function bootApp() {
     initTheme();
     alignHeader();
     window.addEventListener('resize', alignHeader);
 
-    // Migrate existing coffees: stamp initialGrind/initialTemp
     migrateCoffeesInitialValues();
 
-    // Load water hardness with priority: manual > API
     if (manualWaterHardness) {
-        // Manual override exists - use it
         setWaterHardness(manualWaterHardness);
         const waterBtn = document.getElementById('waterControlBtn');
         if (waterBtn) waterBtn.classList.add('active');
     } else if (userZipCode && typeof WaterHardness !== 'undefined') {
-        // No manual override - load from ZIP
         WaterHardness.getHardness(userZipCode).then(data => {
             setApiWaterHardness(data);
             setWaterHardness(data);
@@ -211,31 +203,27 @@ async function initApp() {
         }).catch(err => console.log('Could not load water hardness:', err));
     }
 
-    // Onboarding: attach event listener BEFORE renderCoffees() so coffees:rendered is caught
     initOnboarding();
-
-    // Render coffee list (fires coffees:rendered → maybeStartOnboardingPhase2 via event)
     renderCoffees();
-
-    // App Feedback init (must run after DOM is ready)
     initAppFeedback();
-
-    // Check nudge after first render — triggers once user has ≥7 coffees
     checkNudge();
 
-    // Start backend sync in background so locally cached coffees
-    // are visible immediately on app startup.
     initBackendSync().catch((error) => {
         console.warn('[app] Deferred backend sync failed:', error && error.message ? error.message : error);
     });
 
-    // Init global grinder selector
     initGlobalGrinder();
-
-    // Bind all event listeners
     initEventListeners();
     initFeedbackSliderInteractions();
     initPressedStateInteractions();
+}
+
+// Main initialization function
+async function initApp() {
+    // Handle magic link token from email — must run first so a fresh token is already set
+    await handleMagicLink();
+
+    bootApp();
 }
 
 // Run on DOM ready
