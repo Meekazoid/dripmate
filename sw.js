@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v55.1'; // Quick Tips: freshness names colored to match card badges
+const CACHE_VERSION = 'v55.2'; // fix: keep setupChosen on replay so grinder/method chips retain values
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [

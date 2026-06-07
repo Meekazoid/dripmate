@@ -139,7 +139,6 @@ export function replayOnboarding() {
     _tourActive = false;
     localStorage.removeItem(KEY_PHASE1);
     localStorage.removeItem(KEY_PHASE2);
-    localStorage.removeItem('setupChosen');
     showOnboardingOverlay();
 }
 
