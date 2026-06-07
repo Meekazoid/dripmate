@@ -60,6 +60,37 @@
         </symbol>
     </svg>
 
+    <!-- ====== AUTH GATE OVERLAY ====== -->
+    <div id="authGate" class="auth-gate">
+        <div class="auth-gate-card">
+            <div class="auth-gate-brand">
+                <img class="auth-gate-logo logo-dark" src="logo_hell_dark.svg" alt="drip&#xB7;mate">
+                <p class="auth-gate-tagline">Precision meets Ritual.</p>
+            </div>
+
+            <div class="auth-gate-tabs" role="tablist">
+                <button class="auth-gate-tab auth-gate-tab--active" id="authGateTabCode" role="tab" aria-selected="true">Code eingeben</button>
+                <button class="auth-gate-tab" id="authGateTabRegister" role="tab" aria-selected="false">Registrieren</button>
+            </div>
+
+            <!-- Code panel -->
+            <div id="authGatePanelCode" class="auth-gate-panel" role="tabpanel">
+                <p class="auth-gate-hint">Gib deinen Zugangscode ein, um dripmate zu aktivieren.</p>
+                <input type="text" id="authGateCodeInput" class="auth-gate-input" placeholder="Zugangscode" autocomplete="off" spellcheck="false">
+                <button id="authGateCodeBtn" class="auth-gate-btn">Aktivieren</button>
+                <div id="authGateCodeStatus" class="auth-gate-status" style="display:none;"></div>
+            </div>
+
+            <!-- Register panel -->
+            <div id="authGatePanelRegister" class="auth-gate-panel" style="display:none;" role="tabpanel">
+                <p class="auth-gate-hint">Noch kein Zugang? Trag deine E-Mail ein &#x2014; wir melden uns bei dir.</p>
+                <input type="email" id="authGateEmailInput" class="auth-gate-input" placeholder="E-Mail-Adresse" autocomplete="email" inputmode="email">
+                <button id="authGateRegisterBtn" class="auth-gate-btn">Zugang anfragen</button>
+                <div id="authGateRegisterStatus" class="auth-gate-status" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <!-- ====== HEADER ====== -->
         <header>
