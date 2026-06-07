@@ -4802,6 +4802,10 @@ body.light-mode .qt-fresh-fading  { color: #616161; }
     pointer-events: none;
 }
 
+body:not(.light-mode) .quick-tips-scroll-fade {
+    background: none;
+}
+
 /* ── Centered tooltip (no spotlight ring, full-screen dim) ── */
 .ob-tooltip--centered {
     position: fixed !important;
