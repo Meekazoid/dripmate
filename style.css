@@ -2984,6 +2984,10 @@ h1 {
     margin-top: 14px;
 }
 
+.water-save-btn {
+    margin-top: 10px;
+}
+
 .form-helper {
     font-size: 0.76rem;
     color: var(--text-secondary);

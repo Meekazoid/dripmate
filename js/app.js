@@ -12,12 +12,11 @@ import { renderCoffees } from './coffee-list.js';
 import { initPressedStateInteractions } from './coffee-cards.js';
 import { processImageUpload } from './image-handler.js';
 import { saveCoffeeManual, initProcessPicker } from './manual-entry.js';
-import { 
-    openWaterModal, 
-    closeWaterModal, 
-    saveWaterHardness, 
+import {
+    openWaterModal,
+    closeWaterModal,
     saveManualWaterHardness,
-    clearManualWaterHardness 
+    clearManualWaterHardness
 } from './water-hardness.js';
 import {
     openSettings,
@@ -36,11 +35,9 @@ import {
     pauseBrewTimer,
     resetBrewTimer
 } from './brew-timer.js';
-import { 
+import {
     manualWaterHardness,
-    userZipCode,
-    setWaterHardness,
-    setApiWaterHardness
+    setWaterHardness
 } from './state.js';
 import { initBackendSync, getToken } from './services/backend-sync.js';
 import { initAppFeedback, openAppFeedback, closeAppFeedback, checkNudge } from './app-feedback.js';
@@ -101,7 +98,6 @@ function initEventListeners() {
     // Water hardness
     document.getElementById('waterControlBtn').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openWaterModal(); });
     document.getElementById('closeWaterBtn').addEventListener('click', closeWaterModal);
-    document.getElementById('saveWaterBtn').addEventListener('click', saveWaterHardness);
     document.getElementById('saveManualHardnessBtn').addEventListener('click', saveManualWaterHardness);
 
     // Trash bin / Decaf
@@ -190,13 +186,6 @@ function bootApp() {
         setWaterHardness(manualWaterHardness);
         const waterBtn = document.getElementById('waterControlBtn');
         if (waterBtn) waterBtn.classList.add('active');
-    } else if (userZipCode && typeof WaterHardness !== 'undefined') {
-        WaterHardness.getHardness(userZipCode).then(data => {
-            setApiWaterHardness(data);
-            setWaterHardness(data);
-            const waterBtn = document.getElementById('waterControlBtn');
-            if (waterBtn) waterBtn.classList.add('active');
-        }).catch(err => console.log('Could not load water hardness:', err));
     }
 
     initOnboarding();

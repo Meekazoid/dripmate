@@ -1,16 +1,13 @@
 // ==========================================
 // WATER HARDNESS
-// Water hardness modal, ZIP lookup, manual input
+// Water hardness modal, manual input
 // ==========================================
 
-import { 
-    manualWaterHardness, 
-    apiWaterHardness, 
-    userZipCode,
+import {
+    manualWaterHardness,
+    apiWaterHardness,
     setWaterHardness,
-    setManualWaterHardness,
-    setApiWaterHardness,
-    setUserZipCode
+    setManualWaterHardness
 } from './state.js';
 import { renderCoffees } from './coffee-list.js';
 
@@ -28,8 +25,7 @@ function getActiveWaterHardness() {
 
 export function openWaterModal() {
     document.getElementById('waterModal').classList.add('active');
-    document.getElementById('zipCodeInput').value = userZipCode;
-    
+
     // Load manual hardness value if exists
     const manualInput = document.getElementById('manualHardnessInput');
     if (manualWaterHardness) {
@@ -98,37 +94,6 @@ function getHardnessDescription(category) {
         'very_hard': 'Very hard: go coarser and lower brew temperature slightly.'
     };
     return descriptions[category] || '';
-}
-
-export async function saveWaterHardness() {
-    const zipCode = document.getElementById('zipCodeInput').value.trim();
-
-    if (!zipCode) { alert('Please enter a ZIP code.'); return; }
-    if (!/^\d{5}$/.test(zipCode)) { alert('Please enter a valid 5-digit ZIP code.'); return; }
-    if (typeof WaterHardness === 'undefined') { alert('Water module not loaded. Please reload the page.'); return; }
-
-    try {
-        const hardness = await WaterHardness.getHardness(zipCode);
-        setApiWaterHardness(hardness);
-        setUserZipCode(zipCode);
-        
-        // Only update active hardness if no manual override exists
-        if (!manualWaterHardness) {
-            setWaterHardness(hardness);
-            displayWaterHardness(hardness, 'api');
-        } else {
-            // Show API value but indicate manual is active
-            displayWaterHardness(manualWaterHardness, 'manual');
-            alert('Manual override is active. ZIP result was saved as fallback.');
-        }
-
-        const waterBtn = document.getElementById('waterControlBtn');
-        if (waterBtn) waterBtn.classList.add('active');
-
-        renderCoffees();
-    } catch (error) {
-        alert(`Could not load water hardness:\n${error.message}`);
-    }
 }
 
 export async function saveManualWaterHardness() {
