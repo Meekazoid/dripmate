@@ -4,7 +4,8 @@
 // ==========================================
 
 import { CONFIG } from '../config.js';
-import { dedupeCoffees, setCoffees } from '../state.js';
+import { dedupeCoffees, setCoffees, setPreferredGrinder, setPreferredMethod } from '../state.js';
+import { updateChipLabels } from '../grinder.js';
 
 // ==========================================
 // DEVICE ID
@@ -226,13 +227,12 @@ export async function initBackendSync() {
         if (status.valid) {
             console.log(`[sync] Logged in as: ${status.user.username}`);
 
-            // Load grinder preference
-            const remoteGrinder = await fetchGrinderPreference();
-            if (remoteGrinder) {
-                window.preferredGrinder = remoteGrinder;
-                localStorage.setItem('preferredGrinder', remoteGrinder);
-                if (typeof initGlobalGrinder === 'function') initGlobalGrinder();
-            }
+            // Apply grinder + method preferences from login response
+            const remoteGrinder = status.user.grinderPreference;
+            const remoteMethod  = status.user.methodPreference;
+            if (remoteGrinder) { setPreferredGrinder(remoteGrinder); localStorage.setItem('setupChosen', '1'); }
+            if (remoteMethod)  { setPreferredMethod(remoteMethod);   localStorage.setItem('setupChosen', '1'); }
+            if (remoteGrinder || remoteMethod) updateChipLabels();
 
             // Load water hardness (manual override)
             const remoteWaterHardness = await fetchWaterHardness();
