@@ -354,12 +354,12 @@ export async function signupForAccess(email) {
         return { ok: response.ok, status: data.status, error: data.error };
     } catch (err) {
         console.error('[settings] Signup error:', err.message);
-        return { ok: false, error: 'Netzwerkfehler. Bitte erneut versuchen.' };
+        return { ok: false, error: 'Network error. Please try again in a moment.' };
     }
 }
 
 export function logoutDevice() {
-    if (!confirm('Abmelden? Du musst den Zugangscode danach erneut eingeben. Lokale Kaffees und Einstellungen bleiben erhalten.')) return;
+    if (!confirm('Log out? You will need to enter your access code again. Your local coffees and settings will be kept.')) return;
     clearToken();
     localStorage.removeItem('deviceId');
     window.location.reload();

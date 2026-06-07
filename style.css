@@ -4068,6 +4068,15 @@ body.light-mode .roastery-stack-counter {
     filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.4));
 }
 
+.auth-gate-wordmark {
+    margin: 0;
+    font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e8d5c0;
+    letter-spacing: 0.04em;
+}
+
 .auth-gate-tagline {
     margin: 0;
     color: #7a6050;

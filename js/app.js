@@ -133,7 +133,7 @@ function initEventListeners() {
         sendMagicBtn.addEventListener('click', async () => {
             const email  = document.getElementById('magicLinkEmailInput').value.trim();
             const status = document.getElementById('magicLinkStatus');
-            if (!email) { status.textContent = 'Bitte E-Mail eingeben.'; status.style.display = 'block'; return; }
+            if (!email) { status.textContent = 'Please enter your email address.'; status.style.display = 'block'; return; }
             sendMagicBtn.disabled = true;
             sendMagicBtn.textContent = 'Sending…';
             const result = await requestMagicLink(email);
@@ -273,27 +273,27 @@ function initAuthGateListeners() {
 
     async function handleCodeActivation() {
         const code = codeInput.value.trim();
-        if (!code) { showGateStatus(codeStatus, 'Bitte Zugangscode eingeben.', 'error'); return; }
+        if (!code) { showGateStatus(codeStatus, 'Please enter your access code.', 'error'); return; }
 
         codeBtn.disabled = true;
-        codeBtn.textContent = 'Pruefe Code...';
+        codeBtn.textContent = 'Checking...';
         hideGateStatus(codeStatus);
 
         try {
             const result = await validateAndPersistToken(code);
             if (result.valid) {
                 if (result.isFirstLogin) localStorage.setItem('justActivated', '1');
-                showGateStatus(codeStatus, '✓ Aktiviert! Wird geladen...', 'success');
+                showGateStatus(codeStatus, '✓ Activated! Loading...', 'success');
                 setTimeout(() => { hideAuthGate(); bootApp(); }, 800);
             } else {
-                showGateStatus(codeStatus, result.error || 'Ungultiger Code.', 'error');
+                showGateStatus(codeStatus, result.error || 'That code didn\'t work. Please check it and try again.', 'error');
                 codeBtn.disabled = false;
-                codeBtn.textContent = 'Aktivieren';
+                codeBtn.textContent = 'Activate';
             }
         } catch (err) {
-            showGateStatus(codeStatus, 'Netzwerkfehler. Bitte erneut versuchen.', 'error');
+            showGateStatus(codeStatus, 'Network error. Please try again in a moment.', 'error');
             codeBtn.disabled = false;
-            codeBtn.textContent = 'Aktivieren';
+            codeBtn.textContent = 'Activate';
         }
     }
 
@@ -308,31 +308,31 @@ function initAuthGateListeners() {
     async function handleSignup() {
         const email = emailInput.value.trim();
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            showGateStatus(registerStatus, 'Bitte gultige E-Mail-Adresse eingeben.', 'error');
+            showGateStatus(registerStatus, 'Please enter a valid email address.', 'error');
             return;
         }
 
         registerBtn.disabled = true;
-        registerBtn.textContent = 'Wird gesendet...';
+        registerBtn.textContent = 'Sending...';
         hideGateStatus(registerStatus);
 
         try {
             const result = await signupForAccess(email);
             if (result.ok) {
                 if (result.status === 'waitlisted' || result.status === 'already_waitlisted') {
-                    showGateStatus(registerStatus, 'Beta ist derzeit voll - du bist auf der Warteliste. Wir melden uns!', 'warning');
+                    showGateStatus(registerStatus, 'The Beta is currently full — you are on the waitlist. We will email you the moment a spot opens up.', 'warning');
                 } else {
-                    showGateStatus(registerStatus, 'Pruefe deine E-Mails - wir haben dir einen Zugangscode geschickt.', 'success');
+                    showGateStatus(registerStatus, 'Your token is on the way. Please check your inbox in a moment.', 'success');
                 }
                 emailInput.value = '';
             } else {
-                showGateStatus(registerStatus, result.error || 'Etwas ist schiefgelaufen. Bitte erneut versuchen.', 'error');
+                showGateStatus(registerStatus, result.error || 'Something went wrong. Please try again in a moment.', 'error');
             }
         } catch (err) {
-            showGateStatus(registerStatus, 'Netzwerkfehler. Bitte erneut versuchen.', 'error');
+            showGateStatus(registerStatus, 'Network error. Please try again in a moment.', 'error');
         } finally {
             registerBtn.disabled = false;
-            registerBtn.textContent = 'Zugang anfragen';
+            registerBtn.textContent = 'Request access';
         }
     }
 
