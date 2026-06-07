@@ -55,44 +55,20 @@ export async function activateDevice() {
     if (!accessCode) { showActivationError('Please enter an access code'); return; }
 
     try {
-        const deviceId = getOrCreateDeviceId();
+        const result = await validateAndPersistToken(accessCode);
 
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), 10000);
-        let response;
-        try {
-            response = await fetch(`${CONFIG.backendUrl}/api/auth/validate`, {
-                headers: { 'Authorization': `Bearer ${accessCode}`, 'X-Device-ID': deviceId },
-                signal: controller.signal
-            });
-        } finally {
-            clearTimeout(timer);
-        }
-
-        if (!response.ok) {
-            const error = await response.json();
-            showActivationError(error.error || 'Token validation failed');
-            return;
-        }
-
-        const data = await response.json();
-
-        if (data.valid) {
-            saveToken(accessCode);
-            localStorage.setItem('deviceId', deviceId);
-
+        if (result.valid) {
             statusDiv.style.display    = 'block';
             statusDiv.style.background = 'rgba(40, 167, 69, 0.1)';
             statusDiv.style.border     = '1px solid rgba(40, 167, 69, 0.3)';
             statusDiv.style.color      = '#5fda7d';
             statusDiv.innerHTML = '&#x2713; Device linked. You can now use all features.';
 
-            // Signal onboarding overlay on next load (if first run)
             localStorage.setItem('justActivated', '1');
             await maybeInitBackendSync();
             setTimeout(() => { closeSettings(); location.reload(); }, 2000);
         } else {
-            showActivationError(data.error || 'Invalid access code');
+            showActivationError(result.error || 'Invalid access code');
         }
     } catch (error) {
         showActivationError(error.message || 'Activation failed');
@@ -200,7 +176,7 @@ function cleanAuthParamsFromUrl() {
     window.history.replaceState({}, document.title, window.location.pathname);
 }
 
-async function validateAndPersistToken(token) {
+export async function validateAndPersistToken(token) {
     const deviceId = getOrCreateDeviceId();
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10000);
@@ -361,5 +337,20 @@ export async function requestMagicLink(email) {
     } catch (err) {
         console.error('[settings] Magic link request error:', err.message);
         return { success: false, error: 'Network error' };
+    }
+}
+
+export async function signupForAccess(email) {
+    try {
+        const response = await fetch(`${CONFIG.backendUrl}/api/auth/signup`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        const data = await response.json().catch(() => ({}));
+        return { ok: response.ok, status: data.status, error: data.error };
+    } catch (err) {
+        console.error('[settings] Signup error:', err.message);
+        return { ok: false, error: 'Netzwerkfehler. Bitte erneut versuchen.' };
     }
 }

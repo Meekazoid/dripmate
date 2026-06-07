@@ -19,14 +19,16 @@ import {
     saveManualWaterHardness,
     clearManualWaterHardness 
 } from './water-hardness.js';
-import { 
-    openSettings, 
-    closeSettings, 
+import {
+    openSettings,
+    closeSettings,
     activateDevice,
     openDecafModal,
     closeDecafModal,
     handleMagicLink,
-    requestMagicLink
+    requestMagicLink,
+    validateAndPersistToken,
+    signupForAccess
 } from './settings.js';
 import { updateRoastDate } from './freshness.js';
 import { 
@@ -218,12 +220,135 @@ function bootApp() {
     initPressedStateInteractions();
 }
 
+// ==========================================
+// AUTH GATE
+// ==========================================
+
+function showAuthGate() {
+    const gate = document.getElementById('authGate');
+    if (gate) gate.style.display = 'flex';
+}
+
+function hideAuthGate() {
+    const gate = document.getElementById('authGate');
+    if (gate) gate.style.display = 'none';
+}
+
+function showGateStatus(el, message, type) {
+    el.textContent = message;
+    el.className = 'auth-gate-status auth-gate-status--' + type;
+    el.style.display = 'block';
+}
+
+function hideGateStatus(el) {
+    el.style.display = 'none';
+    el.textContent = '';
+    el.className = 'auth-gate-status';
+}
+
+function initAuthGateListeners() {
+    const tabCode      = document.getElementById('authGateTabCode');
+    const tabRegister  = document.getElementById('authGateTabRegister');
+    const panelCode    = document.getElementById('authGatePanelCode');
+    const panelRegister = document.getElementById('authGatePanelRegister');
+
+    function switchTab(showCode) {
+        panelCode.style.display     = showCode ? 'block' : 'none';
+        panelRegister.style.display = showCode ? 'none'  : 'block';
+        tabCode.classList.toggle('auth-gate-tab--active', showCode);
+        tabRegister.classList.toggle('auth-gate-tab--active', !showCode);
+        tabCode.setAttribute('aria-selected', String(showCode));
+        tabRegister.setAttribute('aria-selected', String(!showCode));
+    }
+
+    tabCode.addEventListener('click',     () => switchTab(true));
+    tabRegister.addEventListener('click', () => switchTab(false));
+
+    // --- Code activation ---
+    const codeInput  = document.getElementById('authGateCodeInput');
+    const codeBtn    = document.getElementById('authGateCodeBtn');
+    const codeStatus = document.getElementById('authGateCodeStatus');
+
+    async function handleCodeActivation() {
+        const code = codeInput.value.trim();
+        if (!code) { showGateStatus(codeStatus, 'Bitte Zugangscode eingeben.', 'error'); return; }
+
+        codeBtn.disabled = true;
+        codeBtn.textContent = 'Pruefe Code...';
+        hideGateStatus(codeStatus);
+
+        try {
+            const result = await validateAndPersistToken(code);
+            if (result.valid) {
+                if (result.isFirstLogin) localStorage.setItem('justActivated', '1');
+                showGateStatus(codeStatus, '✓ Aktiviert! Wird geladen...', 'success');
+                setTimeout(() => { hideAuthGate(); bootApp(); }, 800);
+            } else {
+                showGateStatus(codeStatus, result.error || 'Ungultiger Code.', 'error');
+                codeBtn.disabled = false;
+                codeBtn.textContent = 'Aktivieren';
+            }
+        } catch (err) {
+            showGateStatus(codeStatus, 'Netzwerkfehler. Bitte erneut versuchen.', 'error');
+            codeBtn.disabled = false;
+            codeBtn.textContent = 'Aktivieren';
+        }
+    }
+
+    codeBtn.addEventListener('click', handleCodeActivation);
+    codeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleCodeActivation(); });
+
+    // --- Signup / registration ---
+    const emailInput    = document.getElementById('authGateEmailInput');
+    const registerBtn   = document.getElementById('authGateRegisterBtn');
+    const registerStatus = document.getElementById('authGateRegisterStatus');
+
+    async function handleSignup() {
+        const email = emailInput.value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showGateStatus(registerStatus, 'Bitte gultige E-Mail-Adresse eingeben.', 'error');
+            return;
+        }
+
+        registerBtn.disabled = true;
+        registerBtn.textContent = 'Wird gesendet...';
+        hideGateStatus(registerStatus);
+
+        try {
+            const result = await signupForAccess(email);
+            if (result.ok) {
+                if (result.status === 'waitlisted' || result.status === 'already_waitlisted') {
+                    showGateStatus(registerStatus, 'Beta ist derzeit voll - du bist auf der Warteliste. Wir melden uns!', 'warning');
+                } else {
+                    showGateStatus(registerStatus, 'Pruefe deine E-Mails - wir haben dir einen Zugangscode geschickt.', 'success');
+                }
+                emailInput.value = '';
+            } else {
+                showGateStatus(registerStatus, result.error || 'Etwas ist schiefgelaufen. Bitte erneut versuchen.', 'error');
+            }
+        } catch (err) {
+            showGateStatus(registerStatus, 'Netzwerkfehler. Bitte erneut versuchen.', 'error');
+        } finally {
+            registerBtn.disabled = false;
+            registerBtn.textContent = 'Zugang anfragen';
+        }
+    }
+
+    registerBtn.addEventListener('click', handleSignup);
+    emailInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSignup(); });
+}
+
 // Main initialization function
 async function initApp() {
     // Handle magic link token from email — must run first so a fresh token is already set
     await handleMagicLink();
 
-    bootApp();
+    if (getToken()) {
+        bootApp();
+    } else {
+        showAuthGate();
+        initAuthGateListeners();
+    }
 }
 
 // Run on DOM ready
