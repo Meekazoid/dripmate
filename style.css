@@ -4803,7 +4803,7 @@ body.light-mode .qt-fresh-fading  { color: #616161; }
 }
 
 body:not(.light-mode) .quick-tips-scroll-fade {
-    background: none;
+    background: linear-gradient(to bottom, transparent, var(--bg-secondary));
 }
 
 /* ── Centered tooltip (no spotlight ring, full-screen dim) ── */
