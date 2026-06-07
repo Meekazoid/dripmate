@@ -2530,19 +2530,19 @@ body.light-mode .history-item-brew-badge {
 
 .restore-btn {
     padding: 8px 16px;
-    background: transparent;
-    color: #e8d5c0;
-    border: 1px solid rgba(212, 165, 116, 0.5);
+    background: linear-gradient(135deg, #d4a574, #c89558);
+    color: #20130b;
+    border: none;
     border-radius: 8px;
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: opacity 0.2s;
     white-space: nowrap;
 }
 
 .restore-btn:hover {
-    background: rgba(212, 165, 116, 0.08);
+    opacity: 0.9;
 }
 
 .decaf-card-actions {
