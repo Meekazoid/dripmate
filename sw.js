@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v56.6'; // fix: keep setupChosen on replay so grinder/method chips retain values
+const CACHE_VERSION = 'v56.7'; // refactor: lighten dm-btn font-weight, water modal dot + copy tweaks
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
