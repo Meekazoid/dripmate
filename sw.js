@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v56.8'; // refactor: dm-btn-danger red outline, font-weight 400
+const CACHE_VERSION = 'v56.9'; // refactor: dm-btn-danger red outline, font-weight 400
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
