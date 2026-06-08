@@ -4930,12 +4930,14 @@ body:not(.light-mode) .quick-tips-scroll-fade {
 }
 
 .dm-btn-danger {
-    background: linear-gradient(135deg, #e8857c, #c96b63);
-    color: #20130b;
-    border: none;
+    background: transparent;
+    color: #e8857c;
+    border: 1px solid rgba(232, 133, 124, 0.5);
 }
 
-.dm-btn-danger:hover:not(:disabled) { opacity: 0.9; }
+.dm-btn-danger:hover:not(:disabled) {
+    background: rgba(232, 133, 124, 0.08);
+}
 
 /* ==========================================
    KIT — SHARED STATUS CLASSES
