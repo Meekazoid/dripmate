@@ -188,7 +188,7 @@ export function renderCoffeeCard(coffee, index) {
                 
                 <div class="color-picker-wrapper">
                     <button class="color-picker-btn" aria-label="Choose color" id="color-picker-btn-${index}" onclick="event.stopPropagation(); window.toggleColorPicker(${index});">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
                             <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
                             <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
