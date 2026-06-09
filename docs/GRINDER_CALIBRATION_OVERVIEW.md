@@ -18,6 +18,7 @@ This overview documents how dripmate converts the internal grind reference to ea
 | Comandante MK3/MK4 | clicks | `round(base * 1.0)` | `+ offset * 1.0` | min 1 |
 | Fellow Ode Gen 2 | dial value | `grindBase.fellow` | `+ offset * 0.1` | min 0.1 |
 | Fellow Ode Gen 1 | dial value | `(grindBase.fellow - 1.5)` | `+ offset * 0.1` | min 0.1 |
+| DF64 Gen 2 | dial 0–90 | `round(base * 2.5)` | `+ offset * 2.5` | 0..90 |
 | Timemore S3 | clicks | `round(base * 2.5)` | `+ offset * 2.5` | min 1 |
 | Timemore C2 | clicks | `round(base * 0.82)` | `+ offset * 0.82` | min 1 |
 | 1Zpresso JX | rotations | `base * (3.5/30)` | `+ offset * (3.5/30)` | min 0.1 rot |
@@ -32,6 +33,7 @@ The v1.1 layer adds a practical calibration overview for operations and QA.
 | Comandante MK3/MK4 | 21–25 clicks | 1 offset = 1 click | High | ±3 clicks |
 | Fellow Ode Gen 2 | 3.0–5.0 | 1 offset = 0.1 dial | Medium-High | ±0.3 |
 | Fellow Ode Gen 1 | 2.0–4.0 (Gen2-equivalent shifted) | 1 offset = 0.1 dial | Medium | ±0.3 |
+| DF64 Gen 2 | 52–58 | 1 offset ≈ 2.5 dial units | Medium | ±6 |
 | Timemore S3 | 45–70 clicks | 1 offset ≈ 2.5 clicks | Medium | ±6 clicks |
 | Timemore C2 | 14–22 clicks | 1 offset ≈ 0.82 clicks | Medium-Low | ±4 clicks |
 | 1Zpresso JX | 2.3–3.0 rot | 1 offset ≈ 0.12 rot | Medium | ±0.15 rot |

@@ -20,6 +20,7 @@ const DOC_ORDER = [
     'comandante_mk3',
     'fellow_gen2',
     'fellow_gen1',
+    'df64_gen2',
     'timemore_s3',
     'timemore_c2',
     '1zpresso',
@@ -57,6 +58,13 @@ function v1Mapping(profile) {
         case 'encore':
             return {
                 unit: 'stepped number',
+                baseMapping: `round(base * ${f})`,
+                offsetMapping: `+ offset * ${f}`,
+                clamp: `${profile.min}..${profile.max}`,
+            };
+        case 'df64':
+            return {
+                unit: 'dial 0–90',
                 baseMapping: `round(base * ${f})`,
                 offsetMapping: `+ offset * ${f}`,
                 clamp: `${profile.min}..${profile.max}`,

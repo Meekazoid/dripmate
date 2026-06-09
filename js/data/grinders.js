@@ -86,6 +86,22 @@ export const GRINDERS = {
         calibration: { startBand: '45–70 clicks', offsetSensitivity: '≈ 2.5 clicks', confidence: 'Medium', capPerBrew: '±6 clicks' },
         sources: ['15µm/click, 42mm S2C890, V60 range 50-80'],
     },
+    df64_gen2: {
+        key: 'df64_gen2',
+        label: 'DF64 Gen 2',
+        chipLabel: 'DF64 Gen 2',
+        pickerDetail: '64mm flat · stepless 0–90',
+        docLabel: 'DF64 Gen 2',
+        // baseFactor = 55/22 = 2.5  (Comandante V60-washed anchor 22 → DF64 target 55)
+        // Method target ranges (dial 0–90) for future verification:
+        //   V60 ~55 (50–65) · Chemex ~63 (52–66) · Kalita ~52 (46–60)
+        //   AeroPress ~32 (20–45) · French Press ~70 (60–80) · Cold Brew ~85 (75–90)
+        // Note: AeroPress grindComandante=-3 maps to DF64=48 (outside 20–45).
+        //   The -3 click delta undershoots DF64 immersion fineness; method-registry issue.
+        profile: { type: 'df64', baseFactor: 2.5, offsetFactor: 2.5, min: 0, max: 90 },
+        calibration: { startBand: '52–58', offsetSensitivity: '≈ 2.5 dial units', confidence: 'Medium', capPerBrew: '±6' },
+        sources: ['64mm flat burr, stepless 0–90 dial; V60 anchor: round(22 × 2.5) = 55'],
+    },
 };
 
 // Legacy localStorage keys → canonical registry key

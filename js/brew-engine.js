@@ -286,6 +286,11 @@ function getGrinderValue(grindBase, grinder, offset) {
         return `${Math.max(profile.min, Math.min(profile.max, val))}`;
     }
 
+    if (profile.type === 'df64') {
+        const val = Math.round(base * profile.baseFactor + o * profile.offsetFactor);
+        return String(Math.max(profile.min, Math.min(profile.max, val)));
+    }
+
     const val = Math.round(base * profile.baseFactor + o * profile.offsetFactor);
     return `${Math.max(profile.min, val)} clicks`;
 }
