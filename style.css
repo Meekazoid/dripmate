@@ -297,13 +297,15 @@ body.light-mode .add-section {
 }
 
 .cs-label {
-    font-size: 1.38rem;
+    font-size: 0.92rem;
     font-weight: 200;
     font-family: 'Sora', sans-serif;
     color: #C8945A;
-    letter-spacing: 0;
+    letter-spacing: 0.22em;
+    margin-left: 0.22em;
     line-height: 1.06;
-    padding: 0 0.16em;
+    padding: 0;
+    opacity: 0.82;
 }
 
 .cs-sub {
@@ -3702,9 +3704,10 @@ button::-moz-focus-inner {
     }
 
     .cs-label {
-        font-size: 1.14rem !important;
-        letter-spacing: 0 !important;
-        padding: 0 0.16em !important;
+        font-size: 0.86rem !important;
+        letter-spacing: 0.22em !important;
+        margin-left: 0.22em !important;
+        padding: 0 !important;
     }
 
     .cs-sub {
