@@ -48,6 +48,7 @@ export function renderDecafList() {
     decafListEl.innerHTML = sorted.map(item => `
         <div class="decaf-card">
             <div class="decaf-card-info">
+                ${item.coffee.roastery && item.coffee.roastery !== 'Unknown' && item.coffee.roastery.trim() !== '' ? `<div class="decaf-card-roaster">${sanitizeHTML(item.coffee.roastery)}</div>` : ''}
                 <div class="decaf-card-name">${sanitizeHTML(item.coffee.name)}</div>
                 <div class="decaf-card-origin">${sanitizeHTML(item.coffee.origin)}</div>
             </div>
