@@ -83,7 +83,7 @@ export function initPressedStateInteractions() {
     pressedStateBound = true;
 
     document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .edit-btn');
+        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .edit-btn, .dm-btn');
         if (!btn) return;
 
         if (btn.classList.contains('edit-btn') && btn.classList.contains('editing')) return;
