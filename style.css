@@ -3793,7 +3793,7 @@ button::-moz-focus-inner {
     pointer-events: none;
     border-radius: 16px;
     z-index: 0;
-    transition: height .2s ease;
+    transition: height .2s ease, transform .22s cubic-bezier(0.2, 0, 0, 1.2);
     background: var(--bg-card);
     border: 1px solid var(--border);
     overflow: hidden;
@@ -3824,7 +3824,7 @@ button::-moz-focus-inner {
     overflow: visible;
     touch-action: pan-y;
     will-change: transform;
-    transition: transform .18s ease, opacity .18s ease;
+    transition: transform .3s cubic-bezier(0.2, 0, 0, 1.2), opacity .3s cubic-bezier(0.2, 0, 0, 1.2);
 }
 
 .roastery-stack-slot.roastery-stack-dragging {
@@ -3833,7 +3833,7 @@ button::-moz-focus-inner {
 }
 
 .roastery-stack-slot.roastery-snap-back {
-    transition: transform .18s ease;
+    transition: transform .22s cubic-bezier(0.2, 0, 0, 1.2);
 }
 
 .roastery-stack-slot.roastery-card-exit-next {

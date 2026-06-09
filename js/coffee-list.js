@@ -171,11 +171,19 @@ function buildRoasteryStack(items) {
     let dragRaf = 0;
     let isTransitioning = false;
     let transitionAnim = null;
+    let lastMoveTime = 0;
+    let lastMoveX = 0;
+    let velocityX = 0;
+    let incomingEl = null;
+    let incomingAnim = null;
     // Schwellwerte
     const ACTIVATE_X = 12;
     const LOCK_Y = 10;
     const SWIPE_THRESHOLD = 64;
     const SWIPE_IGNORE_SELECTOR = '.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input, select, textarea, button, .color-picker-btn, .color-picker-popup';
+    const SPRING_EASING = 'cubic-bezier(0.2, 0, 0, 1.2)';
+    const ANIM_DURATION = 300;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function makeCard(item) {
         const tpl = document.createElement('template');
@@ -240,65 +248,103 @@ function buildRoasteryStack(items) {
         deltaX = 0;
         deltaY = 0;
         slot.classList.remove('roastery-stack-dragging');
+        ghosts.forEach(g => { g.style.transform = ''; });
     }
 
     function applyDragTransform() {
         dragRaf = 0;
         slot.style.transform = `translateX(${pendingDeltaX}px)`;
+        if (!reducedMotion) {
+            const shift = pendingDeltaX * 0.04;
+            ghosts.forEach((g, i) => {
+                const base = 1 - 0.012 * (i + 1);
+                const boost = Math.min(Math.abs(pendingDeltaX) * 0.0003, 0.005);
+                g.style.transform = `scale(${(base + boost).toFixed(4)}) translateX(${shift.toFixed(2)}px)`;
+            });
+        }
     }
 
     function animateSnapBack() {
         slot.classList.add('roastery-snap-back');
         slot.style.transform = '';
-        setTimeout(() => slot.classList.remove('roastery-snap-back'), 180);
+        setTimeout(() => slot.classList.remove('roastery-snap-back'), 220);
     }
 
     function go(direction /* 'left' | 'right' */, startOffsetX = 0) {
         if (isTransitioning) return;
         isTransitioning = true;
 
+        if (transitionAnim) { transitionAnim.cancel(); transitionAnim = null; }
+        if (incomingAnim) { incomingAnim.cancel(); incomingAnim = null; }
+        if (incomingEl && incomingEl.parentNode) {
+            incomingEl.parentNode.removeChild(incomingEl);
+            incomingEl = null;
+        }
+
         slot.classList.remove('roastery-snap-back');
 
         const activeCard = slot.querySelector('.coffee-card');
         if (activeCard) activeCard.dataset.suppressClick = '1';
 
+        const nextIndex = direction === 'left'
+            ? (current + 1) % items.length
+            : (current - 1 + items.length) % items.length;
+
         const startX = Number.isFinite(startOffsetX) ? startOffsetX : 0;
-        const endX = direction === 'left' ? -140 : 140;
+        const exitToX = direction === 'left' ? -140 : 140;
+        const enterFromX = direction === 'left' ? 140 : -140;
+
+        incomingEl = makeCard(items[nextIndex]);
+        incomingEl.style.position = 'absolute';
+        incomingEl.style.top = '0';
+        incomingEl.style.left = '0';
+        incomingEl.style.right = '0';
+        incomingEl.style.willChange = 'transform, opacity';
+        incomingEl.style.pointerEvents = 'none';
+        incomingEl.style.zIndex = '3';
+        ghostLayer.style.visibility = 'hidden';
+        wrapper.style.overflow = 'hidden';
+        wrapper.appendChild(incomingEl);
 
         let finalized = false;
         const finalizeSwitch = () => {
             if (finalized) return;
             finalized = true;
-
-            if (transitionAnim) {
-                transitionAnim.cancel();
-                transitionAnim = null;
+            if (transitionAnim) { transitionAnim.cancel(); transitionAnim = null; }
+            if (incomingAnim) { incomingAnim.cancel(); incomingAnim = null; }
+            if (incomingEl && incomingEl.parentNode) {
+                incomingEl.parentNode.removeChild(incomingEl);
+                incomingEl = null;
             }
-
-            current = direction === 'left'
-                ? (current + 1) % items.length
-                : (current - 1 + items.length) % items.length;
-
+            wrapper.style.overflow = '';
+            ghostLayer.style.visibility = '';
+            current = nextIndex;
             slot.style.transform = '';
             slot.style.opacity = '';
             renderCurrent(true);
             isTransitioning = false;
         };
 
+        const animOpts = { duration: ANIM_DURATION, easing: SPRING_EASING, fill: 'forwards' };
+
         transitionAnim = slot.animate(
             [
                 { transform: `translateX(${startX}px)`, opacity: 1 },
-                { transform: `translateX(${endX}px)`, opacity: 0.18 }
+                { transform: `translateX(${exitToX}px)`, opacity: 0 }
             ],
-            {
-                duration: 180,
-                easing: 'ease-out',
-                fill: 'forwards'
-            }
+            animOpts
+        );
+
+        incomingAnim = incomingEl.animate(
+            [
+                { transform: `translateX(${enterFromX}px)`, opacity: 0 },
+                { transform: 'translateX(0px)', opacity: 1 }
+            ],
+            animOpts
         );
 
         transitionAnim.addEventListener('finish', finalizeSwitch, { once: true });
-        setTimeout(finalizeSwitch, 260);
+        setTimeout(finalizeSwitch, ANIM_DURATION + 80);
     }
 
     function onPointerDown(e) {
@@ -315,6 +361,9 @@ function buildRoasteryStack(items) {
         startY = e.clientY;
         deltaX = 0;
         deltaY = 0;
+        lastMoveTime = performance.now();
+        lastMoveX = e.clientX;
+        velocityX = 0;
 
         slot.setPointerCapture?.(pointerId);
     }
@@ -339,6 +388,14 @@ function buildRoasteryStack(items) {
             slot.classList.add('roastery-stack-dragging');
         }
 
+        const now = performance.now();
+        const dt = now - lastMoveTime;
+        if (dt > 0 && dt < 100) {
+            velocityX = (e.clientX - lastMoveX) / dt;
+        }
+        lastMoveTime = now;
+        lastMoveX = e.clientX;
+
         pendingDeltaX = deltaX;
         if (!dragRaf) dragRaf = requestAnimationFrame(applyDragTransform);
 
@@ -357,8 +414,12 @@ function buildRoasteryStack(items) {
 
         if (!wasDrag) return;
 
-        if (Math.abs(moved) >= SWIPE_THRESHOLD) {
-            go(moved < 0 ? 'left' : 'right', moved);
+        const elapsed = performance.now() - lastMoveTime;
+        const isFling = elapsed < 120 && Math.abs(velocityX) > 0.4 && Math.abs(moved) > 20;
+
+        if (Math.abs(moved) >= SWIPE_THRESHOLD || isFling) {
+            const dir = moved < 0 ? 'left' : 'right';
+            go(dir, moved);
         } else {
             animateSnapBack();
         }
