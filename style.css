@@ -4895,21 +4895,13 @@ body:not(.light-mode) .quick-tips-scroll-fade {
     letter-spacing: 0.04em;
     cursor: pointer;
     border: none;
-    transition: opacity 0.2s, transform 0.1s, filter 0.1s;
+    transition: opacity 0.2s, transform 0.1s;
     text-align: center;
     -webkit-tap-highlight-color: transparent;
 }
 
-.dm-btn:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-.dm-btn:focus-visible {
-    outline: 2px solid rgba(212, 165, 116, 0.6);
-    outline-offset: 2px;
-    box-shadow: none;
-}
+.dm-btn:focus { outline: none; }
+.dm-btn:focus-visible { outline: 2px solid rgba(212, 165, 116, 0.6); outline-offset: 2px; }
 
 .dm-btn:disabled {
     opacity: 0.5;
@@ -4921,12 +4913,11 @@ body:not(.light-mode) .quick-tips-scroll-fade {
 .dm-btn-primary {
     background: linear-gradient(135deg, #d4a574, #c89558);
     color: #20130b;
-    border: none;
+    border: 1.5px solid transparent;
 }
 
 .dm-btn-primary:active:not(:disabled) {
-    filter: brightness(0.85);
-    transform: translateY(1px);
+    border-color: rgba(255, 255, 255, 0.65);
 }
 
 .dm-btn-secondary {

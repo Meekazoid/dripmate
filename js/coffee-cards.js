@@ -83,12 +83,6 @@ export function initPressedStateInteractions() {
     pressedStateBound = true;
 
     document.addEventListener('click', (e) => {
-        const dmBtn = e.target.closest('.dm-btn');
-        if (dmBtn) {
-            setTimeout(() => dmBtn.blur(), 150);
-            return;
-        }
-
         const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .edit-btn');
         if (!btn) return;
 
