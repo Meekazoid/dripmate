@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v57.0'; // style: water modal spacing + dm-btn-danger outline
+const CACHE_VERSION = 'v57.1'; // feat: Register-first auth gate
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
