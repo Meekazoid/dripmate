@@ -4917,11 +4917,18 @@ body:not(.light-mode) .quick-tips-scroll-fade {
     border: 1.5px solid transparent;
 }
 
+.dm-btn-primary:hover:not(:disabled),
+.dm-btn-primary:focus {
+    background: linear-gradient(135deg, #d4a574, #c89558);
+}
+
 .dm-btn-primary:active:not(:disabled) {
+    background: linear-gradient(135deg, #d4a574, #c89558);
     border-color: rgba(255, 255, 255, 0.65);
 }
 
 body.light-mode .dm-btn-primary:active:not(:disabled) {
+    background: linear-gradient(135deg, #d4a574, #c89558);
     border-color: rgba(80, 40, 10, 0.5);
 }
 
