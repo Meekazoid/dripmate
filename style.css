@@ -4900,11 +4900,15 @@ body:not(.light-mode) .quick-tips-scroll-fade {
     -webkit-tap-highlight-color: transparent;
 }
 
-.dm-btn:focus { outline: none; }
+.dm-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
 
 .dm-btn:focus-visible {
     outline: 2px solid rgba(212, 165, 116, 0.6);
     outline-offset: 2px;
+    box-shadow: none;
 }
 
 .dm-btn:disabled {
@@ -4920,7 +4924,9 @@ body:not(.light-mode) .quick-tips-scroll-fade {
     border: none;
 }
 
-.dm-btn-primary:hover:not(:disabled) { opacity: 0.9; }
+@media (hover: hover) {
+    .dm-btn-primary:hover:not(:disabled) { opacity: 0.9; }
+}
 
 .dm-btn-primary:active:not(:disabled) {
     filter: brightness(0.85);
