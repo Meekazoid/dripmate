@@ -4884,8 +4884,16 @@ body:not(.light-mode) .quick-tips-scroll-fade {
     letter-spacing: 0.04em;
     cursor: pointer;
     border: none;
-    transition: opacity 0.2s, transform 0.1s;
+    transition: opacity 0.2s, transform 0.1s, filter 0.1s;
     text-align: center;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dm-btn:focus { outline: none; }
+
+.dm-btn:focus-visible {
+    outline: 2px solid rgba(212, 165, 116, 0.6);
+    outline-offset: 2px;
 }
 
 .dm-btn:disabled {
@@ -4902,6 +4910,11 @@ body:not(.light-mode) .quick-tips-scroll-fade {
 }
 
 .dm-btn-primary:hover:not(:disabled) { opacity: 0.9; }
+
+.dm-btn-primary:active:not(:disabled) {
+    filter: brightness(0.85);
+    transform: translateY(1px);
+}
 
 .dm-btn-secondary {
     background: transparent;
