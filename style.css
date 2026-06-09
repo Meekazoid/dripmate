@@ -4924,10 +4924,6 @@ body:not(.light-mode) .quick-tips-scroll-fade {
     border: none;
 }
 
-@media (hover: hover) {
-    .dm-btn-primary:hover:not(:disabled) { opacity: 0.9; }
-}
-
 .dm-btn-primary:active:not(:disabled) {
     filter: brightness(0.85);
     transform: translateY(1px);
