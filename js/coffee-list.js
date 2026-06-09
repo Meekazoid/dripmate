@@ -303,6 +303,8 @@ function buildRoasteryStack(items) {
         incomingEl.style.pointerEvents = 'none';
         incomingEl.style.zIndex = '3';
         ghostLayer.style.visibility = 'hidden';
+        counter.style.visibility = 'hidden';
+        dots.style.visibility = 'hidden';
         wrapper.style.overflow = 'hidden';
         wrapper.appendChild(incomingEl);
 
@@ -318,6 +320,8 @@ function buildRoasteryStack(items) {
             }
             wrapper.style.overflow = '';
             ghostLayer.style.visibility = '';
+            counter.style.visibility = '';
+            dots.style.visibility = '';
             current = nextIndex;
             slot.style.transform = '';
             slot.style.opacity = '';
