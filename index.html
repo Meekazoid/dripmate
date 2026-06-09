@@ -70,24 +70,24 @@
             </div>
 
             <div class="auth-gate-tabs" role="tablist">
-                <button class="auth-gate-tab auth-gate-tab--active" id="authGateTabCode" role="tab" aria-selected="true">Enter code</button>
-                <button class="auth-gate-tab" id="authGateTabRegister" role="tab" aria-selected="false">Request access</button>
-            </div>
-
-            <!-- Code panel -->
-            <div id="authGatePanelCode" class="auth-gate-panel" role="tabpanel">
-                <p class="auth-gate-hint">Enter the access code from your invitation email.</p>
-                <input type="text" id="authGateCodeInput" class="auth-gate-input" placeholder="BREW-XXXXXX" autocomplete="off" spellcheck="false">
-                <button id="authGateCodeBtn" class="auth-gate-btn">Activate</button>
-                <div id="authGateCodeStatus" class="auth-gate-status" style="display:none;"></div>
+                <button class="auth-gate-tab auth-gate-tab--active" id="authGateTabRegister" role="tab" aria-selected="true">Request access</button>
+                <button class="auth-gate-tab" id="authGateTabCode" role="tab" aria-selected="false">Enter code</button>
             </div>
 
             <!-- Register panel -->
-            <div id="authGatePanelRegister" class="auth-gate-panel" style="display:none;" role="tabpanel">
+            <div id="authGatePanelRegister" class="auth-gate-panel" role="tabpanel">
                 <p class="auth-gate-hint">Don't have a code yet?</p>
                 <input type="email" id="authGateEmailInput" class="auth-gate-input" placeholder="you@roastery.com" autocomplete="email" inputmode="email">
                 <button id="authGateRegisterBtn" class="auth-gate-btn">Request access</button>
                 <div id="authGateRegisterStatus" class="auth-gate-status" style="display:none;"></div>
+            </div>
+
+            <!-- Code panel -->
+            <div id="authGatePanelCode" class="auth-gate-panel" style="display:none;" role="tabpanel">
+                <p class="auth-gate-hint">Enter the access code from your invitation email.</p>
+                <input type="text" id="authGateCodeInput" class="auth-gate-input" placeholder="BREW-XXXXXX" autocomplete="off" spellcheck="false">
+                <button id="authGateCodeBtn" class="auth-gate-btn">Activate</button>
+                <div id="authGateCodeStatus" class="auth-gate-status" style="display:none;"></div>
             </div>
         </div>
     </div>
