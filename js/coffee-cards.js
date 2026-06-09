@@ -83,7 +83,13 @@ export function initPressedStateInteractions() {
     pressedStateBound = true;
 
     document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .edit-btn, .dm-btn');
+        const dmBtn = e.target.closest('.dm-btn');
+        if (dmBtn) {
+            setTimeout(() => dmBtn.blur(), 150);
+            return;
+        }
+
+        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .edit-btn');
         if (!btn) return;
 
         if (btn.classList.contains('edit-btn') && btn.classList.contains('editing')) return;
