@@ -4300,7 +4300,8 @@ body.light-mode .roastery-stack-counter {
 /* Submit button — compact, not full-width */
 #appFeedbackSubmitBtn {
     padding: 10px 22px;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 400;
     width: auto;
 }
 
@@ -4918,6 +4919,10 @@ body:not(.light-mode) .quick-tips-scroll-fade {
 
 .dm-btn-primary:active:not(:disabled) {
     border-color: rgba(255, 255, 255, 0.65);
+}
+
+body.light-mode .dm-btn-primary:active:not(:disabled) {
+    border-color: rgba(80, 40, 10, 0.5);
 }
 
 .dm-btn-secondary {
