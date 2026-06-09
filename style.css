@@ -204,11 +204,11 @@ h1 {
     margin-top: 0;
 }
 
-/* --- Coffee Shot Signature Button (Golden Outline) --- */ .cs-btn {
+/* --- Coffee Shot Signature Button (Single-Ring Shutter) --- */ .cs-btn {
     position: relative;
     display: flex;
-    width: 180px;
-    height: 180px;
+    width: 162px;
+    height: 162px;
     margin: 0 auto;
     padding: 0;
     background: transparent;
@@ -223,7 +223,7 @@ h1 {
 .cs-btn:hover {
     transform: none;
     background: transparent;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.38), inset 0 0 0 1px rgba(212, 165, 116, 0.12);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.38), inset 0 0 0 1px rgba(212, 165, 116, 0.16);
 }
 
 .cs-btn:active {
@@ -242,11 +242,14 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     padding: 16px;
     width: 100%;
     height: 100%;
-    background: rgba(48, 30, 14, 0.72);
+    background:
+        radial-gradient(ellipse 55% 35% at 50% 0%, rgba(212, 165, 116, 0.07) 0%, transparent 70%),
+        rgba(48, 30, 14, 0.72);
+    box-shadow: inset 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 -3px 10px rgba(0, 0, 0, 0.22);
     border: none;
     border-radius: 999px;
 }
@@ -264,7 +267,7 @@ body.light-mode .add-section {
     align-items: center;
     justify-content: center;
     overflow: visible;
-    transform: translateY(-6px);
+    transform: translateY(-4px);
 }
 
 .cs-coffeebag {
@@ -277,33 +280,11 @@ body.light-mode .add-section {
     opacity: 0.95;
 }
 
-.cs-ring {
-    position: absolute;
-    border-radius: 999px;
-    border: 1px solid rgba(212, 165, 116, 0.08);
-    pointer-events: none;
-}
-
-.cs-ring--outer {
-    width: 84%;
-    height: 84%;
-    top: 8%;
-    left: 8%;
-}
-
-.cs-ring--inner {
-    width: 67%;
-    height: 67%;
-    top: 16.5%;
-    left: 16.5%;
-}
-
 .cs-scanline {
-    position: absolute;
-    left: 13%;
-    right: 13%;
-    top: 48%;
+    width: 70%;
     height: 1px;
+    flex-shrink: 0;
+    align-self: center;
     background: linear-gradient(90deg, transparent 0%, rgba(212, 165, 116, 0.28) 50%, transparent 100%);
     pointer-events: none;
 }
@@ -317,10 +298,10 @@ body.light-mode .add-section {
 
 .cs-label {
     font-size: 1.38rem;
-    font-weight: 300;
+    font-weight: 200;
     font-family: 'Sora', sans-serif;
     color: #C8945A;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     line-height: 1.06;
     padding: 0 0.16em;
 }
@@ -346,15 +327,14 @@ body.light-mode .cs-label {
 }
 
 body.light-mode .cs-content {
-    background: rgba(253, 248, 242, 0.92);
+    background:
+        radial-gradient(ellipse 55% 35% at 50% 0%, rgba(255, 255, 255, 0.18) 0%, transparent 70%),
+        rgba(253, 248, 242, 0.92);
+    box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.07), inset 0 -2px 8px rgba(0, 0, 0, 0.04);
 }
 
 body.light-mode .cs-coffeebag {
     fill: #8B6F47;
-}
-
-body.light-mode .cs-ring {
-    border-color: rgba(139, 111, 71, 0.07);
 }
 
 body.light-mode .cs-scanline {
@@ -3717,13 +3697,13 @@ button::-moz-focus-inner {
     }
 
     .cs-btn {
-        width: 192px !important;
-        height: 192px !important;
+        width: 174px !important;
+        height: 174px !important;
     }
 
     .cs-label {
         font-size: 1.14rem !important;
-        letter-spacing: -0.01em !important;
+        letter-spacing: 0 !important;
         padding: 0 0.16em !important;
     }
 
@@ -3733,7 +3713,7 @@ button::-moz-focus-inner {
     }
 
     .cs-icon-wrap {
-        transform: translateY(-9px) !important;
+        transform: translateY(-7px) !important;
     }
 
     

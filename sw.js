@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v57.2'; // feat: Register-first auth gate
+const CACHE_VERSION = 'v57.3'; // feat: redesign CoffeeShot button to single-ring shutter
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
