@@ -187,11 +187,13 @@ export function renderCoffeeCard(coffee, index) {
             <div class="coffee-header" style="position: relative;">
                 
                 <div class="color-picker-wrapper">
-                    <button class="color-picker-btn" id="color-picker-btn-${index}" onclick="event.stopPropagation(); window.toggleColorPicker(${index});">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 128 128">
-                            <g>
-                            <path d="M 9.20 122.50 C6.28,121.68 3.02,120.55 1.95,119.97 C-0.94,118.42 -0.44,116.04 2.93,115.36 C7.78,114.39 9.98,110.99 12.61,100.34 C15.98,86.73 19.70,81.88 29.28,78.62 C31.92,77.73 34.63,77.00 35.31,77.00 C35.99,77.00 39.69,73.81 43.53,69.90 C61.29,51.83 101.05,17.39 113.95,8.90 C124.10,2.23 129.37,2.42 127.61,9.41 C125.60,17.44 98.50,50.99 64.75,87.26 C59.39,93.02 55.00,98.36 54.99,99.12 C54.97,101.83 50.13,110.85 46.59,114.77 C41.28,120.65 34.42,123.29 23.50,123.67 C17.69,123.87 12.62,123.45 9.20,122.50 ZM 35.50 116.62 C41.83,113.63 45.19,110.03 48.57,102.63 L 51.25 96.77 L 43.79 89.31 C36.66,82.18 36.17,81.88 32.78,82.51 C27.86,83.44 23.34,86.39 21.03,90.20 C19.95,91.97 18.11,97.61 16.95,102.74 C15.55,108.87 13.99,113.05 12.39,114.95 C9.38,118.52 9.87,118.72 22.00,118.87 C29.00,118.96 31.38,118.56 35.50,116.62 ZM 54.45 78.66 L 48.62 72.13 L 44.81 75.15 C42.71,76.81 41.00,78.46 41.00,78.81 C41.00,79.16 43.80,82.27 47.23,85.73 L 53.45 92.01 L 56.87 88.60 L 60.29 85.18 L 54.45 78.66 ZM 69.28 75.25 C92.57,50.55 125.04,10.00 121.53,10.00 C118.15,10.00 82.40,39.46 60.50,60.28 L 51.50 68.83 L 57.47 74.92 C60.75,78.26 63.53,81.00 63.65,81.00 C63.76,81.00 66.30,78.41 69.28,75.25 Z" fill="currentColor"/>
-                            </g>
+                    <button class="color-picker-btn" aria-label="Choose color" id="color-picker-btn-${index}" onclick="event.stopPropagation(); window.toggleColorPicker(${index});">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+                            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+                            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+                            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2Z"/>
                         </svg>
                     </button>
                     <div class="color-picker-popup" id="color-popup-${index}" onclick="event.stopPropagation();">
