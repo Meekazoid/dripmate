@@ -5,6 +5,46 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [2.6.0] – 2026-06-09 · Auth Gate, Design Unification & Brew Tuning
+
+### Added
+- **Mandatory activation gate** before app access: full-screen, non-dismissible overlay shown when no valid token is present. Brand logo + `drip·mate` wordmark + "Precision meets ritual" tagline; English copy; magic-link arrivals bypass it; local-only token check keeps the PWA offline-startable. Opens on the **Register tab** by default (Register left, Enter code right) for the tester rollout.
+- **Sign out** in Settings — clears the device token and `deviceId`, returns to the gate; local coffees and preferences are preserved.
+- **Standardized button kit** (`dm-btn` with `dm-btn-primary` / `-secondary` / `-danger` / `-auto`) and a unified **status component** (`dm-status` / `-success` / `-error`), namespaced under `dm-*`.
+- **DF64 Gen 2** single-dose grinder — 0–90 stepless scale, `baseFactor` calibrated so V60 ≈ 55; remaining methods derive automatically and are pre-validated against real-world ranges for future activation.
+- **Flow (draw-down) dimension** in Brew Feedback — a subjective "too fast / just right / too slow" rating that tunes grind (fast → finer, slow → coarser); grind-only, capped with the existing ±4 logic.
+- **Dose-size hint** on the coffee-amount control — informational nudge for large/small batches (no automatic grind change).
+- **"Value set" indicator dot** (green, like "Device activated") next to the water-hardness value.
+
+### Changed
+- **Settings menu** reworked into four labelled sections — Account, Account recovery, Help, Legal — with consistent English copy; the two recovery paths consolidated into one. Replay Tutorial and Quick Tips grouped under Help.
+- **All modals migrated onto the kit** (Cold Brew, App Feedback, confirm dialogs, Water), readable in light and dark.
+- **Buttons**: `dm-btn-danger` as a red **outline** (Sign out / Delete / Okay); Restore and Cancel use the gold primary look; lighter button font-weight; on-brand pressed/active state.
+- **Water hardness**: manual °dH entry only, with a supplier hint; removed the redundant "Manual Override" label; more spacing before the Brew Impact box.
+- **Archive (Cold Brew) info-box** copy corrected — these are archived (not "deleted") coffees, restorable or deletable.
+- **CoffeeShot button** redesigned to a single-ring shutter: concentric rings removed, scanline moved inline between the bag glyph and the wordmark, button ~15px smaller, "COFFEESHOT" wordmark lightened (Sora 200, wider tracking, reduced opacity) to recede in dark mode. Coffee-bag SVG retained.
+- **Coffee-card color picker icon**: paintbrush → Lucide `palette`.
+- **Roastery card-stack animation** polished — spring-style easing (~300ms emphasized curve), true cross-slide (incoming card animates in instead of fade-then-swap), subtle ghost-layer coupling for depth, velocity-based fling. Architecture (Pointer Events + WAAPI) retained, not replaced.
+
+### Fixed
+- **Grinder & method preferences** now apply from the login response on sign-in — returning users no longer see the "Select" placeholder for an already-chosen setup.
+- Added the missing **`syncMethodPreference`** so the brew method persists to the backend; no longer reverts to V60 after a reload.
+- **Replay Tutorial** no longer clears `setupChosen`, so grinder/method chips keep their values after replaying.
+- **CSS collision**: the new full-button styling had overridden existing `.btn` hook elements (Manual, Upload, empty-state scan), removing borders and resizing them. Resolved by namespacing the kit to `dm-*`; the pre-existing `.btn` icon hook left intact.
+- **Quick Tips** dark-mode fade now fades to the modal surface instead of an opaque bar.
+- **Delete Coffee** modal header icon corrected (trash icon).
+- **Stack counter and dots** no longer clipped during the cross-slide transition.
+
+### Removed
+- **ZIP-code water-hardness estimate** — unreliable, since one postal code can span multiple supply zones and silently fed an incorrect value into brew tuning.
+
+### Known follow-ups (deferred)
+- Orphan exports in `state.js` (`userZipCode`, `setUserZipCode`, `setApiWaterHardness`) — no consumers.
+- `apiWaterHardness` fallback in `brew-engine.js` is now a dead branch (the ZIP path was its only writer).
+- Future brew methods are pre-calibrated for the DF64 via `baseFactor`; espresso intentionally excluded (non-linear at the fine end).
+
+---
+
 ## [2.5.0] – 2026-06-01 · SSOT Registry + Docs-from-Code
 
 ### Added
