@@ -322,8 +322,9 @@ export function renderCoffeeCard(coffee, index) {
 
                 <div class="feedback-section">
                     <h4>Brew Feedback</h4>
-                    <div class="feedback-cupping-note">Cupping-style quick rating</div>
+                    <div class="feedback-cupping-note">Quick rating — taste & draw-down</div>
                     ${[
+                        ['flow', 'Flow', ['too fast', 'just right', 'too slow']],
                         ['bitterness', 'Bitterness', ['mild', 'balanced', 'bitter']],
                         ['sweetness', 'Sweetness', ['dry', 'balanced', 'sweet']],
                         ['acidity', 'Acidity', ['muted', 'balanced', 'bright']],

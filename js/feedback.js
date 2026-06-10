@@ -306,7 +306,7 @@ function generateSuggestion(index) {
     let totalTempImpact = 0;
     let activeInputs = 0;
 
-    const categories = ['bitterness', 'sweetness', 'acidity', 'body'];
+    const categories = ['flow', 'bitterness', 'sweetness', 'acidity', 'body'];
     categories.forEach(key => {
         const val = feedback[key] !== undefined ? Number(feedback[key]) : 50;
         if (val !== 50) activeInputs++;
@@ -337,6 +337,12 @@ function generateSuggestion(index) {
     const boWeight = getFeedbackWeight(boVal);
     if (boVal > 50) { totalGrindImpact += (3 * boWeight); }
     else if (boVal < 50) { totalGrindImpact -= (3 * boWeight); }
+
+    // Flow (draw-down speed) — grind only, no temp influence
+    const fVal = feedback.flow !== undefined ? Number(feedback.flow) : 50;
+    const fWeight = getFeedbackWeight(fVal);
+    if (fVal > 50) { totalGrindImpact += (4 * fWeight); }   // too slow -> coarser
+    else if (fVal < 50) { totalGrindImpact -= (4 * fWeight); } // too fast -> finer
 
     // 2. Round & Cap values
     const finalGrindDelta = Math.round(totalGrindImpact);
@@ -748,7 +754,7 @@ export function undoFeedbackSliders(index) {
     coffee.feedback = {};
 
     // Reset all sliders to center (50)
-    const categories = ['bitterness', 'sweetness', 'acidity', 'body'];
+    const categories = ['flow', 'bitterness', 'sweetness', 'acidity', 'body'];
     categories.forEach(cat => {
         const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${cat}"]`);
         if (sliderEl) {
