@@ -269,6 +269,7 @@ export function renderCoffeeCard(coffee, index) {
                             <span>30g</span>
                         </div>
                     </div>
+                    <div class="dose-hint" id="doseHint-${index}"></div>
                 </div>
 
                 <div class="param-grid">

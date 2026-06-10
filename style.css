@@ -2176,6 +2176,20 @@ body.light-mode .feedback-slider-labels {
     color: #7a7a7a;
 }
 
+.dose-hint {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-top: 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.dose-hint.visible {
+    opacity: 1;
+}
+
 .feedback-suggestion {
     background: var(--bg-secondary);
     border: 1px solid var(--border);

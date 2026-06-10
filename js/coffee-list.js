@@ -606,6 +606,21 @@ export function updateCoffeeAmountLive(value, originalIndex) {
         });
     }
 
+    // Informational dose-size hint (flow speed guidance, no automatic adjustment)
+    const hintEl = document.getElementById(`doseHint-${originalIndex}`);
+    if (hintEl) {
+        if (amount >= 24) {
+            hintEl.textContent = 'Larger batch — flow runs slower; you may need to grind a touch coarser.';
+            hintEl.classList.add('visible');
+        } else if (amount <= 14) {
+            hintEl.textContent = 'Small dose — flow runs faster; you may need to grind a touch finer.';
+            hintEl.classList.add('visible');
+        } else {
+            hintEl.textContent = '';
+            hintEl.classList.remove('visible');
+        }
+    }
+
     localStorage.setItem('coffees', JSON.stringify(coffees));
 }
 
