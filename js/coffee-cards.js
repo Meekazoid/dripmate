@@ -272,53 +272,69 @@ export function renderCoffeeCard(coffee, index) {
                     <div class="dose-hint" id="doseHint-${index}"></div>
                 </div>
 
-                <div class="param-grid">
-                    ${renderGrindParamBox(index, brewParams)}
-                    <div class="param-box">
-                        <div class="param-label">Temperature</div>
-                        <div class="param-value-row">
-                            <div class="param-value" id="temp-value-${index}">${brewParams.temperature}</div>
-                            <div class="param-adjust">
-                                <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, -1);">−</button>
-                                <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, 1);">+</button>
+                <div class="manual-adjustments-block">
+                    <div class="manual-adjustments-label">Manual Adjustments</div>
+                    <div class="manual-adjustments-sub">(saved for your next brew &middot; feedback overrides it)</div>
+                    <div class="manual-adjustments-grid">
+                        ${renderGrindParamBox(index, brewParams)}
+                        <div class="param-box">
+                            <div class="param-label">Temperature</div>
+                            <div class="param-value-row">
+                                <div class="param-value" id="temp-value-${index}">${brewParams.temperature}</div>
+                                <div class="param-adjust">
+                                    <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, -1);">−</button>
+                                    <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, 1);">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="param-box">
-                        <div class="param-label">Water</div>
-                        <div class="param-value" id="water-value-${index}">${brewParams.waterAmountMl}ml</div>
-                    </div>
-                    <div class="param-box">
-                        <div class="param-label">Target Time</div>
-                        <div class="param-value">${brewParams.targetTime}</div>
-                    </div>
                 </div>
 
-                <div class="brew-timer-section">
-                    <div class="timer-display" id="brew-timer-display-${index}">00:00</div>
-                    <div class="timer-controls-main">
-                        <button class="timer-btn start-brew" id="start-brew-${index}" onclick="event.stopPropagation(); startBrewTimer(${index});">
-                            <span class="brew-btn-icon">${BREW_ICONS[brewParams.method] || BREW_ICONS.v60}</span>
-                            Start Brew
-                        </button>
-                    </div>
-                    <div class="timer-controls-secondary">
-                        <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="event.stopPropagation(); pauseBrewTimer(${index});" disabled>Pause</button>
-                        <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index});" disabled>Reset</button>
-                    </div>
-                </div>
-
-                <div class="brew-steps">
-                    <h4>${(METHODS[brewParams.method] || METHODS.v60).stepHeaderLabel}</h4>
-                    ${brewParams.steps.map((step, stepIndex) => `
-                        <div class="step">
-                            <div class="step-time">${step.time}</div>
-                            <div class="step-action">${boldWeights(step.action)}</div>
-                            <div class="step-progress">
-                                <div class="step-progress-bar" id="progress-bar-${index}-${stepIndex}"></div>
-                            </div>
+                <div class="brew-block">
+                    <div class="brew-vitals">
+                        <div class="brew-vital-item">
+                            <svg class="brew-vital-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <div class="brew-vital-value">${brewParams.targetTime}</div>
+                            <div class="brew-vital-label">Target Time</div>
                         </div>
-                    `).join('')}
+                        <div class="brew-vital-item">
+                            <svg class="brew-vital-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                            </svg>
+                            <div class="brew-vital-value" id="water-value-${index}">${brewParams.waterAmountMl}ml</div>
+                            <div class="brew-vital-label">Water</div>
+                        </div>
+                    </div>
+
+                    <div class="brew-timer-section">
+                        <div class="timer-display" id="brew-timer-display-${index}">00:00</div>
+                        <div class="timer-controls-main">
+                            <button class="timer-btn start-brew" id="start-brew-${index}" onclick="event.stopPropagation(); startBrewTimer(${index});">
+                                <span class="brew-btn-icon">${BREW_ICONS[brewParams.method] || BREW_ICONS.v60}</span>
+                                Start Brew
+                            </button>
+                        </div>
+                        <div class="timer-controls-secondary">
+                            <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="event.stopPropagation(); pauseBrewTimer(${index});" disabled>Pause</button>
+                            <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index});" disabled>Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="brew-steps">
+                        <h4>${(METHODS[brewParams.method] || METHODS.v60).stepHeaderLabel}</h4>
+                        ${brewParams.steps.map((step, stepIndex) => `
+                            <div class="step">
+                                <div class="step-time">${step.time}</div>
+                                <div class="step-action">${boldWeights(step.action)}</div>
+                                <div class="step-progress">
+                                    <div class="step-progress-bar" id="progress-bar-${index}-${stepIndex}"></div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
 
                 <div class="feedback-section">
@@ -356,18 +372,6 @@ export function renderCoffeeCard(coffee, index) {
                     <button class="reset-adjustments-btn" onclick="event.stopPropagation(); resetCoffeeAdjustments(${index});">Reset Adjustments</button>
                 </div>
 
-                <div style="margin-top: 20px; padding: 16px; background: var(--bg-secondary); border-radius: 8px; font-size: 0.9rem;">
-                    <div style="display: flex; align-items: flex-start; gap: 10px;">
-                        <svg style="width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
-                            <path d="M9 18h6"></path><path d="M10 22h4"></path>
-                        </svg>
-                        <div>
-                            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">Tip:</strong>
-                            <span style="color: var(--text-secondary); line-height: 1.5;">${brewParams.notes}</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     `;

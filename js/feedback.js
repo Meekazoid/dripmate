@@ -387,21 +387,35 @@ function generateSuggestion(index) {
         newTempStr = adjustTemp(currentTemp, cappedTemp);
     }
 
-    // 4. UI Rendering (compact layout)
+    // 4. UI Rendering
+    const strategyLines = strategyLabels.map((label, i) => {
+        const isGrind = i === 0 && cappedGrind !== 0;
+        const valueStr = isGrind
+            ? (previewGrind ? `Grind: ${previewGrind}` : '')
+            : (newTempStr ? `Temp: ${newTempStr}` : '');
+        return `
+            <div class="strategy-line">
+                <div class="strategy-line-label">
+                    <span class="strategy-arrow">&#8594;</span>${label.replace(/^→\s*/, '')}
+                </div>
+                ${valueStr ? `<div class="strategy-line-value">${valueStr}</div>` : ''}
+            </div>
+            ${i < strategyLabels.length - 1 ? '<div class="strategy-divider"></div>' : ''}
+        `;
+    }).join('');
+
     suggestionDiv.innerHTML = `
         <div class="suggestion-title">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
-                <path d="M9 18h6"></path><path d="M10 22h4"></path>
+                <line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>
+                <circle cx="8" cy="6" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
+                <circle cx="16" cy="12" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
+                <circle cx="10" cy="18" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
             </svg>
             Tuning Strategy
         </div>
-        <div class="suggestion-text" style="font-weight: 500; color: var(--text-primary);">
-            ${strategyLabels.join('<br>')}
-        </div>
-        <div class="suggestion-values">
-            ${previewGrind ? `<div class="suggestion-value"><strong>Grind:</strong> ${previewGrind}</div>` : ''}
-            ${newTempStr ? `<div class="suggestion-value"><strong>Temp:</strong> ${newTempStr}</div>` : ''}
+        <div class="suggestion-strategies">
+            ${strategyLines}
         </div>
         <div class="suggestion-btn-row">
             <button class="apply-suggestion-btn" onclick="event.stopPropagation(); applySuggestion(${index}, ${cappedGrind}, '${newTempStr}')">

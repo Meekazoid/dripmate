@@ -79,15 +79,13 @@ export function startBrewTimer(index) {
     if (pauseBtn) { pauseBtn.disabled = false; pauseBtn.classList.remove('resume-active'); }
     if (resetBtn) resetBtn.disabled = false;
 
-    // Smooth scroll to pour-over steps
+    // Smooth scroll to brew block (vitals visible at top)
     const card = document.querySelector(`.coffee-card[data-original-index="${index}"]`);
     if (card) {
-        const brewSteps = card.querySelector('.brew-steps');
-        if (brewSteps) {
-            const targetTimeBox = card.querySelector('.param-grid');
-            const offset = targetTimeBox ? targetTimeBox.offsetHeight + 60 : 100;
-            const elementPosition = brewSteps.getBoundingClientRect().top;
-            window.scrollTo({ top: elementPosition + window.pageYOffset - offset, behavior: 'smooth' });
+        const brewBlock = card.querySelector('.brew-block');
+        if (brewBlock) {
+            const elementPosition = brewBlock.getBoundingClientRect().top;
+            window.scrollTo({ top: elementPosition + window.pageYOffset - 20, behavior: 'smooth' });
         }
     }
 
