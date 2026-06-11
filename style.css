@@ -1636,7 +1636,7 @@ body.light-mode .water-hardness-badge {
 
 .ratio-control h4 {
     font-family: 'Sora', sans-serif;
-    color: var(--text-primary);
+    color: var(--accent);
     margin-bottom: 12px;
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -1659,8 +1659,9 @@ body.light-mode .water-hardness-badge {
 }
 
 .ratio-value {
+    font-family: 'Sora', sans-serif;
     font-size: 1.3rem;
-    font-weight: 500;
+    font-weight: 300;
     color: var(--accent);
 }
 
@@ -1671,8 +1672,10 @@ body.light-mode .water-hardness-badge {
 }
 
 .slider-track span {
+    font-family: 'Sora', sans-serif;
     font-size: 0.75rem;
-    color: var(--text-secondary);
+    font-weight: 300;
+    color: var(--accent);
     min-width: 30px;
 }
 
@@ -1819,6 +1822,7 @@ body.light-mode .ratio-slider input[type="range"]::-moz-range-thumb {
 }
 
 .brew-steps h4 {
+    font-family: 'Sora', sans-serif;
     margin-bottom: 14px;
     color: var(--accent);
     font-size: 0.72rem;
@@ -1835,7 +1839,8 @@ body.light-mode .ratio-slider input[type="range"]::-moz-range-thumb {
 }
 
 .step-time {
-    font-weight: 700;
+    font-family: 'Sora', sans-serif;
+    font-weight: 300;
     color: var(--accent);
     font-size: 0.85rem;
 }
@@ -1847,6 +1852,12 @@ body.light-mode .ratio-slider input[type="range"]::-moz-range-thumb {
     font-size: 0.85rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
+}
+
+.step-action strong {
+    font-family: 'Sora', sans-serif;
+    font-weight: 300;
+    color: var(--accent);
 }
 
 .step-progress {
@@ -1885,6 +1896,7 @@ body.light-mode .step-progress-bar {
 }
 
 .timer-display {
+    font-family: 'Sora', sans-serif;
     font-size: 2.5rem;
     font-weight: 300;
     text-align: center;
@@ -2046,6 +2058,7 @@ body.light-mode .step-progress-bar {
 }
 
 .feedback-section h4 {
+    font-family: 'Sora', sans-serif;
     margin-bottom: 14px;
     color: var(--accent);
     font-size: 0.72rem;
@@ -2071,7 +2084,7 @@ body.light-mode .step-progress-bar {
     display: block;
     margin-bottom: 5px;
     color: var(--accent);
-    font-size: 0.65rem;
+    font-size: 0.8rem;
     font-weight: 400;
 }
 
@@ -3833,7 +3846,9 @@ header {
 }
 
 .roast-date-display.has-date {
-    color: var(--text-primary);
+    font-family: 'Sora', sans-serif;
+    font-weight: 300;
+    color: var(--accent);
     border-color: var(--accent);
 }
 
