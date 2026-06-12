@@ -38,10 +38,14 @@ html {
     /* Braun-Border                 (war: #2a2a2a) */     --shadow: rgba(0, 0, 0, 0.6);
     /* Minimal dunkler              (war: 0.5) */     --color-danger: #ff6b6b;
     --color-success: #4CAF50;
-    --dm-water-top-a: #d4fbe9;
-    --dm-water-top-b: #6fe9b6;
-    --dm-water-glow: rgba(60,220,170,0.50);
+    --dm-water-top-a: #2a2017;
+    --dm-water-top-b: #1d160f;
+    --dm-water-glow: rgba(200,148,90,0.45);
     --dm-wave-track-bg: rgba(232,213,192,0.08);
+    --dm-wave-front-top: #d9ad77;
+    --dm-wave-front-bot: #a06c35;
+    --dm-wave-back-top: #b8844a;
+    --dm-wave-back-bot: #6f4a22;
 }
 
 body.light-mode {
@@ -56,8 +60,14 @@ body.light-mode {
     /* Warmes Beige-Grau            (war: #e0e0e0) */     --shadow: rgba(0, 0, 0, 0.1);
     --color-danger: #c62828;
     --color-success: #2E7D32;
-    --dm-water-glow: rgba(31,150,120,0.35);
+    --dm-water-top-a: #f4e7d5;
+    --dm-water-top-b: #ecdcc6;
+    --dm-water-glow: rgba(176,125,66,0.32);
     --dm-wave-track-bg: rgba(16,13,8,0.06);
+    --dm-wave-front-top: #cd9a5e;
+    --dm-wave-front-bot: #9c672f;
+    --dm-wave-back-top: #b8844a;
+    --dm-wave-back-bot: #855326;
 }
 
 /* ==========================================    3. BODY & LAYOUT    ========================================== */  body {

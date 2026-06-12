@@ -7,9 +7,34 @@
 
 const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+const SPEED = 0.6;       // global tempo multiplier (lower = calmer)
+const CALM_DONE = 0.5;   // residual motion factor on completed steps
+const EASE_TAU = 0.75;   // seconds; higher = softer active->complete transition
+
 let waves = [];
 let rafId = null;
+let lastTs = null;
 let resizeObs = null;
+
+// CSS-driven palette — read once on init, re-read on theme swap
+const palette = {};
+function readPalette() {
+  const s = getComputedStyle(document.body);
+  palette.frontTop = s.getPropertyValue('--dm-wave-front-top').trim();
+  palette.frontBot = s.getPropertyValue('--dm-wave-front-bot').trim();
+  palette.backTop  = s.getPropertyValue('--dm-wave-back-top').trim();
+  palette.backBot  = s.getPropertyValue('--dm-wave-back-bot').trim();
+}
+
+let themeObs = null;
+function ensureThemeObserver() {
+  if (themeObs) return;
+  themeObs = new MutationObserver(function () {
+    readPalette();
+    if (PREFERS_REDUCED) waves.forEach(function (o) { drawWave(o); });
+  });
+  themeObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+}
 
 function rand(a, b) { return a + Math.random() * (b - a); }
 
@@ -39,7 +64,8 @@ function sizeWave(o) {
   o.w = w; o.h = h;
 }
 
-function fillLayer(ctx, w, h, baseline, comps, t, calm, grad, alpha) {
+// tAcc replaces the old wall-clock t; calm is pre-computed per frame in stepWave
+function fillLayer(ctx, w, h, baseline, comps, tAcc, calm, grad, alpha) {
   ctx.globalAlpha = alpha;
   ctx.beginPath();
   let first = true;
@@ -47,7 +73,7 @@ function fillLayer(ctx, w, h, baseline, comps, t, calm, grad, alpha) {
     let y = baseline;
     for (let i = 0; i < comps.length; i++) {
       const c = comps[i];
-      y += c.amp * calm * Math.sin((6.2832 / c.len) * x + c.speed * calm * t + c.phase);
+      y += c.amp * calm * Math.sin((6.2832 / c.len) * x + c.speed * tAcc + c.phase);
     }
     if (first) { ctx.moveTo(x, y); first = false; } else { ctx.lineTo(x, y); }
   }
@@ -56,34 +82,42 @@ function fillLayer(ctx, w, h, baseline, comps, t, calm, grad, alpha) {
   ctx.globalAlpha = 1;
 }
 
-function drawWave(o, t) {
+function drawWave(o) {
   const ctx = o.ctx, w = o.w, h = o.h;
   if (!w) return;
   ctx.clearRect(0, 0, w, h);
-
   const pct = parseFloat(o.bar.style.width) || 0;
   if (pct <= 0) return;
-  const calm = pct >= 99.5 ? 0.4 : 1;
 
   const gBack = ctx.createLinearGradient(0, 0, 0, h);
-  gBack.addColorStop(0, '#1492c4');
-  gBack.addColorStop(1, '#0a6f9e');
-  fillLayer(ctx, w, h, h * 0.56, o.comps.back, t, calm, gBack, 0.55);
+  gBack.addColorStop(0, palette.backTop);
+  gBack.addColorStop(1, palette.backBot);
+  fillLayer(ctx, w, h, h * 0.56, o.comps.back, o.tAcc, o.calm, gBack, 0.55);
 
   const gFront = ctx.createLinearGradient(0, 0, 0, h);
-  gFront.addColorStop(0, '#22cabf');
-  gFront.addColorStop(1, '#0a86b5');
-  fillLayer(ctx, w, h, h * 0.5, o.comps.front, t, calm, gFront, 0.95);
+  gFront.addColorStop(0, palette.frontTop);
+  gFront.addColorStop(1, palette.frontBot);
+  fillLayer(ctx, w, h, h * 0.5, o.comps.front, o.tAcc, o.calm, gFront, 0.95);
+}
+
+// Advance the per-wave calm factor and accumulated phase each frame
+function stepWave(o, dt) {
+  const done = o.bar.classList.contains('is-complete');
+  const target = done ? CALM_DONE : 1;
+  o.calm += (target - o.calm) * (1 - Math.exp(-dt / EASE_TAU));
+  o.tAcc += o.calm * dt * SPEED;
 }
 
 function loop(ts) {
-  const t = ts / 1000;
-  for (let i = 0; i < waves.length; i++) drawWave(waves[i], t);
+  if (lastTs === null) lastTs = ts;
+  let dt = (ts - lastTs) / 1000;
+  if (dt > 0.05) dt = 0.05;   // clamp after tab refocus
+  lastTs = ts;
+  for (let i = 0; i < waves.length; i++) {
+    stepWave(waves[i], dt);
+    drawWave(waves[i]);
+  }
   rafId = requestAnimationFrame(loop);
-}
-
-function drawStatic() {
-  for (let i = 0; i < waves.length; i++) drawWave(waves[i], 0);
 }
 
 // Idempotent: scans bars, attaches body + canvas if missing, (re)starts the loop.
@@ -92,6 +126,7 @@ function drawStatic() {
 export function initBrewWaves(root) {
   root = root || document;
   if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  lastTs = null;
   waves = [];
 
   if (resizeObs) {
@@ -102,7 +137,7 @@ export function initBrewWaves(root) {
         const o = waves.find(function (w) { return w.bar.parentElement === e.target; });
         if (o) {
           sizeWave(o);
-          if (PREFERS_REDUCED) drawWave(o, 0);
+          if (PREFERS_REDUCED) drawWave(o);
         }
       }
     });
@@ -122,12 +157,19 @@ export function initBrewWaves(root) {
       canvas.className = 'dm-wave-canvas';
       bar.appendChild(canvas);
     }
-    const o = { bar: bar, canvas: canvas, ctx: canvas.getContext('2d'), comps: makeComps(), w: 0, h: 0 };
+    const o = {
+      bar: bar, canvas: canvas, ctx: canvas.getContext('2d'),
+      comps: makeComps(), w: 0, h: 0,
+      calm: 1, tAcc: 0
+    };
     sizeWave(o);
     waves.push(o);
     resizeObs.observe(bar.parentElement);
   });
 
-  if (PREFERS_REDUCED) { drawStatic(); }
+  readPalette();
+  ensureThemeObserver();
+
+  if (PREFERS_REDUCED) { waves.forEach(function (o) { drawWave(o); }); }
   else if (waves.length > 0) { rafId = requestAnimationFrame(loop); }
 }
