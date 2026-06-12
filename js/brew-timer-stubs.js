@@ -13,10 +13,10 @@ window.startBrewTimer = function(index) {
     console.error('startBrewTimer not yet loaded');
 };
 
-window.pauseBrewTimer = function(index) {
-    if (window._pauseBrewTimer) return window._pauseBrewTimer(index);
-};
-
 window.resetBrewTimer = function(index) {
     if (window._resetBrewTimer) return window._resetBrewTimer(index);
+};
+
+window.finishBrewTimer = function(index) {
+    if (window._finishBrewTimer) return window._finishBrewTimer(index);
 };

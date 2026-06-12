@@ -1,9 +1,9 @@
 // ==========================================
 // BREW TIMER
-// Pour-over timer logic with pause/resume
+// Pour-over timer logic with finish/reset
 // ==========================================
 
-import { coffees, brewTimers, animationFrames, coffeeAmount } from './state.js';
+import { coffees, brewTimers, animationFrames, coffeeAmount, saveCoffeesAndSync } from './state.js';
 import { getBrewRecommendations } from './brew-engine.js';
 import { METHODS } from './data/methods.js';
 
@@ -66,7 +66,7 @@ export function startBrewTimer(index) {
     };
 
     const startBtn = document.getElementById(`start-brew-${index}`);
-    const pauseBtn = document.getElementById(`pause-brew-${index}`);
+    const finishBtn = document.getElementById(`finish-brew-${index}`);
     const resetBtn = document.getElementById(`reset-brew-${index}`);
 
     if (startBtn) {
@@ -76,7 +76,7 @@ export function startBrewTimer(index) {
         startBtn.classList.add('brewing');
         startBtn.disabled = true;
     }
-    if (pauseBtn) { pauseBtn.disabled = false; pauseBtn.classList.remove('resume-active'); }
+    if (finishBtn) finishBtn.disabled = false;
     if (resetBtn) resetBtn.disabled = false;
 
     // Smooth scroll to brew block (vitals visible at top)
@@ -131,7 +131,7 @@ export function resetBrewTimer(index) {
     if (display) display.textContent = '00:00';
 
     const startBtn = document.getElementById(`start-brew-${index}`);
-    const pauseBtn = document.getElementById(`pause-brew-${index}`);
+    const finishBtn = document.getElementById(`finish-brew-${index}`);
     const resetBtn = document.getElementById(`reset-brew-${index}`);
 
     if (startBtn) {
@@ -141,7 +141,7 @@ export function resetBrewTimer(index) {
         startBtn.classList.remove('brewing');
         startBtn.disabled = false;
     }
-    if (pauseBtn) { pauseBtn.textContent = 'Pause'; pauseBtn.disabled = true; pauseBtn.classList.remove('resume-active'); }
+    if (finishBtn) finishBtn.disabled = true;
     if (resetBtn) resetBtn.disabled = true;
 
     delete brewTimers[index];
@@ -174,15 +174,17 @@ function updateBrewProgress(index) {
         bar.classList.toggle('is-complete', pct >= 100);
     });
 
-    // NEU: Der 30s-Logger, der auch funktioniert, wenn das Handy schläft!
+    // 30s safety net logger (runs even if phone sleeps; finishBrewTimer adds duration on top)
     if (elapsedMs >= 30000 && !timer.historyLogged) {
         timer.historyLogged = true;
-        addBrewHistoryEntry(coffees[index], {
+        const brewEntry = {
             timestamp: new Date().toISOString(),
             brewStart: true,
             brewLabel: timer.brewSnapshot
-        });
-        try { localStorage.setItem('coffees', JSON.stringify(coffees)); } catch(e) {}
+        };
+        addBrewHistoryEntry(coffees[index], brewEntry);
+        timer.historyEntry = brewEntry;
+        saveCoffeesAndSync();
     }
 
     animationFrames[index] = requestAnimationFrame(() => updateBrewProgress(index));
@@ -201,7 +203,47 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// Register real functions — stubs in index.html delegate to these
+export function finishBrewTimer(index) {
+    const timer = brewTimers[index];
+    if (!timer) return;
+
+    timer.isRunning = false;
+    if (animationFrames[index]) cancelAnimationFrame(animationFrames[index]);
+
+    const elapsedMs = timer.isPaused ? (timer.pausedAt || 0) : (Date.now() - timer.startTime);
+    const durationStr = formatTime(Math.floor(elapsedMs / 1000));
+
+    if (timer.historyLogged && timer.historyEntry) {
+        timer.historyEntry.brewDuration = durationStr;
+    } else {
+        const entry = {
+            timestamp: new Date().toISOString(),
+            brewStart: true,
+            brewLabel: timer.brewSnapshot,
+            brewDuration: durationStr
+        };
+        addBrewHistoryEntry(coffees[index], entry);
+        timer.historyEntry = entry;
+        timer.historyLogged = true;
+    }
+    saveCoffeesAndSync();
+
+    const startBtn = document.getElementById(`start-brew-${index}`);
+    const finishBtn = document.getElementById(`finish-brew-${index}`);
+    const resetBtn = document.getElementById(`reset-brew-${index}`);
+
+    if (startBtn) {
+        const iconSpan = startBtn.querySelector('.brew-btn-icon');
+        const iconHTML = iconSpan ? iconSpan.outerHTML : '';
+        startBtn.innerHTML = iconHTML + ' Start Brew';
+        startBtn.classList.remove('brewing');
+        startBtn.disabled = false;
+    }
+    if (finishBtn) finishBtn.disabled = true;
+    if (resetBtn) resetBtn.disabled = false;
+}
+
+// Register real functions — stubs delegate to these
 window._startBrewTimer = startBrewTimer;
-window._pauseBrewTimer = pauseBrewTimer;
 window._resetBrewTimer = resetBrewTimer;
+window._finishBrewTimer = finishBrewTimer;

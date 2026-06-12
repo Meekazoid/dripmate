@@ -83,11 +83,10 @@ export function initPressedStateInteractions() {
     pressedStateBound = true;
 
     document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .edit-btn');
+        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .timer-btn-reset, .timer-btn-finish, .edit-btn');
         if (!btn) return;
 
         if (btn.classList.contains('edit-btn') && btn.classList.contains('editing')) return;
-        if (btn.classList.contains('timer-btn-secondary') && btn.id.startsWith('pause-brew-') && btn.textContent.trim() !== 'Resume') return;
 
         autoResetPressedState(btn);
     });
@@ -321,8 +320,10 @@ export function renderCoffeeCard(coffee, index) {
                             </button>
                         </div>
                         <div class="timer-controls-secondary">
-                            <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="event.stopPropagation(); pauseBrewTimer(${index});" disabled>Pause</button>
-                            <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index});" disabled>Reset</button>
+                            <button class="timer-btn-reset" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index});" disabled aria-label="Reset timer">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                            </button>
+                            <button class="timer-btn-finish" id="finish-brew-${index}" onclick="event.stopPropagation(); finishBrewTimer(${index});" disabled>Finish</button>
                         </div>
                     </div>
 

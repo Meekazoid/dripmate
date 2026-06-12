@@ -10,6 +10,52 @@ const suggestionHideTimers = new Map();
 const feedbackTouchState = new WeakMap();
 let feedbackSliderEventsBound = false;
 
+// --- Debounce pending state for manual grind/temp +/- adjustments ---
+const pendingAdjustments = new Map();
+
+function flushPendingAdjustment(index, type) {
+    const key = `${index}|${type}`;
+    const slot = pendingAdjustments.get(key);
+    if (!slot) return;
+    clearTimeout(slot.timerId);
+    pendingAdjustments.delete(key);
+    const coffee = coffees[index];
+    if (!coffee || slot.netDelta === 0) return;
+    const after = getBrewRecommendations(coffee);
+    if (type === 'grind') {
+        addHistoryEntry(coffee, {
+            timestamp: new Date().toISOString(),
+            previousGrind: slot.beforeGrind,
+            previousTemp: slot.beforeTemp,
+            newGrind: after.grindSetting,
+            newTemp: after.temperature,
+            grindOffsetDelta: slot.netDelta,
+            customTempApplied: null,
+            manualAdjust: 'grind'
+        });
+    } else {
+        addHistoryEntry(coffee, {
+            timestamp: new Date().toISOString(),
+            previousGrind: slot.beforeGrind,
+            previousTemp: slot.beforeTemp,
+            newGrind: after.grindSetting,
+            newTemp: after.temperature,
+            grindOffsetDelta: 0,
+            customTempApplied: coffee.customTemp || after.temperature,
+            manualAdjust: 'temp'
+        });
+    }
+    saveCoffeesAndSync();
+}
+
+export function flushAllPendingAdjustments() {
+    Array.from(pendingAdjustments.keys()).forEach(key => {
+        const [indexStr, type] = key.split('|');
+        flushPendingAdjustment(Number(indexStr), type);
+    });
+}
+// ----------------------------------------------------
+
 // --- NEU: Proportionale Gewichtung ---
 /**
  * Calculates the weight of deviation (0.0 to 1.0)
@@ -443,6 +489,7 @@ function adjustTemp(current, change) {
 }
 
 export async function applySuggestion(index, grindOffsetDelta, newTemp) {
+    flushAllPendingAdjustments();
     const { renderCoffees } = await import('./coffee-list.js');
     
     const coffee = coffees[index];
@@ -541,9 +588,10 @@ export function openFeedbackHistory(index) {
             const dateStr = sanitizeHTML(formatHistoryDate(entry.timestamp));
             const deltaStr = sanitizeHTML(formatHistoryDelta(entry));
             if (entry.brewStart) {
+                const durationLabel = entry.brewDuration ? ` &middot; ${sanitizeHTML(entry.brewDuration)}` : '';
                 return `
             <div class="history-item history-item--brew-start">
-                <div class="history-item-brew-badge">&#9749; Brew</div>
+                <div class="history-item-brew-badge">&#9749; Brew${durationLabel}</div>
                 <div class="history-item-top">
                     <strong>${dateStr}</strong>
                 </div>
@@ -595,21 +643,15 @@ export function closeFeedbackHistory() {
 
 export function adjustGrindManual(index, direction) {
     const coffee = coffees[index];
-    const before = getBrewRecommendations(coffee);
+    const key = `${index}|grind`;
+    let slot = pendingAdjustments.get(key);
+    if (!slot) {
+        const snap = getBrewRecommendations(coffee);
+        slot = { beforeGrind: snap.grindSetting, beforeTemp: snap.temperature, netDelta: 0, timerId: null };
+        pendingAdjustments.set(key, slot);
+    }
     coffee.grindOffset = (coffee.grindOffset || 0) + direction;
-
     const after = getBrewRecommendations(coffee);
-    addHistoryEntry(coffee, {
-        timestamp: new Date().toISOString(),
-        previousGrind: before.grindSetting,
-        previousTemp: before.temperature,
-        newGrind: after.grindSetting,
-        newTemp: after.temperature,
-        grindOffsetDelta: direction,
-        customTempApplied: null,
-        manualAdjust: 'grind'
-    });
-
     const el = document.getElementById(`grind-value-${index}`);
     if (el) {
         if (preferredGrinder === 'other') {
@@ -619,39 +661,37 @@ export function adjustGrindManual(index, direction) {
             el.textContent = after.grindSetting;
         }
     }
-    saveCoffeesAndSync();
+    slot.netDelta += direction;
+    clearTimeout(slot.timerId);
+    slot.timerId = setTimeout(() => flushPendingAdjustment(index, 'grind'), 1500);
+    localStorage.setItem('coffees', JSON.stringify(coffees));
 }
 
 export function adjustTempManual(index, direction) {
     const coffee = coffees[index];
-    const before = getBrewRecommendations(coffee);
+    const key = `${index}|temp`;
+    let slot = pendingAdjustments.get(key);
+    if (!slot) {
+        const snap = getBrewRecommendations(coffee);
+        slot = { beforeGrind: snap.grindSetting, beforeTemp: snap.temperature, netDelta: 0, timerId: null };
+        pendingAdjustments.set(key, slot);
+    }
     const currentTemp = coffee.customTemp || getBrewRecommendations(coffee).temperature;
-
     const match = currentTemp.match(/(\d+)(?:-(\d+))?/);
     if (!match) return;
-
     const low = parseInt(match[1]) + direction;
     const high = match[2] ? parseInt(match[2]) + direction : null;
     coffee.customTemp = high ? `${low}-${high}°C` : `${low}°C`;
-
-    const after = getBrewRecommendations(coffee);
-    addHistoryEntry(coffee, {
-        timestamp: new Date().toISOString(),
-        previousGrind: before.grindSetting,
-        previousTemp: before.temperature,
-        newGrind: after.grindSetting,
-        newTemp: after.temperature,
-        grindOffsetDelta: 0,
-        customTempApplied: coffee.customTemp,
-        manualAdjust: 'temp'
-    });
-
     const el = document.getElementById(`temp-value-${index}`);
     if (el) el.textContent = coffee.customTemp;
-    saveCoffeesAndSync();
+    slot.netDelta += direction;
+    clearTimeout(slot.timerId);
+    slot.timerId = setTimeout(() => flushPendingAdjustment(index, 'temp'), 1500);
+    localStorage.setItem('coffees', JSON.stringify(coffees));
 }
 
 export async function resetCoffeeAdjustments(index) {
+    flushAllPendingAdjustments();
     const confirmed = await showResetAdjustmentsConfirmModal();
     if (!confirmed) return;
 
@@ -777,6 +817,29 @@ function initClearHistoryConfirmListeners() {
 
 document.addEventListener("DOMContentLoaded", initClearHistoryConfirmListeners);
 
+// Flush pending adjustments when tab is hidden or page unloads
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') flushAllPendingAdjustments();
+});
+window.addEventListener('pagehide', flushAllPendingAdjustments);
+
+// Flush pending adjustments when a card is collapsed
+document.addEventListener('DOMContentLoaded', () => {
+    const collapseObserver = new MutationObserver(mutations => {
+        for (const m of mutations) {
+            const card = m.target;
+            if (card.classList?.contains('coffee-card') && !card.classList.contains('expanded')) {
+                const index = Number(card.dataset.originalIndex);
+                if (!isNaN(index)) {
+                    flushPendingAdjustment(index, 'grind');
+                    flushPendingAdjustment(index, 'temp');
+                }
+            }
+        }
+    });
+    collapseObserver.observe(document.body, { attributes: true, attributeFilter: ['class'], subtree: true });
+});
+
 // ==========================================
 // UNDO: Reset sliders to center (balanced)
 // ==========================================
@@ -820,6 +883,7 @@ window.applySuggestion = applySuggestion;
 window.undoFeedbackSliders = undoFeedbackSliders;
 window.adjustGrindManual = adjustGrindManual;
 window.adjustTempManual = adjustTempManual;
+window.flushAllPendingAdjustments = flushAllPendingAdjustments;
 window.resetCoffeeAdjustments = resetCoffeeAdjustments;
 window.openFeedbackHistory = openFeedbackHistory;
 window.closeFeedbackHistory = closeFeedbackHistory;

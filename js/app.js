@@ -30,10 +30,10 @@ import {
     logoutDevice
 } from './settings.js';
 import { updateRoastDate } from './freshness.js';
-import { 
+import {
     startBrewTimer,
-    pauseBrewTimer,
-    resetBrewTimer
+    resetBrewTimer,
+    finishBrewTimer
 } from './brew-timer.js';
 import {
     manualWaterHardness,
@@ -51,12 +51,12 @@ window.openAppFeedback = openAppFeedback;
 window.renderCoffees = renderCoffees;
 // Make brew timer functions available globally for onclick handlers
 window.startBrewTimer = startBrewTimer;
-window.pauseBrewTimer = pauseBrewTimer;
 window.resetBrewTimer = resetBrewTimer;
-console.log('âœ… Brew timer functions attached to window:', {
+window.finishBrewTimer = finishBrewTimer;
+console.log('Brew timer functions attached to window:', {
     startBrewTimer: typeof window.startBrewTimer,
-    pauseBrewTimer: typeof window.pauseBrewTimer,
-    resetBrewTimer: typeof window.resetBrewTimer
+    resetBrewTimer: typeof window.resetBrewTimer,
+    finishBrewTimer: typeof window.finishBrewTimer
 });
 
 // Initialize event listeners
