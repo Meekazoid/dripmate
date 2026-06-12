@@ -2376,6 +2376,11 @@ body.light-mode .timer-btn-finish:active:not(:disabled) {
     border-color: #16a34a;
 }
 
+/* Counter the global button:hover fill on all devices (prevents sticky gold on touch) */
+.timer-btn-reset:hover, .timer-btn-finish:hover {
+    background: transparent;
+}
+
 @media (hover: hover) {
     .timer-btn-reset:hover:not(:disabled) {
         background: rgba(232, 133, 124, 0.08);
