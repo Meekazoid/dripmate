@@ -124,7 +124,7 @@ export function resetBrewTimer(index) {
 
     timer.steps.forEach((_, i) => {
         const bar = document.getElementById(`progress-bar-${index}-${i}`);
-        if (bar) bar.style.width = '0%';
+        if (bar) { bar.style.width = '0%'; bar.classList.remove('is-active', 'is-complete'); }
     });
 
     const display = document.getElementById(`brew-timer-display-${index}`);
@@ -170,6 +170,8 @@ function updateBrewProgress(index) {
             pct = Math.min(100, ((elapsedSeconds - step.startSeconds) / step.duration) * 100);
         }
         bar.style.width = `${pct.toFixed(2)}%`;
+        bar.classList.toggle('is-active', pct > 0 && pct < 100);
+        bar.classList.toggle('is-complete', pct >= 100);
     });
 
     // NEU: Der 30s-Logger, der auch funktioniert, wenn das Handy schläft!

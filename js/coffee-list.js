@@ -7,6 +7,7 @@ import { coffees, saveCoffeesAndSync } from './state.js';
 import { renderCoffeeCard } from './coffee-cards.js';
 import { getBrewRecommendations } from './brew-engine.js';
 import { initFeedbackSliderVisuals } from './feedback.js';
+import { initBrewWaves } from './brew-wave.js';
 
 function showCompostConfirmModal() {
     const modal = document.getElementById('compostConfirmModal');
@@ -516,6 +517,7 @@ export function renderCoffees(expandAfterIndex) {
     });
 
     initFeedbackSliderVisuals(listEl);
+    initBrewWaves(listEl);
 
     // Re-expand card if requested (e.g. after reset adjustments)
     if (expandAfterIndex !== undefined) {

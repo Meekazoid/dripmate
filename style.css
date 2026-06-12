@@ -38,6 +38,10 @@ html {
     /* Braun-Border                 (war: #2a2a2a) */     --shadow: rgba(0, 0, 0, 0.6);
     /* Minimal dunkler              (war: 0.5) */     --color-danger: #ff6b6b;
     --color-success: #4CAF50;
+    --dm-water-top-a: #d4fbe9;
+    --dm-water-top-b: #6fe9b6;
+    --dm-water-glow: rgba(60,220,170,0.50);
+    --dm-wave-track-bg: rgba(232,213,192,0.08);
 }
 
 body.light-mode {
@@ -52,6 +56,8 @@ body.light-mode {
     /* Warmes Beige-Grau            (war: #e0e0e0) */     --shadow: rgba(0, 0, 0, 0.1);
     --color-danger: #c62828;
     --color-success: #2E7D32;
+    --dm-water-glow: rgba(31,150,120,0.35);
+    --dm-wave-track-bg: rgba(16,13,8,0.06);
 }
 
 /* ==========================================    3. BODY & LAYOUT    ========================================== */  body {
@@ -1870,28 +1876,43 @@ body.light-mode .step-action strong {
 
 .step-progress {
     margin-top: 6px;
-    height: 3.3px;
-    background: rgba(76, 175, 80, 0.15);
-    border-radius: 3px;
+    height: 13px;
+    border-radius: 7px;
+    background: var(--dm-wave-track-bg);
     overflow: hidden;
     position: relative;
 }
 
 .step-progress-bar {
+    position: absolute;
+    top: 0; left: 0;
     height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--color-success) 0%, color-mix(in srgb, var(--color-success) 70%, #fff 30%) 100%);
-    border-radius: 3px;
-    transition: width 0.5s ease-out;
+    border-radius: 7px 0 0 7px;
+    overflow: hidden;
+    background: transparent;
+    box-shadow: 0 0 14px var(--dm-water-glow);
+    transition: box-shadow 0.4s ease, width 0.2s linear;
     will-change: width;
 }
 
-body.light-mode .step-progress {
-    background: rgba(76, 175, 80, 0.2);
+.step-progress-bar.is-complete {
+    border-radius: 7px;
+    box-shadow: 0 0 5px var(--dm-water-glow);
 }
 
-body.light-mode .step-progress-bar {
-    background: linear-gradient(90deg, #2E7D32 0%, color-mix(in srgb, var(--color-success) 85%, #fff 15%) 100%);
+.dm-wave-body {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, var(--dm-water-top-a), var(--dm-water-top-b));
+}
+
+.dm-wave-canvas {
+    position: absolute; top: 0; left: 0;
+    height: 100%;
+    display: block;
+}
+
+body.light-mode .step-progress {
+    background: var(--dm-wave-track-bg);
 }
 
 /* ==========================================    16. BREW TIMER    ========================================== */  .brew-timer-section {
