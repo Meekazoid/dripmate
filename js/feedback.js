@@ -555,6 +555,26 @@ export function openFeedbackHistory(index) {
             const grindCell = grindChanged ? `<div class="history-cell"><span>Grind</span><strong>${sanitizeHTML(entry.previousGrind)} &rarr; ${sanitizeHTML(entry.newGrind)}</strong></div>` : '';
             const tempCell  = tempChanged  ? `<div class="history-cell"><span>Temp</span><strong>${sanitizeHTML(entry.previousTemp)} &rarr; ${sanitizeHTML(entry.newTemp)}</strong></div>` : '';
             const grid = (grindCell || tempCell) ? `<div class="history-item-grid">${grindCell}${tempCell}</div>` : '';
+            if (entry.manualAdjust) {
+                return `
+            <div class="history-item history-item--manual">
+                <div class="history-item-manual-badge">Manual</div>
+                <div class="history-item-top">
+                    <strong>${dateStr}</strong>
+                </div>
+                ${grid}
+            </div>`;
+            }
+            if (!entry.resetToInitial) {
+                return `
+            <div class="history-item history-item--feedback">
+                <div class="history-item-feedback-badge">Feedback</div>
+                <div class="history-item-top">
+                    <strong>${dateStr}</strong>
+                </div>
+                ${grid}
+            </div>`;
+            }
             return `
             <div class="history-item">
                 <div class="history-item-top">

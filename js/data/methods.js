@@ -92,8 +92,8 @@ export const METHODS = {
                 ];
             }
             return [
-                { time: '0:00', action: `Bloom: ${bloom}g water, 30-40 sec` },
-                { time: '0:40', action: `To ${Math.round(waterAmount * 0.5)}g: Pour evenly` },
+                { time: '0:00', action: `Bloom: ${bloom}g water, 35 sec` },
+                { time: '0:35', action: `To ${Math.round(waterAmount * 0.5)}g: Pour evenly` },
                 { time: '1:15', action: `To ${Math.round(waterAmount * 0.83)}g: Concentric circles` },
                 { time: '1:45', action: `To ${waterAmount}g: Final pour` },
             ];

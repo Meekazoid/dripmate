@@ -100,6 +100,7 @@ function renderGrindParamBox(index, brewParams) {
             <div class="param-box">
                 <div class="param-label">Grind Setting</div>
                 <div class="param-value-row">
+                    <div class="param-eyebrow">recommended</div>
                     <div class="param-value grind-qualitative" id="grind-value-${index}">
                         <span class="grind-qual-label">${label}</span>
                         <span class="grind-qual-haptik">${haptik}</span>
@@ -116,6 +117,7 @@ function renderGrindParamBox(index, brewParams) {
         <div class="param-box">
             <div class="param-label">Grind Setting</div>
             <div class="param-value-row">
+                <div class="param-eyebrow">recommended</div>
                 <div class="param-value" id="grind-value-${index}">${brewParams.grindSetting}</div>
                 <div class="param-adjust">
                     <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1);">−</button>
@@ -280,6 +282,7 @@ export function renderCoffeeCard(coffee, index) {
                         <div class="param-box">
                             <div class="param-label">Temperature</div>
                             <div class="param-value-row">
+                                <div class="param-eyebrow">recommended</div>
                                 <div class="param-value" id="temp-value-${index}">${brewParams.temperature}</div>
                                 <div class="param-adjust">
                                     <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, -1);">−</button>
