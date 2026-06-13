@@ -1,0 +1,155 @@
+[
+  {
+    "grinder": "comandante_mk4",
+    "method": "v60",
+    "unit": "clicks",
+    "min": 20,
+    "max": 26,
+    "confidence": "high",
+    "source": "Comandante C40 ~30µm/click; community V60 range 21–25 clicks (multiple forum references)"
+  },
+  {
+    "grinder": "comandante_mk3",
+    "method": "v60",
+    "unit": "clicks",
+    "min": 20,
+    "max": 26,
+    "confidence": "high",
+    "source": "Comandante C40 MK3 ~30µm/click; community V60 range 21–25 clicks (same burr geometry as MK4)"
+  },
+  {
+    "grinder": "timemore_c2",
+    "method": "v60",
+    "unit": "clicks",
+    "min": 15,
+    "max": 21,
+    "confidence": "medium",
+    "source": "Timemore C2 ~80µm/click 38mm conical; community V60 range 15–20 clicks (grinders.js calibration)"
+  },
+  {
+    "grinder": "baratza",
+    "method": "v60",
+    "unit": "encore-step",
+    "min": 17,
+    "max": 23,
+    "confidence": "medium",
+    "source": "Baratza Encore 40mm conical 40-step; community V60 range 18–22 (grinders.js calibration)"
+  },
+  {
+    "grinder": "fellow_gen2",
+    "method": "v60",
+    "unit": "dial",
+    "min": 3.0,
+    "max": 5.0,
+    "confidence": "medium",
+    "source": "Fellow Ode Gen2 SSP MP 64mm flat; startBand 3.0–5.0 (grinders.js calibration)"
+  },
+  {
+    "grinder": "df64_gen2",
+    "method": "v60",
+    "unit": "clicks",
+    "min": 50,
+    "max": 65,
+    "confidence": "medium",
+    "source": "DF64 Gen2 64mm flat stepless 0–90; V60 anchor ~55 (50–65) per grinders.js sources"
+  },
+  {
+    "grinder": "timemore_s3",
+    "method": "v60",
+    "unit": "clicks",
+    "min": 45,
+    "max": 75,
+    "confidence": "low",
+    "source": "Timemore S3 15µm/click 42mm S2C890; community refs sparse, wide uncertainty (grinders.js: 'V60 range 50–80')"
+  },
+  {
+    "grinder": "1zpresso",
+    "method": "v60",
+    "unit": "rot",
+    "min": 2.2,
+    "max": 3.2,
+    "confidence": "low",
+    "source": "1Zpresso JX 48mm conical 30 clicks/rot; calibration startBand 2.3–3.0 rot (grinders.js)"
+  },
+  {
+    "grinder": "fellow_gen1",
+    "method": "v60",
+    "unit": "dial",
+    "min": 1.8,
+    "max": 4.0,
+    "confidence": "low",
+    "source": "Fellow Ode Gen1 original 64mm flat; Gen2-equivalent shift applied, limited first-party data"
+  },
+  {
+    "grinder": "comandante_mk4",
+    "method": "chemex",
+    "unit": "clicks",
+    "min": 26,
+    "max": 34,
+    "confidence": "medium",
+    "source": "Comandante Chemex community range 26–32 clicks (thick filter adds ~4–6 clicks vs V60; engine +3 undershoots by 1)"
+  },
+  {
+    "grinder": "comandante_mk3",
+    "method": "chemex",
+    "unit": "clicks",
+    "min": 26,
+    "max": 34,
+    "confidence": "medium",
+    "source": "Comandante MK3 Chemex community range 26–32 clicks; same note as MK4"
+  },
+  {
+    "grinder": "timemore_c2",
+    "method": "chemex",
+    "unit": "clicks",
+    "min": 22,
+    "max": 28,
+    "confidence": "medium",
+    "source": "Timemore C2 Chemex community range 22–27 clicks; engine +0.82×3≈2.5 delta undershoots by ~1"
+  },
+  {
+    "grinder": "baratza",
+    "method": "chemex",
+    "unit": "encore-step",
+    "min": 24,
+    "max": 30,
+    "confidence": "medium",
+    "source": "Baratza Encore Chemex community range 24–28 steps; engine +0.9×3≈2.7 delta undershoots by ~1"
+  },
+  {
+    "grinder": "fellow_gen2",
+    "method": "chemex",
+    "unit": "dial",
+    "min": 4.5,
+    "max": 6.5,
+    "confidence": "medium",
+    "source": "Fellow Gen2 Chemex community range 4.5–6.0; engine +0.75 delta produces 4.25→4.3, 0.2 fine"
+  },
+  {
+    "grinder": "df64_gen2",
+    "method": "chemex",
+    "unit": "clicks",
+    "min": 52,
+    "max": 70,
+    "confidence": "medium",
+    "source": "DF64 Gen2 Chemex ~63 (52–66) per grinders.js sources; engine +3×2.5=7.5 delta maps well"
+  },
+  {
+    "grinder": "comandante_mk4",
+    "method": "aeropress",
+    "unit": "clicks",
+    "min": 16,
+    "max": 22,
+    "confidence": "medium",
+    "source": "Comandante AeroPress inverted community range 16–21 clicks (finer than V60)"
+  },
+  {
+    "grinder": "fellow_gen2",
+    "method": "aeropress",
+    "unit": "dial",
+    "min": 2.0,
+    "max": 4.0,
+    "confidence": "medium",
+    "source": "Fellow Gen2 AeroPress inverted community range 2.5–4.0; engine 2.75→2.8"
+  }
+]
