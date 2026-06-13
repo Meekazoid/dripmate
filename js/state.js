@@ -78,8 +78,6 @@ export let waterHardness = null;
 export let manualWaterHardness = (() => {
   try { return JSON.parse(localStorage.getItem('manualWaterHardness')) || null; } catch (e) { return null; }
 })();
-export let apiWaterHardness = null;
-export let userZipCode = localStorage.getItem('userZipCode') || '';
 export let brewTimers = {};
 export let animationFrames = {};
 
@@ -89,8 +87,6 @@ window.preferredGrinder = preferredGrinder;
 window.preferredMethod = preferredMethod;
 window.waterHardness = waterHardness;
 window.manualWaterHardness = manualWaterHardness;
-window.apiWaterHardness = apiWaterHardness;
-window.userZipCode = userZipCode;
 window.brewTimers = brewTimers;
 window.animationFrames = animationFrames;
 
@@ -126,14 +122,6 @@ export function setManualWaterHardness(value) {
   window.manualWaterHardness = manualWaterHardness;
 }
 
-export function setApiWaterHardness(value) { apiWaterHardness = value; window.apiWaterHardness = apiWaterHardness; }
-
-export function setUserZipCode(value) {
-  userZipCode = String(value || '');
-  try { localStorage.setItem('userZipCode', userZipCode); } catch (e) { console.warn('Failed to persist userZipCode', e); }
-  window.userZipCode = userZipCode;
-}
-
 export function setBrewTimers(value) { brewTimers = value || {}; window.brewTimers = brewTimers; }
 export function setAnimationFrames(value) { animationFrames = value || {}; window.animationFrames = animationFrames; }
 
@@ -158,8 +146,6 @@ export function replaceState(partialState = {}) {
   if (partialState.preferredMethod) setPreferredMethod(partialState.preferredMethod);
   if (partialState.waterHardness !== undefined) setWaterHardness(partialState.waterHardness);
   if (partialState.manualWaterHardness !== undefined) setManualWaterHardness(partialState.manualWaterHardness);
-  if (partialState.apiWaterHardness !== undefined) setApiWaterHardness(partialState.apiWaterHardness);
-  if (partialState.userZipCode !== undefined) setUserZipCode(partialState.userZipCode);
   if (partialState.brewTimers !== undefined) setBrewTimers(partialState.brewTimers);
   if (partialState.animationFrames !== undefined) setAnimationFrames(partialState.animationFrames);
 }

@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v61.2';
+const CACHE_VERSION = 'v62.0';
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [

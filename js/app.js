@@ -15,8 +15,7 @@ import { saveCoffeeManual, initProcessPicker } from './manual-entry.js';
 import {
     openWaterModal,
     closeWaterModal,
-    saveManualWaterHardness,
-    clearManualWaterHardness
+    saveManualWaterHardness
 } from './water-hardness.js';
 import {
     openSettings,

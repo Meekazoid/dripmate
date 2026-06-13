@@ -4,7 +4,7 @@
 // 8 Grinder variants (verified specs)
 // ==========================================
 
-import { coffeeAmount, preferredGrinder, preferredMethod, manualWaterHardness, apiWaterHardness } from './state.js';
+import { coffeeAmount, preferredGrinder, preferredMethod, manualWaterHardness } from './state.js';
 import { getGrinderLabel } from './grinder.js';
 import { GRINDERS } from './data/grinders.js';
 import { METHODS } from './data/methods.js';
@@ -365,7 +365,7 @@ export function boldWeights(text) {
 // ==========================================
 
 function getActiveWaterHardness() {
-    return manualWaterHardness || apiWaterHardness;
+    return manualWaterHardness;
 }
 
 function getWaterHardnessCategory(value) {
