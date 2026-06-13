@@ -16,17 +16,16 @@ export const METHODS = {
             grindFellow: -0.75,
             ratioClamp: { op: 'min', value: 15 },
             tempDelta: -1,
-            targetTime: '1:30-2:30',
-            brewStyle: 'inherit',
+            targetTime: '1:15-2:00',
         },
         note: 'AeroPress inverted - full immersion, concentrated, finer grind',
-        buildSteps(amount, ratio, brewStyle, waterAmount) {
-            const bloom = Math.round(amount * 2);
+        buildSteps(amount, ratio, waterAmount) {
+            const bloom = Math.round(amount * 3);
             return [
-                { time: '0:00', action: `Invert AeroPress. Add ${amount}g coffee, pour ${bloom}g water. Stir 3×` },
-                { time: '0:15', action: `Pour to ${waterAmount}g total. Place cap + filter` },
-                { time: '0:30', action: `Let steep. Don't disturb` },
-                { time: '1:15', action: `Flip onto cup. Press slowly (30 sec). Stop before hiss` },
+                { time: '0:00', action: `Add ${bloom}g water, stir to saturate` },
+                { time: '0:30', action: `Fill to ${waterAmount}g, gentle stir` },
+                { time: '0:50', action: `Insert plunger, steep` },
+                { time: '1:20', action: `Press slowly (~25-30 sec)` },
             ];
         },
     },
@@ -43,10 +42,9 @@ export const METHODS = {
             ratioClamp: { op: 'max', value: 16.5 },
             tempDelta: +1,
             targetTime: '3:30-4:30',
-            brewStyle: 'inherit',
         },
         note: 'Chemex - thick paper filter, clean cup, coarser grind',
-        buildSteps(amount, ratio, brewStyle, waterAmount) {
+        buildSteps(amount, ratio, waterAmount) {
             const bloom = Math.round(amount * 3);
             return [
                 { time: '0:00', action: `Bloom: ${bloom}g water, gentle stir, wait 45 sec` },
@@ -68,34 +66,16 @@ export const METHODS = {
             grindFellow: 0,
             ratioClamp: { op: 'none', value: null },
             tempDelta: 0,
-            targetTime: null,
-            brewStyle: 'inherit',
+            targetTime: '2:30-3:00',
         },
         note: null, // v60 uses category-based notes from getProcessingBaseParams
-        buildSteps(amount, ratio, brewStyle, waterAmount) {
-            const bloom = Math.round(amount * (brewStyle === 'slow' ? 3.5 : 3));
-
-            if (brewStyle === 'slow') {
-                return [
-                    { time: '0:00', action: `Bloom: ${bloom}g water, wait 45 sec` },
-                    { time: '0:45', action: `To ${Math.round(waterAmount * 0.45)}g: Very slow circular pour` },
-                    { time: '1:30', action: `To ${Math.round(waterAmount * 0.75)}g: Continue slowly` },
-                    { time: '2:15', action: `To ${waterAmount}g: Final pour` },
-                ];
-            }
-            if (brewStyle === 'fruity') {
-                return [
-                    { time: '0:00', action: `Bloom: ${bloom}g, create crater, 45 sec` },
-                    { time: '0:45', action: `To ${Math.round(waterAmount * 0.52)}g: Pour slowly` },
-                    { time: '1:20', action: `To ${Math.round(waterAmount * 0.84)}g: Concentric circles` },
-                    { time: '1:50', action: `To ${waterAmount}g: Final pour` },
-                ];
-            }
+        buildSteps(amount, ratio, waterAmount) {
+            const bloom = Math.round(amount * 3);
             return [
-                { time: '0:00', action: `Bloom: ${bloom}g water, 35 sec` },
-                { time: '0:35', action: `To ${Math.round(waterAmount * 0.5)}g: Pour evenly` },
-                { time: '1:15', action: `To ${Math.round(waterAmount * 0.83)}g: Concentric circles` },
-                { time: '1:45', action: `To ${waterAmount}g: Final pour` },
+                { time: '0:00', action: `Bloom: ${bloom}g water, 45 sec` },
+                { time: '0:45', action: `To ${Math.round(waterAmount * 0.50)}g: Pour evenly` },
+                { time: '1:20', action: `To ${Math.round(waterAmount * 0.83)}g: Concentric circles` },
+                { time: '1:50', action: `To ${waterAmount}g: Final pour` },
             ];
         },
     },

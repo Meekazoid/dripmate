@@ -47,18 +47,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -67,20 +67,20 @@
           "grindSetting": "25 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -92,20 +92,20 @@
           "grindSetting": "24 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -122,18 +122,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -142,23 +142,23 @@
           "grindSetting": "23 clicks",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -296,24 +296,24 @@
           "grindSetting": "19 clicks",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -321,24 +321,24 @@
           "grindSetting": "22 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -346,24 +346,24 @@
           "grindSetting": "21 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -371,24 +371,24 @@
           "grindSetting": "17 clicks",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -396,24 +396,24 @@
           "grindSetting": "20 clicks",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -430,18 +430,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -450,20 +450,20 @@
           "grindSetting": "25 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -475,20 +475,20 @@
           "grindSetting": "24 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -505,18 +505,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -525,23 +525,23 @@
           "grindSetting": "23 clicks",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -679,24 +679,24 @@
           "grindSetting": "19 clicks",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -704,24 +704,24 @@
           "grindSetting": "22 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -729,24 +729,24 @@
           "grindSetting": "21 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -754,24 +754,24 @@
           "grindSetting": "17 clicks",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -779,24 +779,24 @@
           "grindSetting": "20 clicks",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -813,18 +813,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -833,20 +833,20 @@
           "grindSetting": "25 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -858,20 +858,20 @@
           "grindSetting": "24 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -888,18 +888,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -908,23 +908,23 @@
           "grindSetting": "23 clicks",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -1062,24 +1062,24 @@
           "grindSetting": "19 clicks",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1087,24 +1087,24 @@
           "grindSetting": "22 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1112,24 +1112,24 @@
           "grindSetting": "21 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1137,24 +1137,24 @@
           "grindSetting": "17 clicks",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1162,24 +1162,24 @@
           "grindSetting": "20 clicks",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -1196,18 +1196,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -1216,20 +1216,20 @@
           "grindSetting": "4.1",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -1241,20 +1241,20 @@
           "grindSetting": "3.9",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -1271,18 +1271,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -1291,23 +1291,23 @@
           "grindSetting": "3.7",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -1445,24 +1445,24 @@
           "grindSetting": "2.8",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1470,24 +1470,24 @@
           "grindSetting": "3.3",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1495,24 +1495,24 @@
           "grindSetting": "3.1",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1520,24 +1520,24 @@
           "grindSetting": "2.5",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1545,24 +1545,24 @@
           "grindSetting": "3.0",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -1579,18 +1579,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -1599,20 +1599,20 @@
           "grindSetting": "2.6",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -1624,20 +1624,20 @@
           "grindSetting": "2.4",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -1654,18 +1654,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -1674,23 +1674,23 @@
           "grindSetting": "2.2",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -1828,24 +1828,24 @@
           "grindSetting": "1.3",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1853,24 +1853,24 @@
           "grindSetting": "1.8",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1878,24 +1878,24 @@
           "grindSetting": "1.6",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1903,24 +1903,24 @@
           "grindSetting": "1.0",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -1928,24 +1928,24 @@
           "grindSetting": "1.5",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -1962,18 +1962,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -1982,20 +1982,20 @@
           "grindSetting": "4.1",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -2007,20 +2007,20 @@
           "grindSetting": "3.9",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -2037,18 +2037,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -2057,23 +2057,23 @@
           "grindSetting": "3.7",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -2211,24 +2211,24 @@
           "grindSetting": "2.8",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -2236,24 +2236,24 @@
           "grindSetting": "3.3",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -2261,24 +2261,24 @@
           "grindSetting": "3.1",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -2286,24 +2286,24 @@
           "grindSetting": "2.5",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -2311,24 +2311,24 @@
           "grindSetting": "3.0",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -2345,18 +2345,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -2365,20 +2365,20 @@
           "grindSetting": "63 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -2390,20 +2390,20 @@
           "grindSetting": "60 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -2420,18 +2420,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -2440,23 +2440,23 @@
           "grindSetting": "58 clicks",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -2594,24 +2594,24 @@
           "grindSetting": "48 clicks",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -2619,24 +2619,24 @@
           "grindSetting": "55 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -2644,24 +2644,24 @@
           "grindSetting": "53 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -2669,24 +2669,24 @@
           "grindSetting": "43 clicks",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -2694,24 +2694,24 @@
           "grindSetting": "50 clicks",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -2728,18 +2728,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -2748,20 +2748,20 @@
           "grindSetting": "21 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -2773,20 +2773,20 @@
           "grindSetting": "20 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -2803,18 +2803,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -2823,23 +2823,23 @@
           "grindSetting": "19 clicks",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -2977,24 +2977,24 @@
           "grindSetting": "16 clicks",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3002,24 +3002,24 @@
           "grindSetting": "18 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3027,24 +3027,24 @@
           "grindSetting": "17 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3052,24 +3052,24 @@
           "grindSetting": "14 clicks",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3077,24 +3077,24 @@
           "grindSetting": "16 clicks",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -3111,18 +3111,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -3131,20 +3131,20 @@
           "grindSetting": "63 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -3156,20 +3156,20 @@
           "grindSetting": "60 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -3186,18 +3186,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -3206,23 +3206,23 @@
           "grindSetting": "58 clicks",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -3360,24 +3360,24 @@
           "grindSetting": "48 clicks",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3385,24 +3385,24 @@
           "grindSetting": "55 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3410,24 +3410,24 @@
           "grindSetting": "53 clicks",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3435,24 +3435,24 @@
           "grindSetting": "43 clicks",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3460,24 +3460,24 @@
           "grindSetting": "50 clicks",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -3494,18 +3494,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -3514,20 +3514,20 @@
           "grindSetting": "2.9 rot",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -3539,20 +3539,20 @@
           "grindSetting": "2.8 rot",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -3569,18 +3569,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -3589,23 +3589,23 @@
           "grindSetting": "2.7 rot",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -3743,24 +3743,24 @@
           "grindSetting": "2.2 rot",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3768,24 +3768,24 @@
           "grindSetting": "2.6 rot",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3793,24 +3793,24 @@
           "grindSetting": "2.5 rot",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3818,24 +3818,24 @@
           "grindSetting": "2.0 rot",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -3843,24 +3843,24 @@
           "grindSetting": "2.3 rot",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }
@@ -3877,18 +3877,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -3897,20 +3897,20 @@
           "grindSetting": "23",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -3922,20 +3922,20 @@
           "grindSetting": "22",
           "temperature": "93-94°C",
           "ratio": "1:16.7 (18g)",
-          "targetTime": "2:45-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 301,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g, create crater, 45 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
               "time": "0:45",
-              "action": "To 157g: Pour slowly"
+              "action": "To 151g: Pour evenly"
             },
             {
               "time": "1:20",
-              "action": "To 253g: Concentric circles"
+              "action": "To 250g: Concentric circles"
             },
             {
               "time": "1:50",
@@ -3952,18 +3952,18 @@
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 149g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 247g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 297g: Final pour"
             }
           ]
@@ -3972,23 +3972,23 @@
           "grindSetting": "21",
           "temperature": "92-94°C",
           "ratio": "1:16 (18g)",
-          "targetTime": "2:30-3:15",
+          "targetTime": "2:30-3:00",
           "waterAmountMl": 288,
           "steps": [
             {
               "time": "0:00",
-              "action": "Bloom: 54g water, 30-40 sec"
+              "action": "Bloom: 54g water, 45 sec"
             },
             {
-              "time": "0:40",
+              "time": "0:45",
               "action": "To 144g: Pour evenly"
             },
             {
-              "time": "1:15",
+              "time": "1:20",
               "action": "To 239g: Concentric circles"
             },
             {
-              "time": "1:45",
+              "time": "1:50",
               "action": "To 288g: Final pour"
             }
           ]
@@ -4126,24 +4126,24 @@
           "grindSetting": "17",
           "temperature": "91-92°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -4151,24 +4151,24 @@
           "grindSetting": "20",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -4176,24 +4176,24 @@
           "grindSetting": "19",
           "temperature": "92-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -4201,24 +4201,24 @@
           "grindSetting": "15",
           "temperature": "90-91°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         },
@@ -4226,24 +4226,24 @@
           "grindSetting": "18",
           "temperature": "91-93°C",
           "ratio": "1:15 (18g)",
-          "targetTime": "1:30-2:30",
+          "targetTime": "1:15-2:00",
           "waterAmountMl": 270,
           "steps": [
             {
               "time": "0:00",
-              "action": "Invert AeroPress. Add 18g coffee, pour 36g water. Stir 3×"
-            },
-            {
-              "time": "0:15",
-              "action": "Pour to 270g total. Place cap + filter"
+              "action": "Add 54g water, stir to saturate"
             },
             {
               "time": "0:30",
-              "action": "Let steep. Don't disturb"
+              "action": "Fill to 270g, gentle stir"
             },
             {
-              "time": "1:15",
-              "action": "Flip onto cup. Press slowly (30 sec). Stop before hiss"
+              "time": "0:50",
+              "action": "Insert plunger, steep"
+            },
+            {
+              "time": "1:20",
+              "action": "Press slowly (~25-30 sec)"
             }
           ]
         }

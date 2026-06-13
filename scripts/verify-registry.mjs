@@ -168,9 +168,9 @@ for (const [key, m] of Object.entries(METHODS)) {
     ok(typeof m.buildSteps === 'function',
         `buildSteps is a function`);
     try {
-        const steps = m.buildSteps(18, 16, 'standard', 288);
+        const steps = m.buildSteps(18, 16, 288);
         ok(Array.isArray(steps) && steps.length > 0,
-            `buildSteps(18, 16, 'standard', 288) → ${steps.length} step(s)`);
+            `buildSteps(18, 16, 288) → ${steps.length} step(s)`);
         ok(steps.every(s => typeof s.time === 'string' && typeof s.action === 'string'),
             `all steps have {time, action}`);
     } catch (e) {

@@ -73,22 +73,22 @@ function getProcessingBaseParams(process) {
     const p = (process || 'unknown').toLowerCase();
 
     if (p.includes('nitro') || p.includes('co2') || p.includes('co-infused')) {
-        return { grindBase: { comandante: 18, fellow: 2.8 }, tempBase: { min: 90, max: 91 }, ratio: 15.5, brewStyle: 'slow', targetTime: '2:45-3:15', category: 'experimental-nitro' };
+        return { grindBase: { comandante: 18, fellow: 2.8 }, tempBase: { min: 90, max: 91 }, ratio: 15.5, targetTime: '2:45-3:15', category: 'experimental-nitro' };
     }
     if (p.includes('anaerobic') && p.includes('natural')) {
-        return { grindBase: { comandante: 20, fellow: 3.2 }, tempBase: { min: 91, max: 92 }, ratio: 16.5, brewStyle: 'controlled', targetTime: '2:30-3:00', category: 'anaerobic-natural' };
+        return { grindBase: { comandante: 20, fellow: 3.2 }, tempBase: { min: 91, max: 92 }, ratio: 16.5, targetTime: '2:30-3:00', category: 'anaerobic-natural' };
     }
     if (p.includes('anaerobic') && p.includes('washed')) {
-        return { grindBase: { comandante: 19, fellow: 3.0 }, tempBase: { min: 91, max: 92 }, ratio: 16, brewStyle: 'controlled', targetTime: '2:30-3:00', category: 'anaerobic-washed' };
+        return { grindBase: { comandante: 19, fellow: 3.0 }, tempBase: { min: 91, max: 92 }, ratio: 16, targetTime: '2:30-3:00', category: 'anaerobic-washed' };
     }
     if (p.includes('carbonic')) {
-        return { grindBase: { comandante: 20, fellow: 3.3 }, tempBase: { min: 90, max: 91 }, ratio: 16, brewStyle: 'slow', targetTime: '2:45-3:15', category: 'carbonic' };
+        return { grindBase: { comandante: 20, fellow: 3.3 }, tempBase: { min: 90, max: 91 }, ratio: 16, targetTime: '2:45-3:15', category: 'carbonic' };
     }
     if (p.includes('extended') || p.includes('long ferment')) {
-        return { grindBase: { comandante: 21, fellow: 3.4 }, tempBase: { min: 91, max: 92 }, ratio: 16.2, brewStyle: 'controlled', targetTime: '2:30-3:00', category: 'extended-fermentation' };
+        return { grindBase: { comandante: 21, fellow: 3.4 }, tempBase: { min: 91, max: 92 }, ratio: 16.2, targetTime: '2:30-3:00', category: 'extended-fermentation' };
     }
     if (p.includes('yeast')) {
-        return { grindBase: { comandante: 23, fellow: 3.8 }, tempBase: { min: 92, max: 93 }, ratio: 16.5, brewStyle: 'standard', targetTime: '2:30-3:00', category: 'yeast' };
+        return { grindBase: { comandante: 23, fellow: 3.8 }, tempBase: { min: 92, max: 93 }, ratio: 16.5, targetTime: '2:30-3:00', category: 'yeast' };
     }
     if (p.includes('honey')) {
         let grindBase, tempBase;
@@ -99,15 +99,15 @@ function getProcessingBaseParams(process) {
         } else {
             grindBase = { comandante: 24, fellow: 3.9 }; tempBase = { min: 93, max: 94 };
         }
-        return { grindBase, tempBase, ratio: 16.7, brewStyle: 'fruity', targetTime: '2:45-3:15', category: 'honey' };
+        return { grindBase, tempBase, ratio: 16.7, targetTime: '2:45-3:15', category: 'honey' };
     }
     if (p.includes('natural')) {
-        return { grindBase: { comandante: 25, fellow: 4.1 }, tempBase: { min: 93, max: 94 }, ratio: 16.7, brewStyle: 'fruity', targetTime: '2:45-3:15', category: 'natural' };
+        return { grindBase: { comandante: 25, fellow: 4.1 }, tempBase: { min: 93, max: 94 }, ratio: 16.7, targetTime: '2:45-3:15', category: 'natural' };
     }
     if (p === 'unknown') {
-        return { grindBase: { comandante: 23, fellow: 3.7 }, tempBase: { min: 92, max: 94 }, ratio: 16, brewStyle: 'standard', targetTime: '2:30-3:15', category: 'unknown' };
+        return { grindBase: { comandante: 23, fellow: 3.7 }, tempBase: { min: 92, max: 94 }, ratio: 16, targetTime: '2:30-3:15', category: 'unknown' };
     }
-    return { grindBase: { comandante: 22, fellow: 3.5 }, tempBase: { min: 92, max: 93 }, ratio: 16, brewStyle: 'standard', targetTime: '2:30-3:00', category: 'washed' };
+    return { grindBase: { comandante: 22, fellow: 3.5 }, tempBase: { min: 92, max: 93 }, ratio: 16, targetTime: '2:30-3:00', category: 'washed' };
 }
 
 function adjustForAltitude(params, altitudeStr) {
@@ -199,8 +199,7 @@ function adjustForMethod(params, method) {
         },
         ratio,
         tempBase: { min: params.tempBase.min + adj.tempDelta, max: params.tempBase.max + adj.tempDelta },
-        targetTime: adj.targetTime || params.targetTime,
-        brewStyle: params.brewStyle,
+        targetTime: adj.targetTime,
     };
 }
 
@@ -229,9 +228,9 @@ function getGrinderValue(grindBase, grinder, offset) {
     return `${Math.max(profile.min, val)} clicks`;
 }
 
-function generateBrewSteps(amount, ratio, brewStyle, method) {
+function generateBrewSteps(amount, ratio, method) {
     const waterAmount = Math.round(amount * ratio);
-    return (METHODS[method] || METHODS.v60).buildSteps(amount, ratio, brewStyle, waterAmount);
+    return (METHODS[method] || METHODS.v60).buildSteps(amount, ratio, waterAmount);
 }
 
 function formatTemp(tempBase) {
@@ -252,7 +251,7 @@ function computeBrew(grinder, method, processing) {
     const grindSetting = getGrinderValue(final.grindBase, grinder, grindOffset);
     const temperature  = formatTemp(final.tempBase);
     const waterAmount  = Math.round(amount * final.ratio);
-    const steps        = generateBrewSteps(amount, final.ratio, final.brewStyle, method);
+    const steps        = generateBrewSteps(amount, final.ratio, method);
 
     return {
         grindSetting,
