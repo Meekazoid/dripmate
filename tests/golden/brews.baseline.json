@@ -166,7 +166,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "25 clicks",
+          "grindSetting": "27 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -191,7 +191,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "28 clicks",
+          "grindSetting": "30 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -216,7 +216,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "27 clicks",
+          "grindSetting": "29 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -241,7 +241,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "23 clicks",
+          "grindSetting": "25 clicks",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -266,7 +266,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "26 clicks",
+          "grindSetting": "28 clicks",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -549,7 +549,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "25 clicks",
+          "grindSetting": "27 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -574,7 +574,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "28 clicks",
+          "grindSetting": "30 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -599,7 +599,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "27 clicks",
+          "grindSetting": "29 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -624,7 +624,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "23 clicks",
+          "grindSetting": "25 clicks",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -649,7 +649,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "26 clicks",
+          "grindSetting": "28 clicks",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -932,7 +932,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "25 clicks",
+          "grindSetting": "27 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -957,7 +957,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "28 clicks",
+          "grindSetting": "30 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -982,7 +982,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "27 clicks",
+          "grindSetting": "29 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -1007,7 +1007,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "23 clicks",
+          "grindSetting": "25 clicks",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -1032,7 +1032,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "26 clicks",
+          "grindSetting": "28 clicks",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -1315,7 +1315,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "4.3",
+          "grindSetting": "4.7",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -1340,7 +1340,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "4.8",
+          "grindSetting": "5.3",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -1365,7 +1365,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "4.7",
+          "grindSetting": "5.0",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -1390,7 +1390,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "4.0",
+          "grindSetting": "4.3",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -1415,7 +1415,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "4.5",
+          "grindSetting": "4.8",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -1698,7 +1698,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "2.8",
+          "grindSetting": "3.2",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -1723,7 +1723,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "3.3",
+          "grindSetting": "3.8",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -1748,7 +1748,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "3.2",
+          "grindSetting": "3.5",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -1773,7 +1773,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "2.5",
+          "grindSetting": "2.8",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -1798,7 +1798,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "3.0",
+          "grindSetting": "3.3",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2081,7 +2081,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "4.3",
+          "grindSetting": "4.7",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2106,7 +2106,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "4.8",
+          "grindSetting": "5.3",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -2131,7 +2131,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "4.7",
+          "grindSetting": "5.0",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -2156,7 +2156,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "4.0",
+          "grindSetting": "4.3",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2181,7 +2181,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "4.5",
+          "grindSetting": "4.8",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2464,7 +2464,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "63 clicks",
+          "grindSetting": "68 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2489,7 +2489,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "70 clicks",
+          "grindSetting": "75 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -2514,7 +2514,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "68 clicks",
+          "grindSetting": "73 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -2539,7 +2539,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "58 clicks",
+          "grindSetting": "63 clicks",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2564,7 +2564,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "65 clicks",
+          "grindSetting": "70 clicks",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2847,7 +2847,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "21 clicks",
+          "grindSetting": "22 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2872,7 +2872,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "23 clicks",
+          "grindSetting": "25 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -2897,7 +2897,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "22 clicks",
+          "grindSetting": "24 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -2922,7 +2922,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "19 clicks",
+          "grindSetting": "21 clicks",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -2947,7 +2947,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "21 clicks",
+          "grindSetting": "23 clicks",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -3230,7 +3230,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "63 clicks",
+          "grindSetting": "68 clicks",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -3255,7 +3255,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "70 clicks",
+          "grindSetting": "75 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -3280,7 +3280,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "68 clicks",
+          "grindSetting": "73 clicks",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -3305,7 +3305,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "58 clicks",
+          "grindSetting": "63 clicks",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -3330,7 +3330,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "65 clicks",
+          "grindSetting": "70 clicks",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -3613,7 +3613,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "2.9 rot",
+          "grindSetting": "3.1 rot",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -3638,7 +3638,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "3.3 rot",
+          "grindSetting": "3.5 rot",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -3663,7 +3663,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "3.1 rot",
+          "grindSetting": "3.4 rot",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -3688,7 +3688,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "2.7 rot",
+          "grindSetting": "2.9 rot",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -3713,7 +3713,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "3.0 rot",
+          "grindSetting": "3.3 rot",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -3996,7 +3996,7 @@
       },
       "chemex": {
         "washed": {
-          "grindSetting": "23",
+          "grindSetting": "24",
           "temperature": "93-94°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -4021,7 +4021,7 @@
           ]
         },
         "natural": {
-          "grindSetting": "25",
+          "grindSetting": "27",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -4046,7 +4046,7 @@
           ]
         },
         "honey": {
-          "grindSetting": "24",
+          "grindSetting": "26",
           "temperature": "94-95°C",
           "ratio": "1:16.7 (18g)",
           "targetTime": "3:30-4:30",
@@ -4071,7 +4071,7 @@
           ]
         },
         "anaerobic-natural": {
-          "grindSetting": "21",
+          "grindSetting": "23",
           "temperature": "92-93°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",
@@ -4096,7 +4096,7 @@
           ]
         },
         "unknown": {
-          "grindSetting": "23",
+          "grindSetting": "25",
           "temperature": "93-95°C",
           "ratio": "1:16.5 (18g)",
           "targetTime": "3:30-4:30",

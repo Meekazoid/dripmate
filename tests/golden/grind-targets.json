@@ -66,10 +66,10 @@
     "grinder": "1zpresso",
     "method": "v60",
     "unit": "rot",
-    "min": 2.2,
-    "max": 3.2,
+    "min": 2.0,
+    "max": 2.8,
     "confidence": "low",
-    "source": "1Zpresso JX 48mm conical 30 clicks/rot; calibration startBand 2.3–3.0 rot (grinders.js)"
+    "source": "1Zpresso JX 48mm conical 30 clicks/rot; community V60 ~2.2–2.6 rot confirmed (tightened from 2.3–3.0 startBand)"
   },
   {
     "grinder": "fellow_gen1",

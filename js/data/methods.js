@@ -37,8 +37,8 @@ export const METHODS = {
         stepHeaderLabel: 'Chemex Pour-Over Steps',
         timerLabel: 'Chemex',
         adjust: {
-            grindComandante: +3,
-            grindFellow: +0.75,
+            grindComandante: +5,
+            grindFellow: +1.15,
             ratioClamp: { op: 'max', value: 16.5 },
             tempDelta: +1,
             targetTime: '3:30-4:30',
