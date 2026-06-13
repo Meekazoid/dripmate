@@ -83,7 +83,9 @@ function fillLayer(ctx, w, h, baseline, comps, tAcc, calm, grad, alpha) {
 }
 
 function drawWave(o) {
-  const ctx = o.ctx, w = o.w, h = o.h;
+  const ctx = o.ctx;
+  if (!o.w) sizeWave(o);
+  const w = o.w, h = o.h;
   if (!w) return;
   ctx.clearRect(0, 0, w, h);
   const pct = parseFloat(o.bar.style.width) || 0;
