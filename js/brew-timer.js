@@ -55,14 +55,18 @@ export function startBrewTimer(index) {
     const brewSnapshot = `Brewed ${brewAmount}g on ${methodLabel}  ›  Grind ${brewGrind}  ›  ${brewTemp}`;
 
     // WICHTIG: Wir nutzen jetzt Date.now() für absolute, echte Zeitsynchronisation
-    brewTimers[index] = { 
+    brewTimers[index] = {
         startTime: Date.now(), // <-- Background-Proof
-        steps, 
-        isRunning: true, 
-        isPaused: false, 
+        steps,
+        isRunning: true,
+        isPaused: false,
         brewStartedAt,
         historyLogged: false,
-        brewSnapshot: brewSnapshot // Für den Auto-Log gespeichert
+        brewSnapshot,
+        brewAmount: String(brewAmount),
+        brewMethod: methodLabel,
+        brewGrind: String(brewGrind),
+        brewTemp: String(brewTemp),
     };
 
     const startBtn = document.getElementById(`start-brew-${index}`);
@@ -180,7 +184,11 @@ function updateBrewProgress(index) {
         const brewEntry = {
             timestamp: new Date().toISOString(),
             brewStart: true,
-            brewLabel: timer.brewSnapshot
+            brewLabel: timer.brewSnapshot,
+            brewAmount: timer.brewAmount,
+            brewMethod: timer.brewMethod,
+            brewGrind: timer.brewGrind,
+            brewTemp: timer.brewTemp,
         };
         addBrewHistoryEntry(coffees[index], brewEntry);
         timer.historyEntry = brewEntry;
@@ -220,7 +228,11 @@ export function finishBrewTimer(index) {
             timestamp: new Date().toISOString(),
             brewStart: true,
             brewLabel: timer.brewSnapshot,
-            brewDuration: durationStr
+            brewDuration: durationStr,
+            brewAmount: timer.brewAmount,
+            brewMethod: timer.brewMethod,
+            brewGrind: timer.brewGrind,
+            brewTemp: timer.brewTemp,
         };
         addBrewHistoryEntry(coffees[index], entry);
         timer.historyEntry = entry;

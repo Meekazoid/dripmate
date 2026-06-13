@@ -586,16 +586,50 @@ export function openFeedbackHistory(index) {
         emptyEl.style.display = 'none';
         listEl.innerHTML = history.map(entry => {
             const dateStr = sanitizeHTML(formatHistoryDate(entry.timestamp));
-            const deltaStr = sanitizeHTML(formatHistoryDelta(entry));
             if (entry.brewStart) {
-                const durationLabel = entry.brewDuration ? ` &middot; ${sanitizeHTML(entry.brewDuration)}` : '';
+                // Build structured brew-box; fall back to parsing brewSnapshot for old entries
+                let brewFields = null;
+                if (entry.brewAmount) {
+                    brewFields = {
+                        amount: sanitizeHTML(entry.brewAmount),
+                        method: sanitizeHTML(entry.brewMethod || '-'),
+                        grind:  sanitizeHTML(entry.brewGrind  || '-'),
+                        temp:   sanitizeHTML(entry.brewTemp   || '-'),
+                    };
+                } else if (entry.brewLabel) {
+                    const parts = entry.brewLabel.split('  ›  ');
+                    if (parts.length >= 3) {
+                        const m = parts[0].match(/^Brewed\s+(\d+)g\s+on\s+(.+)$/);
+                        if (m) {
+                            brewFields = {
+                                amount: sanitizeHTML(m[1]),
+                                method: sanitizeHTML(m[2].trim()),
+                                grind:  sanitizeHTML(parts[1].replace(/^Grind\s+/, '').trim()),
+                                temp:   sanitizeHTML(parts[2].trim()),
+                            };
+                        }
+                    }
+                }
+                const brewtimeHTML = entry.brewDuration
+                    ? `<div class="history-brewtime">Brewing time &middot; <span class="history-brewtime-val">${sanitizeHTML(entry.brewDuration)}</span> min</div>`
+                    : '';
+                let brewBoxHTML = '';
+                if (brewFields) {
+                    brewBoxHTML = `
+            <div class="history-brew-box">
+                <div class="history-brewed">Brewed <span class="history-hl">${brewFields.amount}g</span> on <span class="history-hl">${brewFields.method}</span></div>
+                <div class="history-brew-gt"><span class="history-brew-label">Grind</span> ${brewFields.grind} / <span class="history-brew-label">Temp</span> ${brewFields.temp}</div>
+            </div>`;
+                } else if (entry.brewLabel) {
+                    brewBoxHTML = `<div class="history-brew-box"><div class="history-brewed">${sanitizeHTML(entry.brewLabel)}</div></div>`;
+                }
                 return `
             <div class="history-item history-item--brew-start">
-                <div class="history-item-brew-badge">&#9749; Brew${durationLabel}</div>
-                <div class="history-item-top">
-                    <strong>${dateStr}</strong>
+                <div class="history-item-badge-row">
+                    <div class="history-item-brew-badge">Brew</div>
+                    <div class="history-item-date">${dateStr}</div>
                 </div>
-                <div class="history-item-brew-label">${deltaStr}</div>
+                ${brewtimeHTML}${brewBoxHTML}
             </div>`;
             }
             const grindChanged = entry.previousGrind !== entry.newGrind;
@@ -606,9 +640,9 @@ export function openFeedbackHistory(index) {
             if (entry.manualAdjust) {
                 return `
             <div class="history-item history-item--manual">
-                <div class="history-item-manual-badge">Manual</div>
-                <div class="history-item-top">
-                    <strong>${dateStr}</strong>
+                <div class="history-item-badge-row">
+                    <div class="history-item-manual-badge">Manual</div>
+                    <div class="history-item-date">${dateStr}</div>
                 </div>
                 ${grid}
             </div>`;
@@ -616,17 +650,17 @@ export function openFeedbackHistory(index) {
             if (!entry.resetToInitial) {
                 return `
             <div class="history-item history-item--feedback">
-                <div class="history-item-feedback-badge">Feedback</div>
-                <div class="history-item-top">
-                    <strong>${dateStr}</strong>
+                <div class="history-item-badge-row">
+                    <div class="history-item-feedback-badge">Feedback</div>
+                    <div class="history-item-date">${dateStr}</div>
                 </div>
                 ${grid}
             </div>`;
             }
             return `
             <div class="history-item">
-                <div class="history-item-top">
-                    <strong>${dateStr}</strong>
+                <div class="history-item-badge-row">
+                    <div class="history-item-date">${dateStr}</div>
                 </div>
                 ${grid}
             </div>`;

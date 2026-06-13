@@ -2608,10 +2608,25 @@ body.light-mode .undo-suggestion-btn:hover {
     padding: 7px 10px;
 }
 
-/* Brew-start entries: subtler styling ? no parameter diff, just a timestamp marker */ .history-item--brew-start {
+/* Brew-start entries: subtler styling — no parameter diff, just a timestamp marker */
+.history-item--brew-start {
     border-color: rgba(74, 222, 128, 0.45);
     background: rgba(74, 222, 128, 0.05);
     padding: 7px 10px;
+}
+
+.history-item-badge-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.history-item-date {
+    font-size: 0.62rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    white-space: nowrap;
 }
 
 .history-item-brew-badge {
@@ -2619,38 +2634,52 @@ body.light-mode .undo-suggestion-btn:hover {
     font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: rgb(74, 222, 128);
     background: rgba(74, 222, 128, 0.12);
     border: 1px solid rgba(74, 222, 128, 0.3);
-    border-radius: 5px;
+    border-radius: 4px;
     padding: 1px 7px;
+}
+
+.history-brewtime {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
     margin-bottom: 5px;
 }
 
-body.light-mode .history-item--brew-start {
-    border-color: rgba(74, 222, 128, 0.45);
-    background: rgba(74, 222, 128, 0.05);
-    padding: 7px 10px;
-}
-
-body.light-mode .history-item-brew-badge {
-    display: inline-block;
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+.history-brewtime-val {
     color: rgb(74, 222, 128);
-    background: rgba(74, 222, 128, 0.12);
-    border: 1px solid rgba(74, 222, 128, 0.3);
-    border-radius: 5px;
-    padding: 1px 7px;
-    margin-bottom: 5px;
+    font-weight: 600;
 }
 
-.history-item-brew-label {
+.history-brew-box {
+    background: var(--bg-secondary);
+    padding: 5px 9px;
+    border-radius: 6px;
+}
+
+.history-brewed {
+    font-size: 0.78rem;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.history-brew-gt {
     font-size: 0.74rem;
     color: var(--text-secondary);
-    line-height: 1.4;
-    margin-top: 1px;
+}
+
+.history-hl {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.history-brew-label {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
 }
 
 .history-item--manual {
@@ -2668,7 +2697,6 @@ body.light-mode .history-item-brew-badge {
     background: rgba(96, 165, 250, 0.12);
     border-radius: 4px;
     padding: 1px 7px;
-    margin-bottom: 5px;
 }
 
 .history-item--feedback {
@@ -2686,7 +2714,6 @@ body.light-mode .history-item-brew-badge {
     background: color-mix(in srgb, var(--accent) 12%, transparent);
     border-radius: 4px;
     padding: 1px 7px;
-    margin-bottom: 5px;
 }
 
 .history-item-top {
