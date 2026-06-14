@@ -755,6 +755,97 @@ function _drLift(listEl, e) {
     });
 }
 
+// ── During drag: sibling shifts + auto-scroll ─────────────────────────────────
+
+function _drComputeTargetIdx(pointerY) {
+    const { snaps, origIdx } = _dr;
+    const absY = pointerY + window.scrollY;
+    for (let i = 0; i < snaps.length; i++) {
+        if (absY < snaps[i].top + snaps[i].height / 2) return i;
+    }
+    return snaps.length - 1;
+}
+
+function _drUpdateShifts(pointerY) {
+    const { snaps, origIdx } = _dr;
+    const targetIdx = _drComputeTargetIdx(pointerY);
+    _dr.targetIdx   = targetIdx;
+    const dragH     = snaps[origIdx].height + _DR_GAP;
+
+    snaps.forEach(({ el }, i) => {
+        if (i === origIdx) return;
+        let shift = 0;
+        if      (targetIdx < origIdx && i >= targetIdx && i < origIdx) shift =  dragH;
+        else if (targetIdx > origIdx && i > origIdx    && i <= targetIdx) shift = -dragH;
+        el.style.transition = 'transform .18s cubic-bezier(.2,0,0,1.2)';
+        el.style.transform  = shift ? `translateY(${shift}px)` : '';
+    });
+}
+
+function _drRunAutoScroll() {
+    if (!_dr || !_dr.lifted || _dr.ascRaf) return;
+    const tick = () => {
+        if (!_dr || !_dr.lifted) return;
+        const py = _dr.lastPY;
+        const vy = window.innerHeight;
+        if      (py < _DR_ASCROLL_Z)      window.scrollBy(0, -_DR_ASCROLL_V);
+        else if (py > vy - _DR_ASCROLL_Z) window.scrollBy(0,  _DR_ASCROLL_V);
+        _dr.ascRaf = requestAnimationFrame(tick);
+    };
+    _dr.ascRaf = requestAnimationFrame(tick);
+}
+
+// ── Drop: normalize + persist ─────────────────────────────────────────────────
+
+function _drNormalizeSortOrders() {
+    const active = coffees.filter(c => c.deleted !== true)
+        .sort((a, b) => {
+            if ((a.sortOrder || 0) !== (b.sortOrder || 0)) return (a.sortOrder || 0) - (b.sortOrder || 0);
+            if (a.stackId && a.stackId === b.stackId) return (a.stackPos || 0) - (b.stackPos || 0);
+            return 0;
+        });
+    let pos = 0, gi = 0;
+    while (gi < active.length) {
+        const c = active[gi];
+        if (c.stackId) {
+            const sid = c.stackId;
+            while (gi < active.length && active[gi].stackId === sid) { active[gi].sortOrder = pos; gi++; }
+        } else {
+            c.sortOrder = pos; gi++;
+        }
+        pos++;
+    }
+}
+
+function _drCommitReorder() {
+    const { snaps, origIdx, targetIdx, unitEl, shownOrigIdx } = _dr;
+    _drResetVisuals();
+
+    const isStack = unitEl.classList.contains('roastery-stack-wrapper');
+
+    if (isStack && shownOrigIdx !== null) {
+        // Unstack: extract shown card; remaining stack stays in place.
+        // (Full unstack logic added in COMMIT 3.)
+        _dr = null; return;
+    }
+
+    if (targetIdx === origIdx) { _dr = null; return; }
+
+    // Build new unit order then assign sortOrder = position
+    const order = Array.from({ length: snaps.length }, (_, i) => i);
+    order.splice(origIdx, 1);
+    order.splice(targetIdx, 0, origIdx);
+
+    order.forEach((snapIdx, pos) => {
+        _drUnitOriginalIndices(snaps[snapIdx].el).forEach(j => { coffees[j].sortOrder = pos; });
+    });
+
+    _drNormalizeSortOrders();
+    saveCoffeesAndSync();
+    renderCoffees();
+    _dr = null;
+}
+
 export function initDragReorder() {
     const listEl = document.getElementById('coffeeList');
     if (!listEl || listEl._drInit) return;
@@ -798,14 +889,16 @@ export function initDragReorder() {
         _dr.lastPY = e.clientY;
         _dr.ghost.style.top  = (e.clientY - _dr.ghostDY) + 'px';
         _dr.ghost.style.left = (e.clientX - _dr.ghostDX) + 'px';
+
+        _drUpdateShifts(e.clientY);
+        _drRunAutoScroll();
     });
 
     const onEnd = (e) => {
         if (!_dr || e.pointerId !== _dr.pointerId) return;
         clearTimeout(_dr.timer);
         if (!_dr.lifted) { _dr = null; return; }
-        _drResetVisuals();
-        _dr = null;
+        _drCommitReorder();
     };
     listEl.addEventListener('pointerup',     onEnd);
     listEl.addEventListener('pointercancel', (e) => {
