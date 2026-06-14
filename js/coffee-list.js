@@ -795,6 +795,28 @@ function _drRunAutoScroll() {
     _dr.ascRaf = requestAnimationFrame(tick);
 }
 
+// ── During drag: merge-target highlight (30-70 % of target height) ────────────
+
+function _drUpdateMerge(pointerY) {
+    const { snaps, origIdx } = _dr;
+    const absY = pointerY + window.scrollY;
+    let newMTgt = null;
+
+    for (let i = 0; i < snaps.length; i++) {
+        if (i === origIdx) continue;
+        const { top, height } = snaps[i];
+        if (absY >= top + height * _DR_MERGE_MIN && absY <= top + height * _DR_MERGE_MAX) {
+            newMTgt = snaps[i].el; break;
+        }
+    }
+
+    if (newMTgt !== _dr.mergeTgt) {
+        if (_dr.mergeTgt) _dr.mergeTgt.classList.remove('drag-merge-target');
+        if (newMTgt)      newMTgt.classList.add('drag-merge-target');
+        _dr.mergeTgt = newMTgt;
+    }
+}
+
 // ── Drop: normalize + persist ─────────────────────────────────────────────────
 
 function _drNormalizeSortOrders() {
@@ -817,6 +839,41 @@ function _drNormalizeSortOrders() {
     }
 }
 
+function _drCommitMerge() {
+    const { snaps, origIdx, mergeTgt, unitEl } = _dr;
+    _drResetVisuals();
+
+    const targetIndices = _drUnitOriginalIndices(mergeTgt);
+    const dragIndices   = _drUnitOriginalIndices(unitEl);
+    if (!targetIndices.length || !dragIndices.length) { _dr = null; return; }
+
+    // Resolve or create target stackId
+    let targetStackId = coffees[targetIndices[0]].stackId;
+    if (!targetStackId) {
+        targetStackId = String(Date.now()) + '-' + Math.random().toString(36).slice(2, 8);
+        targetIndices.forEach(i => { coffees[i].stackId = targetStackId; coffees[i].stackPos = 0; });
+    }
+
+    // Append dragged coffees to end of target stack
+    const existing = coffees.filter(c => c.stackId === targetStackId && c.deleted !== true);
+    let maxPos = existing.reduce((m, c) => Math.max(m, c.stackPos || 0), -1);
+    dragIndices.forEach(i => {
+        if (coffees[i].stackId === targetStackId) return;
+        coffees[i].stackId  = targetStackId;
+        coffees[i].stackPos = ++maxPos;
+    });
+
+    // All stack members get the target's current sortOrder so they cluster together
+    const baseSO = coffees[targetIndices[0]].sortOrder || 0;
+    coffees.filter(c => c.stackId === targetStackId && c.deleted !== true)
+           .forEach(c => { c.sortOrder = baseSO; });
+
+    _drNormalizeSortOrders();
+    saveCoffeesAndSync();
+    renderCoffees();
+    _dr = null;
+}
+
 function _drCommitReorder() {
     const { snaps, origIdx, targetIdx, unitEl, shownOrigIdx } = _dr;
     _drResetVisuals();
@@ -825,8 +882,37 @@ function _drCommitReorder() {
 
     if (isStack && shownOrigIdx !== null) {
         // Unstack: extract shown card; remaining stack stays in place.
-        // (Full unstack logic added in COMMIT 3.)
-        _dr = null; return;
+        const shownCoffee = coffees[shownOrigIdx];
+        const stackId     = shownCoffee.stackId;
+
+        shownCoffee.stackId  = null;
+        shownCoffee.stackPos = 0;
+
+        const rem = coffees
+            .filter(c => c.stackId === stackId && c.deleted !== true)
+            .sort((a, b) => (a.stackPos || 0) - (b.stackPos || 0));
+
+        if (rem.length === 1) {
+            rem[0].stackId  = null;
+            rem[0].stackPos = 0;
+        } else {
+            rem.forEach((c, i) => { c.stackPos = i; });
+        }
+
+        // Assign integer sortOrders to existing units, then place extracted card
+        // at targetIdx + 0.5 so normalization inserts it in the right slot.
+        snaps.forEach(({ el }, i) => {
+            _drUnitOriginalIndices(el).forEach(j => {
+                if (j !== shownOrigIdx) coffees[j].sortOrder = i;
+            });
+        });
+        shownCoffee.sortOrder = targetIdx + 0.5;
+
+        _drNormalizeSortOrders();
+        saveCoffeesAndSync();
+        renderCoffees();
+        _dr = null;
+        return;
     }
 
     if (targetIdx === origIdx) { _dr = null; return; }
@@ -891,6 +977,7 @@ export function initDragReorder() {
         _dr.ghost.style.left = (e.clientX - _dr.ghostDX) + 'px';
 
         _drUpdateShifts(e.clientY);
+        _drUpdateMerge(e.clientY);
         _drRunAutoScroll();
     });
 
@@ -898,7 +985,8 @@ export function initDragReorder() {
         if (!_dr || e.pointerId !== _dr.pointerId) return;
         clearTimeout(_dr.timer);
         if (!_dr.lifted) { _dr = null; return; }
-        _drCommitReorder();
+        if (_dr.mergeTgt) _drCommitMerge();
+        else              _drCommitReorder();
     };
     listEl.addEventListener('pointerup',     onEnd);
     listEl.addEventListener('pointercancel', (e) => {
