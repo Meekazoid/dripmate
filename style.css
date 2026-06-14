@@ -4332,6 +4332,21 @@ body.light-mode .roastery-stack-counter {
 }
 
 /* ==========================================
+   DRAG-REORDER (Phase 3)
+   ========================================== */
+
+.drag-merge-target {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 16px;
+    transition: outline-color 0.15s ease;
+}
+
+body.light-mode .drag-merge-target {
+    outline-color: var(--accent);
+}
+
+/* ==========================================
    APP FEEDBACK — left button container + nudge
    ========================================== */
 

@@ -662,6 +662,157 @@ export function bringForward(originalIndex) {
     renderCoffees();
 }
 
+// ==========================================
+// DRAG-REORDER (Phase 3)
+// Delegated from #coffeeList. Long-press gate sits before the existing
+// swipe handler: cancels on horizontal movement (stack) or any movement
+// > cancel-px before the timer, so the swipe handler always wins.
+// ==========================================
+
+const _DR_LONG_MS   = 400;
+const _DR_SWIPE_PX  = 8;    // horizontal on a stack -> cancel, let swipe win
+const _DR_MOVE_PX   = 14;   // any movement before timer -> scroll intent -> cancel
+const _DR_MERGE_MIN = 0.30; // merge-zone: 30-70 % of target height
+const _DR_MERGE_MAX = 0.70;
+const _DR_GAP       = 22;   // .coffee-list gap (px)
+const _DR_ASCROLL_Z = 80;   // auto-scroll edge zone (px)
+const _DR_ASCROLL_V = 6;    // auto-scroll speed (px/frame)
+const _DR_IGNORE = '.delete-btn,.edit-btn,.stack-front-btn,.timer-btn,'
+    + '.feedback-slider,.apply-suggestion-btn,.adjust-btn,.history-btn,'
+    + '.reset-adjustments-btn,input,select,textarea,button,'
+    + '.color-picker-btn,.color-picker-popup,.inline-edit-input';
+
+let _dr = null; // current drag state
+
+function _drFindUnit(listEl, target) {
+    let el = target;
+    while (el && el.parentElement !== listEl) el = el.parentElement;
+    return (el && el.parentElement === listEl) ? el : null;
+}
+
+function _drUnitOriginalIndices(el) {
+    if (el.classList.contains('coffee-card')) {
+        const i = parseInt(el.dataset.originalIndex);
+        return isNaN(i) ? [] : [i];
+    }
+    return Array.from(el.querySelectorAll('.coffee-card'))
+        .map(c => parseInt(c.dataset.originalIndex))
+        .filter(n => !isNaN(n));
+}
+
+function _drResetVisuals() {
+    if (!_dr) return;
+    if (_dr.ghost)   { _dr.ghost.remove(); _dr.ghost = null; }
+    if (_dr.unitEl)  { _dr.unitEl.style.opacity = ''; _dr.unitEl.style.pointerEvents = ''; }
+    if (_dr.snaps)   { _dr.snaps.forEach(s => { s.el.style.transform = ''; s.el.style.transition = ''; }); }
+    if (_dr.mergeTgt){ _dr.mergeTgt.classList.remove('drag-merge-target'); _dr.mergeTgt = null; }
+    if (_dr.ascRaf)  { cancelAnimationFrame(_dr.ascRaf); _dr.ascRaf = null; }
+}
+
+function _drCancel() {
+    if (!_dr) return;
+    clearTimeout(_dr.timer);
+    _drResetVisuals();
+    _dr = null;
+}
+
+function _drLift(listEl, e) {
+    const { unitEl, startX, startY } = _dr;
+    const rect = unitEl.getBoundingClientRect();
+
+    if (navigator.vibrate) navigator.vibrate(30);
+
+    unitEl.style.opacity = '0';
+    unitEl.style.pointerEvents = 'none';
+
+    const ghost = unitEl.cloneNode(true);
+    ghost.style.cssText = 'position:fixed;margin:0;pointer-events:none;z-index:1000;'
+        + 'border-radius:16px;transition:transform .12s ease,box-shadow .12s ease;'
+        + `top:${rect.top}px;left:${rect.left}px;width:${rect.width}px;`
+        + 'transform:scale(1.04);box-shadow:0 14px 40px rgba(0,0,0,0.45);';
+    document.body.appendChild(ghost);
+
+    const allUnits = Array.from(listEl.children);
+    const origIdx  = allUnits.indexOf(unitEl);
+    const snaps    = allUnits.map(el => {
+        const r = el.getBoundingClientRect();
+        return { el, top: r.top + window.scrollY, height: r.height };
+    });
+
+    let shownOrigIdx = null;
+    if (unitEl.classList.contains('roastery-stack-wrapper')) {
+        const shownCard = unitEl.querySelector('.roastery-stack-slot .coffee-card');
+        if (shownCard) shownOrigIdx = parseInt(shownCard.dataset.originalIndex);
+        if (isNaN(shownOrigIdx)) shownOrigIdx = null;
+    }
+
+    Object.assign(_dr, {
+        lifted: true, ghost, rect,
+        ghostDX: startX - rect.left, ghostDY: startY - rect.top,
+        allUnits, origIdx, snaps,
+        targetIdx: origIdx, mergeTgt: null,
+        shownOrigIdx, ascRaf: null, lastPY: startY,
+    });
+}
+
+export function initDragReorder() {
+    const listEl = document.getElementById('coffeeList');
+    if (!listEl || listEl._drInit) return;
+    listEl._drInit = true;
+
+    listEl.addEventListener('pointerdown', (e) => {
+        if (e.button !== undefined && e.button !== 0) return;
+        if (_dr) _drCancel();
+        if (e.target.closest(_DR_IGNORE)) return;
+        const unitEl = _drFindUnit(listEl, e.target);
+        if (!unitEl) return;
+
+        const isStack = unitEl.classList.contains('roastery-stack-wrapper');
+        const pid = e.pointerId;
+        const timer = setTimeout(() => {
+            if (_dr && _dr.pointerId === pid) _dr.readyToCapture = true;
+        }, _DR_LONG_MS);
+
+        _dr = { pointerId: pid, startX: e.clientX, startY: e.clientY,
+                timer, unitEl, isStack, lifted: false, readyToCapture: false };
+    });
+
+    listEl.addEventListener('pointermove', (e) => {
+        if (!_dr || e.pointerId !== _dr.pointerId) return;
+
+        if (_dr.readyToCapture && !_dr.lifted) {
+            listEl.setPointerCapture(e.pointerId);
+            _drLift(listEl, e);
+        }
+
+        const adx = Math.abs(e.clientX - _dr.startX);
+        const ady = Math.abs(e.clientY - _dr.startY);
+
+        if (!_dr.lifted) {
+            if (_dr.isStack && adx > _DR_SWIPE_PX && adx > ady) { _drCancel(); return; }
+            if (adx > _DR_MOVE_PX || ady > _DR_MOVE_PX)          { _drCancel(); return; }
+            return;
+        }
+
+        e.preventDefault();
+        _dr.lastPY = e.clientY;
+        _dr.ghost.style.top  = (e.clientY - _dr.ghostDY) + 'px';
+        _dr.ghost.style.left = (e.clientX - _dr.ghostDX) + 'px';
+    });
+
+    const onEnd = (e) => {
+        if (!_dr || e.pointerId !== _dr.pointerId) return;
+        clearTimeout(_dr.timer);
+        if (!_dr.lifted) { _dr = null; return; }
+        _drResetVisuals();
+        _dr = null;
+    };
+    listEl.addEventListener('pointerup',     onEnd);
+    listEl.addEventListener('pointercancel', (e) => {
+        if (_dr && e.pointerId === _dr.pointerId) _drCancel();
+    });
+}
+
 // Register functions on window for onclick handlers
 window.deleteCoffee = deleteCoffee;
 window.restoreCoffee = restoreCoffee;

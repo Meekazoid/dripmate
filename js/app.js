@@ -8,7 +8,7 @@ import { initTheme, toggleTheme, toggleManual, collapseManual, alignHeader } fro
 import { initGlobalGrinder } from './grinder.js';
 import { closeFeedbackHistory, migrateCoffeesInitialValues } from './feedback.js';
 import { initFeedbackSliderInteractions } from './feedback.js';
-import { renderCoffees } from './coffee-list.js';
+import { renderCoffees, initDragReorder } from './coffee-list.js';
 import { initPressedStateInteractions } from './coffee-cards.js';
 import { processImageUpload } from './image-handler.js';
 import { saveCoffeeManual, initProcessPicker } from './manual-entry.js';
@@ -191,6 +191,7 @@ function bootApp() {
 
     initOnboarding();
     renderCoffees();
+    initDragReorder();
     initAppFeedback();
     checkNudge();
 
