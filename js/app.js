@@ -36,7 +36,8 @@ import {
 } from './brew-timer.js';
 import {
     manualWaterHardness,
-    setWaterHardness
+    setWaterHardness,
+    migrateOrderFields
 } from './state.js';
 import { initBackendSync, getToken } from './services/backend-sync.js';
 import { initAppFeedback, openAppFeedback, closeAppFeedback, checkNudge } from './app-feedback.js';
@@ -180,6 +181,7 @@ function bootApp() {
     window.addEventListener('resize', alignHeader);
 
     migrateCoffeesInitialValues();
+    migrateOrderFields();
 
     if (manualWaterHardness) {
         setWaterHardness(manualWaterHardness);

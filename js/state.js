@@ -135,8 +135,61 @@ export async function saveCoffeesAndSync() {
 
 export function addCoffee(coffee) {
   if (!coffee) return;
+  const activeSortOrders = coffees
+      .filter(c => c.deleted !== true && c.sortOrder !== undefined)
+      .map(c => c.sortOrder);
+  const minOrder = activeSortOrders.length > 0 ? Math.min(...activeSortOrders) : 0;
+  coffee.sortOrder = minOrder - 1;
+  coffee.stackId = null;
+  coffee.stackPos = 0;
   coffees = [normalizeCoffeeRecord(coffee), ...(coffees || [])];
   setCoffees(coffees);
+}
+
+export function migrateOrderFields() {
+  // One-time additive migration: assign sortOrder/stackId/stackPos to coffees that lack them.
+  // sortOrder is assigned based on the previous favorite-then-addedDate display order so nothing jumps.
+  const active = coffees
+      .filter(c => c.deleted !== true)
+      .sort((a, b) => {
+          const aFav = a.favorite === true;
+          const bFav = b.favorite === true;
+          if (aFav && !bFav) return -1;
+          if (!aFav && bFav) return 1;
+          if (aFav && bFav) {
+              return new Date(b.favoritedAt || 0).getTime() - new Date(a.favoritedAt || 0).getTime();
+          }
+          return new Date(b.addedDate || 0).getTime() - new Date(a.addedDate || 0).getTime();
+      });
+
+  let changed = false;
+
+  active.forEach((coffee, i) => {
+      if (coffee.sortOrder === undefined) {
+          coffee.sortOrder = i;
+          changed = true;
+      }
+  });
+
+  let nextOrder = active.length;
+  coffees.forEach(coffee => {
+      if (coffee.deleted === true && coffee.sortOrder === undefined) {
+          coffee.sortOrder = nextOrder++;
+          changed = true;
+      }
+      if (coffee.stackId === undefined) {
+          coffee.stackId = null;
+          changed = true;
+      }
+      if (coffee.stackPos === undefined) {
+          coffee.stackPos = 0;
+          changed = true;
+      }
+  });
+
+  if (changed) {
+      try { localStorage.setItem('coffees', JSON.stringify(coffees)); } catch (e) { console.warn('Failed to persist order migration', e); }
+  }
 }
 
 export function replaceState(partialState = {}) {

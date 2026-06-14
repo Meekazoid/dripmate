@@ -486,22 +486,41 @@ export function renderCoffees(expandAfterIndex) {
 
     emptyState.style.display = 'none';
 
-    // Sort: favorites first (newest favorited first), then by added date
+    // Sort by manual sortOrder; within a stack, by stackPos
     const sorted = activeCoffees.sort((a, b) => {
-        const aFav = a.coffee.favorite === true;
-        const bFav = b.coffee.favorite === true;
-
-        if (aFav && !bFav) return -1;
-        if (!aFav && bFav) return 1;
-
-        if (aFav && bFav) {
-            return new Date(b.coffee.favoritedAt || 0).getTime() - new Date(a.coffee.favoritedAt || 0).getTime();
+        const orderA = a.coffee.sortOrder !== undefined ? a.coffee.sortOrder : Infinity;
+        const orderB = b.coffee.sortOrder !== undefined ? b.coffee.sortOrder : Infinity;
+        if (orderA !== orderB) return orderA - orderB;
+        if (a.coffee.stackId !== null && a.coffee.stackId === b.coffee.stackId) {
+            return (a.coffee.stackPos || 0) - (b.coffee.stackPos || 0);
         }
-
-        return new Date(b.coffee.addedDate || 0).getTime() - new Date(a.coffee.addedDate || 0).getTime();
+        return 0;
     });
 
-    const groups = groupByRoastery(sorted);
+    // Group consecutive items that share a non-null stackId into stacks; everything else is a single card
+    const groups = [];
+    let gi = 0;
+    while (gi < sorted.length) {
+        const item = sorted[gi];
+        const sid = item.coffee.stackId;
+        if (sid !== null && sid !== undefined) {
+            const stackItems = [item];
+            gi++;
+            while (gi < sorted.length && sorted[gi].coffee.stackId === sid) {
+                stackItems.push(sorted[gi]);
+                gi++;
+            }
+            if (stackItems.length === 1) {
+                groups.push({ single: true, item: stackItems[0] });
+            } else {
+                groups.push({ single: false, items: stackItems });
+            }
+        } else {
+            groups.push({ single: true, item });
+            gi++;
+        }
+    }
+
     listEl.innerHTML = '';
 
     groups.forEach(group => {
@@ -548,8 +567,16 @@ export async function deleteCoffee(originalIndex) {
 export async function restoreCoffee(originalIndex) {
     if (originalIndex < 0 || originalIndex >= coffees.length) return;
 
+    const activeSortOrders = coffees
+        .filter(c => c.deleted !== true && c.sortOrder !== undefined)
+        .map(c => c.sortOrder);
+    const maxOrder = activeSortOrders.length > 0 ? Math.max(...activeSortOrders) : -1;
+
     coffees[originalIndex].deleted = false;
     delete coffees[originalIndex].deletedAt;
+    coffees[originalIndex].sortOrder = maxOrder + 1;
+    coffees[originalIndex].stackId = null;
+    coffees[originalIndex].stackPos = 0;
     saveCoffeesAndSync();
     await renderDecafList();
     renderCoffees();
