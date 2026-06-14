@@ -24,8 +24,12 @@
     ],
     "methods": [
       "v60",
+      "kalita",
       "chemex",
-      "aeropress"
+      "hario_switch",
+      "aeropress",
+      "clever",
+      "french_press"
     ],
     "processings": [
       "washed",
@@ -164,6 +168,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "24 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "27 clicks",
@@ -291,6 +422,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "24 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "19 clicks",
@@ -414,6 +652,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "26 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "29 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "28 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "24 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "27 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "32 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "35 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "34 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "30 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "33 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -547,6 +999,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "24 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "27 clicks",
@@ -674,6 +1253,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "24 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "19 clicks",
@@ -797,6 +1483,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "26 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "29 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "28 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "24 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "27 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "32 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "35 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "34 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "30 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "33 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -930,6 +1830,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "24 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "27 clicks",
@@ -1057,6 +2084,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "23 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "26 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "25 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "24 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "19 clicks",
@@ -1180,6 +2314,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "26 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "29 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "28 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "24 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "27 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "32 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "35 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "34 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "30 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "33 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -1313,6 +2661,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "3.8",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.3",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.2",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "3.5",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.0",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "4.7",
@@ -1440,6 +2915,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "3.8",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.3",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.2",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "3.5",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.0",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "2.8",
@@ -1563,6 +3145,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "4.4",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "5.0",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.8",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "4.1",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.6",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "5.8",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "6.4",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "6.2",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "5.5",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "6.0",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -1696,6 +3492,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "2.3",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "2.8",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "2.7",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.0",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "2.5",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "3.2",
@@ -1823,6 +3746,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "2.3",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "2.8",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "2.7",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.0",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "2.5",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "1.3",
@@ -1946,6 +3976,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "2.9",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "3.5",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "3.3",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.6",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.1",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "4.3",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.9",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.7",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "4.0",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.5",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -2079,6 +4323,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "3.8",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.3",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.2",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "3.5",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.0",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "4.7",
@@ -2206,6 +4577,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "3.8",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.3",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.2",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "3.5",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.0",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "2.8",
@@ -2329,6 +4807,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "4.4",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "5.0",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.8",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "4.1",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "4.6",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "5.8",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "6.4",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "6.2",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "5.5",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "6.0",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -2462,6 +5154,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "58 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "65 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "63 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "53 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "60 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "68 clicks",
@@ -2589,6 +5408,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "58 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "65 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "63 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "53 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "60 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "48 clicks",
@@ -2712,6 +5638,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "65 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "73 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "70 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "60 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "68 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "80 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "88 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "85 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "75 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "83 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -2845,6 +5985,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "19 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "21 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "17 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "20 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "22 clicks",
@@ -2972,6 +6239,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "19 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "21 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "21 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "17 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "20 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "16 clicks",
@@ -3095,6 +6469,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "21 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "24 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "23 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "20 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "22 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "26 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "29 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "28 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "25 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "27 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -3228,6 +6816,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "58 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "65 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "63 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "53 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "60 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "68 clicks",
@@ -3355,6 +7070,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "58 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "65 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "63 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "53 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "60 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "48 clicks",
@@ -3478,6 +7300,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "65 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "73 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "70 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "60 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "68 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "80 clicks",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "88 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "85 clicks",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "75 clicks",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "83 clicks",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -3611,6 +7647,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "2.7 rot",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "3.0 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "2.9 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.5 rot",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "2.8 rot",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "3.1 rot",
@@ -3738,6 +7901,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "2.7 rot",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "3.0 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "2.9 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.5 rot",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "2.8 rot",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "2.2 rot",
@@ -3861,6 +8131,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "3.0 rot",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "3.4 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "3.3 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "2.8 rot",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.1 rot",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "3.7 rot",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "4.1 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "4.0 rot",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "3.5 rot",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "3.9 rot",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }
@@ -3994,6 +8478,133 @@
           ]
         }
       },
+      "kalita": {
+        "washed": {
+          "grindSetting": "21",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "23",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "23",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 135g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 226g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 301g, let drain fully"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "19",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 134g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 223g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 297g, let drain fully"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "22",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:30",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Bloom: 54g water, level the bed, 30-45 sec"
+            },
+            {
+              "time": "0:45",
+              "action": "Pour to 130g in slow spirals"
+            },
+            {
+              "time": "1:30",
+              "action": "Pour to 216g"
+            },
+            {
+              "time": "2:00",
+              "action": "Final pour to 288g, let drain fully"
+            }
+          ]
+        }
+      },
       "chemex": {
         "washed": {
           "grindSetting": "24",
@@ -4121,6 +8732,113 @@
           ]
         }
       },
+      "hario_switch": {
+        "washed": {
+          "grindSetting": "21",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "23",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "23",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 151g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 301g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "19",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 149g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 297g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "22",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "2:45-3:15",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Switch OPEN — pour 144g"
+            },
+            {
+              "time": "0:45",
+              "action": "Switch CLOSED — pour to 288g, steep"
+            },
+            {
+              "time": "2:00",
+              "action": "Switch OPEN — let it drain"
+            }
+          ]
+        }
+      },
       "aeropress": {
         "washed": {
           "grindSetting": "17",
@@ -4244,6 +8962,220 @@
             {
               "time": "1:20",
               "action": "Press slowly (~25-30 sec)"
+            }
+          ]
+        }
+      },
+      "clever": {
+        "washed": {
+          "grindSetting": "23",
+          "temperature": "92-93°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "26",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "25",
+          "temperature": "93-94°C",
+          "ratio": "1:16.7 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 301,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 301g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "22",
+          "temperature": "91-92°C",
+          "ratio": "1:16.5 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 297,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 297g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "24",
+          "temperature": "92-94°C",
+          "ratio": "1:16 (18g)",
+          "targetTime": "3:00-4:00",
+          "waterAmountMl": 288,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate, gentle stir"
+            },
+            {
+              "time": "0:45",
+              "action": "Fill to 288g, stir once"
+            },
+            {
+              "time": "2:00",
+              "action": "Stir, then place dripper on your mug to drain"
+            }
+          ]
+        }
+      },
+      "french_press": {
+        "washed": {
+          "grindSetting": "29",
+          "temperature": "92-93°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "natural": {
+          "grindSetting": "32",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "honey": {
+          "grindSetting": "31",
+          "temperature": "93-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "anaerobic-natural": {
+          "grindSetting": "27",
+          "temperature": "91-92°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
+            }
+          ]
+        },
+        "unknown": {
+          "grindSetting": "30",
+          "temperature": "92-94°C",
+          "ratio": "1:15 (18g)",
+          "targetTime": "4:00",
+          "waterAmountMl": 270,
+          "steps": [
+            {
+              "time": "0:00",
+              "action": "Add 54g water, saturate evenly, do not stir"
+            },
+            {
+              "time": "0:30",
+              "action": "Top up to 270g"
+            },
+            {
+              "time": "4:00",
+              "action": "Break the crust, skim foam, then decant slowly (don't press to the bottom)"
             }
           ]
         }

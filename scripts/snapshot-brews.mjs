@@ -54,7 +54,7 @@ const GRINDER_KEYS = [
 ];
 
 // ── Methods ───────────────────────────────────────────────────────────────────
-const METHOD_KEYS = ['v60', 'chemex', 'aeropress'];
+const METHOD_KEYS = ['v60', 'kalita', 'chemex', 'hario_switch', 'aeropress', 'clever', 'french_press'];
 
 // ── Processings ───────────────────────────────────────────────────────────────
 const PROCESSINGS = [

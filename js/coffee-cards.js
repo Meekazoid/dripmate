@@ -183,6 +183,9 @@ export function renderCoffeeCard(coffee, index) {
         </div>
     `;
 
+    const methodIcon = BREW_ICONS[brewParams.method];
+    const brewIconHtml = methodIcon ? `<span class="brew-btn-icon">${methodIcon}</span>` : '';
+
     return `
         <div class="coffee-card" data-original-index="${index}" style="${colorStyle}">
             <div class="coffee-header" style="position: relative;">
@@ -315,8 +318,7 @@ export function renderCoffeeCard(coffee, index) {
                         <div class="timer-display" id="brew-timer-display-${index}">00:00</div>
                         <div class="timer-controls-main">
                             <button class="timer-btn start-brew" id="start-brew-${index}" onclick="event.stopPropagation(); startBrewTimer(${index});">
-                                <span class="brew-btn-icon">${BREW_ICONS[brewParams.method] || BREW_ICONS.v60}</span>
-                                Start Brew
+                                ${brewIconHtml}Start Brew
                             </button>
                         </div>
                         <div class="timer-controls-secondary">

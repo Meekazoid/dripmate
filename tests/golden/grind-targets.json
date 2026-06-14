@@ -151,5 +151,113 @@
     "max": 4.0,
     "confidence": "medium",
     "source": "Fellow Gen2 AeroPress inverted community range 2.5–4.0; engine 2.75→2.8"
+  },
+  {
+    "grinder": "comandante_mk4",
+    "method": "kalita",
+    "unit": "clicks",
+    "min": 21,
+    "max": 26,
+    "confidence": "medium",
+    "source": "Kalita Wave community V60-adjacent range; flat bed adds ~1 click vs V60"
+  },
+  {
+    "grinder": "baratza",
+    "method": "kalita",
+    "unit": "encore-step",
+    "min": 16,
+    "max": 22,
+    "confidence": "medium",
+    "source": "Baratza Encore Kalita Wave; flat bed close to V60, engine +0.9×1=0.9 delta"
+  },
+  {
+    "grinder": "fellow_gen2",
+    "method": "kalita",
+    "unit": "dial",
+    "min": 3.0,
+    "max": 5.0,
+    "confidence": "medium",
+    "source": "Fellow Gen2 Kalita Wave; dial range similar to V60 with small coarser bias"
+  },
+  {
+    "grinder": "comandante_mk4",
+    "method": "hario_switch",
+    "unit": "clicks",
+    "min": 20,
+    "max": 26,
+    "confidence": "medium",
+    "source": "Hario Switch community range; hybrid immersion slightly coarser than V60"
+  },
+  {
+    "grinder": "baratza",
+    "method": "hario_switch",
+    "unit": "encore-step",
+    "min": 16,
+    "max": 22,
+    "confidence": "medium",
+    "source": "Baratza Encore Hario Switch; hybrid method, range overlaps V60"
+  },
+  {
+    "grinder": "fellow_gen2",
+    "method": "hario_switch",
+    "unit": "dial",
+    "min": 3.0,
+    "max": 5.0,
+    "confidence": "medium",
+    "source": "Fellow Gen2 Hario Switch; hybrid immersion, dial range close to V60"
+  },
+  {
+    "grinder": "comandante_mk4",
+    "method": "clever",
+    "unit": "clicks",
+    "min": 24,
+    "max": 30,
+    "confidence": "medium",
+    "source": "Clever Dripper community range 24–30 clicks; full immersion, coarser than V60"
+  },
+  {
+    "grinder": "baratza",
+    "method": "clever",
+    "unit": "encore-step",
+    "min": 21,
+    "max": 28,
+    "confidence": "medium",
+    "source": "Baratza Encore Clever Dripper; full immersion, community range 22–27"
+  },
+  {
+    "grinder": "fellow_gen2",
+    "method": "clever",
+    "unit": "dial",
+    "min": 4.0,
+    "max": 6.0,
+    "confidence": "medium",
+    "source": "Fellow Gen2 Clever Dripper; full immersion, dial range 4.0–6.0"
+  },
+  {
+    "grinder": "comandante_mk4",
+    "method": "french_press",
+    "unit": "clicks",
+    "min": 31,
+    "max": 35,
+    "confidence": "medium",
+    "source": "Comandante French Press community range 31–35 clicks; very coarse, full immersion"
+  },
+  {
+    "grinder": "baratza",
+    "method": "french_press",
+    "unit": "encore-step",
+    "min": 27,
+    "max": 33,
+    "confidence": "medium",
+    "source": "Baratza Encore French Press community range 28–32; coarsest setting"
+  },
+  {
+    "grinder": "fellow_gen2",
+    "method": "french_press",
+    "unit": "dial",
+    "min": 5.5,
+    "max": 8.0,
+    "confidence": "medium",
+    "source": "Fellow Gen2 French Press; very coarse, dial range 5.5–8.0 (SSP MP 64mm flat)"
   }
 ]
