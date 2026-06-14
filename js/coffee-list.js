@@ -645,8 +645,26 @@ async function renderDecafList() {
     }
 }
 
+export function bringForward(originalIndex) {
+    const coffee = coffees[originalIndex];
+    if (!coffee || !coffee.stackId) return;
+
+    const stackId = coffee.stackId;
+    const stackMembers = coffees
+        .filter(c => c.stackId === stackId && c.deleted !== true)
+        .sort((a, b) => (a.stackPos || 0) - (b.stackPos || 0));
+
+    coffee.stackPos = 0;
+    let pos = 1;
+    stackMembers.filter(c => c !== coffee).forEach(c => { c.stackPos = pos++; });
+
+    saveCoffeesAndSync();
+    renderCoffees();
+}
+
 // Register functions on window for onclick handlers
 window.deleteCoffee = deleteCoffee;
 window.restoreCoffee = restoreCoffee;
 window.permanentDeleteCoffee = permanentDeleteCoffee;
 window.updateCoffeeAmountLive = updateCoffeeAmountLive;
+window.bringForward = bringForward;
