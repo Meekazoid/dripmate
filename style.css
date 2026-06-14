@@ -1176,56 +1176,6 @@ body.light-mode .delete-btn {
     fill: none;
 }
 
-.favorite-btn {
-    position: absolute;
-    top: -10px;
-    right: 64px;
-    background: var(--bg-card);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    padding: 0;
-    border-radius: 6px;
-    cursor: pointer;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.2s;
-    opacity: 0.6;
-}
-
-.favorite-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-    opacity: 1;
-}
-
-.favorite-btn:hover {
-    opacity: 1;
-    border-color: var(--accent);
-    color: var(--accent);
-}
-
-.favorite-btn.active:hover {
-    color: white;
-}
-
-.star-icon {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-}
-
-.favorite-btn.active .star-icon {
-    fill: currentColor;
-}
 
 /* ==========================================    10. PROCESS BADGE & FRESHNESS    ========================================== */  .coffee-process {
     display: inline-block;
@@ -4128,11 +4078,10 @@ button::-moz-focus-inner {
         height: 24px !important;
     }
 
-    /* DIE DREI BUTTONS AUF DER COFFEECARD (Favorite, Edit, Delete) */
-    .favorite-btn, 
-    .edit-btn, 
+    /* BUTTONS AUF DER COFFEECARD (Edit, Delete) */
+    .edit-btn,
     .delete-btn {
-        width: 36px !important;  /* Von 28px auf 36px erhöht */
+        width: 36px !important;
         height: 36px !important;
         display: flex !important;
         align-items: center !important;
@@ -4142,13 +4091,10 @@ button::-moz-focus-inner {
     /* Positionen der Card-Buttons leicht korrigieren, damit sie nicht überlappen */
     .delete-btn   { right: -4px !important; top: -10px !important; }
     .edit-btn     { right: 38px !important;  top: -10px !important; }
-    .favorite-btn { right: 80px !important;  top: -10px !important; }
 
     /* Icons auf der Card etwas größer für bessere Sichtbarkeit */
-    .favorite-btn svg, 
-    .edit-btn svg, 
+    .edit-btn svg,
     .delete-btn svg,
-    .star-icon,
     .edit-icon,
     .delete-icon {
         width: 18px !important;
@@ -4304,7 +4250,6 @@ button::-moz-focus-inner {
 .roastery-stack-preview-card .coffee-card-actions,
 .roastery-stack-preview-card .delete-btn,
 .roastery-stack-preview-card .edit-btn,
-.roastery-stack-preview-card .favorite-btn,
 .roastery-stack-preview-card .roastery-stack-counter {
     display: none !important;
 }

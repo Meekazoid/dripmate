@@ -214,11 +214,6 @@ export function renderCoffeeCard(coffee, index) {
                 </div>
 
                 <div class="coffee-header-actions">
-                    <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${index});">
-                    <svg class="star-icon" viewBox="0 0 24 24">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
-                </button>
                 <button class="edit-btn" id="edit-btn-${index}" onclick="event.stopPropagation(); toggleEditMode(${index});">
                     <svg class="edit-icon" id="edit-icon-${index}" viewBox="0 0 24 24">
                         <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>

@@ -122,7 +122,7 @@ function attachCardClickListener(card) {
             return;
         }
 
-        if (e.target.closest('.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input[type="range"], input[type="date"], .color-picker-btn, .color-picker-popup')) return;
+        if (e.target.closest('.delete-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input[type="range"], input[type="date"], .color-picker-btn, .color-picker-popup')) return;
 
         document.querySelectorAll('.coffee-card').forEach(c => {
             if (c !== this) c.classList.remove('expanded');
@@ -181,7 +181,7 @@ function buildRoasteryStack(items) {
     const ACTIVATE_X = 12;
     const LOCK_Y = 10;
     const SWIPE_THRESHOLD = 64;
-    const SWIPE_IGNORE_SELECTOR = '.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input, select, textarea, button, .color-picker-btn, .color-picker-popup';
+    const SWIPE_IGNORE_SELECTOR = '.delete-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input, select, textarea, button, .color-picker-btn, .color-picker-popup';
     const SPRING_EASING = 'cubic-bezier(0.2, 0, 0, 1.2)';
     const ANIM_DURATION = 300;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -593,22 +593,6 @@ export async function permanentDeleteCoffee(originalIndex) {
     }
 }
 
-export function toggleFavorite(originalIndex) {
-    if (originalIndex < 0 || originalIndex >= coffees.length) return;
-
-    const coffee = coffees[originalIndex];
-    coffee.favorite = !coffee.favorite;
-
-    if (coffee.favorite) {
-        coffee.favoritedAt = new Date().toISOString();
-    } else {
-        delete coffee.favoritedAt;
-    }
-
-    saveCoffeesAndSync();
-    renderCoffees();
-}
-
 export function updateCoffeeAmountLive(value, originalIndex) {
     const amount = parseInt(value);
     coffees[originalIndex].customAmount = amount;
@@ -662,7 +646,6 @@ async function renderDecafList() {
 }
 
 // Register functions on window for onclick handlers
-window.toggleFavorite = toggleFavorite;
 window.deleteCoffee = deleteCoffee;
 window.restoreCoffee = restoreCoffee;
 window.permanentDeleteCoffee = permanentDeleteCoffee;
