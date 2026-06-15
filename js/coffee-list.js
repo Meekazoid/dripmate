@@ -681,9 +681,9 @@ export function unstackShown(originalIndex) {
 // > cancel-px before the timer, so the swipe handler always wins.
 // ==========================================
 
-const _DR_LONG_MS   = 400;
+const _DR_LONG_MS   = 260;
 const _DR_SWIPE_PX  = 8;    // horizontal on a stack -> cancel, let swipe win
-const _DR_MOVE_PX   = 14;   // any movement before timer -> scroll intent -> cancel
+const _DR_MOVE_PX   = 18;   // vertical movement before timer -> scroll intent -> cancel
 const _DR_MERGE_MIN = 0.30; // merge-zone: 30-70 % of target height
 const _DR_MERGE_MAX = 0.70;
 const _DR_GAP       = 22;   // .coffee-list gap (px)
@@ -940,8 +940,8 @@ export function initDragReorder() {
             // Swipe/scroll detection before lift
             const adx = Math.abs(e.clientX - _dr.startX);
             const ady = Math.abs(e.clientY - _dr.startY);
-            if (_dr.isStack && adx > _DR_SWIPE_PX && adx > ady) { _drCancel(); return; }
-            if (adx > _DR_MOVE_PX || ady > _DR_MOVE_PX)          { _drCancel(); return; }
+            if (_dr.isStack && adx > _DR_SWIPE_PX && adx > ady) { _drCancel(); return; } // horizontal -> swipe wins
+            if (ady > _DR_MOVE_PX)                               { _drCancel(); return; } // vertical -> scroll wins
             return;
         }
 
