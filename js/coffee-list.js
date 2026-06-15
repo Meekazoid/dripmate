@@ -781,10 +781,11 @@ function _drLift(listEl) {
     const ghost = unitEl.cloneNode(true);
     ghost.style.cssText = 'position:fixed;left:0;top:0;margin:0;box-sizing:border-box;'
         + `width:${rect.width}px;height:${rect.height}px;`
-        + 'pointer-events:none;z-index:1000;border-radius:16px;transition:none;'
+        + 'pointer-events:none;z-index:1000;border-radius:16px;transition:none;opacity:0;'
         + 'box-shadow:0 14px 40px rgba(0,0,0,0.45);'
         + `transform:translate(${rect.left}px,${rect.top}px) scale(1.04);`;
     document.body.appendChild(ghost);
+    requestAnimationFrame(() => { ghost.style.opacity = '1'; });
 
     const allUnits = Array.from(listEl.children);
     const origIdx  = allUnits.indexOf(unitEl);
