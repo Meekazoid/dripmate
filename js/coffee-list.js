@@ -837,8 +837,6 @@ function _drUpdateMerge(pointerY) {
         const relY = (pointerY - r.top) / r.height;
         if (relY >= _DR_MERGE_MIN && relY <= _DR_MERGE_MAX) {
             newMTgt = tgtEl;
-            const tgtIdx = _dr.allUnits.indexOf(tgtEl);
-            console.log('merge-target', tgtIdx, tgtEl.classList.contains('roastery-stack-wrapper') ? 'stack' : 'solo'); // temp
         }
     }
 
