@@ -216,9 +216,9 @@ export function renderCoffeeCard(coffee, index) {
                 <div class="coffee-header-actions">
                 ${coffee.stackId !== null ? `<button class="stack-front-btn" onclick="event.stopPropagation(); unstackShown(${index});" title="Remove from stack">
                     <svg class="stack-front-icon" viewBox="0 0 24 24">
-                        <line x1="12" y1="2" x2="12" y2="13"/>
-                        <polyline points="8 6 12 2 16 6"/>
-                        <path d="M3 13v6a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-6"/>
+                        <rect x="4" y="12" width="16" height="8" rx="2"/>
+                        <path d="M12 9V3"/>
+                        <path d="M9 6l3-3 3 3"/>
                     </svg>
                 </button>` : ''}
                 <button class="edit-btn" id="edit-btn-${index}" onclick="event.stopPropagation(); toggleEditMode(${index});">
