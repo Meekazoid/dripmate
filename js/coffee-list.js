@@ -944,12 +944,14 @@ export function initDragReorder() {
 
         const isStack = unitEl.classList.contains('roastery-stack-wrapper');
         const pid = e.pointerId;
+        console.log('[dr] down', isStack ? 'STACK' : 'SOLO', performance.now().toFixed(1));
         // For solo cards: capture immediately so the browser cannot fire pointercancel
         // during the 260ms wait (stacks already capture via the slot's internal handler).
         if (!isStack) try { unitEl.setPointerCapture(pid); } catch (_) {}
         // FIX A: transfer capture to listEl and lift — fires even if finger stays still.
         const timer = setTimeout(() => {
             if (!_dr || _dr.pointerId !== pid || _dr.lifted) return;
+            console.log('[dr] lift', _dr.isStack ? 'STACK' : 'SOLO', performance.now().toFixed(1));
             try { listEl.setPointerCapture(pid); } catch (_) {}
             _drLift(listEl);
         }, _DR_LONG_MS);
@@ -965,12 +967,13 @@ export function initDragReorder() {
             // Swipe/scroll detection before lift
             const adx = Math.abs(e.clientX - _dr.startX);
             const ady = Math.abs(e.clientY - _dr.startY);
-            if (_dr.isStack && adx > _DR_SWIPE_PX && adx > ady) { _drCancel(); return; } // horizontal -> swipe wins
-            if (ady > _DR_MOVE_PX)                               { _drCancel(); return; } // vertical -> scroll wins
+            if (_dr.isStack && adx > _DR_SWIPE_PX && adx > ady) { console.log('[dr] cancel:swipe', performance.now().toFixed(1)); _drCancel(); return; } // horizontal -> swipe wins
+            if (ady > _DR_MOVE_PX)                               { console.log('[dr] cancel:scroll', 'ady='+ady.toFixed(1), performance.now().toFixed(1)); _drCancel(); return; } // vertical -> scroll wins
             return;
         }
 
         e.preventDefault();
+        if (!_dr._loggedFirstMove) { console.log('[dr] firstMove', _dr.isStack ? 'STACK' : 'SOLO', performance.now().toFixed(1)); _dr._loggedFirstMove = true; }
         _dr.lastPY = e.clientY;
         const ty = _dr.rect.top + (e.clientY - _dr.startY);
         _dr.ghost.style.transform = `translate(${_dr.fixedX}px,${ty}px) scale(1.03)`;
@@ -982,6 +985,7 @@ export function initDragReorder() {
 
     const onEnd = (e) => {
         if (!_dr || e.pointerId !== _dr.pointerId) return;
+        if (e.type === 'pointercancel') console.log('[dr] cancel:pointercancel', _dr.isStack ? 'STACK' : 'SOLO', 'lifted='+_dr.lifted, performance.now().toFixed(1));
         clearTimeout(_dr.timer);
         if (_dr.listEl) try { _dr.listEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
         if (_dr.unitEl && !_dr.isStack) try { _dr.unitEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
