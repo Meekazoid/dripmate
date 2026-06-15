@@ -743,18 +743,11 @@ function _drLift(listEl) {
         return { el, top: r.top + window.scrollY, height: r.height };
     });
 
-    let shownOrigIdx = null;
-    if (unitEl.classList.contains('roastery-stack-wrapper')) {
-        const shownCard = unitEl.querySelector('.roastery-stack-slot .coffee-card');
-        if (shownCard) shownOrigIdx = parseInt(shownCard.dataset.originalIndex);
-        if (isNaN(shownOrigIdx)) shownOrigIdx = null;
-    }
-
     Object.assign(_dr, {
         lifted: true, ghost, rect, listEl,
         allUnits, origIdx, snaps,
         targetIdx: origIdx, mergeTgt: null,
-        shownOrigIdx, ascRaf: null, lastPY: startY,
+        ascRaf: null, lastPY: startY,
     });
 }
 
@@ -878,49 +871,13 @@ function _drCommitMerge() {
 }
 
 function _drCommitReorder() {
-    const { snaps, origIdx, targetIdx, unitEl, shownOrigIdx } = _dr;
+    const { snaps, origIdx, targetIdx } = _dr;
     _drResetVisuals();
-
-    const isStack = unitEl.classList.contains('roastery-stack-wrapper');
-
-    if (isStack && shownOrigIdx !== null) {
-        // Unstack: extract shown card; remaining stack stays in place.
-        const shownCoffee = coffees[shownOrigIdx];
-        const stackId     = shownCoffee.stackId;
-
-        shownCoffee.stackId  = null;
-        shownCoffee.stackPos = 0;
-
-        const rem = coffees
-            .filter(c => c.stackId === stackId && c.deleted !== true)
-            .sort((a, b) => (a.stackPos || 0) - (b.stackPos || 0));
-
-        if (rem.length === 1) {
-            rem[0].stackId  = null;
-            rem[0].stackPos = 0;
-        } else {
-            rem.forEach((c, i) => { c.stackPos = i; });
-        }
-
-        // Assign integer sortOrders to existing units, then place extracted card
-        // at targetIdx + 0.5 so normalization inserts it in the right slot.
-        snaps.forEach(({ el }, i) => {
-            _drUnitOriginalIndices(el).forEach(j => {
-                if (j !== shownOrigIdx) coffees[j].sortOrder = i;
-            });
-        });
-        shownCoffee.sortOrder = targetIdx + 0.5;
-
-        _drNormalizeSortOrders();
-        saveCoffeesAndSync();
-        renderCoffees();
-        _dr = null;
-        return;
-    }
 
     if (targetIdx === origIdx) { _dr = null; return; }
 
-    // Build new unit order then assign sortOrder = position
+    // Move the dragged unit (solo card or entire stack) to the target position.
+    // All cards in a stack share the same sortOrder so they stay grouped.
     const order = Array.from({ length: snaps.length }, (_, i) => i);
     order.splice(origIdx, 1);
     order.splice(targetIdx, 0, origIdx);
