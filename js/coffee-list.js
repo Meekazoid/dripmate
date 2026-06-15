@@ -712,6 +712,24 @@ function _drUnitOriginalIndices(el) {
         .filter(n => !isNaN(n));
 }
 
+// Like _drUnitOriginalIndices but reads full stack membership from coffees[], not DOM.
+// Needed because a stack wrapper only renders ONE .coffee-card at a time (the shown one).
+function _drAllCoffeeIndices(el) {
+    if (el.classList.contains('roastery-stack-wrapper')) {
+        const shown = el.querySelector('.roastery-stack-slot .coffee-card');
+        const shownIdx = shown ? parseInt(shown.dataset.originalIndex) : NaN;
+        if (isNaN(shownIdx)) return [];
+        const stackId = coffees[shownIdx] ? coffees[shownIdx].stackId : null;
+        if (!stackId) return [shownIdx];
+        return coffees.reduce((acc, c, i) => {
+            if (c.stackId === stackId && c.deleted !== true) acc.push(i);
+            return acc;
+        }, []);
+    }
+    const idx = parseInt(el.dataset.originalIndex);
+    return isNaN(idx) ? [] : [idx];
+}
+
 function _drResetVisuals() {
     if (!_dr) return;
     if (_dr.ghost)   { _dr.ghost.remove(); _dr.ghost = null; }
@@ -855,8 +873,8 @@ function _drCommitMerge() {
     const { snaps, origIdx, mergeTgt, unitEl } = _dr;
     _drResetVisuals();
 
-    const targetIndices = _drUnitOriginalIndices(mergeTgt);
-    const dragIndices   = _drUnitOriginalIndices(unitEl);
+    const targetIndices = _drAllCoffeeIndices(mergeTgt);
+    const dragIndices   = _drAllCoffeeIndices(unitEl);
     if (!targetIndices.length || !dragIndices.length) { _dr = null; return; }
 
     // Resolve or create target stackId
@@ -899,7 +917,7 @@ function _drCommitReorder() {
     order.splice(targetIdx, 0, origIdx);
 
     order.forEach((snapIdx, pos) => {
-        _drUnitOriginalIndices(snaps[snapIdx].el).forEach(j => { coffees[j].sortOrder = pos; });
+        _drAllCoffeeIndices(snaps[snapIdx].el).forEach(j => { coffees[j].sortOrder = pos; });
     });
 
     _drNormalizeSortOrders();
