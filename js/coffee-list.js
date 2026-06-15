@@ -941,6 +941,7 @@ export function initDragReorder() {
         if (e.target.closest(_DR_IGNORE)) return;
         const unitEl = _drFindUnit(listEl, e.target);
         if (!unitEl) return;
+        if (window.getSelection) { const s = window.getSelection(); if (s) s.removeAllRanges(); }
 
         const isStack = unitEl.classList.contains('roastery-stack-wrapper');
         const pid = e.pointerId;
@@ -997,6 +998,12 @@ export function initDragReorder() {
     // FIX 2: suppress native scroll during drag so the browser does not fire pointercancel.
     listEl.addEventListener('touchmove', e => { if (_dr && _dr.lifted) e.preventDefault(); }, { passive: false });
     listEl.addEventListener('pointercancel', onEnd);
+    // Prevent text-selection magnifier on long-press. Using selectstart (not pointerdown
+    // preventDefault) so click events are not suppressed and tap-to-expand keeps working.
+    listEl.addEventListener('selectstart', e => {
+        if (e.target.closest('input, textarea, [contenteditable]')) return;
+        e.preventDefault();
+    });
 }
 
 // Register functions on window for onclick handlers
