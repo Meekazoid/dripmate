@@ -9,6 +9,9 @@ import { getBrewRecommendations } from './brew-engine.js';
 import { initFeedbackSliderVisuals } from './feedback.js';
 import { initBrewWaves } from './brew-wave.js';
 
+let _nextRenderHasScanPulse = false;
+export function markNextRenderAsScan() { _nextRenderHasScanPulse = true; }
+
 function showCompostConfirmModal() {
     const modal = document.getElementById('compostConfirmModal');
     const confirmBtn = document.getElementById('confirmCompostConfirmBtn');
@@ -523,15 +526,28 @@ export function renderCoffees(expandAfterIndex) {
 
     listEl.innerHTML = '';
 
+    let _scanPulse = _nextRenderHasScanPulse;
+    _nextRenderHasScanPulse = false;
+
     groups.forEach(group => {
         if (group.single) {
             const tpl = document.createElement('template');
             tpl.innerHTML = renderCoffeeCard(group.item.coffee, group.item.originalIndex).trim();
             const card = tpl.content.firstElementChild;
             attachCardClickListener(card);
+            if (_scanPulse) {
+                _scanPulse = false;
+                card.classList.add('just-scanned');
+                setTimeout(() => card.classList.remove('just-scanned'), 3100);
+            }
             listEl.appendChild(card);
         } else {
             listEl.appendChild(buildRoasteryStack(group.items));
+            if (_scanPulse) {
+                _scanPulse = false;
+                const fc = listEl.lastElementChild.querySelector('.coffee-card');
+                if (fc) { fc.classList.add('just-scanned'); setTimeout(() => fc.classList.remove('just-scanned'), 3100); }
+            }
         }
     });
 

@@ -2031,6 +2031,17 @@ body.light-mode .step-progress {
     }
 }
 
+@keyframes scan-pulse-soft {
+    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); border-color: var(--accent); }
+    50%  { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 38%, transparent); border-color: var(--accent); }
+    100% { box-shadow: 0 0 0 0 transparent; border-color: var(--border); }
+}
+
+.just-scanned {
+    animation: scan-pulse-soft 1.5s ease-in-out 2;
+    border-width: 1.5px;
+}
+
 /* Brew method icon inside Start Brew button */
 .brew-btn-icon {
     display: inline-flex;
