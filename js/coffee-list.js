@@ -805,16 +805,20 @@ function _drRunAutoScroll() {
 
 // ── During drag: merge-target highlight (30-70 % of target height) ────────────
 
-function _drUpdateMerge(pointerY) {
-    const { snaps, origIdx } = _dr;
-    const absY = pointerY + window.scrollY;
+function _drUpdateMerge(pointerX, pointerY) {
+    // Use live hit-test so stacks (which are taller) contribute their actual height.
+    // Ghost has pointer-events:none so elementFromPoint reaches real list units.
+    const hit   = document.elementFromPoint(pointerX, pointerY);
+    const tgtEl = hit ? _drFindUnit(_dr.listEl, hit) : null;
     let newMTgt = null;
 
-    for (let i = 0; i < snaps.length; i++) {
-        if (i === origIdx) continue;
-        const { top, height } = snaps[i];
-        if (absY >= top + height * _DR_MERGE_MIN && absY <= top + height * _DR_MERGE_MAX) {
-            newMTgt = snaps[i].el; break;
+    if (tgtEl && tgtEl !== _dr.unitEl) {
+        const r    = tgtEl.getBoundingClientRect();
+        const relY = (pointerY - r.top) / r.height;
+        if (relY >= _DR_MERGE_MIN && relY <= _DR_MERGE_MAX) {
+            newMTgt = tgtEl;
+            const tgtIdx = _dr.allUnits.indexOf(tgtEl);
+            console.log('merge-target', tgtIdx, tgtEl.classList.contains('roastery-stack-wrapper') ? 'stack' : 'solo'); // temp
         }
     }
 
@@ -950,7 +954,7 @@ export function initDragReorder() {
         _dr.ghost.style.transform = `translate(${tx}px,${ty}px) scale(1.04)`;
 
         _drUpdateShifts(e.clientY);
-        _drUpdateMerge(e.clientY);
+        _drUpdateMerge(e.clientX, e.clientY);
         _drRunAutoScroll();
     });
 
