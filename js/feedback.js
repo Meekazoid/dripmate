@@ -6,7 +6,6 @@
 import { coffees, saveCoffeesAndSync, sanitizeHTML, preferredGrinder } from './state.js';
 import { getBrewRecommendations, getQualitativeGrind } from './brew-engine.js';
 
-const suggestionHideTimers = new Map();
 const feedbackTouchState = new WeakMap();
 let feedbackSliderEventsBound = false;
 
@@ -279,14 +278,6 @@ function showResetAdjustmentsConfirmModal() {
     });
 }
 
-function clearSuggestionHideTimer(index) {
-    const existing = suggestionHideTimers.get(index);
-    if (existing) {
-        clearTimeout(existing);
-        suggestionHideTimers.delete(index);
-    }
-}
-
 export function updateFeedbackSlider(index, category, sliderValue) {
     const coffee = coffees[index];
     if (!coffee.feedback) coffee.feedback = {};
@@ -343,10 +334,10 @@ export function selectFeedback(index, category, value, syncSlider = true) {
 function generateSuggestion(index) {
     const coffee = coffees[index];
     const feedback = coffee.feedback || {};
-    const suggestionDiv = document.getElementById(`suggestion-${index}`);
-    if (!suggestionDiv) return;
+    const contentDiv = document.getElementById(`suggestion-content-${index}`);
+    if (!contentDiv) return;
 
-    clearSuggestionHideTimer(index);
+    const idleHTML = `<p class="suggestion-idle-text">Nothing to apply — your brew's dialed in for this coffee. Nice.</p>`;
 
     let totalGrindImpact = 0;
     let totalTempImpact = 0;
@@ -359,8 +350,8 @@ function generateSuggestion(index) {
     });
 
     if (activeInputs === 0) {
-        suggestionDiv.innerHTML = '';
-        suggestionDiv.classList.add('hidden');
+        contentDiv.innerHTML = idleHTML;
+        contentDiv.parentElement.classList.remove('has-suggestion');
         return;
     }
 
@@ -396,83 +387,54 @@ function generateSuggestion(index) {
     const cappedGrind = Math.max(-4, Math.min(4, finalGrindDelta));
     const cappedTemp = Math.max(-2, Math.min(2, finalTempDelta));
 
-    // 3. Consolidated Strategy Labels
-    let strategyLabels = [];
-    if (cappedGrind > 0) {
-        strategyLabels.push(`→ Grind ${Math.abs(cappedGrind) > 2 ? 'significantly' : 'slightly'} coarser`);
-    } else if (cappedGrind < 0) {
-        strategyLabels.push(`→ Grind ${Math.abs(cappedGrind) > 2 ? 'significantly' : 'slightly'} finer`);
-    }
-    
-    if (cappedTemp > 0) {
-        strategyLabels.push(`→ Increase temperature (+${cappedTemp}°C)`);
-    } else if (cappedTemp < 0) {
-        strategyLabels.push(`→ Lower temperature (${cappedTemp}°C)`);
-    }
-
-    if (strategyLabels.length === 0) {
-        suggestionDiv.innerHTML = `<div style="text-align: center; padding: 24px; color: var(--text-secondary);">✓ Nuances are balanced. No major adjustments needed.</div>`;
-        suggestionDiv.classList.remove('hidden');
-
-        // Restore hide timer for "balanced" state
-        const hideTimer = setTimeout(() => {
-            suggestionDiv.classList.add('hidden');
-            suggestionHideTimers.delete(index);
-        }, 3000);
-        suggestionHideTimers.set(index, hideTimer);
+    if (cappedGrind === 0 && cappedTemp === 0) {
+        contentDiv.innerHTML = idleHTML;
+        contentDiv.parentElement.classList.remove('has-suggestion');
         return;
     }
 
+    // 3. Compute new values for display
     const previewGrind = cappedGrind !== 0
         ? getBrewRecommendations({ ...coffee, grindOffset: (coffee.grindOffset || 0) + cappedGrind }).grindSetting
         : null;
+    const currentGrind = cappedGrind !== 0 ? getBrewRecommendations(coffee).grindSetting : null;
 
     let newTempStr = null;
+    let currentTempDisplay = null;
     if (cappedTemp !== 0) {
-        const currentTemp = coffee.customTemp || getDefaultTemp(coffee.process?.toLowerCase() || 'unknown');
-        newTempStr = adjustTemp(currentTemp, cappedTemp);
+        currentTempDisplay = coffee.customTemp || getDefaultTemp(coffee.process?.toLowerCase() || 'unknown');
+        newTempStr = adjustTemp(currentTempDisplay, cappedTemp);
     }
 
-    // 4. UI Rendering
-    const strategyLines = strategyLabels.map((label, i) => {
-        const isGrind = i === 0 && cappedGrind !== 0;
-        const valueStr = isGrind
-            ? (previewGrind ? `Grind: ${previewGrind}` : '')
-            : (newTempStr ? `Temp: ${newTempStr}` : '');
-        return `
-            <div class="strategy-line">
-                <div class="strategy-line-label">
-                    <span class="strategy-arrow">&#8594;</span>${label.replace(/^→\s*/, '')}
-                </div>
-                ${valueStr ? `<div class="strategy-line-value">${valueStr}</div>` : ''}
-            </div>
-            ${i < strategyLabels.length - 1 ? '<div class="strategy-divider"></div>' : ''}
-        `;
-    }).join('');
+    // 4. Compact side-by-side tiles — only dimensions that actually change
+    const tiles = [];
+    if (cappedGrind !== 0) {
+        const dir = cappedGrind < 0
+            ? (Math.abs(cappedGrind) > 2 ? 'significantly finer' : 'slightly finer')
+            : (Math.abs(cappedGrind) > 2 ? 'significantly coarser' : 'slightly coarser');
+        tiles.push(`<div class="suggestion-tile">
+            <div class="suggestion-tile-label">Grind</div>
+            <div class="suggestion-tile-direction">${dir}</div>
+            ${currentGrind && previewGrind ? `<div class="suggestion-tile-value">${currentGrind} → ${previewGrind}</div>` : ''}
+        </div>`);
+    }
+    if (cappedTemp !== 0 && newTempStr) {
+        const dir = cappedTemp > 0 ? `+${cappedTemp}°C hotter` : `${cappedTemp}°C cooler`;
+        tiles.push(`<div class="suggestion-tile">
+            <div class="suggestion-tile-label">Temp</div>
+            <div class="suggestion-tile-direction">${dir}</div>
+            ${currentTempDisplay ? `<div class="suggestion-tile-value">${currentTempDisplay} → ${newTempStr}</div>` : ''}
+        </div>`);
+    }
 
-    suggestionDiv.innerHTML = `
-        <div class="suggestion-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>
-                <circle cx="8" cy="6" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
-                <circle cx="16" cy="12" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
-                <circle cx="10" cy="18" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
-            </svg>
-            Tuning Strategy
-        </div>
-        <div class="suggestion-strategies">
-            ${strategyLines}
-        </div>
+    contentDiv.innerHTML = `
+        <div class="suggestion-tiles">${tiles.join('')}</div>
         <div class="suggestion-btn-row">
-            <button class="apply-suggestion-btn" onclick="event.stopPropagation(); applySuggestion(${index}, ${cappedGrind}, '${newTempStr}')">
-                Apply
-            </button>
-            <button class="undo-suggestion-btn" onclick="event.stopPropagation(); undoFeedbackSliders(${index})">
-                Undo
-            </button>
+            <button class="apply-suggestion-btn" onclick="event.stopPropagation(); applySuggestion(${index}, ${cappedGrind}, '${newTempStr}')">Apply</button>
+            <button class="undo-suggestion-btn" onclick="event.stopPropagation(); undoFeedbackSliders(${index})">Undo</button>
         </div>
     `;
-    suggestionDiv.classList.remove('hidden');
+    contentDiv.parentElement.classList.add('has-suggestion');
 }
 
 function getDefaultTemp(processType) {

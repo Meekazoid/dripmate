@@ -375,7 +375,20 @@ export function renderCoffeeCard(coffee, index) {
                             </div>
                         `;
                     }).join('')}
-                    <div class="feedback-suggestion hidden" id="suggestion-${index}"></div>
+                    <div class="feedback-suggestion" id="suggestion-${index}">
+                        <div class="suggestion-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>
+                                <circle cx="8" cy="6" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="16" cy="12" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="10" cy="18" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Tuning Strategy
+                        </div>
+                        <div class="suggestion-content" id="suggestion-content-${index}">
+                            <p class="suggestion-idle-text">Nothing to apply — your brew's dialed in for this coffee. Nice.</p>
+                        </div>
+                    </div>
                     <button class="history-btn" onclick="event.stopPropagation(); openFeedbackHistory(${index});">View Adjustment History</button>
                     <button class="reset-adjustments-btn" onclick="event.stopPropagation(); resetCoffeeAdjustments(${index});">Reset Adjustments</button>
                 </div>
