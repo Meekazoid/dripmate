@@ -974,6 +974,7 @@ export function initDragReorder() {
 
         // FIX C: ghost follows finger via translate — no layout cost, no coordinate jump.
         e.preventDefault();
+        console.count('drag-move'); // temp — remove after device verification
         _dr.lastPY = e.clientY;
         const tx = _dr.rect.left + (e.clientX - _dr.startX);
         const ty = _dr.rect.top  + (e.clientY - _dr.startY);
@@ -993,9 +994,9 @@ export function initDragReorder() {
         else              _drCommitReorder();
     };
     listEl.addEventListener('pointerup',     onEnd);
-    listEl.addEventListener('pointercancel', (e) => {
-        if (_dr && e.pointerId === _dr.pointerId) _drCancel();
-    });
+    // FIX 2: suppress native scroll during drag so the browser does not fire pointercancel.
+    listEl.addEventListener('touchmove', e => { if (_dr && _dr.lifted) e.preventDefault(); }, { passive: false });
+    listEl.addEventListener('pointercancel', onEnd);
 }
 
 // Register functions on window for onclick handlers
