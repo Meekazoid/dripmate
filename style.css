@@ -2490,6 +2490,64 @@ body.light-mode .feedback-slider-labels {
     margin-bottom: 10px;
 }
 
+.suggestion-content {
+    overflow: hidden;
+    max-height: 70px;
+    transition: max-height 160ms ease;
+}
+
+.feedback-suggestion.has-suggestion .suggestion-content {
+    max-height: 260px;
+}
+
+.suggestion-idle-text {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin: 0;
+    padding: 4px 0 2px;
+}
+
+.suggestion-tiles {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.suggestion-tile {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+}
+
+.suggestion-tile-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+}
+
+.suggestion-tile-direction {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: normal;
+    word-break: break-word;
+}
+
+.suggestion-tile-value {
+    font-size: 0.72rem;
+    color: var(--accent);
+    margin-top: 2px;
+    white-space: normal;
+    word-break: break-word;
+    font-weight: 500;
+}
+
 .strategy-line {
     padding: 6px 0;
 }
