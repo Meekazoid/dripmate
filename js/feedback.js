@@ -721,17 +721,8 @@ export async function resetCoffeeAdjustments(index) {
     if (grindEl) grindEl.textContent = initial.grind;
     if (tempEl) tempEl.textContent = initial.temp;
 
-    document.querySelectorAll(`[data-feedback^="${index}-"]`).forEach(opt => {
-        opt.classList.remove('selected');
-    });
-
-    const suggestionEl = document.getElementById(`suggestion-${index}`);
-    if (suggestionEl) {
-        suggestionEl.innerHTML = '';
-        suggestionEl.classList.add('hidden');
-    }
-
     saveCoffeesAndSync();
+    resetSlidersAndIdle(index);
 }
 
 export function getInitialBrewValues(coffee) {
@@ -837,16 +828,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// UNDO: Reset sliders to center (balanced)
+// SHARED HELPER: sliders -> neutral, box -> idle
 // ==========================================
-export function undoFeedbackSliders(index) {
-    const coffee = coffees[index];
-    if (!coffee) return;
-
-    // Reset feedback state
-    coffee.feedback = {};
-
-    // Reset all sliders to center (50)
+function resetSlidersAndIdle(index) {
     const categories = ['flow', 'bitterness', 'sweetness', 'acidity', 'body'];
     categories.forEach(cat => {
         const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${cat}"]`);
@@ -854,21 +838,23 @@ export function undoFeedbackSliders(index) {
             sliderEl.value = 50;
             updateSliderVisual(sliderEl);
         }
-        // Reset quick-button highlights
-        document.querySelectorAll(`[data-feedback="${index}-${cat}"]`).forEach(opt => {
-            opt.classList.remove('selected');
-        });
     });
+    document.querySelectorAll(`[data-feedback^="${index}-"]`).forEach(opt => {
+        opt.classList.remove('selected');
+    });
+    generateSuggestion(index);
+}
 
-    // Hide suggestion box
-    const suggestionEl = document.getElementById(`suggestion-${index}`);
-    if (suggestionEl) {
-        suggestionEl.innerHTML = '';
-        suggestionEl.classList.add('hidden');
-    }
+// ==========================================
+// UNDO: Reset sliders to center (balanced)
+// ==========================================
+export function undoFeedbackSliders(index) {
+    const coffee = coffees[index];
+    if (!coffee) return;
 
-    clearSuggestionHideTimer(index);
+    coffee.feedback = {};
     localStorage.setItem('coffees', JSON.stringify(coffees));
+    resetSlidersAndIdle(index);
 }
 
 // Register functions on window for onclick handlers
