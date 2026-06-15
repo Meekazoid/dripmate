@@ -925,6 +925,9 @@ body.light-mode .picker-option.active {
     border-radius: 16px;
     padding: 24px;
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
     /* NEU: 'background' aus Transition entfernt -> kein Flimmern mehr beim Ausklappen */
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
