@@ -777,7 +777,7 @@ function _drLift(listEl) {
         lifted: true, ghost, rect, listEl,
         allUnits, origIdx, snaps,
         targetIdx: origIdx, mergeTgt: null,
-        ascRaf: null, lastPY: startY,
+        fixedX: rect.left, ascRaf: null, lastPY: startY,
     });
 }
 
@@ -823,10 +823,12 @@ function _drRunAutoScroll() {
 
 // ── During drag: merge-target highlight (30-70 % of target height) ────────────
 
-function _drUpdateMerge(pointerX, pointerY) {
+function _drUpdateMerge(pointerY) {
     // Use live hit-test so stacks (which are taller) contribute their actual height.
     // Ghost has pointer-events:none so elementFromPoint reaches real list units.
-    const hit   = document.elementFromPoint(pointerX, pointerY);
+    // x is fixed to the card rail center so merge detection works on the vertical rail.
+    const hitX  = _dr.fixedX + _dr.rect.width / 2;
+    const hit   = document.elementFromPoint(hitX, pointerY);
     const tgtEl = hit ? _drFindUnit(_dr.listEl, hit) : null;
     let newMTgt = null;
 
@@ -963,16 +965,13 @@ export function initDragReorder() {
             return;
         }
 
-        // FIX C: ghost follows finger via translate — no layout cost, no coordinate jump.
         e.preventDefault();
-        console.count('drag-move'); // temp — remove after device verification
         _dr.lastPY = e.clientY;
-        const tx = _dr.rect.left + (e.clientX - _dr.startX);
-        const ty = _dr.rect.top  + (e.clientY - _dr.startY);
-        _dr.ghost.style.transform = `translate(${tx}px,${ty}px) scale(1.04)`;
+        const ty = _dr.rect.top + (e.clientY - _dr.startY);
+        _dr.ghost.style.transform = `translate(${_dr.fixedX}px,${ty}px) scale(1.03)`;
 
         _drUpdateShifts(e.clientY);
-        _drUpdateMerge(e.clientX, e.clientY);
+        _drUpdateMerge(e.clientY);
         _drRunAutoScroll();
     });
 
