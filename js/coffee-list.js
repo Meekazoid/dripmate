@@ -712,11 +712,12 @@ function _drResetVisuals() {
 function _drCancel() {
     if (!_dr) return;
     clearTimeout(_dr.timer);
+    if (_dr.listEl) try { _dr.listEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
     _drResetVisuals();
     _dr = null;
 }
 
-function _drLift(listEl, e) {
+function _drLift(listEl) {
     const { unitEl, startX, startY } = _dr;
     const rect = unitEl.getBoundingClientRect();
 
@@ -725,11 +726,14 @@ function _drLift(listEl, e) {
     unitEl.style.opacity = '0';
     unitEl.style.pointerEvents = 'none';
 
+    // FIX B: position at 0,0; move via translate so no layout cost per frame.
+    // No transition on transform — ghost must follow finger without lag.
     const ghost = unitEl.cloneNode(true);
-    ghost.style.cssText = 'position:fixed;margin:0;pointer-events:none;z-index:1000;'
-        + 'border-radius:16px;transition:transform .12s ease,box-shadow .12s ease;'
-        + `top:${rect.top}px;left:${rect.left}px;width:${rect.width}px;`
-        + 'transform:scale(1.04);box-shadow:0 14px 40px rgba(0,0,0,0.45);';
+    ghost.style.cssText = 'position:fixed;left:0;top:0;margin:0;box-sizing:border-box;'
+        + `width:${rect.width}px;height:${rect.height}px;`
+        + 'pointer-events:none;z-index:1000;border-radius:16px;'
+        + 'box-shadow:0 14px 40px rgba(0,0,0,0.45);'
+        + `transform:translate(${rect.left}px,${rect.top}px) scale(1.04);`;
     document.body.appendChild(ghost);
 
     const allUnits = Array.from(listEl.children);
@@ -747,8 +751,7 @@ function _drLift(listEl, e) {
     }
 
     Object.assign(_dr, {
-        lifted: true, ghost, rect,
-        ghostDX: startX - rect.left, ghostDY: startY - rect.top,
+        lifted: true, ghost, rect, listEl,
         allUnits, origIdx, snaps,
         targetIdx: origIdx, mergeTgt: null,
         shownOrigIdx, ascRaf: null, lastPY: startY,
@@ -946,35 +949,35 @@ export function initDragReorder() {
 
         const isStack = unitEl.classList.contains('roastery-stack-wrapper');
         const pid = e.pointerId;
+        // FIX A: capture + lift inside the timer so they fire even if finger stays still.
         const timer = setTimeout(() => {
-            if (_dr && _dr.pointerId === pid) _dr.readyToCapture = true;
+            if (!_dr || _dr.pointerId !== pid || _dr.lifted) return;
+            try { listEl.setPointerCapture(pid); } catch (_) {}
+            _drLift(listEl);
         }, _DR_LONG_MS);
 
         _dr = { pointerId: pid, startX: e.clientX, startY: e.clientY,
-                timer, unitEl, isStack, lifted: false, readyToCapture: false };
+                timer, unitEl, isStack, lifted: false, listEl };
     });
 
     listEl.addEventListener('pointermove', (e) => {
         if (!_dr || e.pointerId !== _dr.pointerId) return;
 
-        if (_dr.readyToCapture && !_dr.lifted) {
-            listEl.setPointerCapture(e.pointerId);
-            _drLift(listEl, e);
-        }
-
-        const adx = Math.abs(e.clientX - _dr.startX);
-        const ady = Math.abs(e.clientY - _dr.startY);
-
         if (!_dr.lifted) {
+            // Swipe/scroll detection before lift
+            const adx = Math.abs(e.clientX - _dr.startX);
+            const ady = Math.abs(e.clientY - _dr.startY);
             if (_dr.isStack && adx > _DR_SWIPE_PX && adx > ady) { _drCancel(); return; }
             if (adx > _DR_MOVE_PX || ady > _DR_MOVE_PX)          { _drCancel(); return; }
             return;
         }
 
+        // FIX C: ghost follows finger via translate — no layout cost, no coordinate jump.
         e.preventDefault();
         _dr.lastPY = e.clientY;
-        _dr.ghost.style.top  = (e.clientY - _dr.ghostDY) + 'px';
-        _dr.ghost.style.left = (e.clientX - _dr.ghostDX) + 'px';
+        const tx = _dr.rect.left + (e.clientX - _dr.startX);
+        const ty = _dr.rect.top  + (e.clientY - _dr.startY);
+        _dr.ghost.style.transform = `translate(${tx}px,${ty}px) scale(1.04)`;
 
         _drUpdateShifts(e.clientY);
         _drUpdateMerge(e.clientY);
@@ -984,6 +987,7 @@ export function initDragReorder() {
     const onEnd = (e) => {
         if (!_dr || e.pointerId !== _dr.pointerId) return;
         clearTimeout(_dr.timer);
+        if (_dr.listEl) try { _dr.listEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
         if (!_dr.lifted) { _dr = null; return; }
         if (_dr.mergeTgt) _drCommitMerge();
         else              _drCommitReorder();
