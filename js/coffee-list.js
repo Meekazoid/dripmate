@@ -645,19 +645,31 @@ async function renderDecafList() {
     }
 }
 
-export function bringForward(originalIndex) {
+export function unstackShown(originalIndex) {
     const coffee = coffees[originalIndex];
     if (!coffee || !coffee.stackId) return;
 
-    const stackId = coffee.stackId;
-    const stackMembers = coffees
+    const stackId       = coffee.stackId;
+    const stackSortOrder = coffee.sortOrder || 0;
+
+    // Extract this card from the stack; place it just above the remaining stack.
+    coffee.stackId   = null;
+    coffee.stackPos  = 0;
+    coffee.sortOrder = stackSortOrder - 0.5;
+
+    // Re-number remaining members; solo-remaining -> also un-stack.
+    const rem = coffees
         .filter(c => c.stackId === stackId && c.deleted !== true)
         .sort((a, b) => (a.stackPos || 0) - (b.stackPos || 0));
 
-    coffee.stackPos = 0;
-    let pos = 1;
-    stackMembers.filter(c => c !== coffee).forEach(c => { c.stackPos = pos++; });
+    if (rem.length === 1) {
+        rem[0].stackId  = null;
+        rem[0].stackPos = 0;
+    } else {
+        rem.forEach((c, i) => { c.stackPos = i; });
+    }
 
+    _drNormalizeSortOrders();
     saveCoffeesAndSync();
     renderCoffees();
 }
@@ -961,4 +973,4 @@ window.deleteCoffee = deleteCoffee;
 window.restoreCoffee = restoreCoffee;
 window.permanentDeleteCoffee = permanentDeleteCoffee;
 window.updateCoffeeAmountLive = updateCoffeeAmountLive;
-window.bringForward = bringForward;
+window.unstackShown = unstackShown;

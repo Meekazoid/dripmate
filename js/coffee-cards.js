@@ -214,11 +214,11 @@ export function renderCoffeeCard(coffee, index) {
                 </div>
 
                 <div class="coffee-header-actions">
-                ${coffee.stackId !== null ? `<button class="stack-front-btn" onclick="event.stopPropagation(); bringForward(${index});" title="Bring to front">
+                ${coffee.stackId !== null ? `<button class="stack-front-btn" onclick="event.stopPropagation(); unstackShown(${index});" title="Remove from stack">
                     <svg class="stack-front-icon" viewBox="0 0 24 24">
-                        <path d="M12 19V5"/>
-                        <polyline points="5 12 12 5 19 12"/>
-                        <line x1="5" y1="19" x2="19" y2="19"/>
+                        <line x1="12" y1="2" x2="12" y2="13"/>
+                        <polyline points="8 6 12 2 16 6"/>
+                        <path d="M3 13v6a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-6"/>
                     </svg>
                 </button>` : ''}
                 <button class="edit-btn" id="edit-btn-${index}" onclick="event.stopPropagation(); toggleEditMode(${index});">
