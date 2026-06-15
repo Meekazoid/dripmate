@@ -13,6 +13,17 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+input, textarea, [contenteditable], .selectable {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
 }
 
 html {
@@ -5208,6 +5219,14 @@ body:not(.light-mode) .quick-tips-scroll-fade {
 
 .settings-section:last-child {
     margin-bottom: 0;
+}
+
+.sw-version-badge {
+    text-align: center;
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    opacity: 0.45;
+    padding: 12px 0 0;
 }
 
 .settings-section-label {
