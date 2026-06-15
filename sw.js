@@ -3,7 +3,7 @@
  * Provides offline PWA support with intelligent caching strategies
 */
 
-const CACHE_VERSION = 'v67.1';
+const CACHE_VERSION = 'v67.2';
 
 // Static assets to pre-cache during installation
 const STATIC_ASSETS = [
@@ -178,3 +178,9 @@ async function networkFirstStrategy(request) {
     });
   }
 }
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'GET_VERSION') {
+    event.source.postMessage({ type: 'SW_VERSION', version: CACHE_VERSION });
+  }
+});
