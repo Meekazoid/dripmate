@@ -743,6 +743,8 @@ function _drCancel() {
     if (!_dr) return;
     clearTimeout(_dr.timer);
     if (_dr.listEl) try { _dr.listEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
+    // Pre-lift solo cards hold capture on unitEl, not listEl yet — release both.
+    if (_dr.unitEl && !_dr.isStack) try { _dr.unitEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
     _drResetVisuals();
     _dr = null;
 }
@@ -752,6 +754,9 @@ function _drLift(listEl) {
     const rect = unitEl.getBoundingClientRect();
 
     if (navigator.vibrate) navigator.vibrate(30);
+
+    // Suppress any click that the browser fires after the drag touch ends.
+    if (!_dr.isStack) unitEl.dataset.suppressClick = '1';
 
     unitEl.style.opacity = '0';
     unitEl.style.pointerEvents = 'none';
@@ -940,7 +945,10 @@ export function initDragReorder() {
 
         const isStack = unitEl.classList.contains('roastery-stack-wrapper');
         const pid = e.pointerId;
-        // FIX A: capture + lift inside the timer so they fire even if finger stays still.
+        // For solo cards: capture immediately so the browser cannot fire pointercancel
+        // during the 260ms wait (stacks already capture via the slot's internal handler).
+        if (!isStack) try { unitEl.setPointerCapture(pid); } catch (_) {}
+        // FIX A: transfer capture to listEl and lift — fires even if finger stays still.
         const timer = setTimeout(() => {
             if (!_dr || _dr.pointerId !== pid || _dr.lifted) return;
             try { listEl.setPointerCapture(pid); } catch (_) {}
@@ -977,6 +985,7 @@ export function initDragReorder() {
         if (!_dr || e.pointerId !== _dr.pointerId) return;
         clearTimeout(_dr.timer);
         if (_dr.listEl) try { _dr.listEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
+        if (_dr.unitEl && !_dr.isStack) try { _dr.unitEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
         if (!_dr.lifted) { _dr = null; return; }
         if (_dr.mergeTgt) _drCommitMerge();
         else              _drCommitReorder();
