@@ -1,28 +1,30 @@
 name: Auto-bump SW cache version
 
 on:
-  push:
+  workflow_dispatch:
     branches: [main]
     paths-ignore:
-      - 'sw.js'
+      - 'sw.js'  # prevent infinite loop
 
 permissions:
-  contents: write
+  contents: write          # <-- DAS fehlte: erlaubt dem Bot den Push
 
 jobs:
   bump-sw-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump SW cache version
         run: |
+          set -euo pipefail
           CURRENT=$(grep -oP "CACHE_VERSION = 'v\K[0-9]+\.[0-9]+" sw.js)
-          echo "Current version: v$CURRENT"
-          NEW=$(echo "$CURRENT + 0.1" | bc)
-          echo "New version: v$NEW"
+          if [ -z "$CURRENT" ]; then
+            echo "CACHE_VERSION nicht in sw.js gefunden"; exit 1
+          fi
+          echo "Current: v$CURRENT"
+          NEW=$(awk "BEGIN { printf \"%.1f\", $CURRENT + 0.1 }")
+          echo "New: v$NEW"
           sed -i "s/CACHE_VERSION = 'v$CURRENT'/CACHE_VERSION = 'v$NEW'/" sw.js
 
       - name: Commit bumped version

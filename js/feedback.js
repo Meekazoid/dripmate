@@ -6,9 +6,54 @@
 import { coffees, saveCoffeesAndSync, sanitizeHTML, preferredGrinder } from './state.js';
 import { getBrewRecommendations, getQualitativeGrind } from './brew-engine.js';
 
-const suggestionHideTimers = new Map();
 const feedbackTouchState = new WeakMap();
 let feedbackSliderEventsBound = false;
+
+// --- Debounce pending state for manual grind/temp +/- adjustments ---
+const pendingAdjustments = new Map();
+
+function flushPendingAdjustment(index, type) {
+    const key = `${index}|${type}`;
+    const slot = pendingAdjustments.get(key);
+    if (!slot) return;
+    clearTimeout(slot.timerId);
+    pendingAdjustments.delete(key);
+    const coffee = coffees[index];
+    if (!coffee || slot.netDelta === 0) return;
+    const after = getBrewRecommendations(coffee);
+    if (type === 'grind') {
+        addHistoryEntry(coffee, {
+            timestamp: new Date().toISOString(),
+            previousGrind: slot.beforeGrind,
+            previousTemp: slot.beforeTemp,
+            newGrind: after.grindSetting,
+            newTemp: after.temperature,
+            grindOffsetDelta: slot.netDelta,
+            customTempApplied: null,
+            manualAdjust: 'grind'
+        });
+    } else {
+        addHistoryEntry(coffee, {
+            timestamp: new Date().toISOString(),
+            previousGrind: slot.beforeGrind,
+            previousTemp: slot.beforeTemp,
+            newGrind: after.grindSetting,
+            newTemp: after.temperature,
+            grindOffsetDelta: 0,
+            customTempApplied: coffee.customTemp || after.temperature,
+            manualAdjust: 'temp'
+        });
+    }
+    saveCoffeesAndSync();
+}
+
+export function flushAllPendingAdjustments() {
+    Array.from(pendingAdjustments.keys()).forEach(key => {
+        const [indexStr, type] = key.split('|');
+        flushPendingAdjustment(Number(indexStr), type);
+    });
+}
+// ----------------------------------------------------
 
 // --- NEU: Proportionale Gewichtung ---
 /**
@@ -233,14 +278,6 @@ function showResetAdjustmentsConfirmModal() {
     });
 }
 
-function clearSuggestionHideTimer(index) {
-    const existing = suggestionHideTimers.get(index);
-    if (existing) {
-        clearTimeout(existing);
-        suggestionHideTimers.delete(index);
-    }
-}
-
 export function updateFeedbackSlider(index, category, sliderValue) {
     const coffee = coffees[index];
     if (!coffee.feedback) coffee.feedback = {};
@@ -297,10 +334,10 @@ export function selectFeedback(index, category, value, syncSlider = true) {
 function generateSuggestion(index) {
     const coffee = coffees[index];
     const feedback = coffee.feedback || {};
-    const suggestionDiv = document.getElementById(`suggestion-${index}`);
-    if (!suggestionDiv) return;
+    const contentDiv = document.getElementById(`suggestion-content-${index}`);
+    if (!contentDiv) return;
 
-    clearSuggestionHideTimer(index);
+    const idleHTML = `<p class="suggestion-idle-text">Nothing to apply — your brew's dialed in for this coffee. Nice.</p>`;
 
     let totalGrindImpact = 0;
     let totalTempImpact = 0;
@@ -313,8 +350,8 @@ function generateSuggestion(index) {
     });
 
     if (activeInputs === 0) {
-        suggestionDiv.innerHTML = '';
-        suggestionDiv.classList.add('hidden');
+        contentDiv.innerHTML = idleHTML;
+        contentDiv.parentElement.classList.remove('has-suggestion');
         return;
     }
 
@@ -350,69 +387,54 @@ function generateSuggestion(index) {
     const cappedGrind = Math.max(-4, Math.min(4, finalGrindDelta));
     const cappedTemp = Math.max(-2, Math.min(2, finalTempDelta));
 
-    // 3. Consolidated Strategy Labels
-    let strategyLabels = [];
-    if (cappedGrind > 0) {
-        strategyLabels.push(`→ Grind ${Math.abs(cappedGrind) > 2 ? 'significantly' : 'slightly'} coarser`);
-    } else if (cappedGrind < 0) {
-        strategyLabels.push(`→ Grind ${Math.abs(cappedGrind) > 2 ? 'significantly' : 'slightly'} finer`);
-    }
-    
-    if (cappedTemp > 0) {
-        strategyLabels.push(`→ Increase temperature (+${cappedTemp}°C)`);
-    } else if (cappedTemp < 0) {
-        strategyLabels.push(`→ Lower temperature (${cappedTemp}°C)`);
-    }
-
-    if (strategyLabels.length === 0) {
-        suggestionDiv.innerHTML = `<div style="text-align: center; padding: 24px; color: var(--text-secondary);">✓ Nuances are balanced. No major adjustments needed.</div>`;
-        suggestionDiv.classList.remove('hidden');
-
-        // Restore hide timer for "balanced" state
-        const hideTimer = setTimeout(() => {
-            suggestionDiv.classList.add('hidden');
-            suggestionHideTimers.delete(index);
-        }, 3000);
-        suggestionHideTimers.set(index, hideTimer);
+    if (cappedGrind === 0 && cappedTemp === 0) {
+        contentDiv.innerHTML = idleHTML;
+        contentDiv.parentElement.classList.remove('has-suggestion');
         return;
     }
 
+    // 3. Compute new values for display
     const previewGrind = cappedGrind !== 0
         ? getBrewRecommendations({ ...coffee, grindOffset: (coffee.grindOffset || 0) + cappedGrind }).grindSetting
         : null;
+    const currentGrind = cappedGrind !== 0 ? getBrewRecommendations(coffee).grindSetting : null;
 
     let newTempStr = null;
+    let currentTempDisplay = null;
     if (cappedTemp !== 0) {
-        const currentTemp = coffee.customTemp || getDefaultTemp(coffee.process?.toLowerCase() || 'unknown');
-        newTempStr = adjustTemp(currentTemp, cappedTemp);
+        currentTempDisplay = coffee.customTemp || getDefaultTemp(coffee.process?.toLowerCase() || 'unknown');
+        newTempStr = adjustTemp(currentTempDisplay, cappedTemp);
     }
 
-    // 4. UI Rendering (compact layout)
-    suggestionDiv.innerHTML = `
-        <div class="suggestion-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
-                <path d="M9 18h6"></path><path d="M10 22h4"></path>
-            </svg>
-            Tuning Strategy
-        </div>
-        <div class="suggestion-text" style="font-weight: 500; color: var(--text-primary);">
-            ${strategyLabels.join('<br>')}
-        </div>
-        <div class="suggestion-values">
-            ${previewGrind ? `<div class="suggestion-value"><strong>Grind:</strong> ${previewGrind}</div>` : ''}
-            ${newTempStr ? `<div class="suggestion-value"><strong>Temp:</strong> ${newTempStr}</div>` : ''}
-        </div>
+    // 4. Compact side-by-side tiles — only dimensions that actually change
+    const tiles = [];
+    if (cappedGrind !== 0) {
+        const dir = cappedGrind < 0
+            ? (Math.abs(cappedGrind) > 2 ? 'significantly finer' : 'slightly finer')
+            : (Math.abs(cappedGrind) > 2 ? 'significantly coarser' : 'slightly coarser');
+        tiles.push(`<div class="suggestion-tile">
+            <div class="suggestion-tile-label">Grind</div>
+            <div class="suggestion-tile-direction">${dir}</div>
+            ${currentGrind && previewGrind ? `<div class="suggestion-tile-value">${currentGrind} → ${previewGrind}</div>` : ''}
+        </div>`);
+    }
+    if (cappedTemp !== 0 && newTempStr) {
+        const dir = cappedTemp > 0 ? `+${cappedTemp}°C hotter` : `${cappedTemp}°C cooler`;
+        tiles.push(`<div class="suggestion-tile">
+            <div class="suggestion-tile-label">Temp</div>
+            <div class="suggestion-tile-direction">${dir}</div>
+            ${currentTempDisplay ? `<div class="suggestion-tile-value">${currentTempDisplay} → ${newTempStr}</div>` : ''}
+        </div>`);
+    }
+
+    contentDiv.innerHTML = `
+        <div class="suggestion-tiles">${tiles.join('')}</div>
         <div class="suggestion-btn-row">
-            <button class="apply-suggestion-btn" onclick="event.stopPropagation(); applySuggestion(${index}, ${cappedGrind}, '${newTempStr}')">
-                Apply
-            </button>
-            <button class="undo-suggestion-btn" onclick="event.stopPropagation(); undoFeedbackSliders(${index})">
-                Undo
-            </button>
+            <button class="apply-suggestion-btn" onclick="event.stopPropagation(); applySuggestion(${index}, ${cappedGrind}, '${newTempStr}')">Apply</button>
+            <button class="undo-suggestion-btn" onclick="event.stopPropagation(); undoFeedbackSliders(${index})">Undo</button>
         </div>
     `;
-    suggestionDiv.classList.remove('hidden');
+    contentDiv.parentElement.classList.add('has-suggestion');
 }
 
 function getDefaultTemp(processType) {
@@ -429,6 +451,7 @@ function adjustTemp(current, change) {
 }
 
 export async function applySuggestion(index, grindOffsetDelta, newTemp) {
+    flushAllPendingAdjustments();
     const { renderCoffees } = await import('./coffee-list.js');
     
     const coffee = coffees[index];
@@ -525,15 +548,50 @@ export function openFeedbackHistory(index) {
         emptyEl.style.display = 'none';
         listEl.innerHTML = history.map(entry => {
             const dateStr = sanitizeHTML(formatHistoryDate(entry.timestamp));
-            const deltaStr = sanitizeHTML(formatHistoryDelta(entry));
             if (entry.brewStart) {
+                // Build structured brew-box; fall back to parsing brewSnapshot for old entries
+                let brewFields = null;
+                if (entry.brewAmount) {
+                    brewFields = {
+                        amount: sanitizeHTML(entry.brewAmount),
+                        method: sanitizeHTML(entry.brewMethod || '-'),
+                        grind:  sanitizeHTML(entry.brewGrind  || '-'),
+                        temp:   sanitizeHTML(entry.brewTemp   || '-'),
+                    };
+                } else if (entry.brewLabel) {
+                    const parts = entry.brewLabel.split('  ›  ');
+                    if (parts.length >= 3) {
+                        const m = parts[0].match(/^Brewed\s+(\d+)g\s+on\s+(.+)$/);
+                        if (m) {
+                            brewFields = {
+                                amount: sanitizeHTML(m[1]),
+                                method: sanitizeHTML(m[2].trim()),
+                                grind:  sanitizeHTML(parts[1].replace(/^Grind\s+/, '').trim()),
+                                temp:   sanitizeHTML(parts[2].trim()),
+                            };
+                        }
+                    }
+                }
+                const brewtimeHTML = entry.brewDuration
+                    ? `<div class="history-brewtime">Brewing time &middot; <span class="history-brewtime-val">${sanitizeHTML(entry.brewDuration)}</span> min</div>`
+                    : '';
+                let brewBoxHTML = '';
+                if (brewFields) {
+                    brewBoxHTML = `
+            <div class="history-brew-box">
+                <div class="history-brewed">Brewed <span class="history-hl">${brewFields.amount}g</span> on <span class="history-hl">${brewFields.method}</span></div>
+                <div class="history-brew-gt"><span class="history-brew-label">Grind</span> ${brewFields.grind} / <span class="history-brew-label">Temp</span> ${brewFields.temp}</div>
+            </div>`;
+                } else if (entry.brewLabel) {
+                    brewBoxHTML = `<div class="history-brew-box"><div class="history-brewed">${sanitizeHTML(entry.brewLabel)}</div></div>`;
+                }
                 return `
             <div class="history-item history-item--brew-start">
-                <div class="history-item-brew-badge">&#9749; Brew</div>
-                <div class="history-item-top">
-                    <strong>${dateStr}</strong>
+                <div class="history-item-badge-row">
+                    <div class="history-item-brew-badge">Brew</div>
+                    <div class="history-item-date">${dateStr}</div>
                 </div>
-                <div class="history-item-brew-label">${deltaStr}</div>
+                ${brewtimeHTML}${brewBoxHTML}
             </div>`;
             }
             const grindChanged = entry.previousGrind !== entry.newGrind;
@@ -541,10 +599,30 @@ export function openFeedbackHistory(index) {
             const grindCell = grindChanged ? `<div class="history-cell"><span>Grind</span><strong>${sanitizeHTML(entry.previousGrind)} &rarr; ${sanitizeHTML(entry.newGrind)}</strong></div>` : '';
             const tempCell  = tempChanged  ? `<div class="history-cell"><span>Temp</span><strong>${sanitizeHTML(entry.previousTemp)} &rarr; ${sanitizeHTML(entry.newTemp)}</strong></div>` : '';
             const grid = (grindCell || tempCell) ? `<div class="history-item-grid">${grindCell}${tempCell}</div>` : '';
+            if (entry.manualAdjust) {
+                return `
+            <div class="history-item history-item--manual">
+                <div class="history-item-badge-row">
+                    <div class="history-item-manual-badge">Manual</div>
+                    <div class="history-item-date">${dateStr}</div>
+                </div>
+                ${grid}
+            </div>`;
+            }
+            if (!entry.resetToInitial) {
+                return `
+            <div class="history-item history-item--feedback">
+                <div class="history-item-badge-row">
+                    <div class="history-item-feedback-badge">Feedback</div>
+                    <div class="history-item-date">${dateStr}</div>
+                </div>
+                ${grid}
+            </div>`;
+            }
             return `
             <div class="history-item">
-                <div class="history-item-top">
-                    <strong>${dateStr}</strong>
+                <div class="history-item-badge-row">
+                    <div class="history-item-date">${dateStr}</div>
                 </div>
                 ${grid}
             </div>`;
@@ -561,21 +639,15 @@ export function closeFeedbackHistory() {
 
 export function adjustGrindManual(index, direction) {
     const coffee = coffees[index];
-    const before = getBrewRecommendations(coffee);
+    const key = `${index}|grind`;
+    let slot = pendingAdjustments.get(key);
+    if (!slot) {
+        const snap = getBrewRecommendations(coffee);
+        slot = { beforeGrind: snap.grindSetting, beforeTemp: snap.temperature, netDelta: 0, timerId: null };
+        pendingAdjustments.set(key, slot);
+    }
     coffee.grindOffset = (coffee.grindOffset || 0) + direction;
-
     const after = getBrewRecommendations(coffee);
-    addHistoryEntry(coffee, {
-        timestamp: new Date().toISOString(),
-        previousGrind: before.grindSetting,
-        previousTemp: before.temperature,
-        newGrind: after.grindSetting,
-        newTemp: after.temperature,
-        grindOffsetDelta: direction,
-        customTempApplied: null,
-        manualAdjust: 'grind'
-    });
-
     const el = document.getElementById(`grind-value-${index}`);
     if (el) {
         if (preferredGrinder === 'other') {
@@ -585,39 +657,37 @@ export function adjustGrindManual(index, direction) {
             el.textContent = after.grindSetting;
         }
     }
-    saveCoffeesAndSync();
+    slot.netDelta += direction;
+    clearTimeout(slot.timerId);
+    slot.timerId = setTimeout(() => flushPendingAdjustment(index, 'grind'), 1500);
+    localStorage.setItem('coffees', JSON.stringify(coffees));
 }
 
 export function adjustTempManual(index, direction) {
     const coffee = coffees[index];
-    const before = getBrewRecommendations(coffee);
+    const key = `${index}|temp`;
+    let slot = pendingAdjustments.get(key);
+    if (!slot) {
+        const snap = getBrewRecommendations(coffee);
+        slot = { beforeGrind: snap.grindSetting, beforeTemp: snap.temperature, netDelta: 0, timerId: null };
+        pendingAdjustments.set(key, slot);
+    }
     const currentTemp = coffee.customTemp || getBrewRecommendations(coffee).temperature;
-
     const match = currentTemp.match(/(\d+)(?:-(\d+))?/);
     if (!match) return;
-
     const low = parseInt(match[1]) + direction;
     const high = match[2] ? parseInt(match[2]) + direction : null;
     coffee.customTemp = high ? `${low}-${high}°C` : `${low}°C`;
-
-    const after = getBrewRecommendations(coffee);
-    addHistoryEntry(coffee, {
-        timestamp: new Date().toISOString(),
-        previousGrind: before.grindSetting,
-        previousTemp: before.temperature,
-        newGrind: after.grindSetting,
-        newTemp: after.temperature,
-        grindOffsetDelta: 0,
-        customTempApplied: coffee.customTemp,
-        manualAdjust: 'temp'
-    });
-
     const el = document.getElementById(`temp-value-${index}`);
     if (el) el.textContent = coffee.customTemp;
-    saveCoffeesAndSync();
+    slot.netDelta += direction;
+    clearTimeout(slot.timerId);
+    slot.timerId = setTimeout(() => flushPendingAdjustment(index, 'temp'), 1500);
+    localStorage.setItem('coffees', JSON.stringify(coffees));
 }
 
 export async function resetCoffeeAdjustments(index) {
+    flushAllPendingAdjustments();
     const confirmed = await showResetAdjustmentsConfirmModal();
     if (!confirmed) return;
 
@@ -651,17 +721,8 @@ export async function resetCoffeeAdjustments(index) {
     if (grindEl) grindEl.textContent = initial.grind;
     if (tempEl) tempEl.textContent = initial.temp;
 
-    document.querySelectorAll(`[data-feedback^="${index}-"]`).forEach(opt => {
-        opt.classList.remove('selected');
-    });
-
-    const suggestionEl = document.getElementById(`suggestion-${index}`);
-    if (suggestionEl) {
-        suggestionEl.innerHTML = '';
-        suggestionEl.classList.add('hidden');
-    }
-
     saveCoffeesAndSync();
+    resetSlidersAndIdle(index);
 }
 
 export function getInitialBrewValues(coffee) {
@@ -743,17 +804,33 @@ function initClearHistoryConfirmListeners() {
 
 document.addEventListener("DOMContentLoaded", initClearHistoryConfirmListeners);
 
-// ==========================================
-// UNDO: Reset sliders to center (balanced)
-// ==========================================
-export function undoFeedbackSliders(index) {
-    const coffee = coffees[index];
-    if (!coffee) return;
+// Flush pending adjustments when tab is hidden or page unloads
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') flushAllPendingAdjustments();
+});
+window.addEventListener('pagehide', flushAllPendingAdjustments);
 
-    // Reset feedback state
-    coffee.feedback = {};
+// Flush pending adjustments when a card is collapsed
+document.addEventListener('DOMContentLoaded', () => {
+    const collapseObserver = new MutationObserver(mutations => {
+        for (const m of mutations) {
+            const card = m.target;
+            if (card.classList?.contains('coffee-card') && !card.classList.contains('expanded')) {
+                const index = Number(card.dataset.originalIndex);
+                if (!isNaN(index)) {
+                    flushPendingAdjustment(index, 'grind');
+                    flushPendingAdjustment(index, 'temp');
+                }
+            }
+        }
+    });
+    collapseObserver.observe(document.body, { attributes: true, attributeFilter: ['class'], subtree: true });
+});
 
-    // Reset all sliders to center (50)
+// ==========================================
+// SHARED HELPER: sliders -> neutral, box -> idle
+// ==========================================
+function resetSlidersAndIdle(index) {
     const categories = ['flow', 'bitterness', 'sweetness', 'acidity', 'body'];
     categories.forEach(cat => {
         const sliderEl = document.querySelector(`[data-feedback-slider="${index}-${cat}"]`);
@@ -761,21 +838,23 @@ export function undoFeedbackSliders(index) {
             sliderEl.value = 50;
             updateSliderVisual(sliderEl);
         }
-        // Reset quick-button highlights
-        document.querySelectorAll(`[data-feedback="${index}-${cat}"]`).forEach(opt => {
-            opt.classList.remove('selected');
-        });
     });
+    document.querySelectorAll(`[data-feedback^="${index}-"]`).forEach(opt => {
+        opt.classList.remove('selected');
+    });
+    generateSuggestion(index);
+}
 
-    // Hide suggestion box
-    const suggestionEl = document.getElementById(`suggestion-${index}`);
-    if (suggestionEl) {
-        suggestionEl.innerHTML = '';
-        suggestionEl.classList.add('hidden');
-    }
+// ==========================================
+// UNDO: Reset sliders to center (balanced)
+// ==========================================
+export function undoFeedbackSliders(index) {
+    const coffee = coffees[index];
+    if (!coffee) return;
 
-    clearSuggestionHideTimer(index);
+    coffee.feedback = {};
     localStorage.setItem('coffees', JSON.stringify(coffees));
+    resetSlidersAndIdle(index);
 }
 
 // Register functions on window for onclick handlers
@@ -786,6 +865,7 @@ window.applySuggestion = applySuggestion;
 window.undoFeedbackSliders = undoFeedbackSliders;
 window.adjustGrindManual = adjustGrindManual;
 window.adjustTempManual = adjustTempManual;
+window.flushAllPendingAdjustments = flushAllPendingAdjustments;
 window.resetCoffeeAdjustments = resetCoffeeAdjustments;
 window.openFeedbackHistory = openFeedbackHistory;
 window.closeFeedbackHistory = closeFeedbackHistory;

@@ -8,15 +8,14 @@ import { initTheme, toggleTheme, toggleManual, collapseManual, alignHeader } fro
 import { initGlobalGrinder } from './grinder.js';
 import { closeFeedbackHistory, migrateCoffeesInitialValues } from './feedback.js';
 import { initFeedbackSliderInteractions } from './feedback.js';
-import { renderCoffees } from './coffee-list.js';
+import { renderCoffees, initDragReorder } from './coffee-list.js';
 import { initPressedStateInteractions } from './coffee-cards.js';
 import { processImageUpload } from './image-handler.js';
 import { saveCoffeeManual, initProcessPicker } from './manual-entry.js';
 import {
     openWaterModal,
     closeWaterModal,
-    saveManualWaterHardness,
-    clearManualWaterHardness
+    saveManualWaterHardness
 } from './water-hardness.js';
 import {
     openSettings,
@@ -30,14 +29,15 @@ import {
     logoutDevice
 } from './settings.js';
 import { updateRoastDate } from './freshness.js';
-import { 
+import {
     startBrewTimer,
-    pauseBrewTimer,
-    resetBrewTimer
+    resetBrewTimer,
+    finishBrewTimer
 } from './brew-timer.js';
 import {
     manualWaterHardness,
-    setWaterHardness
+    setWaterHardness,
+    migrateOrderFields
 } from './state.js';
 import { initBackendSync, getToken } from './services/backend-sync.js';
 import { initAppFeedback, openAppFeedback, closeAppFeedback, checkNudge } from './app-feedback.js';
@@ -51,12 +51,12 @@ window.openAppFeedback = openAppFeedback;
 window.renderCoffees = renderCoffees;
 // Make brew timer functions available globally for onclick handlers
 window.startBrewTimer = startBrewTimer;
-window.pauseBrewTimer = pauseBrewTimer;
 window.resetBrewTimer = resetBrewTimer;
-console.log('âœ… Brew timer functions attached to window:', {
+window.finishBrewTimer = finishBrewTimer;
+console.log('Brew timer functions attached to window:', {
     startBrewTimer: typeof window.startBrewTimer,
-    pauseBrewTimer: typeof window.pauseBrewTimer,
-    resetBrewTimer: typeof window.resetBrewTimer
+    resetBrewTimer: typeof window.resetBrewTimer,
+    finishBrewTimer: typeof window.finishBrewTimer
 });
 
 // Initialize event listeners
@@ -181,6 +181,7 @@ function bootApp() {
     window.addEventListener('resize', alignHeader);
 
     migrateCoffeesInitialValues();
+    migrateOrderFields();
 
     if (manualWaterHardness) {
         setWaterHardness(manualWaterHardness);
@@ -190,6 +191,7 @@ function bootApp() {
 
     initOnboarding();
     renderCoffees();
+    initDragReorder();
     initAppFeedback();
     checkNudge();
 

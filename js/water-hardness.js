@@ -5,7 +5,6 @@
 
 import {
     manualWaterHardness,
-    apiWaterHardness,
     setWaterHardness,
     setManualWaterHardness
 } from './state.js';
@@ -20,7 +19,7 @@ function getWaterHardnessCategory(value) {
 }
 
 function getActiveWaterHardness() {
-    return manualWaterHardness || apiWaterHardness;
+    return manualWaterHardness;
 }
 
 export function openWaterModal() {
@@ -119,15 +118,3 @@ export async function saveManualWaterHardness() {
     alert(`✓ Manual hardness saved: ${value} °dH`);
 }
 
-export function clearManualWaterHardness() {
-    setManualWaterHardness(null);
-    
-    // Fallback to API value if available
-    setWaterHardness(apiWaterHardness);
-    
-    if (apiWaterHardness) {
-        displayWaterHardness(apiWaterHardness);
-    }
-    
-    renderCoffees();
-}

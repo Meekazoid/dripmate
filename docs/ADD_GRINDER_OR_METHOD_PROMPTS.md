@@ -64,8 +64,8 @@ PHASE 2 — Registry als Single Source of Truth (verhaltensneutral):
   abbreviateGrinderName-Replaces und den picker-option-detail-Texten aus index.html.
 - Erstelle js/data/methods.js mit export const METHODS (key = Methoden-Key). Jeder Eintrag:
   { key, label, pickerDetail, stepHeaderLabel, timerLabel,
-    adjust:{ grindComandante, grindFellow, ratioClamp:{op:'max'|'min'|'none', value}, tempDelta, targetTime, brewStyle:'inherit' },
-    note, buildSteps(amount, ratio, brewStyle, waterAmount) }.
+    adjust:{ grindComandante, grindFellow, ratioClamp:{op:'max'|'min'|'none', value}, tempDelta, targetTime },
+    note, buildSteps(amount, ratio, waterAmount) }.
   Befülle EXAKT aus adjustForMethod(), generateBrewSteps(), generateBrewNotes(),
   dem Step-Header-Ternary in coffee-cards.js und methodLabels in brew-timer.js.
   V60 = baseline (kein adjust). Übernimm die Step-Arrays wortgleich in buildSteps.
@@ -140,7 +140,7 @@ Backend: `selectGrinder()` speichert nur den KEY-String. Alte Keys → `GRINDER_
 ### Neue METHODE hinzufügen → 1 Eintrag + Verifikation
 | # | Stelle | Was |
 |---|--------|-----|
-| 1 | `js/data/methods.js` → ein Eintrag in `METHODS` | `{ key, label, pickerDetail, stepHeaderLabel, timerLabel, adjust{grindComandante, grindFellow, ratioClamp{op, value}, tempDelta, targetTime, brewStyle:'inherit'}, note, buildSteps(amount, ratio, brewStyle, waterAmount) }` |
+| 1 | `js/data/methods.js` → ein Eintrag in `METHODS` | `{ key, label, pickerDetail, stepHeaderLabel, timerLabel, adjust{grindComandante, grindFellow, ratioClamp{op, value}, tempDelta, targetTime}, note, buildSteps(amount, ratio, waterAmount) }` |
 | 2 | `node scripts/verify-registry.mjs` + `snapshot --after` | Methode vollständig aufrufbar; Golden-Diff zeigt **nur** den neuen Key |
 
 Nicht mehr anfassen: `index.html`-Methoden-Picker, `adjustForMethod`/`generateBrewSteps`/
@@ -246,7 +246,7 @@ ABLEITUNG der adjust-Werte (relativ zur V60-baseline):
 - grindComandante: Comandante-Klick-Offset (+ = gröber, − = feiner).
 - grindFellow: = grindComandante × 0.25 (gleiches Verhältnis wie bestehende Methoden).
 - ratioClamp: { op:'max'|'min'|'none', value:… } (Chemex nutzt max, AeroPress min).
-- tempDelta: ±°C. targetTime: 'm:ss-m:ss'. brewStyle: 'inherit'.
+- tempDelta: ±°C. targetTime: 'm:ss-m:ss' (mandatory — used directly as the method's target time).
 
 EINTRAG (genau einer, alphabetisch, KEY kleingeschrieben):
 {
@@ -255,12 +255,12 @@ EINTRAG (genau einer, alphabetisch, KEY kleingeschrieben):
   pickerDetail: '<Filtertyp · Ratio>',
   stepHeaderLabel: '<Name> Brew Steps',    // Überschrift auf der CoffeeCard
   timerLabel: '<Label>',                   // Snapshot in der Brew-History
-  adjust: { grindComandante:…, grindFellow:…, ratioClamp:{op:'…', value:…}, tempDelta:…, targetTime:'…', brewStyle:'inherit' },
+  adjust: { grindComandante:…, grindFellow:…, ratioClamp:{op:'…', value:…}, tempDelta:…, targetTime:'…' },
   note: '<Hinweissatz für generateBrewNotes>',
-  buildSteps(amount, ratio, brewStyle, waterAmount) {
+  buildSteps(amount, ratio, waterAmount) {
     // jeder Step: { time:'m:ss', action:'…' }. Wassermengen aus waterAmount = round(amount*ratio)
     // ableiten (siehe V60/Chemex). Gewichte mit 'g' werden von boldWeights() fett gerendert.
-    return [ { time:'0:00', action:`Bloom: ${Math.round(amount*2)}g …` }, … ];
+    return [ { time:'0:00', action:`Bloom: ${Math.round(amount*3)}g …` }, … ];
   }
 }
 

@@ -7,6 +7,10 @@ import { coffees, saveCoffeesAndSync } from './state.js';
 import { renderCoffeeCard } from './coffee-cards.js';
 import { getBrewRecommendations } from './brew-engine.js';
 import { initFeedbackSliderVisuals } from './feedback.js';
+import { initBrewWaves } from './brew-wave.js';
+
+let _nextRenderHasScanPulse = false;
+export function markNextRenderAsScan() { _nextRenderHasScanPulse = true; }
 
 function showCompostConfirmModal() {
     const modal = document.getElementById('compostConfirmModal');
@@ -121,7 +125,7 @@ function attachCardClickListener(card) {
             return;
         }
 
-        if (e.target.closest('.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input[type="range"], input[type="date"], .color-picker-btn, .color-picker-popup')) return;
+        if (e.target.closest('.delete-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input[type="range"], input[type="date"], .color-picker-btn, .color-picker-popup')) return;
 
         document.querySelectorAll('.coffee-card').forEach(c => {
             if (c !== this) c.classList.remove('expanded');
@@ -180,7 +184,7 @@ function buildRoasteryStack(items) {
     const ACTIVATE_X = 12;
     const LOCK_Y = 10;
     const SWIPE_THRESHOLD = 64;
-    const SWIPE_IGNORE_SELECTOR = '.delete-btn, .favorite-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input, select, textarea, button, .color-picker-btn, .color-picker-popup';
+    const SWIPE_IGNORE_SELECTOR = '.delete-btn, .edit-btn, .inline-edit-input, .edit-process, .timer-btn, .feedback-slider, .apply-suggestion-btn, .adjust-btn, .history-btn, .reset-adjustments-btn, input, select, textarea, button, .color-picker-btn, .color-picker-popup';
     const SPRING_EASING = 'cubic-bezier(0.2, 0, 0, 1.2)';
     const ANIM_DURATION = 300;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -485,23 +489,45 @@ export function renderCoffees(expandAfterIndex) {
 
     emptyState.style.display = 'none';
 
-    // Sort: favorites first (newest favorited first), then by added date
+    // Sort by manual sortOrder; within a stack, by stackPos
     const sorted = activeCoffees.sort((a, b) => {
-        const aFav = a.coffee.favorite === true;
-        const bFav = b.coffee.favorite === true;
-
-        if (aFav && !bFav) return -1;
-        if (!aFav && bFav) return 1;
-
-        if (aFav && bFav) {
-            return new Date(b.coffee.favoritedAt || 0).getTime() - new Date(a.coffee.favoritedAt || 0).getTime();
+        const orderA = a.coffee.sortOrder !== undefined ? a.coffee.sortOrder : Infinity;
+        const orderB = b.coffee.sortOrder !== undefined ? b.coffee.sortOrder : Infinity;
+        if (orderA !== orderB) return orderA - orderB;
+        if (a.coffee.stackId !== null && a.coffee.stackId === b.coffee.stackId) {
+            return (a.coffee.stackPos || 0) - (b.coffee.stackPos || 0);
         }
-
-        return new Date(b.coffee.addedDate || 0).getTime() - new Date(a.coffee.addedDate || 0).getTime();
+        return 0;
     });
 
-    const groups = groupByRoastery(sorted);
+    // Group consecutive items that share a non-null stackId into stacks; everything else is a single card
+    const groups = [];
+    let gi = 0;
+    while (gi < sorted.length) {
+        const item = sorted[gi];
+        const sid = item.coffee.stackId;
+        if (sid !== null && sid !== undefined) {
+            const stackItems = [item];
+            gi++;
+            while (gi < sorted.length && sorted[gi].coffee.stackId === sid) {
+                stackItems.push(sorted[gi]);
+                gi++;
+            }
+            if (stackItems.length === 1) {
+                groups.push({ single: true, item: stackItems[0] });
+            } else {
+                groups.push({ single: false, items: stackItems });
+            }
+        } else {
+            groups.push({ single: true, item });
+            gi++;
+        }
+    }
+
     listEl.innerHTML = '';
+
+    let _scanPulse = _nextRenderHasScanPulse;
+    _nextRenderHasScanPulse = false;
 
     groups.forEach(group => {
         if (group.single) {
@@ -509,13 +535,24 @@ export function renderCoffees(expandAfterIndex) {
             tpl.innerHTML = renderCoffeeCard(group.item.coffee, group.item.originalIndex).trim();
             const card = tpl.content.firstElementChild;
             attachCardClickListener(card);
+            if (_scanPulse) {
+                _scanPulse = false;
+                card.classList.add('just-scanned');
+                setTimeout(() => card.classList.remove('just-scanned'), 3100);
+            }
             listEl.appendChild(card);
         } else {
             listEl.appendChild(buildRoasteryStack(group.items));
+            if (_scanPulse) {
+                _scanPulse = false;
+                const fc = listEl.lastElementChild.querySelector('.coffee-card');
+                if (fc) { fc.classList.add('just-scanned'); setTimeout(() => fc.classList.remove('just-scanned'), 3100); }
+            }
         }
     });
 
     initFeedbackSliderVisuals(listEl);
+    initBrewWaves(listEl);
 
     // Re-expand card if requested (e.g. after reset adjustments)
     if (expandAfterIndex !== undefined) {
@@ -546,8 +583,16 @@ export async function deleteCoffee(originalIndex) {
 export async function restoreCoffee(originalIndex) {
     if (originalIndex < 0 || originalIndex >= coffees.length) return;
 
+    const activeSortOrders = coffees
+        .filter(c => c.deleted !== true && c.sortOrder !== undefined)
+        .map(c => c.sortOrder);
+    const maxOrder = activeSortOrders.length > 0 ? Math.max(...activeSortOrders) : -1;
+
     coffees[originalIndex].deleted = false;
     delete coffees[originalIndex].deletedAt;
+    coffees[originalIndex].sortOrder = maxOrder + 1;
+    coffees[originalIndex].stackId = null;
+    coffees[originalIndex].stackPos = 0;
     saveCoffeesAndSync();
     await renderDecafList();
     renderCoffees();
@@ -562,22 +607,6 @@ export async function permanentDeleteCoffee(originalIndex) {
         saveCoffeesAndSync();
         await renderDecafList();
     }
-}
-
-export function toggleFavorite(originalIndex) {
-    if (originalIndex < 0 || originalIndex >= coffees.length) return;
-
-    const coffee = coffees[originalIndex];
-    coffee.favorite = !coffee.favorite;
-
-    if (coffee.favorite) {
-        coffee.favoritedAt = new Date().toISOString();
-    } else {
-        delete coffee.favoritedAt;
-    }
-
-    saveCoffeesAndSync();
-    renderCoffees();
 }
 
 export function updateCoffeeAmountLive(value, originalIndex) {
@@ -632,9 +661,371 @@ async function renderDecafList() {
     }
 }
 
+export function unstackShown(originalIndex) {
+    const coffee = coffees[originalIndex];
+    if (!coffee || !coffee.stackId) return;
+
+    const stackId       = coffee.stackId;
+    const stackSortOrder = coffee.sortOrder || 0;
+
+    // Extract this card from the stack; place it just above the remaining stack.
+    coffee.stackId   = null;
+    coffee.stackPos  = 0;
+    coffee.sortOrder = stackSortOrder - 0.5;
+
+    // Re-number remaining members; solo-remaining -> also un-stack.
+    const rem = coffees
+        .filter(c => c.stackId === stackId && c.deleted !== true)
+        .sort((a, b) => (a.stackPos || 0) - (b.stackPos || 0));
+
+    if (rem.length === 1) {
+        rem[0].stackId  = null;
+        rem[0].stackPos = 0;
+    } else {
+        rem.forEach((c, i) => { c.stackPos = i; });
+    }
+
+    _drNormalizeSortOrders();
+    saveCoffeesAndSync();
+    renderCoffees();
+}
+
+// ==========================================
+// DRAG-REORDER (Phase 3)
+// Delegated from #coffeeList. Long-press gate sits before the existing
+// swipe handler: cancels on horizontal movement (stack) or any movement
+// > cancel-px before the timer, so the swipe handler always wins.
+// ==========================================
+
+const _DR_LONG_MS   = 260;
+const _DR_SWIPE_PX  = 8;    // horizontal on a stack -> cancel, let swipe win
+const _DR_MOVE_PX   = 18;   // vertical movement before timer -> scroll intent -> cancel
+const _DR_MERGE_MIN = 0.30; // merge-zone: 30-70 % of target height
+const _DR_MERGE_MAX = 0.70;
+const _DR_GAP       = 22;   // .coffee-list gap (px)
+const _DR_ASCROLL_Z = 80;   // auto-scroll edge zone (px)
+const _DR_ASCROLL_V = 6;    // auto-scroll speed (px/frame)
+const _DR_IGNORE = '.delete-btn,.edit-btn,.stack-front-btn,.timer-btn,'
+    + '.feedback-slider,.apply-suggestion-btn,.adjust-btn,.history-btn,'
+    + '.reset-adjustments-btn,input,select,textarea,button,'
+    + '.color-picker-btn,.color-picker-popup,.inline-edit-input';
+
+let _dr = null; // current drag state
+
+function _drFindUnit(listEl, target) {
+    let el = target;
+    while (el && el.parentElement !== listEl) el = el.parentElement;
+    return (el && el.parentElement === listEl) ? el : null;
+}
+
+function _drUnitOriginalIndices(el) {
+    if (el.classList.contains('coffee-card')) {
+        const i = parseInt(el.dataset.originalIndex);
+        return isNaN(i) ? [] : [i];
+    }
+    return Array.from(el.querySelectorAll('.coffee-card'))
+        .map(c => parseInt(c.dataset.originalIndex))
+        .filter(n => !isNaN(n));
+}
+
+// Like _drUnitOriginalIndices but reads full stack membership from coffees[], not DOM.
+// Needed because a stack wrapper only renders ONE .coffee-card at a time (the shown one).
+function _drAllCoffeeIndices(el) {
+    if (el.classList.contains('roastery-stack-wrapper')) {
+        const shown = el.querySelector('.roastery-stack-slot .coffee-card');
+        const shownIdx = shown ? parseInt(shown.dataset.originalIndex) : NaN;
+        if (isNaN(shownIdx)) return [];
+        const stackId = coffees[shownIdx] ? coffees[shownIdx].stackId : null;
+        if (!stackId) return [shownIdx];
+        return coffees.reduce((acc, c, i) => {
+            if (c.stackId === stackId && c.deleted !== true) acc.push(i);
+            return acc;
+        }, []);
+    }
+    const idx = parseInt(el.dataset.originalIndex);
+    return isNaN(idx) ? [] : [idx];
+}
+
+function _drResetVisuals() {
+    if (!_dr) return;
+    if (_dr.ghost)   { _dr.ghost.remove(); _dr.ghost = null; }
+    if (_dr.unitEl)  { _dr.unitEl.style.opacity = ''; _dr.unitEl.style.pointerEvents = ''; }
+    if (_dr.snaps)   { _dr.snaps.forEach(s => { s.el.style.transform = ''; s.el.style.transition = ''; }); }
+    if (_dr.mergeTgt){ _dr.mergeTgt.classList.remove('drag-merge-target'); _dr.mergeTgt = null; }
+    if (_dr.ascRaf)  { cancelAnimationFrame(_dr.ascRaf); _dr.ascRaf = null; }
+}
+
+function _drCancel() {
+    if (!_dr) return;
+    clearTimeout(_dr.timer);
+    if (_dr.listEl) try { _dr.listEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
+    // Pre-lift solo cards hold capture on unitEl, not listEl yet — release both.
+    if (_dr.unitEl && !_dr.isStack) try { _dr.unitEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
+    _drResetVisuals();
+    _dr = null;
+}
+
+function _drLift(listEl) {
+    const { unitEl, startX, startY } = _dr;
+    const rect = unitEl.getBoundingClientRect();
+
+    if (navigator.vibrate) navigator.vibrate(30);
+    if (window.getSelection) window.getSelection().removeAllRanges();
+
+    // Suppress any click that the browser fires after the drag touch ends.
+    if (!_dr.isStack) unitEl.dataset.suppressClick = '1';
+
+    unitEl.style.opacity = '0';
+    unitEl.style.pointerEvents = 'none';
+
+    const ghost = unitEl.cloneNode(true);
+    ghost.style.cssText = 'position:fixed;left:0;top:0;margin:0;box-sizing:border-box;'
+        + `width:${rect.width}px;height:${rect.height}px;`
+        + 'pointer-events:none;z-index:1000;border-radius:16px;transition:none;opacity:0;'
+        + 'box-shadow:0 14px 40px rgba(0,0,0,0.45);'
+        + `transform:translate(${rect.left}px,${rect.top}px) scale(1.04);`;
+    document.body.appendChild(ghost);
+    requestAnimationFrame(() => { ghost.style.opacity = '1'; });
+
+    const allUnits = Array.from(listEl.children);
+    const origIdx  = allUnits.indexOf(unitEl);
+    const snaps    = allUnits.map(el => {
+        const r = el.getBoundingClientRect();
+        return { el, top: r.top + window.scrollY, height: r.height };
+    });
+
+    Object.assign(_dr, {
+        lifted: true, ghost, rect, listEl,
+        allUnits, origIdx, snaps,
+        targetIdx: origIdx, mergeTgt: null,
+        fixedX: rect.left, ascRaf: null, lastPY: startY,
+    });
+}
+
+// ── During drag: sibling shifts + auto-scroll ─────────────────────────────────
+
+function _drComputeTargetIdx(pointerY) {
+    const { snaps, origIdx } = _dr;
+    const absY = pointerY + window.scrollY;
+    for (let i = 0; i < snaps.length; i++) {
+        if (absY < snaps[i].top + snaps[i].height / 2) return i;
+    }
+    return snaps.length - 1;
+}
+
+function _drUpdateShifts(pointerY) {
+    const { snaps, origIdx } = _dr;
+    const targetIdx = _drComputeTargetIdx(pointerY);
+    _dr.targetIdx   = targetIdx;
+    const dragH     = snaps[origIdx].height + _DR_GAP;
+
+    snaps.forEach(({ el }, i) => {
+        if (i === origIdx) return;
+        let shift = 0;
+        if      (targetIdx < origIdx && i >= targetIdx && i < origIdx) shift =  dragH;
+        else if (targetIdx > origIdx && i > origIdx    && i <= targetIdx) shift = -dragH;
+        el.style.transition = 'transform .18s cubic-bezier(.2,0,0,1.2)';
+        el.style.transform  = shift ? `translateY(${shift}px)` : '';
+    });
+}
+
+function _drRunAutoScroll() {
+    if (!_dr || !_dr.lifted || _dr.ascRaf) return;
+    const tick = () => {
+        if (!_dr || !_dr.lifted) return;
+        const py = _dr.lastPY;
+        const vy = window.innerHeight;
+        if      (py < _DR_ASCROLL_Z)      window.scrollBy(0, -_DR_ASCROLL_V);
+        else if (py > vy - _DR_ASCROLL_Z) window.scrollBy(0,  _DR_ASCROLL_V);
+        _dr.ascRaf = requestAnimationFrame(tick);
+    };
+    _dr.ascRaf = requestAnimationFrame(tick);
+}
+
+// ── During drag: merge-target highlight (30-70 % of target height) ────────────
+
+function _drUpdateMerge(pointerY) {
+    // Use live hit-test so stacks (which are taller) contribute their actual height.
+    // Ghost has pointer-events:none so elementFromPoint reaches real list units.
+    // x is fixed to the card rail center so merge detection works on the vertical rail.
+    const hitX  = _dr.fixedX + _dr.rect.width / 2;
+    const hit   = document.elementFromPoint(hitX, pointerY);
+    const tgtEl = hit ? _drFindUnit(_dr.listEl, hit) : null;
+    let newMTgt = null;
+
+    if (tgtEl && tgtEl !== _dr.unitEl) {
+        const r    = tgtEl.getBoundingClientRect();
+        const relY = (pointerY - r.top) / r.height;
+        if (relY >= _DR_MERGE_MIN && relY <= _DR_MERGE_MAX) {
+            newMTgt = tgtEl;
+        }
+    }
+
+    if (newMTgt !== _dr.mergeTgt) {
+        if (_dr.mergeTgt) _dr.mergeTgt.classList.remove('drag-merge-target');
+        if (newMTgt)      newMTgt.classList.add('drag-merge-target');
+        _dr.mergeTgt = newMTgt;
+    }
+}
+
+// ── Drop: normalize + persist ─────────────────────────────────────────────────
+
+function _drNormalizeSortOrders() {
+    const active = coffees.filter(c => c.deleted !== true)
+        .sort((a, b) => {
+            if ((a.sortOrder || 0) !== (b.sortOrder || 0)) return (a.sortOrder || 0) - (b.sortOrder || 0);
+            if (a.stackId && a.stackId === b.stackId) return (a.stackPos || 0) - (b.stackPos || 0);
+            return 0;
+        });
+    let pos = 0, gi = 0;
+    while (gi < active.length) {
+        const c = active[gi];
+        if (c.stackId) {
+            const sid = c.stackId;
+            while (gi < active.length && active[gi].stackId === sid) { active[gi].sortOrder = pos; gi++; }
+        } else {
+            c.sortOrder = pos; gi++;
+        }
+        pos++;
+    }
+}
+
+function _drCommitMerge() {
+    const { snaps, origIdx, mergeTgt, unitEl } = _dr;
+    _drResetVisuals();
+
+    const targetIndices = _drAllCoffeeIndices(mergeTgt);
+    const dragIndices   = _drAllCoffeeIndices(unitEl);
+    if (!targetIndices.length || !dragIndices.length) { _dr = null; return; }
+
+    // Resolve or create target stackId
+    let targetStackId = coffees[targetIndices[0]].stackId;
+    if (!targetStackId) {
+        targetStackId = String(Date.now()) + '-' + Math.random().toString(36).slice(2, 8);
+        targetIndices.forEach(i => { coffees[i].stackId = targetStackId; coffees[i].stackPos = 0; });
+    }
+
+    // Append dragged coffees to end of target stack
+    const existing = coffees.filter(c => c.stackId === targetStackId && c.deleted !== true);
+    let maxPos = existing.reduce((m, c) => Math.max(m, c.stackPos || 0), -1);
+    dragIndices.forEach(i => {
+        if (coffees[i].stackId === targetStackId) return;
+        coffees[i].stackId  = targetStackId;
+        coffees[i].stackPos = ++maxPos;
+    });
+
+    // All stack members get the target's current sortOrder so they cluster together
+    const baseSO = coffees[targetIndices[0]].sortOrder || 0;
+    coffees.filter(c => c.stackId === targetStackId && c.deleted !== true)
+           .forEach(c => { c.sortOrder = baseSO; });
+
+    _drNormalizeSortOrders();
+    saveCoffeesAndSync();
+    renderCoffees();
+    _dr = null;
+}
+
+function _drCommitReorder() {
+    const { snaps, origIdx, targetIdx } = _dr;
+    _drResetVisuals();
+
+    if (targetIdx === origIdx) { _dr = null; return; }
+
+    // Move the dragged unit (solo card or entire stack) to the target position.
+    // All cards in a stack share the same sortOrder so they stay grouped.
+    const order = Array.from({ length: snaps.length }, (_, i) => i);
+    order.splice(origIdx, 1);
+    order.splice(targetIdx, 0, origIdx);
+
+    order.forEach((snapIdx, pos) => {
+        _drAllCoffeeIndices(snaps[snapIdx].el).forEach(j => { coffees[j].sortOrder = pos; });
+    });
+
+    _drNormalizeSortOrders();
+    saveCoffeesAndSync();
+    renderCoffees();
+    _dr = null;
+}
+
+export function initDragReorder() {
+    const listEl = document.getElementById('coffeeList');
+    if (!listEl || listEl._drInit) return;
+    listEl._drInit = true;
+
+    listEl.addEventListener('pointerdown', (e) => {
+        if (e.button !== undefined && e.button !== 0) return;
+        if (_dr) _drCancel();
+        if (e.target.closest(_DR_IGNORE)) return;
+        const unitEl = _drFindUnit(listEl, e.target);
+        if (!unitEl) return;
+        if (window.getSelection) { const s = window.getSelection(); if (s) s.removeAllRanges(); }
+
+        const isStack = unitEl.classList.contains('roastery-stack-wrapper');
+        const pid = e.pointerId;
+        console.log('[dr] down', isStack ? 'STACK' : 'SOLO', performance.now().toFixed(1));
+        // For solo cards: capture immediately so the browser cannot fire pointercancel
+        // during the 260ms wait (stacks already capture via the slot's internal handler).
+        if (!isStack) try { unitEl.setPointerCapture(pid); } catch (_) {}
+        // FIX A: transfer capture to listEl and lift — fires even if finger stays still.
+        const timer = setTimeout(() => {
+            if (!_dr || _dr.pointerId !== pid || _dr.lifted) return;
+            console.log('[dr] lift', _dr.isStack ? 'STACK' : 'SOLO', performance.now().toFixed(1));
+            try { listEl.setPointerCapture(pid); } catch (_) {}
+            _drLift(listEl);
+        }, _DR_LONG_MS);
+
+        _dr = { pointerId: pid, startX: e.clientX, startY: e.clientY,
+                timer, unitEl, isStack, lifted: false, listEl };
+    });
+
+    listEl.addEventListener('pointermove', (e) => {
+        if (!_dr || e.pointerId !== _dr.pointerId) return;
+
+        if (!_dr.lifted) {
+            // Swipe/scroll detection before lift
+            const adx = Math.abs(e.clientX - _dr.startX);
+            const ady = Math.abs(e.clientY - _dr.startY);
+            if (_dr.isStack && adx > _DR_SWIPE_PX && adx > ady) { console.log('[dr] cancel:swipe', performance.now().toFixed(1)); _drCancel(); return; } // horizontal -> swipe wins
+            if (ady > _DR_MOVE_PX)                               { console.log('[dr] cancel:scroll', 'ady='+ady.toFixed(1), performance.now().toFixed(1)); _drCancel(); return; } // vertical -> scroll wins
+            return;
+        }
+
+        e.preventDefault();
+        if (!_dr._loggedFirstMove) { console.log('[dr] firstMove', _dr.isStack ? 'STACK' : 'SOLO', performance.now().toFixed(1)); _dr._loggedFirstMove = true; }
+        _dr.lastPY = e.clientY;
+        const ty = _dr.rect.top + (e.clientY - _dr.startY);
+        _dr.ghost.style.transform = `translate(${_dr.fixedX}px,${ty}px) scale(1.03)`;
+
+        _drUpdateShifts(e.clientY);
+        _drUpdateMerge(e.clientY);
+        _drRunAutoScroll();
+    });
+
+    const onEnd = (e) => {
+        if (!_dr || e.pointerId !== _dr.pointerId) return;
+        if (e.type === 'pointercancel') console.log('[dr] cancel:pointercancel', _dr.isStack ? 'STACK' : 'SOLO', 'lifted='+_dr.lifted, performance.now().toFixed(1));
+        clearTimeout(_dr.timer);
+        if (_dr.listEl) try { _dr.listEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
+        if (_dr.unitEl && !_dr.isStack) try { _dr.unitEl.releasePointerCapture(_dr.pointerId); } catch (_) {}
+        if (!_dr.lifted) { _dr = null; return; }
+        if (_dr.mergeTgt) _drCommitMerge();
+        else              _drCommitReorder();
+    };
+    listEl.addEventListener('pointerup',     onEnd);
+    // FIX 2: suppress native scroll during drag so the browser does not fire pointercancel.
+    listEl.addEventListener('touchmove', e => { if (_dr && _dr.lifted) e.preventDefault(); }, { passive: false });
+    listEl.addEventListener('pointercancel', onEnd);
+    // Prevent text-selection magnifier on long-press. Using selectstart (not pointerdown
+    // preventDefault) so click events are not suppressed and tap-to-expand keeps working.
+    listEl.addEventListener('selectstart', e => {
+        if (e.target.closest('input, textarea, [contenteditable]')) return;
+        e.preventDefault();
+    });
+}
+
 // Register functions on window for onclick handlers
-window.toggleFavorite = toggleFavorite;
 window.deleteCoffee = deleteCoffee;
 window.restoreCoffee = restoreCoffee;
 window.permanentDeleteCoffee = permanentDeleteCoffee;
 window.updateCoffeeAmountLive = updateCoffeeAmountLive;
+window.unstackShown = unstackShown;

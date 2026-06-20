@@ -1,33 +1,34 @@
 /**
- * snapshot-brews.mjs
- * Golden-Master snapshot: iterates ALL grinder × method × processing combinations
- * with fixed neutral inputs and writes grindSetting/temperature/ratio/targetTime/steps
- * to tests/golden/brews.baseline.json (or brews.after.json if --after flag is set).
+ * verify-grind-targets.mjs  (read-only — writes nothing)
  *
- * Fixed inputs: amount=18g, altitude=1500, no waterHardness, no roastDate,
- *               cultivar='', origin='', grindOffset=0
+ * Runs the brew-engine pipeline against the external reference targets in
+ * tests/golden/grind-targets.json and reports whether each engine output
+ * falls within the documented real-world range.
  *
- * Processing pipeline (getProcessingBaseParams, adjustForAltitude, …) is inlined —
- * those functions live solely in js/brew-engine.js and have no browser deps here.
+ * Fixed inputs: identical to snapshot-brews.mjs
+ *   processing=washed, amount=18g, altitude=1500, no waterHardness,
+ *   no roastDate, cultivar='', origin='', grindOffset=0
  *
- * Profile lookup  → js/data/grinders.js  (GRINDERS registry, real source)
- * Method adjust   → js/data/methods.js   (METHODS registry, real source)
- * This makes the --after snapshot a genuine test of the refactored registry data.
+ * Status legend
+ *   PASS (checkmark) — value inside [min, max]
+ *   NEAR (warning)   — outside but within 1 native unit OR 10% of nearest bound
+ *   OUT  (cross)     — clearly outside
+ *
+ * Exit codes
+ *   0 — all HIGH/MEDIUM confidence cells are PASS or NEAR
+ *   1 — at least one HIGH/MEDIUM confidence cell is OUT (CI-suitable)
+ *   LOW-confidence cells produce warnings only, never affect exit code.
  */
 
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { GRINDERS, GRINDER_MIGRATION } from '../js/data/grinders.js';
-import { METHODS }  from '../js/data/methods.js';
+import { METHODS } from '../js/data/methods.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUT_DIR = path.join(__dirname, '..', 'tests', 'golden');
 
-const isAfter = process.argv.includes('--after');
-const OUT_FILE = path.join(OUT_DIR, isAfter ? 'brews.after.json' : 'brews.baseline.json');
-
-// ── Fixed inputs ──────────────────────────────────────────────────────────────
+// ── Fixed inputs ─────────────────────────────────────────────────────────────
 const FIXED = {
     amount: 18,
     altitude: 1500,
@@ -38,35 +39,9 @@ const FIXED = {
     grindOffset: 0,
 };
 
-// ── Grinders to iterate (all profile keys, including legacy aliases) ───────────
-const GRINDER_KEYS = [
-    'comandante_mk4',
-    'comandante_mk3',
-    'comandante',      // legacy alias → falls back to fellow_gen2 profile (same as old profiles.fellow)
-    'fellow_gen2',
-    'fellow_gen1',
-    'fellow',          // legacy alias
-    'timemore_s3',
-    'timemore_c2',
-    'timemore',        // legacy alias
-    '1zpresso',
-    'baratza',
-];
-
-// ── Methods ───────────────────────────────────────────────────────────────────
-const METHOD_KEYS = ['v60', 'kalita', 'chemex', 'hario_switch', 'aeropress', 'clever', 'french_press'];
-
-// ── Processings ───────────────────────────────────────────────────────────────
-const PROCESSINGS = [
-    'washed',            // → default fallback
-    'natural',           // → natural branch
-    'honey',             // → honey (general)
-    'anaerobic-natural', // → anaerobic+natural branch
-    'unknown',           // → unknown branch
-];
-
 // ═════════════════════════════════════════════════════════════════════════════
-// PROCESSING PIPELINE — inlined from js/brew-engine.js (no browser deps)
+// PROCESSING PIPELINE — inlined from js/brew-engine.js (no browser deps).
+// Must stay in sync with snapshot-brews.mjs / brew-engine.js.
 // ═════════════════════════════════════════════════════════════════════════════
 
 function getProcessingBaseParams(process) {
@@ -184,8 +159,6 @@ function adjustForRoastAge(params, roastDate) {
     };
 }
 
-// ── Registry-driven functions (use real GRINDERS / METHODS data) ───────────────
-
 function adjustForMethod(params, method) {
     const adj = (METHODS[method] || METHODS.v60).adjust;
     let ratio = params.ratio;
@@ -206,8 +179,6 @@ function adjustForMethod(params, method) {
 function getGrinderValue(grindBase, grinder, offset) {
     const o = offset || 0;
     const base = grindBase.comandante;
-    // Apply the same migration the real app runs via migrateGrinderPreference(),
-    // so legacy keys resolve to their canonical profiles instead of the fellow_gen2 fallback.
     const canonicalKey = GRINDER_MIGRATION[grinder] || grinder;
     const profile = (GRINDERS[canonicalKey] || GRINDERS.fellow_gen2).profile;
 
@@ -228,18 +199,9 @@ function getGrinderValue(grindBase, grinder, offset) {
     return `${Math.max(profile.min, val)} clicks`;
 }
 
-function generateBrewSteps(amount, ratio, method) {
-    const waterAmount = Math.round(amount * ratio);
-    return (METHODS[method] || METHODS.v60).buildSteps(amount, ratio, waterAmount);
-}
-
-function formatTemp(tempBase) {
-    return `${tempBase.min}-${tempBase.max}°C`;
-}
-
-// ── Compute a single brew result ──────────────────────────────────────────────
-function computeBrew(grinder, method, processing) {
-    const { amount, altitude, roastDate, cultivar, origin, grindOffset } = FIXED;
+// ── Compute grindSetting for a single grinder/method/processing combination ──
+function computeGrindSetting(grinder, method, processing) {
+    const { altitude, roastDate, cultivar, origin, grindOffset } = FIXED;
 
     const base  = getProcessingBaseParams(processing);
     const alt   = adjustForAltitude(base, altitude);
@@ -248,45 +210,107 @@ function computeBrew(grinder, method, processing) {
     const roast = adjustForRoastAge(orig, roastDate);
     const final = adjustForMethod(roast, method);
 
-    const grindSetting = getGrinderValue(final.grindBase, grinder, grindOffset);
-    const temperature  = formatTemp(final.tempBase);
-    const waterAmount  = Math.round(amount * final.ratio);
-    const steps        = generateBrewSteps(amount, final.ratio, method);
-
-    return {
-        grindSetting,
-        temperature,
-        ratio: `1:${final.ratio} (${amount}g)`,
-        targetTime: final.targetTime,
-        waterAmountMl: waterAmount,
-        steps,
-    };
+    return getGrinderValue(final.grindBase, grinder, grindOffset);
 }
 
-// ── Main ──────────────────────────────────────────────────────────────────────
-mkdirSync(OUT_DIR, { recursive: true });
+// ── Parse the numeric value out of a grindSetting string ─────────────────────
+// parseFloat handles all output formats: "22 clicks", "2.6 rot", "20", "3.5"
+function parseGrindValue(str) {
+    return parseFloat(str);
+}
 
-const results = {};
-for (const grinder of GRINDER_KEYS) {
-    results[grinder] = {};
-    for (const method of METHOD_KEYS) {
-        results[grinder][method] = {};
-        for (const processing of PROCESSINGS) {
-            results[grinder][method][processing] = computeBrew(grinder, method, processing);
-        }
+// ── Classify the result ───────────────────────────────────────────────────────
+function getStatus(value, min, max) {
+    if (value >= min && value <= max) return 'PASS';
+    const delta = value < min ? min - value : value - max;
+    const bound = value < min ? min : max;
+    if (delta <= 1 || delta / bound <= 0.10) return 'NEAR';
+    return 'OUT';
+}
+
+// ── Load targets ──────────────────────────────────────────────────────────────
+const targetsPath = path.join(__dirname, '..', 'tests', 'golden', 'grind-targets.json');
+const targets = JSON.parse(readFileSync(targetsPath, 'utf8'));
+
+// ── Run verification ──────────────────────────────────────────────────────────
+const rows = targets.map(t => {
+    const engineStr = computeGrindSetting(t.grinder, t.method, 'washed');
+    const engineVal = parseGrindValue(engineStr);
+    const status    = getStatus(engineVal, t.min, t.max);
+    return { ...t, engineStr, engineVal, status };
+});
+
+// ── Print table ───────────────────────────────────────────────────────────────
+const ICONS = { PASS: '✓', NEAR: '⚠', OUT: '✗' };
+
+const colWidths = {
+    grinder:    Math.max(7,  ...rows.map(r => r.grinder.length)),
+    method:     Math.max(6,  ...rows.map(r => r.method.length)),
+    engine:     Math.max(6,  ...rows.map(r => r.engineStr.length)),
+    target:     12,
+    status:     6,
+    confidence: 10,
+};
+
+function pad(s, n) { return String(s).padEnd(n); }
+
+const header = [
+    pad('grinder',    colWidths.grinder),
+    pad('method',     colWidths.method),
+    pad('engine',     colWidths.engine),
+    pad('target',     colWidths.target),
+    pad('status',     colWidths.status),
+    pad('confidence', colWidths.confidence),
+].join(' | ');
+
+const divider = '-'.repeat(header.length);
+
+console.log('\nGrind-Target Verification');
+console.log(divider);
+console.log(header);
+console.log(divider);
+
+for (const r of rows) {
+    const targetStr = `[${r.min}, ${r.max}]`;
+    const icon = ICONS[r.status];
+    const statusLabel = `${icon} ${r.status}`;
+    const line = [
+        pad(r.grinder,    colWidths.grinder),
+        pad(r.method,     colWidths.method),
+        pad(r.engineStr,  colWidths.engine),
+        pad(targetStr,    colWidths.target),
+        pad(statusLabel,  colWidths.status + 2),
+        pad(r.confidence, colWidths.confidence),
+    ].join(' | ');
+    console.log(line);
+}
+
+console.log(divider);
+
+// ── Summary ───────────────────────────────────────────────────────────────────
+const nPass = rows.filter(r => r.status === 'PASS').length;
+const nNear = rows.filter(r => r.status === 'NEAR').length;
+const nOut  = rows.filter(r => r.status === 'OUT').length;
+
+console.log(`\nSummary: ${nPass} PASS / ${nNear} NEAR / ${nOut} OUT`);
+
+const lowRows  = rows.filter(r => r.confidence === 'low');
+const highRows = rows.filter(r => r.confidence !== 'low');
+
+const failingLow  = lowRows.filter(r => r.status === 'OUT');
+const failingHigh = highRows.filter(r => r.status === 'OUT');
+
+if (failingLow.length > 0) {
+    console.log('\nWarnings (low confidence, not failing CI):');
+    for (const r of failingLow) {
+        console.log(`  ${ICONS.OUT} ${r.grinder} / ${r.method}: engine=${r.engineStr} outside [${r.min}, ${r.max}]`);
     }
 }
 
-const output = {
-    meta: {
-        inputs: FIXED,
-        grinders: GRINDER_KEYS,
-        methods: METHOD_KEYS,
-        processings: PROCESSINGS,
-    },
-    results,
-};
-
-writeFileSync(OUT_FILE, JSON.stringify(output, null, 2), 'utf8');
-console.log(`✓ Snapshot written to ${OUT_FILE}`);
-console.log(`  ${GRINDER_KEYS.length} grinders × ${METHOD_KEYS.length} methods × ${PROCESSINGS.length} processings = ${GRINDER_KEYS.length * METHOD_KEYS.length * PROCESSINGS.length} combinations`);
+if (failingHigh.length > 0) {
+    console.log('\nFailures (high/medium confidence):');
+    for (const r of failingHigh) {
+        console.log(`  ${ICONS.OUT} ${r.grinder} / ${r.method}: engine=${r.engineStr} outside [${r.min}, ${r.max}]`);
+    }
+    process.exit(1);
+}

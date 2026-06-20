@@ -83,11 +83,10 @@ export function initPressedStateInteractions() {
     pressedStateBound = true;
 
     document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .edit-btn');
+        const btn = e.target.closest('.upload-button, .manual-button, .adjust-btn, .timer-btn-secondary, .timer-btn-reset, .timer-btn-finish, .edit-btn');
         if (!btn) return;
 
         if (btn.classList.contains('edit-btn') && btn.classList.contains('editing')) return;
-        if (btn.classList.contains('timer-btn-secondary') && btn.id.startsWith('pause-brew-') && btn.textContent.trim() !== 'Resume') return;
 
         autoResetPressedState(btn);
     });
@@ -100,6 +99,7 @@ function renderGrindParamBox(index, brewParams) {
             <div class="param-box">
                 <div class="param-label">Grind Setting</div>
                 <div class="param-value-row">
+                    <div class="param-eyebrow">recommended</div>
                     <div class="param-value grind-qualitative" id="grind-value-${index}">
                         <span class="grind-qual-label">${label}</span>
                         <span class="grind-qual-haptik">${haptik}</span>
@@ -116,6 +116,7 @@ function renderGrindParamBox(index, brewParams) {
         <div class="param-box">
             <div class="param-label">Grind Setting</div>
             <div class="param-value-row">
+                <div class="param-eyebrow">recommended</div>
                 <div class="param-value" id="grind-value-${index}">${brewParams.grindSetting}</div>
                 <div class="param-adjust">
                     <button class="adjust-btn" data-type="grind" onclick="event.stopPropagation(); adjustGrindManual(${index}, -1);">−</button>
@@ -182,6 +183,9 @@ export function renderCoffeeCard(coffee, index) {
         </div>
     `;
 
+    const methodIcon = BREW_ICONS[brewParams.method];
+    const brewIconHtml = methodIcon ? `<span class="brew-btn-icon">${methodIcon}</span>` : '';
+
     return `
         <div class="coffee-card" data-original-index="${index}" style="${colorStyle}">
             <div class="coffee-header" style="position: relative;">
@@ -210,11 +214,13 @@ export function renderCoffeeCard(coffee, index) {
                 </div>
 
                 <div class="coffee-header-actions">
-                    <button class="favorite-btn ${coffee.favorite ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${index});">
-                    <svg class="star-icon" viewBox="0 0 24 24">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                ${coffee.stackId !== null ? `<button class="stack-front-btn" onclick="event.stopPropagation(); unstackShown(${index});" title="Remove from stack">
+                    <svg class="stack-front-icon" viewBox="0 0 24 24">
+                        <rect x="4" y="12" width="16" height="8" rx="2"/>
+                        <path d="M12 9V3"/>
+                        <path d="M9 6l3-3 3 3"/>
                     </svg>
-                </button>
+                </button>` : ''}
                 <button class="edit-btn" id="edit-btn-${index}" onclick="event.stopPropagation(); toggleEditMode(${index});">
                     <svg class="edit-icon" id="edit-icon-${index}" viewBox="0 0 24 24">
                         <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
@@ -272,53 +278,71 @@ export function renderCoffeeCard(coffee, index) {
                     <div class="dose-hint" id="doseHint-${index}"></div>
                 </div>
 
-                <div class="param-grid">
-                    ${renderGrindParamBox(index, brewParams)}
-                    <div class="param-box">
-                        <div class="param-label">Temperature</div>
-                        <div class="param-value-row">
-                            <div class="param-value" id="temp-value-${index}">${brewParams.temperature}</div>
-                            <div class="param-adjust">
-                                <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, -1);">−</button>
-                                <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, 1);">+</button>
+                <div class="manual-adjustments-block">
+                    <div class="manual-adjustments-label">Manual Adjustments</div>
+                    <div class="manual-adjustments-sub">(saved for your next brew &middot; feedback overrides it)</div>
+                    <div class="manual-adjustments-grid">
+                        ${renderGrindParamBox(index, brewParams)}
+                        <div class="param-box">
+                            <div class="param-label">Temperature</div>
+                            <div class="param-value-row">
+                                <div class="param-eyebrow">recommended</div>
+                                <div class="param-value" id="temp-value-${index}">${brewParams.temperature}</div>
+                                <div class="param-adjust">
+                                    <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, -1);">−</button>
+                                    <button class="adjust-btn" data-type="temp" onclick="event.stopPropagation(); adjustTempManual(${index}, 1);">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="param-box">
-                        <div class="param-label">Water</div>
-                        <div class="param-value" id="water-value-${index}">${brewParams.waterAmountMl}ml</div>
-                    </div>
-                    <div class="param-box">
-                        <div class="param-label">Target Time</div>
-                        <div class="param-value">${brewParams.targetTime}</div>
-                    </div>
                 </div>
 
-                <div class="brew-timer-section">
-                    <div class="timer-display" id="brew-timer-display-${index}">00:00</div>
-                    <div class="timer-controls-main">
-                        <button class="timer-btn start-brew" id="start-brew-${index}" onclick="event.stopPropagation(); startBrewTimer(${index});">
-                            <span class="brew-btn-icon">${BREW_ICONS[brewParams.method] || BREW_ICONS.v60}</span>
-                            Start Brew
-                        </button>
-                    </div>
-                    <div class="timer-controls-secondary">
-                        <button class="timer-btn timer-btn-secondary" id="pause-brew-${index}" onclick="event.stopPropagation(); pauseBrewTimer(${index});" disabled>Pause</button>
-                        <button class="timer-btn timer-btn-secondary" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index});" disabled>Reset</button>
-                    </div>
-                </div>
-
-                <div class="brew-steps">
-                    <h4>${(METHODS[brewParams.method] || METHODS.v60).stepHeaderLabel}</h4>
-                    ${brewParams.steps.map((step, stepIndex) => `
-                        <div class="step">
-                            <div class="step-time">${step.time}</div>
-                            <div class="step-action">${boldWeights(step.action)}</div>
-                            <div class="step-progress">
-                                <div class="step-progress-bar" id="progress-bar-${index}-${stepIndex}"></div>
-                            </div>
+                <div class="brew-block">
+                    <div class="brew-vitals">
+                        <div class="brew-vital-item">
+                            <svg class="brew-vital-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <div class="brew-vital-value">${brewParams.targetTime}</div>
+                            <div class="brew-vital-label">Target Time</div>
                         </div>
-                    `).join('')}
+                        <div class="brew-vital-item">
+                            <svg class="brew-vital-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                            </svg>
+                            <div class="brew-vital-value" id="water-value-${index}">${brewParams.waterAmountMl}ml</div>
+                            <div class="brew-vital-label">Water</div>
+                        </div>
+                    </div>
+
+                    <div class="brew-timer-section">
+                        <div class="timer-display" id="brew-timer-display-${index}">00:00</div>
+                        <div class="timer-controls-main">
+                            <button class="timer-btn start-brew" id="start-brew-${index}" onclick="event.stopPropagation(); startBrewTimer(${index});">
+                                ${brewIconHtml}Start Brew
+                            </button>
+                        </div>
+                        <div class="timer-controls-secondary">
+                            <button class="timer-btn-reset" id="reset-brew-${index}" onclick="event.stopPropagation(); resetBrewTimer(${index});" disabled aria-label="Reset timer">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                            </button>
+                            <button class="timer-btn-finish" id="finish-brew-${index}" onclick="event.stopPropagation(); finishBrewTimer(${index});" disabled>Finish</button>
+                        </div>
+                    </div>
+
+                    <div class="brew-steps">
+                        <h4>${(METHODS[brewParams.method] || METHODS.v60).stepHeaderLabel}</h4>
+                        ${brewParams.steps.map((step, stepIndex) => `
+                            <div class="step">
+                                <div class="step-time">${step.time}</div>
+                                <div class="step-action">${boldWeights(step.action)}</div>
+                                <div class="step-progress">
+                                    <div class="step-progress-bar" id="progress-bar-${index}-${stepIndex}"></div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
 
                 <div class="feedback-section">
@@ -351,23 +375,24 @@ export function renderCoffeeCard(coffee, index) {
                             </div>
                         `;
                     }).join('')}
-                    <div class="feedback-suggestion hidden" id="suggestion-${index}"></div>
+                    <div class="feedback-suggestion" id="suggestion-${index}">
+                        <div class="suggestion-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>
+                                <circle cx="8" cy="6" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="16" cy="12" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="10" cy="18" r="2" fill="var(--bg-secondary)" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Tuning Strategy
+                        </div>
+                        <div class="suggestion-content" id="suggestion-content-${index}">
+                            <p class="suggestion-idle-text">Nothing to apply — your brew's dialed in for this coffee. Nice.</p>
+                        </div>
+                    </div>
                     <button class="history-btn" onclick="event.stopPropagation(); openFeedbackHistory(${index});">View Adjustment History</button>
                     <button class="reset-adjustments-btn" onclick="event.stopPropagation(); resetCoffeeAdjustments(${index});">Reset Adjustments</button>
                 </div>
 
-                <div style="margin-top: 20px; padding: 16px; background: var(--bg-secondary); border-radius: 8px; font-size: 0.9rem;">
-                    <div style="display: flex; align-items: flex-start; gap: 10px;">
-                        <svg style="width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
-                            <path d="M9 18h6"></path><path d="M10 22h4"></path>
-                        </svg>
-                        <div>
-                            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">Tip:</strong>
-                            <span style="color: var(--text-secondary); line-height: 1.5;">${brewParams.notes}</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     `;
